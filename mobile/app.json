@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "name": "Unframe",
+    "slug": "unframe-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "unframe",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": { "image": "./assets/icon.png", "resizeMode": "contain", "backgroundColor": "#F7F8F2" },
+    "ios": { "supportsTablet": true, "bundleIdentifier": "com.unframe.museum", "infoPlist": { "ITSAppUsesNonExemptEncryption": false } },
+    "android": { "package": "com.unframe.museum", "adaptiveIcon": { "foregroundImage": "./assets/icon.png", "backgroundColor": "#F7F8F2" } },
+    "web": { "favicon": "./assets/icon.png", "bundler": "metro" },
+    "plugins": [["expo-image-picker", { "photosPermission": "Choose an artwork photo to use as a private reference during your museum visit.", "cameraPermission": "Take an artwork photo to use as a private reference during your museum visit.", "microphonePermission": false }], ["expo-location", { "locationWhenInUsePermission": "Allow Unframe to find a museum near you. Your location is not stored.", "isIosBackgroundLocationEnabled": false, "isAndroidBackgroundLocationEnabled": false }]]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "demo": true,
+  "description": "Illustrative GOMA demo only. Room names, placement, distances and accessibility are invented for this prototype, not an official floor plan or indoor navigation guidance.",
+  "nodes": [
+    { "id": "entrance", "label": "Entrance", "x": 50, "y": 92, "floor": "1" },
+    { "id": "goma-foyer", "label": "Demo foyer", "x": 50, "y": 52, "floor": "1" },
+    { "id": "goma-obliteration-room", "label": "The obliteration room", "x": 25, "y": 70, "floor": "1", "galleryId": "colour-studio" },
+    { "id": "goma-in-bed", "label": "In bed", "x": 75, "y": 70, "floor": "1", "galleryId": "sculpture-gallery" },
+    { "id": "goma-heritage", "label": "Heritage", "x": 25, "y": 25, "floor": "1", "galleryId": "nature-gallery" },
+    { "id": "goma-soul-under-the-moon", "label": "Soul under the moon", "x": 75, "y": 25, "floor": "1", "galleryId": "light-room" }
+  ],
+  "edges": [
+    { "from": "entrance", "to": "goma-foyer", "distance": 15, "estimatedSeconds": 22, "accessible": true },
+    { "from": "goma-foyer", "to": "goma-obliteration-room", "distance": 12, "estimatedSeconds": 18, "accessible": true },
+    { "from": "goma-foyer", "to": "goma-in-bed", "distance": 20, "estimatedSeconds": 30, "accessible": true },
+    { "from": "goma-foyer", "to": "goma-heritage", "distance": 32, "estimatedSeconds": 48, "accessible": true },
+    { "from": "goma-foyer", "to": "goma-soul-under-the-moon", "distance": 42, "estimatedSeconds": 63, "accessible": true },
+    { "from": "goma-obliteration-room", "to": "goma-heritage", "distance": 20, "estimatedSeconds": 30, "accessible": true },
+    { "from": "goma-in-bed", "to": "goma-soul-under-the-moon", "distance": 22, "estimatedSeconds": 33, "accessible": true }
+  ]
+}

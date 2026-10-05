@@ -1,0 +1,117 @@
+[
+  {
+    "id": "riverlight",
+    "title": "Riverlight",
+    "artist": "Elena Marr",
+    "year": "2024",
+    "category": "Painting",
+    "room": "01",
+    "minutes": 8,
+    "tags": [
+      "Nature",
+      "Colour"
+    ],
+    "color": "#cecbbb",
+    "image": "/assets/riverlight.svg",
+    "description": "Soft bands of river green, warm sand and terracotta create a landscape that sits somewhere between a place and a memory. Marr invites you to slow down and notice where one colour gives way to another.",
+    "detail": "The curved forms suggest a river without describing a particular location. Notice the small orange circle: its warmth changes how the surrounding greens appear. There is no prescribed reading; it might feel like sunlight, a distant landmark, or a point of attention.",
+    "source": "Unframe sample collection · Curatorial note 01",
+    "accessible": true,
+    "featured": true
+  },
+  {
+    "id": "soft-form",
+    "title": "Soft Form No. 3",
+    "artist": "Theo Okafor",
+    "year": "2023",
+    "category": "Sculpture",
+    "room": "02",
+    "minutes": 6,
+    "tags": [
+      "Sculpture",
+      "Form"
+    ],
+    "color": "#ded5c9",
+    "image": "/assets/soft-form.svg",
+    "description": "An imagined clay sculpture brings two rounded forms into a delicate balance. Its open centre makes the space around the object part of the work.",
+    "detail": "Walk around the piece and imagine how the opening would change from each angle. The contrast between a grounded base and a lifted curve explores weight, balance and the appearance of softness in a solid material.",
+    "source": "Unframe sample collection · Curatorial note 02",
+    "accessible": true
+  },
+  {
+    "id": "blue-hour",
+    "title": "The Blue Hour",
+    "artist": "Mina Park",
+    "year": "2025",
+    "category": "Painting",
+    "room": "03",
+    "minutes": 7,
+    "tags": [
+      "Colour",
+      "Reflection"
+    ],
+    "color": "#8cabb5",
+    "image": "/assets/blue-hour.svg",
+    "description": "Layers of blue and a pale horizon evoke the suspended moment between day and night. Small variations in the surface reward a longer look.",
+    "detail": "The horizon is intentionally difficult to locate. The work asks whether a landscape can be remembered through colour alone. Try looking first at the darkest area, then at the lightest, and notice how your sense of depth changes.",
+    "source": "Unframe sample collection · Curatorial note 03",
+    "accessible": true
+  },
+  {
+    "id": "quiet-geometry",
+    "title": "Quiet Geometry",
+    "artist": "Jules Avery",
+    "year": "2022",
+    "category": "Print",
+    "room": "03",
+    "minutes": 5,
+    "tags": [
+      "Form",
+      "Colour"
+    ],
+    "color": "#d8b77d",
+    "image": "/assets/quiet-geometry.svg",
+    "description": "A playful arrangement of circles, arches and blocks turns simple shapes into an unexpected conversation.",
+    "detail": "Each shape is flat, yet overlapping edges suggest depth. Follow the repeated arch across the composition. The print explores how repetition can create rhythm without exact symmetry.",
+    "source": "Unframe sample collection · Curatorial note 04",
+    "accessible": true
+  },
+  {
+    "id": "botanical-notes",
+    "title": "Botanical Notes",
+    "artist": "Ada Sol",
+    "year": "2024",
+    "category": "Drawing",
+    "room": "04",
+    "minutes": 6,
+    "tags": [
+      "Nature",
+      "Reflection"
+    ],
+    "color": "#c5c9af",
+    "image": "/assets/botanical-notes.svg",
+    "description": "A collection of imagined plant studies records the small differences between leaves, stems and the spaces they leave behind.",
+    "detail": "Fine lines sit alongside broader washes of green. The drawing values close observation over scientific classification. Look for a pair of leaves that appear similar at first but differ in their direction or scale.",
+    "source": "Unframe sample collection · Curatorial note 05",
+    "accessible": true
+  },
+  {
+    "id": "afterimage",
+    "title": "Afterimage",
+    "artist": "Samira Vale",
+    "year": "2025",
+    "category": "Installation",
+    "room": "05",
+    "minutes": 9,
+    "tags": [
+      "Form",
+      "Reflection"
+    ],
+    "color": "#c4b1a9",
+    "image": "/assets/afterimage.svg",
+    "description": "Translucent coloured panels overlap to suggest a changing architectural space. The installation explores the relationship between colour and memory.",
+    "detail": "The layered planes invite different views rather than a single correct vantage point. In this sample gallery, Room 05 is reached by stairs; choose a step-free tour to explore the other works.",
+    "source": "Unframe sample collection · Curatorial note 06",
+    "accessible": false
+  }
+]

@@ -1,0 +1,34 @@
+{
+  "name": "unframe",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A thoughtful, personal museum companion",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch server/index.js",
+    "start": "node server/index.js",
+    "ai:index": "node scripts/index-artworks.mjs",
+    "test:ai": "node --test tests/ai.test.js",
+    "mobile": "npm --prefix mobile start",
+    "mobile:web": "npm --prefix mobile run web --",
+    "mobile:check": "npm --prefix mobile run check",
+    "mobile:test": "npm --prefix mobile test",
+    "mobile:export": "npm --prefix mobile run export",
+    "mobile:export:web": "npm --prefix mobile run export:web",
+    "test:mobile:e2e": "playwright test --config playwright.mobile.config.js",
+    "test:mobile:web-dev": "playwright test --config playwright.mobile-dev.config.js",
+    "test": "node --test tests/domain.test.js tests/api.test.js tests/ai.test.js",
+    "test:e2e": "playwright test",
+    "check": "node --check server/index.js && node --check server/domain.js && node --check public/app.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0"
+  },
+  "dependencies": {
+    "google-auth-library": "^11.1.0",
+    "sharp": "^0.35.5"
+  }
+}

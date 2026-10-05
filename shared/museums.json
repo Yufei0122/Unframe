@@ -1,0 +1,26 @@
+{
+  "met": {
+    "id": "met",
+    "name": "The Metropolitan Museum of Art",
+    "shortName": "The Met",
+    "collectionName": "The Met",
+    "address": "1000 Fifth Avenue, New York",
+    "latitude": 40.779437,
+    "longitude": -73.963244,
+    "radius": 800,
+    "website": "https://www.metmuseum.org/",
+    "catalogueNotice": "A selection from The Met catalogue, not a live list of works on display."
+  },
+  "goma": {
+    "id": "goma",
+    "name": "Gallery of Modern Art, Brisbane",
+    "shortName": "GOMA",
+    "collectionName": "QAGOMA",
+    "address": "Stanley Place, South Brisbane, Queensland 4101, Australia",
+    "latitude": -27.4709,
+    "longitude": 153.0172,
+    "radius": 300,
+    "website": "https://www.qagoma.qld.gov.au/visit/",
+    "catalogueNotice": "Selected QAGOMA Collection works with a history at GOMA. This demo does not confirm that they are currently on display at GOMA."
+  }
+}
