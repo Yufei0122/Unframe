@@ -8,7 +8,7 @@ This extends the existing Node HTTP server and Expo/React Native Web interface. 
 
 Gemini never identifies the photographed artwork. A score below `ARTWORK_MATCH_THRESHOLD` returns no match. The score is cosine similarity, not calibrated probability. If explanation generation fails after a match, the API returns the catalogue artwork and a warning. An unavailable embedding provider or missing index is reported without inventing a result. Photos are held in memory for the request; Unframe does not persist them. They are sent to Google, subject to your Google Cloud configuration and terms.
 
-**Planning:** Preferences → Gemini recommendations restricted to supplied catalogue IDs → validated shortlist → exact itinerary search over up to eight candidates → Dijkstra paths between stops → time/accessibility checks → ordered itinerary, walking legs and overlay on the existing demo map. Gemini does not calculate physical paths. The original deterministic preference planner supplies recommendations if Gemini fails. The result ends at its last stop; it does not include a return walk.
+**Planning:** Bottom Plan tab → conversational messages and current preferences → Gemini structured reply and validated preference snapshot → visitor reviews the summary and presses Generate route → Gemini recommendations restricted to supplied catalogue IDs → validated shortlist → exact itinerary search over up to eight candidates → Dijkstra paths between stops → time/accessibility checks → separate itinerary screen. Gemini does not calculate physical paths. The original deterministic preference planner supplies route recommendations if Gemini fails; chat updates require Gemini and fail explicitly without changing the confirmed preferences. The result ends at its last stop; it does not include a return walk.
 
 ## 2. Files changed
 
@@ -27,6 +27,7 @@ Gemini never identifies the photographed artwork. A score below `ARTWORK_MATCH_T
 | `server/ai/recognition.js` | Vector match, threshold and explanation fallback. |
 | `server/ai/graph.js` | Dijkstra with accessibility and distance/time weights. |
 | `server/ai/routes.js` | Preference validation, local recommendation fallback and constrained itinerary search. |
+| `server/ai/chat.js` | Bounded conversation input and complete, museum-scoped preference validation. |
 | `server/ai/handler.js` | Recognition/planning/catalogue endpoints, origin allowlist, two-request concurrency bound and sanitized errors. |
 | `shared/met-collection.json` | Shared Met records (now eight artworks) moved out of the frontend into a shared catalogue. |
 | `shared/met-graph.json` | Clearly marked demo nodes, artwork positions, distances and accessible edges. |
@@ -39,9 +40,9 @@ Gemini never identifies the photographed artwork. A score below `ARTWORK_MATCH_T
 | `mobile/src/screens/Lookup.web.tsx` | Camera/upload, explicit recognition submission, progress, catalogue result, AI interpretation and errors. |
 | `mobile/src/screens/Lookup.tsx` | Preserves the existing native manual lookup via platform resolution. |
 | `mobile/src/screens/Modals.tsx` | Names the existing native lookup; updates About/privacy text. |
-| `mobile/src/screens/AIPlanner.tsx` | Preference form and route request; navigates to the itinerary screen on success. |
+| `mobile/src/screens/AIPlanner.tsx` | Planning chat tab, preference summary, retry/cancellation and separate itinerary navigation. |
 | `mobile/src/screens/AIItinerary.tsx` | Separate result screen with route map, ordered stops and a return action that preserves planner preferences. |
-| `mobile/src/screens/Museum.tsx` | Adds Plan a Met visit to the existing museum screen. |
+| `mobile/src/screens/Museum.tsx` | Museum home map and artworks; planning has its own bottom tab. |
 | `mobile/src/model.ts` | Adds the planner navigation route. |
 | `mobile/App.tsx` | Registers planner and platform-specific Scan screen. |
 | `mobile/package.json` | Adds a web-only export command; native scripts stay unchanged. |
@@ -145,9 +146,9 @@ Terminal 2, repository root:
 npm.cmd run mobile:web
 ```
 
-Open **http://localhost:8081**. Choose **Start visit → Scan → Take photo**, allow permission, capture, then **Identify artwork**. Upload JPEG/PNG/WebP is also available (5 MB max). Browser camera permission is user controlled and requires localhost or HTTPS; permission denial never blocks manual browsing.
+Open **http://localhost:8081**. Choose **Start visit → Scan** to open the camera, allow permission, then press the shutter to capture and identify. The **Photos** shortcut uploads JPEG/PNG/WebP (5 MB max) and starts recognition automatically. Opening Scan alone sends no photo. Results appear in a compact bottom card; AI interpretation expands on demand. Permission denial still allows uploading. Leaving Scan releases the camera and aborts pending requests. The separate Map tab has been removed; the museum map remains on Home. Browser camera permission is user controlled and requires localhost or HTTPS.
 
-For routes choose **Plan a Met visit**, set preferences, then **Generate route**. Successful generation opens a separate itinerary screen with the map and ordered stops. **Edit visit preferences** returns to the existing form with your choices preserved. Errors stay on the form for retry. The backend remains usable without Google configuration: routes return a labelled local fallback; recognition explains the missing index/provider configuration. Without running the backend, the UI shows a connection error with a startup hint.
+For routes open the bottom **Plan** tab, describe your visit (in English or Chinese), review the preference summary, then press **Generate route**. Successful generation opens a separate itinerary screen with the map and ordered stops. **Edit visit preferences** returns to the chat with the conversation and choices preserved. Sending a message uses Gemini; errors preserve the last confirmed preferences and offer Retry or Discard. A pending, failed or unsent message blocks route generation so it cannot silently ignore a new request. Switching tabs cancels pending chat/route requests and ignores late responses. Museum changes and New conversation reset the chat. The backend remains usable without Google configuration for route generation with existing/default preferences, returning a labelled local fallback. Without running the backend, the UI shows a connection error with a startup hint. Restart `npm.cmd start` after upgrading to enable the new chat endpoint.
 
 ## 7. Requests and tests
 
@@ -158,6 +159,8 @@ curl.exe -X POST http://127.0.0.1:3000/api/ai/artworks/recognise -F "image=@mobi
 ```
 
 Optional multipart field: `visitorPreferences`, a JSON string array such as `["Nature"]`. Response: `{matched,similarity,artwork,aiExplanation,interpretationLabel,warning?}`; low confidence gives `{matched:false,message}`. Wrong/malformed uploads return 400/415, oversized uploads 413, missing configuration/index 503, and provider timeout 504.
+
+Planning chat: `POST /api/ai/routes/chat` accepts `{museumId, message, history, preferences}`. The latest message is 1–600 characters; history contains at most eight `{role: "user" | "assistant", content}` entries of up to 600 characters. Preferences use the same fields as route planning below. It returns `{reply, preferences}` with all preference fields present and validated against the selected museum. Invalid input returns 400, invalid model output 502, and provider errors retain their 503/504 status. The chat request body limit is 32 KB. Conversations stay in client memory; the server forwards bounded context to Google without persisting it. Generating routes retains the existing 16 KB request limit.
 
 Route planning:
 
@@ -177,7 +180,7 @@ Valid current locations and artworks are returned by `GET /api/ai/catalogue?muse
 
 Automated checks (Google APIs are mocked; no paid calls):
 
-Validated in this workspace: 35 Node tests (including 20 AI tests), 10 mobile state/location tests, 18 browser cases against the real Expo development server (17 in the main run and the GOMA itinerary case in a successful targeted rerun), TypeScript checks, existing JavaScript checks, and web export. Camera capture used Chrome's simulated camera device, not a physical device. A running local backend also returned a three-stop, 15-minute, 89 m demo route with `recommendationSource: local` while Google was unconfigured.
+Validated in this workspace: 35 Node tests (including 20 AI tests), 10 mobile state/location tests, 21 browser cases against the real Expo development server, including camera-first Scan, small-screen controls, automatic upload/capture recognition, cancellation, delayed permission cleanup and removal of the Map tab, TypeScript checks, existing JavaScript checks, and web export. Camera capture used Chrome's simulated camera device, not a physical device. A running local backend also returned a three-stop, 15-minute, 89 m demo route with `recommendationSource: local` while Google was unconfigured.
 
 ```powershell
 npm.cmd test

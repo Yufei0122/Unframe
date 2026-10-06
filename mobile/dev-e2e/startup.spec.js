@@ -1,11 +1,11 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, enterWelcome } from '../e2e/fixtures';
 import { stat, utimes } from 'node:fs/promises';
 import path from 'node:path';
 
 test('web development server survives watched configuration changes and reloads', async ({ page, request }) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
-  await page.goto('/');
+  await page.goto('/'); await enterWelcome(page);
   await expect(page.getByRole('button', { name: 'Start visit', exact: true })).toBeVisible({ timeout: 60000 });
 
   const config = path.resolve(__dirname, '../tsconfig.json');
@@ -21,7 +21,7 @@ test('web development server survives watched configuration changes and reloads'
       return ++healthyResponses;
     }, { intervals: [500], timeout: 10000 }).toBeGreaterThanOrEqual(5);
 
-    await page.reload();
+    await page.reload(); await enterWelcome(page);
     await page.getByRole('button', { name: 'Start visit', exact: true }).click();
     await expect(page.getByText('Nearby Artworks', { exact: true })).toBeVisible();
     await page.getByRole('button', { name: 'Explore Water Lilies', exact: true }).click();

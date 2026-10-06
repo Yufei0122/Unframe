@@ -1,5 +1,7 @@
 # The Met demo assets
 
+For the five nearby-museum preview photographs, see [museum discovery image sources](../../MUSEUM-DISCOVERY.md#new-photo-assets).
+
 - `met-exterior.jpg`: Alvin David, “The met banner on classical building entrance”, https://unsplash.com/photos/6_W4k0CWnns (Unsplash License). Downloaded from https://images.unsplash.com/photo-1764473814276-6032e9070f61 .
 - `water-lilies.jpg`: Claude Monet, *Water Lilies*, 1916–19. The Met, 1983.532. CC0 image donated by The Met and available at https://commons.wikimedia.org/wiki/File:Water_Lilies_MET_DT1856.jpg . Collection record: https://www.metmuseum.org/art/collection/search/437137 .
 - `the-harvesters.jpg`: Pieter Bruegel the Elder, *The Harvesters*, 1565. The Met Open Access / public domain. https://www.metmuseum.org/art/collection/search/435809 . Image: https://images.metmuseum.org/CRDImages/ep/web-large/DP119115.jpg .

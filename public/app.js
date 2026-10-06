@@ -63,7 +63,7 @@ function render() {
   if (!state) return;
   const page = currentPage();
   applyPreferences();
-  document.title = `${{ discover: 'Discover', explore: 'Explore the gallery', guide: 'Your AI guide', visits: 'My visits', profile: 'Your preferences', admin: 'Curator workspace' }[page]} — Unframe`;
+  document.title = 'Unframe';
   app.innerHTML = `<div class="shell">
     <aside class="sidebar" aria-label="Main navigation">
       <a href="#discover" class="brand" aria-label="Unframe home"><img src="/assets/mark.svg" alt=""/><span>unframe<span style="color:var(--accent)">.</span></span></a>

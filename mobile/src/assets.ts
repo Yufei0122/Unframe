@@ -1,3 +1,8 @@
+export const museumImages = {
+  met: require('../assets/met-exterior.jpg'),
+  goma: require('../assets/goma-exterior.jpg'),
+};
+
 export const images: Record<string, number> = {
   'goma-obliteration-room': require('../assets/goma-obliteration-room.jpg'),
   'goma-in-bed': require('../assets/goma-in-bed.jpg'),

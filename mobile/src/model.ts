@@ -15,16 +15,15 @@ export interface ActiveTour extends RoutePlan { completed: string[]; skipped: st
 export interface MobileState { version: 1; preferences: Preferences; saved: string[]; visits: Visit[]; feedback: Feedback[]; tour: ActiveTour | null }
 export const initialState: MobileState = { version: 1, preferences: { name: 'Alex', interests: ['Nature', 'Colour'], duration: 30, stepFree: false, saveHistory: true, largeText: false }, saved: [], visits: [], feedback: [], tour: null };
 export type RootStackParams = {
+  MuseumSelect: undefined;
   Welcome: undefined;
-  MuseumInfo: undefined;
   Tour: undefined;
   Home: NavigatorScreenParams<TabParams> | undefined;
   Artwork: { id: string };
   Planner: undefined;
-  AIPlanner: undefined;
   AIItinerary: { itinerary: AIRoute; museumId?: MuseumId };
   Lookup: undefined;
   Feedback: { artworkId?: string } | undefined;
   About: undefined;
 };
-export type TabParams = { Discover: undefined; Explore: undefined; Scan: undefined; Guide: { artworkId?: string } | undefined; Saved: undefined; You: undefined };
+export type TabParams = { Discover: undefined; Plan: undefined; Scan: undefined; Guide: { artworkId?: string } | undefined; Saved: undefined; You: undefined };

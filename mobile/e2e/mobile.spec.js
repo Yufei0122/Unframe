@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, enterWelcome } from '../e2e/fixtures';
 
 test.use({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 });
 
@@ -21,9 +21,13 @@ async function readyImages(page) {
 test('welcome → museum → artwork, saved works survive reload', async ({ page }) => {
   const errors = []; page.on('pageerror', error => errors.push(error.message));
   await denyLocation(page);
-  await page.goto('/');
+  await page.goto('/'); await enterWelcome(page);
   await expect(page.getByText('Welcome to', { exact: true })).toBeVisible();
-  await expect(page.getByText('Location off · demo museum')).toBeVisible();
+  await expect(page.getByText('Location off · demo museum').filter({ visible: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Back to museum selection' }).click();
+  await expect(page.getByRole('button', { name: 'Choose The Met', exact: true })).toBeVisible();
+  await expect(page.getByText('Museum & location')).toHaveCount(0);
+  await enterWelcome(page);
   await readyImages(page);
   await page.screenshot({ path: 'test-results/met-welcome.png' });
   await startVisit(page);
@@ -41,7 +45,7 @@ test('welcome → museum → artwork, saved works survive reload', async ({ page
   await page.getByRole('button', { name: 'Back to museum' }).click();
   await page.getByRole('tab', { name: /Saved/ }).click();
   await expect(page.getByRole('button', { name: 'Explore Water Lilies' })).toBeVisible();
-  await page.reload();
+  await page.reload(); await enterWelcome(page);
   await startVisit(page);
   await page.getByRole('tab', { name: /Saved/ }).click();
   await page.getByRole('button', { name: 'Explore Water Lilies' }).click();
@@ -54,7 +58,7 @@ test('welcome → museum → artwork, saved works survive reload', async ({ page
 
 test('floor selection, room filters, search and all artwork details', async ({ page }) => {
   await denyLocation(page);
-  await page.goto('/'); await startVisit(page);
+  await page.goto('/'); await enterWelcome(page); await startVisit(page);
   await page.getByRole('button', { name: 'Floor 3', exact: true }).click();
   await expect(page.getByText('Room to discover', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Show demo artworks' }).click();
@@ -105,7 +109,7 @@ test('speech controls switch language and stop playback when leaving', async ({ 
       speak: utterance => { window.__speechCalls.push(utterance.lang); utterance.onstart?.(); },
     } });
   });
-  await page.goto('/'); await startVisit(page);
+  await page.goto('/'); await enterWelcome(page); await startVisit(page);
   await page.getByRole('button', { name: 'Explore Water Lilies' }).click();
   await page.getByRole('button', { name: 'Play introduction' }).click();
   await expect(page.getByRole('button', { name: 'Stop introduction' })).toBeVisible();
@@ -121,14 +125,17 @@ test('device location recognises The Met and labels distant locations as demo', 
   await context.grantPermissions(['geolocation']);
   await context.setGeolocation({ latitude: 40.779437, longitude: -73.963244, accuracy: 15 });
   await page.goto('/');
+  await expect(page.getByText('0 m · straight line', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Choose The Met', exact: true }).click();
   await expect(page.getByText('Near your location', { exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'Museum and location information' }).click();
-  await expect(page.getByText(/Device estimate: 0 m/)).toBeVisible();
+  await page.getByRole('button', { name: 'Back to museum selection' }).click();
+  await expect(page.getByRole('button', { name: 'Choose The Met', exact: true })).toBeVisible();
   await context.setGeolocation({ latitude: -27.4698, longitude: 153.0251, accuracy: 15 });
   await page.getByRole('button', { name: 'Refresh my location' }).click();
-  await expect(page.getByText('Explore a demo museum', { exact: true }).filter({ visible: true })).toBeVisible();
-  await expect(page.getByText(/does not confirm that you are near The Met/)).toBeVisible();
-  await page.getByRole('button', { name: 'Explore The Met', exact: true }).click();
+  await expect(page.getByText('EXPLORE MUSEUMS', { exact: true })).toBeVisible();
+  await expect(page.getByText(/km · straight line/)).toBeVisible();
+  await page.getByRole('button', { name: 'Choose The Met', exact: true }).click();
+  await page.getByRole('button', { name: 'Start visit', exact: true }).click();
   await expect(page.getByText('Nearby Artworks', { exact: true })).toBeVisible();
 });
 
@@ -136,15 +143,15 @@ test('unavailable location still allows starting the visit', async ({ page }) =>
   await page.addInitScript(() => {
     Object.defineProperty(navigator, 'geolocation', { configurable: true, value: { getCurrentPosition: (_ok, error) => error({ code: 2 }) } });
   });
-  await page.goto('/');
-  await expect(page.getByText('Location unavailable · demo museum')).toBeVisible();
+  await page.goto('/'); await enterWelcome(page);
+  await expect(page.getByText('Location unavailable · demo museum').filter({ visible: true })).toBeVisible();
   await startVisit(page);
 });
 
 test('desktop preview stays phone-sized and small phones have no page overflow', async ({ page }) => {
   await denyLocation(page);
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.goto('/');
+  await page.goto('/'); await enterWelcome(page);
   await readyImages(page);
   const viewport = page.getByTestId('mobile-viewport');
   await expect(viewport).toHaveCSS('width', '406px');
@@ -161,7 +168,7 @@ test('desktop preview stays phone-sized and small phones have no page overflow',
 
 test('existing sample tours survive reload and produce a completed visit', async ({ page }) => {
   await denyLocation(page);
-  await page.goto('/'); await startVisit(page);
+  await page.goto('/'); await enterWelcome(page); await startVisit(page);
   await page.getByRole('tab', { name: /Profile/ }).click();
   await page.getByRole('button', { name: 'Northbank sample tour' }).click();
   await page.getByRole('button', { name: 'Plan my visit', exact: true }).click();
@@ -171,7 +178,7 @@ test('existing sample tours survive reload and produce a completed visit', async
   await expect(page.getByText('Step-free route · Rooms without stairs').filter({ visible: true })).toBeVisible();
   await expect(page.getByRole('button', { name: 'View Afterimage' })).toHaveCount(0);
   await page.getByRole('button', { name: 'Mark explored', exact: true }).first().click();
-  await page.reload(); await startVisit(page);
+  await page.reload(); await enterWelcome(page); await startVisit(page);
   await page.getByRole('tab', { name: /Profile/ }).click();
   await page.getByRole('button', { name: 'Northbank sample tour' }).click();
   await expect(page.getByText(/1 explored/)).toBeVisible();
@@ -181,14 +188,14 @@ test('existing sample tours survive reload and produce a completed visit', async
 
 test('preferences, private feedback and scan entry still work', async ({ page }) => {
   await denyLocation(page);
-  await page.goto('/'); await startVisit(page);
+  await page.goto('/'); await enterWelcome(page); await startVisit(page);
   await page.getByRole('tab', { name: /Scan/ }).click();
   await expect(page.getByRole('button', { name: 'Upload photo' })).toBeVisible();
   await page.getByRole('tab', { name: /Profile/ }).click();
   await page.getByRole('textbox', { name: 'Your name' }).fill('Yufei');
   await page.getByRole('button', { name: 'Save preferences', exact: true }).click();
   await expect(page.getByText('Your preferences are saved on this device.')).toBeVisible();
-  await page.reload(); await startVisit(page);
+  await page.reload(); await enterWelcome(page); await startVisit(page);
   await page.getByRole('tab', { name: /Profile/ }).click();
   await expect(page.getByRole('textbox', { name: 'Your name' })).toHaveValue('Yufei');
   await page.getByRole('button', { name: 'Share feedback', exact: true }).click();

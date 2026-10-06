@@ -17,10 +17,10 @@ export function WelcomeScreen({ navigation }: NativeStackScreenProps<RootStackPa
     <LinearGradient colors={['#132A3F69', '#172E3733', '#11272CEE']} locations={[0, .42, 1]} style={StyleSheet.absoluteFill}/>
     <SafeAreaView style={styles.safe}>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <Pressable accessibilityRole="button" accessibilityLabel="Museum and location information" onPress={() => navigation.navigate('MuseumInfo')} style={styles.location}>
+        <Pressable accessibilityRole="button" accessibilityLabel="Back to museum selection" onPress={() => navigation.popTo('MuseumSelect')} style={styles.location}>
           <Icon name="location" color="#ECE5D5" size={21}/>
           <View style={{ flex: 1, gap: 2 }}><T style={styles.locationCaption}>{locationLabel(location.status)}</T><T style={styles.museum}>{museum.name}</T></View>
-          <Icon name="chevron-down" color="white" size={15}/>
+          <Icon name="chevron-back" color="white" size={18}/>
         </Pressable>
         <View style={styles.welcome}>
           <T accessibilityRole="header" style={styles.greeting}>Welcome to</T>

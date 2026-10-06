@@ -1,5 +1,5 @@
 ﻿import React, { useState } from 'react';
-import { Image, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FloorPlan, type Floor } from '../components/FloorPlan';
 import { images } from '../assets';
@@ -7,12 +7,12 @@ import { useMuseumLocation } from '../location';
 import { useStore } from '../store';
 import { Button, Icon, T, c, useRootNavigation } from '../ui';
 
-export function MuseumScreen({ mapMode = false }: { mapMode?: boolean }) {
+export function MuseumScreen() {
   const { museumId } = useMuseumLocation();
-  return <MuseumContent key={museumId} mapMode={mapMode}/>;
+  return <MuseumContent key={museumId}/>;
 }
 
-function MuseumContent({ mapMode }: { mapMode: boolean }) {
+function MuseumContent() {
   const { museum, museumId } = useMuseumLocation();
   const museumArtworks = museum.artworks;
   const nav = useRootNavigation();
@@ -30,13 +30,12 @@ function MuseumContent({ mapMode }: { mapMode: boolean }) {
   const showSearch = () => { setSearch(true); setViewAll(true); };
   return <SafeAreaView edges={['top']} style={styles.screen} onLayout={event => setScreenHeight(event.nativeEvent.layout.height)}>
     <View style={styles.header}>
-      <Pressable accessibilityRole="button" accessibilityLabel="Choose museum" onPress={() => nav.navigate('MuseumInfo')} style={styles.museumButton}><T numberOfLines={1} style={styles.museumName}>{museum.name}</T><Icon name="chevron-down" size={16}/></Pressable>
+      <Pressable accessibilityRole="button" accessibilityLabel="Choose museum" onPress={() => nav.navigate('MuseumSelect')} style={styles.museumButton}><T numberOfLines={1} style={styles.museumName}>{museum.name}</T><Icon name="chevron-down" size={16}/></Pressable>
       <Pressable accessibilityRole="button" accessibilityLabel="Scan an artwork" onPress={() => nav.navigate('Lookup')} style={styles.scan}><Icon name="scan-outline" size={19}/></Pressable>
     </View>
     <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
       <FloorPlan museumId={museumId} floor={floor} setFloor={changeFloor} room={room} onRoom={setRoom} onSearch={showSearch} height={mapHeight}/>
       <View style={styles.mapCaption}><View style={styles.demoDot}/><T style={styles.caption}>Illustrative map · demo position & distances</T></View>
-      {Platform.OS === 'web' && <View style={{ paddingHorizontal: 18, paddingBottom: 14 }}><Button title={museumId === 'met' ? 'Plan a Met visit' : 'Plan a GOMA visit'} secondary icon="sparkles-outline" onPress={() => nav.navigate('AIPlanner')}/></View>}
       <View style={styles.artworks}>
         <View style={styles.sectionHeader}><View><T accessibilityRole="header" style={styles.sectionTitle}>{room || (viewAll ? 'Museum Artworks' : 'Nearby Artworks')}</T><T style={styles.sectionSubtitle}>{floor === '1' ? 'A little discovery, just around you' : `Explore demo floor ${floor}`}</T></View><Pressable accessibilityRole="button" accessibilityLabel={viewAll ? 'Show nearby artworks' : 'View all artworks'} onPress={() => { setViewAll(!viewAll); setRoom(null); changeFloor('1'); }} style={styles.viewAll}><T style={styles.viewAllText}>{viewAll ? 'Nearby' : 'View all'}</T></Pressable></View>
         {search && <View style={styles.search}><Icon name="search-outline" size={18}/><TextInput autoFocus accessibilityLabel="Search museum artworks" value={query} onChangeText={setQuery} placeholder="Artwork or artist" placeholderTextColor={c.muted} style={styles.searchInput}/><Pressable accessibilityRole="button" accessibilityLabel="Close search" onPress={() => { setSearch(false); setQuery(''); }} style={styles.closeSearch}><Icon name="close" size={18}/></Pressable></View>}
@@ -50,13 +49,10 @@ function MuseumContent({ mapMode }: { mapMode: boolean }) {
           </Pressable>)}
         </ScrollView> : <View style={styles.empty}><Icon name="images-outline" size={26}/><T style={styles.emptyTitle}>{query ? 'No matching artworks' : 'Room to discover'}</T><T style={styles.emptyText}>{query ? 'Try an artist name or artwork title.' : 'This demo has ' + museumArtworks.length + ' works. Reset the map to explore this collection.'}</T><Button title="Show demo artworks" secondary onPress={() => { changeFloor('1'); setQuery(''); }}/></View>}
       </View>
-      {mapMode && <View style={styles.mapHelp}><T style={styles.helpTitle}>Make the museum your own.</T><T style={styles.emptyText}>Choose a floor or tap a gallery to explore. The blue marker shows a sample starting point.</T><Button title="Museum & location" secondary icon="location-outline" onPress={() => nav.navigate('MuseumInfo')}/></View>}
       {storageError && <T accessibilityRole="alert" style={styles.storageError}>{storageError}</T>}
     </ScrollView>
   </SafeAreaView>;
 }
-
-export function MuseumMapScreen() { return <MuseumScreen mapMode/>; }
 
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: c.bg }, header: { height: 67, paddingHorizontal: 18, flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderColor: c.border, gap: 9 },
@@ -68,5 +64,5 @@ const styles = StyleSheet.create({
   artImage: { width: '100%', height: 149, borderRadius: 11, backgroundColor: c.sand }, artTitle: { fontSize: 13, lineHeight: 19, marginTop: 9, color: '#181C19' }, artist: { fontSize: 10, lineHeight: 17, color: '#353A34' }, year: { fontSize: 10, lineHeight: 16, color: '#656660' }, distance: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 9 }, distanceText: { fontSize: 10, lineHeight: 16, color: '#60635C' },
   search: { marginHorizontal: 18, marginBottom: 16, flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: c.border, borderRadius: 10, paddingLeft: 12 }, searchInput: { flex: 1, minHeight: 44, paddingHorizontal: 8, fontSize: 13, color: c.ink }, closeSearch: { width: 40, height: 44, alignItems: 'center', justifyContent: 'center' },
   empty: { margin: 18, padding: 20, alignItems: 'center', gap: 13, borderRadius: 15, backgroundColor: '#EFEDE7' }, emptyTitle: { fontSize: 16, fontWeight: '500' }, emptyText: { fontSize: 12, lineHeight: 20, color: c.muted },
-  mapHelp: { margin: 18, padding: 18, backgroundColor: '#ECEFE7', borderRadius: 15, gap: 12 }, helpTitle: { fontSize: 16, fontWeight: '500' }, storageError: { fontSize: 12, color: '#A34B38', margin: 18 },
+  storageError: { fontSize: 12, color: '#A34B38', margin: 18 },
 });

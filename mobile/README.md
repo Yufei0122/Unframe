@@ -4,9 +4,11 @@ A native React Native + Expo application for iOS and Android. It includes native
 
 ## The Met and Brisbane GOMA visits
 
-The app opens on a full-screen museum welcome page. **Start Visit** opens the floor plan and horizontal nearby-artwork cards. Selecting a work opens an image-led detail page with bookmarks, a readable introduction, English/Chinese device speech, and a link to the museum collection record.
+The app opens on museum discovery: a full-width photographic preview above a web OpenLayers street map. Switch between New York and Brisbane, tap a museum pin, or swipe the preview (mouse dragging also works). The preview rotates every ten seconds, pausing during interaction, when hidden, or for reduced-motion preferences. The Met and GOMA offer **Choose** → welcome → **Start Visit**. Five nearby museums offer photo previews and official website links. See [museum discovery sources and scope](../MUSEUM-DISCOVERY.md).
 
-Choose a museum from the welcome page's location header or the Home page's museum dropdown: **Choose The Met** / **Choose GOMA** → **Explore**. The selection applies to artwork browsing, the map, web Scan and AI route planning. The Met has eight artworks; GOMA has four QAGOMA Collection works with official images, English/Chinese introductions and source links. See [GOMA demo sources and scope](../GOMA-DEMO.md).
+**Start Visit** opens the indoor demo floor plan and horizontal nearby-artwork cards. Selecting a work opens an image-led detail page with bookmarks, a readable introduction, English/Chinese device speech, and a link to the museum collection record. The outdoor discovery map uses real building locations; the indoor map remains illustrative.
+
+Choose a museum from the discovery entrance: **Choose The Met** / **Choose GOMA** → **Start Visit**. Tap the museum and location area on the welcome page, the museum name on Home, or **Explore museums** in Profile to return to the entrance. The selection applies to artwork browsing, the indoor map, web Scan and AI route planning. The Met has eight artworks; GOMA has four QAGOMA Collection works with official images, English/Chinese introductions and source links. See [GOMA demo sources and scope](../GOMA-DEMO.md).
 
 Device location is requested on opening. The Met matches within 800 m with accuracy of 500 m or better; GOMA matches within 300 m with accuracy of 300 m or better. The nearest qualifying museum is selected automatically until you manually choose a museum for this session. Otherwise, or if permission is refused, the default Met demo remains available and either museum can be selected manually. Refresh location from the museum information page. Location is not persisted or uploaded by Unframe. There is no global museum discovery service.
 
@@ -46,7 +48,7 @@ SDK 54 supports iOS 15.1 and later. See the [SDK platform requirements](https://
 
 ## Preview on the computer
 
-For browser camera and Google AI, also start the Node API with `npm.cmd start` **from the repository root in another terminal**. Follow [AI setup](../AI-INTEGRATION.md) to configure Google credentials and generate the artwork index. Open **Scan** to capture/upload, or **Plan a Met visit** to create an itinerary. Camera access requires HTTPS or localhost. Google AI configuration is server-only; Expo Go camera configuration is unchanged.
+For browser camera and Google AI, also start the Node API with `npm.cmd start` **from the repository root in another terminal**. Follow [AI setup](../AI-INTEGRATION.md) to configure Google credentials and generate the artwork index. Open **Scan** to capture/upload, or the bottom **Plan** tab to chat about your visit and create an itinerary. Camera access requires HTTPS or localhost. Google AI configuration is server-only; Expo Go camera configuration is unchanged.
 
 Run from any directory using the full project path:
 
@@ -64,20 +66,23 @@ This runs the same React Native screens using React Native Web. On desktop windo
 ## Features
 
 - **Home:** Selected museum's demo map, room selection, nearby cards, artwork/artist search and a full collection view; the Met schematic also has demo floor selection.
-- **Map:** the interactive demo map with museum and location information.
+- **Plan:** a dedicated chat with quick prompts, a fixed message composer and a summary of confirmed preferences. Gemini interprets time, interests, starting point, walking/access needs and must-see requests; **Generate route** opens a separate itinerary. Returning or switching tabs preserves the conversation; switching museums or choosing **New conversation** starts fresh. Enter sends, Shift+Enter adds a line. Failed messages can be retried or discarded, and leaving the tab cancels pending work.
+- **Scan:** opens directly into a camera view, with a shutter and photo-library shortcut. Capture/upload starts recognition; a compact result card opens artwork details or an optional AI interpretation. The separate Map tab has been removed; use the map on Home.
 - **Saved:** persistent bookmarks and optional completed-visit reflections.
 - **Profile:** preferences, larger text, history consent, feedback and the separate Northbank sample tour.
 - **Sample tour:** the existing fictional Northbank route planner and catalogue guide remain available. Active tour progress survives a restart.
-- **Photo lookup:** web camera preview/capture or upload, followed by Vertex similarity matching and Gemini interpretation. Native photo lookup retains its existing manual flow. Permission denial allows upload or browsing.
-- **Met route planning:** interests, time, start, walking/accessibility and must-see choices; Gemini recommendations plus deterministic Dijkstra paths, demo-map overlay and ordered stops. Local recommendations are used when Gemini is unavailable.
+- **Photo lookup:** camera permission is requested on entering web Scan. Capture/upload starts Vertex similarity matching and Gemini interpretation; opening the camera alone sends no photo. Permission denial still allows uploading. Leaving Scan stops the camera and cancels pending recognition. Native photo lookup retains its existing manual flow.
+- **Met and GOMA route planning:** Gemini recommendations plus deterministic Dijkstra paths, demo-map overlay and ordered stops. Route generation can use local recommendations if Gemini is unavailable; conversational preference updates require the AI service and show an explicit retryable error on failure.
 - **Listen:** device text-to-speech. On iPhone, silent mode can prevent audio playback; turn it off to listen.
 - **Feedback:** local drafts and the native share sheet. Nothing is automatically sent to a museum.
 
-The eight Met paintings are real works; their introductory text is prototype copy. Northbank Gallery and its collection remain fictional. Device location and configurable Google AI are connected in the web flow. Live indoor positioning, multi-user accounts and museum synchronisation remain unavailable. Uploaded recognition photos are sent to the server and Google only after pressing Identify artwork; Unframe does not persist them.
+The eight Met paintings and four QAGOMA Collection works are real works; their introductory text is prototype copy. Northbank Gallery and its collection remain fictional. Device location and configurable Google AI are connected in the web flow. Live indoor positioning, multi-user accounts and museum synchronisation remain unavailable. Capturing or uploading a photo in web Scan sends it to the server and Google for recognition; Unframe does not persist it.
 
 ## Device data
 
 Data is stored under `unframe.mobile.v1` using AsyncStorage on the device. The prototype stores bookmarks, preferences, active tours, completed visits and feedback drafts. Selected photos and location coordinates are not stored. The data is not encrypted; do not use this prototype to store sensitive information.
+
+Planning conversations stay in memory for the current museum session and are cleared on reload, museum change or New conversation. Sending a message transmits it, the latest eight messages and the current visit preferences through the backend to Google. Unframe does not write planning conversations to disk.
 
 The existing website remains a separate curator workspace. Its JSON database is not silently copied to the phone. The mobile and web clients share the bundled collection and core route/guide algorithms under `../shared/`, but changes made in the web editor do not sync to a running mobile installation.
 

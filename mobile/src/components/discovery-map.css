@@ -1,0 +1,19 @@
+.discovery-map-wrap { position:relative; width:100%; background:#e4e9e4; }
+.discovery-map { width:100%; height:100%; }
+.discovery-map .ol-zoom { top:108px; left:10px; border-radius:12px; padding:5px; }
+.discovery-map .ol-zoom button { width:28px; height:28px; color:#284850; background:white; }
+.discovery-map .ol-attribution { font-size:10px; max-width:100%; background:#fffffff2; }
+.museum-pin { position:relative; display:flex; flex-direction:column; align-items:center; border:0; background:transparent; cursor:pointer; padding:4px; color:#233f3a; font-family:system-ui,sans-serif; }
+.museum-pin-icon { display:grid; place-items:center; width:34px; height:38px; border-radius:22px 22px 20px 3px; transform:rotate(-45deg); background:#274b43; color:white; border:2px solid white; box-shadow:0 3px 12px #12372f40; font-size:0; }
+.museum-pin-icon svg { transform:rotate(45deg); }
+.museum-pin-label { position:absolute; top:47px; white-space:nowrap; font-size:10px; font-weight:600; background:#ffffffed; padding:2px 5px; border-radius:5px; pointer-events:none; }
+.museum-pin[data-museum=qag] .museum-pin-label { top:10px; right:45px; }
+.museum-pin[data-museum=kurilpa] .museum-pin-label { top:10px; left:45px; max-width:95px; white-space:normal; text-align:left; }
+.museum-pin[data-shift=left]::after, .museum-pin[data-shift=right]::after { content:''; position:absolute; bottom:0; width:22px; height:1px; background:#54736b; pointer-events:none; }
+.museum-pin[data-shift=left]::after { left:50%; }
+.museum-pin[data-shift=right]::after { right:50%; }
+.museum-pin[aria-pressed=true] .museum-pin-icon { background:#2364c2; box-shadow:0 0 0 7px #408bdf26,0 3px 12px #24508b55; }
+.museum-pin:focus-visible { outline:3px solid #286ac8; border-radius:6px; }
+.museum-gps { width:15px; height:15px; border:3px solid white; border-radius:50%; background:#3385fc; box-shadow:0 0 0 15px #3287fb26; }
+.map-error { position:absolute; bottom:24px; left:8px; right:8px; padding:6px 9px; background:#fffff7ed; border-radius:8px; font:10px/16px system-ui,sans-serif; color:#32433e; }
+.map-error button { color:#185691; background:none; border:0; text-decoration:underline; cursor:pointer; }

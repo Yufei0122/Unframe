@@ -4,10 +4,12 @@ import { Platform } from 'react-native';
 import { matchMuseum, nearestMuseum, museums, type MuseumId } from './museum';
 
 type LocationState = { status: 'loading' | 'nearby' | 'outside' | 'denied' | 'unavailable'; distance?: number; accuracy?: number | null };
-const Context = createContext<{ location: LocationState; locate: () => Promise<void>; museumId: MuseumId; museum: typeof museums[MuseumId]; selectMuseum: (id: MuseumId) => void } | null>(null);
+export type DeviceCoordinates = { latitude: number; longitude: number; accuracy: number | null };
+const Context = createContext<{ location: LocationState; coordinates: DeviceCoordinates | null; locate: () => Promise<void>; museumId: MuseumId; museum: typeof museums[MuseumId]; selectMuseum: (id: MuseumId) => void } | null>(null);
 
 export function LocationProvider({ children }: { children: React.ReactNode }) {
   const [location, setLocation] = useState<LocationState>({ status: 'loading' });
+  const [coordinates, setCoordinates] = useState<DeviceCoordinates | null>(null);
   const [museumId, setMuseumId] = useState<MuseumId>('met');
   const selectedId = useRef<MuseumId>('met');
   const manualSelection = useRef(false);
@@ -46,16 +48,18 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
       ]);
       if (!active.current || token !== request.current) return;
       lastCoords.current = result;
+      setCoordinates({ latitude: result.latitude, longitude: result.longitude, accuracy: result.accuracy });
       const nearbyId = nearestMuseum(result);
       if (!manualSelection.current && nearbyId) { selectedId.current = nearbyId; setMuseumId(nearbyId); }
       const match = matchMuseum(result, selectedId.current);
       update({ status: match.nearby ? 'nearby' : 'outside', distance: match.distance, accuracy: result.accuracy });
     } catch (error) {
+      if (active.current && token === request.current) { lastCoords.current = null; setCoordinates(null); }
       update({ status: error instanceof Error && error.message === 'denied' ? 'denied' : 'unavailable' });
     } finally { if (timer) clearTimeout(timer); }
   }, []);
   useEffect(() => { active.current = true; void locate(); return () => { active.current = false; request.current++; }; }, [locate]);
-  return <Context.Provider value={{ location, locate, museumId, museum: museums[museumId], selectMuseum }}>{children}</Context.Provider>;
+  return <Context.Provider value={{ location, coordinates, locate, museumId, museum: museums[museumId], selectMuseum }}>{children}</Context.Provider>;
 }
 
 export function useMuseumLocation() {

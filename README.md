@@ -4,7 +4,7 @@ A responsive museum companion with a local Node.js backend, persistent visitor d
 
 ## Google AI and browser camera
 
-The mobile web **Scan** screen supports browser camera permission, capture/upload, Vertex image embedding search and Gemini explanations. Choose **The Met** (eight artworks) or **Brisbane GOMA** (four QAGOMA Collection works) from the museum dropdown. **Plan a Met visit / Plan a GOMA visit** builds a personalised itinerary with that museum's demo map and opens a separate results page. See **[GOMA demo and official sources](GOMA-DEMO.md)** and **[AI setup, API examples and implementation report](AI-INTEGRATION.md)** for configuration, authentication, indexing, tests and limitations.
+The mobile web **Scan** screen supports browser camera permission, capture/upload, Vertex image embedding search and Gemini explanations. Choose **The Met** (eight artworks) or **Brisbane GOMA** (four QAGOMA Collection works) from the discovery entrance. The bottom **Plan** tab offers a Gemini conversation about your time, interests, must-see artworks and access needs, then opens a personalised itinerary on a separate results page. See **[GOMA demo and official sources](GOMA-DEMO.md)** and **[AI setup, API examples and implementation report](AI-INTEGRATION.md)** for configuration, authentication, indexing, tests and limitations.
 
 From the project root, run `npm.cmd install`, then `npm.cmd start` for the API. In a second terminal run `npm.cmd run mobile:web` and open http://localhost:8081. Google calls require `.env`, ADC and a generated collection index; browsing and local route fallback work without credentials.
 

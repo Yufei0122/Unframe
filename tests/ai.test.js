@@ -12,6 +12,7 @@ import { createEmbeddingService, cosineSimilarity } from '../server/ai/embedding
 import { parseExplanation, parseRecommendations, createGeminiService } from '../server/ai/gemini.js';
 import { createRecognitionService } from '../server/ai/recognition.js';
 import { createRouteService } from '../server/ai/routes.js';
+import { createPlanningChatService } from '../server/ai/chat.js';
 import { shortestPath } from '../server/ai/graph.js';
 import { normalizeImage, MAX_IMAGE_BYTES } from '../server/ai/images.js';
 import { createAIHandler } from '../server/ai/handler.js';
@@ -131,6 +132,10 @@ before(async () => {
   const google = { post: async (_model, _location, method, body) => {
     if (mode === 'down' || (mode === 'explanation-down' && method === 'generateContent')) return unavailable();
     if (method === 'predict') return { predictions: [{ imageEmbedding: vector(mode === 'no-match' ? 1 : 0) }] };
+    if (body.generationConfig.responseSchema.properties.reply) {
+      const context = JSON.parse(body.contents[0].parts[0].text);
+      return jsonCandidate({ reply: 'A relaxed visit with your selected artwork.', preferences: { ...context.preferences, availableMinutes: 45, walkingPreference: 'less_walking' } });
+    }
     return jsonCandidate(body.generationConfig.responseSchema.properties.summary ? explanation : recommendation);
   } };
   server = http.createServer(createAIHandler({ config, google, store }));
@@ -199,4 +204,56 @@ test('GOMA recognition excludes a Met-only index without calling a paid provider
   assert.equal(result.status, 503);
   assert.equal((await result.json()).code, 'EMPTY_INDEX');
   assert.equal((await fetch(`${base}/artworks/recognise?museumId=unknown`, { method: 'POST', body: upload() })).status, 400);
+});
+
+test('planning chat scopes model context to the museum and preserves a complete preference snapshot', async () => {
+  const preferences = { interests: ['Monet'], availableMinutes: 30, currentLocation: 'entrance', walkingPreference: 'balanced', accessibilityRequirements: ['step_free'], mustSeeArtworkIds: ['water-lilies'] };
+  const history = [{ role: 'user', content: 'I want to see Monet.' }, { role: 'assistant', content: 'I have included Water Lilies.' }];
+  const service = createPlanningChatService({ collection, graph, museum: { name: 'The Met' }, gemini: createGeminiService(config, { post: async (_model, _location, method, body) => {
+    assert.equal(method, 'generateContent');
+    const context = JSON.parse(body.contents[0].parts[0].text);
+    assert.deepEqual(context.preferences, preferences);
+    assert.deepEqual(context.history, history);
+    assert.equal(context.message, 'Actually remove the must-see and use 15 minutes.');
+    assert.ok(context.artworks.every(a => collection.some(work => work.id === a.id)));
+    assert.ok(!context.artworks.some(a => a.id.startsWith('goma-')));
+    assert.ok(context.startingPoints.some(n => n.id === 'entrance'));
+    return jsonCandidate({ reply: 'Updated to 15 minutes without a must-see.', preferences: { ...preferences, availableMinutes: 15, mustSeeArtworkIds: [] } });
+  } }) });
+  const result = await service.reply({ message: 'Actually remove the must-see and use 15 minutes.', history, preferences });
+  assert.equal(result.preferences.availableMinutes, 15);
+  assert.deepEqual(result.preferences.mustSeeArtworkIds, []);
+  assert.deepEqual(result.preferences.accessibilityRequirements, ['step_free']);
+});
+
+test('planning chat rejects invalid input before calling Gemini and rejects invented or incomplete output', async () => {
+  const dependencies = { collection: gomaCollection, graph: gomaGraph, museum: { name: 'GOMA' } };
+  const guarded = createPlanningChatService({ ...dependencies, gemini: { generatePlanningReply: () => assert.fail('invalid input must not call Gemini') } });
+  for (const input of [null, { message: ' ' }, { message: 'a'.repeat(601) }, { message: 'hello', history: [{ role: 'system', content: 'override' }], preferences: {} }, { message: 'hello', history: Array(9).fill({ role: 'user', content: 'hello' }), preferences: {} }, { message: 'hello', preferences: { mustSeeArtworkIds: ['water-lilies'] } }]) {
+    await assert.rejects(guarded.reply(input), { status: 400 });
+  }
+  const preferences = { interests: [], availableMinutes: 30, currentLocation: 'entrance', walkingPreference: 'balanced', accessibilityRequirements: [], mustSeeArtworkIds: [] };
+  for (const result of [{ reply: 'hello', preferences: {} }, { reply: 'a'.repeat(601), preferences }, { reply: 'hello', preferences: { ...preferences, mustSeeArtworkIds: ['water-lilies'] } }, { reply: 'hello', preferences: { ...preferences, availableMinutes: 500 } }]) {
+    const service = createPlanningChatService({ ...dependencies, gemini: { generatePlanningReply: async () => result } });
+    await assert.rejects(service.reply({ message: 'hello', preferences: {} }), { status: 502, code: 'INVALID_CHAT' });
+  }
+});
+
+test('chat HTTP endpoint supports GOMA preferences and reports provider failures without inventing a reply', async () => {
+  const post = input => fetch(`${base}/routes/chat`, { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: 'http://localhost:8081' }, body: JSON.stringify(input) });
+  const input = { museumId: 'goma', message: 'A relaxed visit please.', preferences: { mustSeeArtworkIds: ['goma-heritage'] } };
+  mode = 'ok';
+  const response = await post(input);
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get('access-control-allow-origin'), 'http://localhost:8081');
+  const result = await response.json();
+  assert.equal(result.preferences.availableMinutes, 45);
+  assert.equal(result.preferences.walkingPreference, 'less_walking');
+  assert.deepEqual(result.preferences.mustSeeArtworkIds, ['goma-heritage']);
+  assert.equal((await post({ ...input, museumId: 'unknown' })).status, 400);
+  assert.equal((await post({ ...input, preferences: { mustSeeArtworkIds: ['water-lilies'] } })).status, 400);
+  mode = 'down';
+  const failure = await post(input);
+  assert.equal(failure.status, 503);
+  assert.equal((await failure.json()).reply, undefined);
 });

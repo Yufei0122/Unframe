@@ -10,8 +10,8 @@ import { LocationProvider } from './src/location';
 import type { RootStackParams, TabParams } from './src/model';
 import { Icon, c, type IconName } from './src/ui';
 import { WelcomeScreen } from './src/screens/Welcome';
-import { MuseumScreen, MuseumMapScreen } from './src/screens/Museum';
-import { MuseumInfoScreen } from './src/screens/MuseumInfo';
+import { MuseumSelectScreen } from './src/screens/MuseumSelect';
+import { MuseumScreen } from './src/screens/Museum';
 import { ExploreScreen } from './src/screens/Explore';
 import { GuideScreen } from './src/screens/Guide';
 import { SavedScreen } from './src/screens/Saved';
@@ -25,11 +25,12 @@ import { AIItineraryScreen } from './src/screens/AIItinerary';
 const Stack = createNativeStackNavigator<RootStackParams>();
 const Tabs = createBottomTabNavigator<TabParams>();
 const tabIcons: Record<keyof TabParams, [IconName, IconName]> = {
-  Discover: ['home-outline', 'home'], Explore: ['map-outline', 'map'],
+  Discover: ['home-outline', 'home'],
+  Plan: ['chatbubble-ellipses-outline', 'chatbubble-ellipses'],
   Scan: ['scan-outline', 'scan'], Guide: ['sparkles-outline', 'sparkles'],
   Saved: ['bookmark-outline', 'bookmark'], You: ['person-outline', 'person'],
 };
-function ScanScreen() { return <SafeAreaView edges={['top']} style={{ flex: 1, backgroundColor: c.bg }}><LookupScreen/></SafeAreaView>; }
+function ScanScreen() { return Platform.OS === 'web' ? <LookupScreen/> : <SafeAreaView edges={['top']} style={{ flex: 1, backgroundColor: c.bg }}><LookupScreen/></SafeAreaView>; }
 function MainTabs() {
   const { state } = useStore();
   return <Tabs.Navigator screenOptions={({ route }) => ({
@@ -40,7 +41,7 @@ function MainTabs() {
     tabBarIcon: ({ color, focused }) => <Icon name={tabIcons[route.name][focused ? 1 : 0]} size={21} color={color}/>,
   })}>
     <Tabs.Screen name="Discover" component={MuseumScreen} options={{ title: 'Home' }}/>
-    <Tabs.Screen name="Explore" component={MuseumMapScreen} options={{ title: 'Map' }}/>
+    <Tabs.Screen name="Plan" component={AIPlannerScreen}/>
     <Tabs.Screen name="Scan" component={ScanScreen}/>
     <Tabs.Screen name="Saved" component={SavedScreen} options={{ title: 'Saved', tabBarBadge: state.saved.length || undefined, tabBarBadgeStyle: { backgroundColor: c.sage, color: c.green, fontSize: 9 } }}/>
     <Tabs.Screen name="You" component={PreferencesScreen} options={{ title: 'Profile' }}/>
@@ -48,18 +49,17 @@ function MainTabs() {
   </Tabs.Navigator>;
 }
 function AppNavigation() {
-  return <NavigationContainer theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, primary: c.green, background: c.bg, card: c.bg, text: c.ink, border: c.border } }}>
-    <Stack.Navigator initialRouteName="Welcome" screenOptions={{ headerTintColor: c.green, headerShadowVisible: false, contentStyle: { backgroundColor: c.bg }, headerTitleStyle: { fontSize: 15 }, headerBackButtonDisplayMode: 'minimal' }}>
+  return <NavigationContainer documentTitle={{ formatter: () => 'Unframe' }} theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, primary: c.green, background: c.bg, card: c.bg, text: c.ink, border: c.border } }}>
+    <Stack.Navigator initialRouteName="MuseumSelect" screenOptions={{ headerTintColor: c.green, headerShadowVisible: false, contentStyle: { backgroundColor: c.bg }, headerTitleStyle: { fontSize: 15 }, headerBackButtonDisplayMode: 'minimal' }}>
+      <Stack.Screen name="MuseumSelect" component={MuseumSelectScreen} options={{ headerShown: false }}/>
       <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }}/>
       <Stack.Screen name="Home" component={MainTabs} options={{ headerShown: false }}/>
       <Stack.Screen name="Artwork" component={ArtworkScreen} options={{ headerShown: false }}/>
       <Stack.Screen name="Tour" component={ExploreScreen} options={{ title: 'Sample gallery tour' }}/>
       <Stack.Screen name="AIItinerary" component={AIItineraryScreen} options={{ title: 'Visit route' }}/>
       <Stack.Group screenOptions={({ navigation }) => ({ presentation: 'modal', headerRight: () => <Pressable accessibilityRole="button" accessibilityLabel="Close" onPress={() => navigation.goBack()} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }}><Icon name="close-circle-outline"/></Pressable> })}>
-        <Stack.Screen name="MuseumInfo" component={MuseumInfoScreen} options={{ title: 'Museum & location' }}/>
         <Stack.Screen name="Planner" component={PlannerScreen} options={{ title: 'Plan your visit' }}/>
-        <Stack.Screen name="AIPlanner" component={AIPlannerScreen} options={{ title: 'Plan your visit' }}/>
-        <Stack.Screen name="Lookup" component={LookupScreen} options={{ title: 'Find an artwork' }}/>
+        <Stack.Screen name="Lookup" component={LookupScreen} options={{ title: 'Find an artwork', headerShown: Platform.OS !== 'web' }}/>
         <Stack.Screen name="Feedback" component={FeedbackScreen} options={{ title: 'Your feedback' }}/>
         <Stack.Screen name="About" component={AboutScreen} options={{ title: 'About Unframe' }}/>
       </Stack.Group>
