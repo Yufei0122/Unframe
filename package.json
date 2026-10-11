@@ -8,7 +8,13 @@
     "dev": "node --watch server/index.js",
     "start": "node server/index.js",
     "ai:index": "node scripts/index-artworks.mjs",
-    "test:ai": "node --test tests/ai.test.js",
+    "ai:setup": "node scripts/ai-setup.mjs",
+    "ai:clip": "node scripts/ai-clip.mjs",
+    "ai:up": "node scripts/ai-up.mjs",
+    "ai:doctor": "node scripts/check-ai.mjs",
+    "ai:validate": "node scripts/validate-local-ai.mjs",
+    "ai:check": "node scripts/check-ai.mjs",
+    "test:ai": "node --test tests/ai.test.js tests/ai-runtime.test.js",
     "mobile": "npm --prefix mobile start",
     "mobile:web": "npm --prefix mobile run web --",
     "mobile:check": "npm --prefix mobile run check",
@@ -17,7 +23,7 @@
     "mobile:export:web": "npm --prefix mobile run export:web",
     "test:mobile:e2e": "playwright test --config playwright.mobile.config.js",
     "test:mobile:web-dev": "playwright test --config playwright.mobile-dev.config.js",
-    "test": "node --test tests/domain.test.js tests/api.test.js tests/ai.test.js",
+    "test": "node --test tests/domain.test.js tests/api.test.js tests/ai.test.js tests/ai-runtime.test.js",
     "test:e2e": "playwright test",
     "check": "node --check server/index.js && node --check server/domain.js && node --check public/app.js"
   },
@@ -28,7 +34,6 @@
     "@playwright/test": "^1.63.0"
   },
   "dependencies": {
-    "google-auth-library": "^11.1.0",
     "sharp": "^0.35.5"
   }
 }

@@ -6,11 +6,30 @@ try { loadEnvFile(path.join(root, '.env')); } catch (error) { if (error.code !==
 export function readAIConfig(env = process.env) {
   const threshold = Number(env.ARTWORK_MATCH_THRESHOLD || '0.80');
   if (!Number.isFinite(threshold) || threshold < 0 || threshold > 1) throw new Error('ARTWORK_MATCH_THRESHOLD must be between 0 and 1');
+  const integer = (key, fallback, min, max) => {
+    const value = Number(env[key] ?? fallback);
+    if (!Number.isInteger(value) || value < min || value > max) throw new Error(`${key} must be an integer from ${min} to ${max}`);
+    return value;
+  };
+  const localUrl = (key, fallback) => {
+    let url;
+    try { url = new URL(env[key] || fallback); } catch { throw new Error(`${key} must be a local HTTP URL`); }
+    if (!['http:', 'https:'].includes(url.protocol) || !['127.0.0.1', 'localhost', '[::1]'].includes(url.hostname) || url.username || url.password || url.pathname !== '/' || url.search || url.hash) throw new Error(`${key} must point to a loopback model service without credentials or a path`);
+    return url.origin;
+  };
+  const ollamaModel = env.OLLAMA_MODEL || 'qwen3:4b';
+  if (!/^[a-zA-Z0-9_.:/-]+$/.test(ollamaModel) || /cloud/i.test(ollamaModel)) throw new Error('OLLAMA_MODEL must be a locally installed model');
   return {
-    project: env.GOOGLE_CLOUD_PROJECT || '', location: env.GOOGLE_CLOUD_LOCATION || 'us-central1',
-    geminiLocation: env.GEMINI_LOCATION || 'global', geminiModel: env.GEMINI_MODEL || 'gemini-3.8-flash',
-    embeddingModel: env.VERTEX_MULTIMODAL_EMBEDDING_MODEL || 'multimodalembedding@001',
-    dimension: 1408, threshold, timeoutMs: 25000,
+    clipUrl: localUrl('OPENCLIP_URL', 'http://127.0.0.1:8001'),
+    ollamaUrl: localUrl('OLLAMA_URL', 'http://127.0.0.1:11434'), ollamaModel,
+    embeddingModel: 'ViT-B-32', embeddingPretrained: 'laion2b_s34b_b79k',
+    dimension: 512, threshold,
+    timeoutMs: integer('OLLAMA_TIMEOUT_MS', 300000, 1000, 1800000),
+    clipTimeoutMs: integer('OPENCLIP_TIMEOUT_MS', 120000, 1000, 600000),
+    ollamaNumCtx: integer('OLLAMA_NUM_CTX', 4096, 2048, 32768),
+    ollamaNumGpu: integer('OLLAMA_NUM_GPU', 0, -1, 999),
+    ollamaNumPredict: integer('OLLAMA_NUM_PREDICT', 768, 128, 4096),
+    ollamaKeepAlive: env.OLLAMA_KEEP_ALIVE || '0',
     embeddingsFile: path.resolve(env.ARTWORK_EMBEDDINGS_FILE || path.join(env.UNFRAME_DATA_DIR || path.join(root, 'data'), 'artwork-embeddings.json')),
     allowedOrigins: (env.AI_ALLOWED_ORIGINS || 'http://localhost:8081,http://127.0.0.1:8081,http://localhost:8082,http://127.0.0.1:8082,http://127.0.0.1:8091').split(',').map(s => s.trim()).filter(Boolean),
   };

@@ -1,10 +1,15 @@
-import type { MobileState, Preferences, Visit, Feedback } from './model';
+import { artworks, type MobileState, type Preferences, type Visit, type Feedback, type SavedRoute } from './model';
 import type { RoutePlan } from '../../shared/domain.js';
+import { isAvatarDataUri } from './avatar';
+import { validDate, validSavedRoute } from './profileData';
 
 export type Action =
   | { type: 'hydrate'; state: MobileState }
-  | { type: 'save'; id: string }
+  | { type: 'save'; id: string; date?: string }
+  | { type: 'saveRoute'; route: SavedRoute }
+  | { type: 'removeRoute'; id: string }
   | { type: 'preferences'; preferences: Preferences }
+  | { type: 'avatar'; uri: string }
   | { type: 'plan'; route: RoutePlan }
   | { type: 'stop'; id: string; status: 'completed' | 'skipped' }
   | { type: 'end' }
@@ -15,8 +20,16 @@ export type Action =
 export function reducer(state: MobileState, action: Action): MobileState {
   switch (action.type) {
     case 'hydrate': return action.state;
-    case 'save': return { ...state, saved: state.saved.includes(action.id) ? state.saved.filter(id => id !== action.id) : [...state.saved, action.id] };
+    case 'save': {
+      const savedAt = { ...state.savedAt };
+      if (state.saved.includes(action.id)) { delete savedAt[action.id]; return { ...state, savedAt, saved: state.saved.filter(id => id !== action.id) }; }
+      savedAt[action.id] = validDate(action.date) ? action.date : new Date().toISOString();
+      return { ...state, savedAt, saved: [...state.saved, action.id] };
+    }
+    case 'saveRoute': return validSavedRoute(action.route, artworks.map(a => a.id)) ? { ...state, savedRoutes: [action.route, ...(state.savedRoutes || []).filter(r => r.id !== action.route.id)] } : state;
+    case 'removeRoute': return { ...state, savedRoutes: (state.savedRoutes || []).filter(r => r.id !== action.id) };
     case 'preferences': return { ...state, preferences: action.preferences };
+    case 'avatar': return isAvatarDataUri(action.uri) ? { ...state, avatarUri: action.uri } : state;
     case 'plan': return { ...state, tour: { ...action.route, completed: [], skipped: [] } };
     case 'stop': {
       if (!state.tour || !state.tour.artworkIds.includes(action.id)) return state;
@@ -46,5 +59,7 @@ export function restoreState(raw: string, defaults: MobileState, ids: string[]):
   if (!Array.isArray(s.saved) || !Array.isArray(s.visits) || !Array.isArray(s.feedback)) throw new Error('Saved collection could not be read.');
   const validIds = (values: unknown): values is string[] => Array.isArray(values) && values.every(id => typeof id === 'string' && ids.includes(id));
   const validTour = s.tour && validIds(s.tour.artworkIds) && validIds(s.tour.completed) && validIds(s.tour.skipped) && typeof s.tour.stepFree === 'boolean' && Number.isFinite(s.tour.minutes) && Number.isFinite(s.tour.duration) && Array.isArray(s.tour.interests);
-  return { ...defaults, preferences: p, saved: [...new Set(s.saved.filter(id => ids.includes(id)))], visits: s.visits.filter(v => v && typeof v.id === 'string' && typeof v.summary === 'string' && Number.isFinite(Date.parse(v.date)) && validIds(v.artworkIds)), feedback: s.feedback.filter(f => f && typeof f.id === 'string' && typeof f.message === 'string' && typeof f.type === 'string' && Number.isFinite(Date.parse(f.date))), tour: validTour ? s.tour : null };
+  const savedAt = s.savedAt && typeof s.savedAt === 'object' && !Array.isArray(s.savedAt) ? Object.fromEntries(Object.entries(s.savedAt).filter(([id, date]) => s.saved.includes(id) && ids.includes(id) && validDate(date))) : {};
+  const savedRoutes = Array.isArray(s.savedRoutes) ? s.savedRoutes.filter(r => validSavedRoute(r, ids)).filter((r, i, all) => all.findIndex(other => other.id === r.id) === i) : [];
+  return { ...defaults, preferences: p, savedAt, savedRoutes, avatarUri: isAvatarDataUri(s.avatarUri) ? s.avatarUri : undefined, saved: [...new Set(s.saved.filter(id => ids.includes(id)))], visits: s.visits.filter(v => v && typeof v.id === 'string' && typeof v.summary === 'string' && Number.isFinite(Date.parse(v.date)) && validIds(v.artworkIds)), feedback: s.feedback.filter(f => f && typeof f.id === 'string' && typeof f.message === 'string' && typeof f.type === 'string' && Number.isFinite(Date.parse(f.date))), tour: validTour ? s.tour : null };
 }

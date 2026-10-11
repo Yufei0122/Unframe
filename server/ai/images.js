@@ -10,7 +10,7 @@ export async function normalizeImage(bytes, mime) {
   };
   if (!signatures[mime]) throw new AIError(415, 'INVALID_IMAGE_TYPE', 'Upload a valid JPEG, PNG or WebP image.');
   try {
-    // Fully decode, limit decompression, strip EXIF/GPS; Vertex accepts JPEG/PNG.
+    // Fully decode, limit decompression and strip EXIF/GPS before local OpenCLIP inference.
     return await sharp(bytes, { limitInputPixels: 25_000_000, failOn: 'warning' }).rotate().resize({ width: 1536, height: 1536, fit: 'inside', withoutEnlargement: true }).flatten({ background: '#ffffff' }).jpeg({ quality: 88 }).toBuffer();
   } catch { throw new AIError(400, 'INVALID_IMAGE', 'This image is damaged or too large to decode. Please choose another.'); }
 }

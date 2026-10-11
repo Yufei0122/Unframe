@@ -3,6 +3,37 @@ import assert from 'node:assert/strict';
 import { initialState, artworks } from '../src/model.ts';
 import { makeReflection, reducer, restoreState } from '../src/state.ts';
 import { planRoute } from '../../shared/domain.js';
+import { avatarCrop, MAX_AVATAR_LENGTH } from '../src/avatar.ts';
+
+test('avatar persists independently of preferences and legacy collections still restore', () => {
+  const ids = artworks.map(a => a.id), uri = 'data:image/jpeg;base64,/9j/2Q==';
+  const legacy = restoreState(JSON.stringify(initialState), initialState, ids);
+  assert.equal(legacy.avatarUri, undefined);
+  let state = reducer(legacy, { type: 'avatar', uri });
+  state = reducer(state, { type: 'preferences', preferences: { ...state.preferences, name: 'Maya' } });
+  const restored = restoreState(JSON.stringify(state), initialState, ids);
+  assert.equal(restored.avatarUri, uri);
+  assert.equal(restored.preferences.name, 'Maya');
+  assert.deepEqual(restored.saved, legacy.saved);
+  for (const invalid of ['https://example.com/avatar.jpg', 'blob:expired', 'data:image/svg+xml,<svg/>', `data:image/jpeg;base64,${'A'.repeat(MAX_AVATAR_LENGTH)}`]) {
+    assert.equal(reducer(state, { type: 'avatar', uri: invalid }), state);
+    const recovered = restoreState(JSON.stringify({ ...state, avatarUri: invalid }), initialState, ids);
+    assert.equal(recovered.avatarUri, undefined);
+    assert.equal(recovered.preferences.name, 'Maya');
+  }
+});
+
+test('avatar crops stay square and inside portrait and landscape images at all edges', () => {
+  for (const [width, height] of [[1600, 900], [600, 1600], [512, 512]]) {
+    for (const zoom of [1, 1.25, 3]) for (const x of [-1, 0, .5, 1, 2]) for (const y of [-1, .5, 2]) {
+      const crop = avatarCrop(width, height, zoom, x, y);
+      assert.equal(crop.width, crop.height);
+      assert.ok(crop.originX >= 0 && crop.originY >= 0);
+      assert.ok(crop.originX + crop.width <= width && crop.originY + crop.height <= height);
+    }
+  }
+  assert.deepEqual(avatarCrop(1600, 900, 1, .5, .5), { originX: 350, originY: 0, width: 900, height: 900 });
+});
 
 test('bookmarks and active tour progress survive a persisted round trip', () => {
   let state = reducer(initialState, { type: 'save', id: 'riverlight' });

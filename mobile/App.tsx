@@ -3,12 +3,12 @@ import { Platform, Pressable, StyleSheet, View, useWindowDimensions } from 'reac
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { StoreProvider, useStore } from './src/store';
 import { LocationProvider } from './src/location';
-import type { RootStackParams, TabParams } from './src/model';
-import { Icon, c, type IconName } from './src/ui';
+import type { RootStackParams, TabParams, ProfileStackParams } from './src/model';
+import { Icon, T, c, type IconName } from './src/ui';
 import { WelcomeScreen } from './src/screens/Welcome';
 import { MuseumSelectScreen } from './src/screens/MuseumSelect';
 import { MuseumScreen } from './src/screens/Museum';
@@ -16,6 +16,10 @@ import { ExploreScreen } from './src/screens/Explore';
 import { GuideScreen } from './src/screens/Guide';
 import { SavedScreen } from './src/screens/Saved';
 import { PreferencesScreen } from './src/screens/Preferences';
+import { AppSettingsScreen } from './src/screens/AppSettings';
+import { SavedArtworksScreen } from './src/screens/SavedArtworks';
+import { SavedRoutesScreen, SavedRouteDetailsScreen } from './src/screens/SavedRoutes';
+import { RecentActivityScreen } from './src/screens/RecentActivity';
 import { ArtworkScreen } from './src/screens/Details';
 import { AboutScreen, FeedbackScreen, PlannerScreen } from './src/screens/Modals';
 import { LookupScreen } from './src/screens/Lookup';
@@ -24,13 +28,23 @@ import { AIItineraryScreen } from './src/screens/AIItinerary';
 
 const Stack = createNativeStackNavigator<RootStackParams>();
 const Tabs = createBottomTabNavigator<TabParams>();
+const ProfileStack = createNativeStackNavigator<ProfileStackParams>();
+function ProfileNavigation() {
+  return <ProfileStack.Navigator screenOptions={{ headerShown: false }}>
+    <ProfileStack.Screen name="ProfileHome" component={PreferencesScreen}/>
+    <ProfileStack.Screen name="SavedArtworks" component={SavedArtworksScreen}/>
+    <ProfileStack.Screen name="SavedRoutes" component={SavedRoutesScreen}/>
+    <ProfileStack.Screen name="RecentActivity" component={RecentActivityScreen}/>
+    <ProfileStack.Screen name="SavedRouteDetails" component={SavedRouteDetailsScreen}/>
+  </ProfileStack.Navigator>;
+}
 const tabIcons: Record<keyof TabParams, [IconName, IconName]> = {
   Discover: ['home-outline', 'home'],
   Plan: ['chatbubble-ellipses-outline', 'chatbubble-ellipses'],
   Scan: ['scan-outline', 'scan'], Guide: ['sparkles-outline', 'sparkles'],
   Saved: ['bookmark-outline', 'bookmark'], You: ['person-outline', 'person'],
 };
-function ScanScreen() { return Platform.OS === 'web' ? <LookupScreen/> : <SafeAreaView edges={['top']} style={{ flex: 1, backgroundColor: c.bg }}><LookupScreen/></SafeAreaView>; }
+function ScanScreen() { return <LookupScreen/>; }
 function MainTabs() {
   const { state } = useStore();
   return <Tabs.Navigator screenOptions={({ route }) => ({
@@ -44,7 +58,7 @@ function MainTabs() {
     <Tabs.Screen name="Plan" component={AIPlannerScreen}/>
     <Tabs.Screen name="Scan" component={ScanScreen}/>
     <Tabs.Screen name="Saved" component={SavedScreen} options={{ title: 'Saved', tabBarBadge: state.saved.length || undefined, tabBarBadgeStyle: { backgroundColor: c.sage, color: c.green, fontSize: 9 } }}/>
-    <Tabs.Screen name="You" component={PreferencesScreen} options={{ title: 'Profile' }}/>
+    <Tabs.Screen name="You" component={ProfileNavigation} options={{ title: 'Profile', tabBarActiveTintColor: '#A97932', tabBarLabel: ({ focused, color }) => <View style={{ alignItems: 'center', gap: 3 }}><T style={{ color, fontSize: 10, lineHeight: 12 }}>Profile</T><View style={{ height: 2, width: 25, borderRadius: 2, backgroundColor: focused ? '#A97932' : 'transparent' }}/></View> }}/>
     <Tabs.Screen name="Guide" component={GuideScreen} options={{ tabBarItemStyle: { display: 'none' }, tabBarButton: () => null }}/>
   </Tabs.Navigator>;
 }
@@ -58,8 +72,9 @@ function AppNavigation() {
       <Stack.Screen name="Tour" component={ExploreScreen} options={{ title: 'Sample gallery tour' }}/>
       <Stack.Screen name="AIItinerary" component={AIItineraryScreen} options={{ title: 'Visit route' }}/>
       <Stack.Group screenOptions={({ navigation }) => ({ presentation: 'modal', headerRight: () => <Pressable accessibilityRole="button" accessibilityLabel="Close" onPress={() => navigation.goBack()} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }}><Icon name="close-circle-outline"/></Pressable> })}>
+        <Stack.Screen name="AppSettings" component={AppSettingsScreen} options={{ title: 'App Settings' }}/>
         <Stack.Screen name="Planner" component={PlannerScreen} options={{ title: 'Plan your visit' }}/>
-        <Stack.Screen name="Lookup" component={LookupScreen} options={{ title: 'Find an artwork', headerShown: Platform.OS !== 'web' }}/>
+        <Stack.Screen name="Lookup" component={LookupScreen} options={{ title: 'Find an artwork', headerShown: false }}/>
         <Stack.Screen name="Feedback" component={FeedbackScreen} options={{ title: 'Your feedback' }}/>
         <Stack.Screen name="About" component={AboutScreen} options={{ title: 'About Unframe' }}/>
       </Stack.Group>

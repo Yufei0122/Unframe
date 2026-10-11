@@ -1,17 +1,33 @@
-import { AIError, logFailure } from './config.js';
+import { AIError, logFailure, requireInput } from './config.js';
 import { cosineSimilarity } from './embeddings.js';
-export function createRecognitionService({ config, embeddings, store, gemini, collection }) {
-  return { async recognise(image, preferences = []) {
+export const MAX_RECOGNITION_CANDIDATES = 3;
+export function createRecognitionService({ config, embeddings, store, ollama, collection }) {
+  return { async recognise(image) {
     if (!collection.length) throw new AIError(503, 'EMPTY_COLLECTION', 'No artworks are available in this collection.');
     const records = (await store.load()).filter(r => collection.some(a => a.id === r.artworkId));
     if (!records.length) throw new AIError(503, 'EMPTY_INDEX', 'No indexed artworks are available. Run npm run ai:index.');
     const query = await embeddings.generate(image);
-    const best = records.map(r => ({ id: r.artworkId, similarity: cosineSimilarity(query, r.vector) })).sort((a, b) => b.similarity - a.similarity)[0];
-    if (best.similarity < config.threshold) return { matched: false, message: 'No artwork could be identified with sufficient confidence.' };
-    const artwork = collection.find(a => a.id === best.id);
-    const result = { matched: true, similarity: best.similarity, artwork, aiExplanation: null, interpretationLabel: 'AI interpretation based on collection notes; not museum-approved.' };
-    try { result.aiExplanation = await gemini.generateArtworkExplanation(artwork, preferences, collection); }
-    catch (error) { logFailure('explanation', error); result.warning = 'AI explanation is temporarily unavailable. Collection information is still available.'; }
+    const scores = new Map();
+    for (const record of records) {
+      const similarity = cosineSimilarity(query, record.vector);
+      scores.set(record.artworkId, Math.max(scores.get(record.artworkId) ?? -1, similarity));
+    }
+    // A similarity score is a retrieval signal, not a probability or a confirmed identity.
+    const candidates = [...scores].filter(([, score]) => score >= config.threshold)
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, MAX_RECOGNITION_CANDIDATES)
+      .map(([id, similarity]) => ({ artwork: collection.find(a => a.id === id), similarity }));
+    if (!candidates.length) return { matched: false, candidates: [], requiresConfirmation: true, message: 'No artwork passed the matching threshold.' };
+    // Legacy fields describe the leading suggestion only. No explanation is generated while scanning.
+    return { matched: true, candidates, requiresConfirmation: true, ...candidates[0], aiExplanation: null };
+  }, async confirm(input) {
+    requireInput(input && typeof input === 'object' && !Array.isArray(input), 'Choose an artwork from this museum.');
+    const artwork = collection.find(a => a.id === input.artworkId);
+    requireInput(Boolean(artwork), 'Choose a valid artwork from this museum.');
+    const preferences = input.visitorPreferences !== undefined ? input.visitorPreferences : (input.preferences !== undefined ? input.preferences : []);
+    requireInput(Array.isArray(preferences) && preferences.length <= 10 && preferences.every(s => typeof s === 'string' && s.length <= 80), 'Invalid visitor preferences.');
+    const result = { artwork, aiExplanation: null, interpretationLabel: 'AI interpretation based on collection notes; not museum-approved.' };
+    try { result.aiExplanation = await ollama.generateArtworkExplanation(artwork, preferences, collection); }
+    catch (error) { logFailure('explanation', error); result.errorCode = error instanceof AIError ? error.code : 'EXPLANATION_UNAVAILABLE'; result.warning = (error instanceof AIError ? error.message : 'The local AI explanation is unavailable.') + ' Collection information is still available.'; }
     return result;
   } };
 }

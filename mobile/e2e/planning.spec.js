@@ -13,7 +13,7 @@ test('chat fits a small screen, handles keyboard input and retries without losin
   await page.route('**/api/ai/routes/chat', route => {
     const input = route.request().postDataJSON();
     expect(input.history.filter(message => message.role === 'user')).toHaveLength(0);
-    return route.fulfill(++calls === 1 ? { status: 503, json: { error: 'Google AI is temporarily unavailable.' } } : { json: { reply: 'We will take a relaxed, step-free route.', preferences: { ...input.preferences, walkingPreference: 'less_walking', accessibilityRequirements: ['step_free'] } } });
+    return route.fulfill(++calls === 1 ? { status: 503, json: { error: 'Local Ollama Qwen is temporarily unavailable.' } } : { json: { reply: 'We will take a relaxed, step-free route.', preferences: { ...input.preferences, walkingPreference: 'less_walking', accessibilityRequirements: ['step_free'] } } });
   });
   await openPlan(page);
   await expect(page.getByRole('tab')).toHaveCount(5);
@@ -29,7 +29,7 @@ test('chat fits a small screen, handles keyboard input and retries without losin
   expect(calls).toBe(0);
   await composer.fill('A relaxed, step-free visit please.');
   await page.getByRole('button', { name: 'Send message', exact: true }).click();
-  await expect(page.getByRole('alert')).toContainText('Google AI is temporarily unavailable.');
+  await expect(page.getByRole('alert')).toContainText('Local Ollama Qwen is temporarily unavailable.');
   await expect(page.getByRole('button', { name: 'Generate route', exact: true })).toBeDisabled();
   await page.getByRole('button', { name: 'Retry message', exact: true }).click();
   await expect(page.getByTestId('visit-preferences')).toContainText('Step-free');
@@ -94,4 +94,19 @@ test('leaving Plan during generation prevents a late route from opening', async 
   await expect(page.getByRole('alert')).toContainText('Route generation was paused.');
   await expect(page.getByRole('heading', { name: 'Your itinerary', exact: true })).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Generate route', exact: true })).toBeEnabled();
+});
+
+test('local CPU generation can exceed the former 35-second limit and identifies Qwen recommendations', async ({ page }) => {
+  let pending;
+  await page.route('**/api/ai/routes/plan', route => { pending = route; });
+  await openPlan(page);
+  await page.clock.install();
+  await page.getByRole('button', { name: 'Generate route', exact: true }).click();
+  await expect.poll(() => !!pending).toBe(true);
+  await page.clock.fastForward(40000);
+  await expect(page.getByRole('button', { name: 'Planning your visit…', exact: true })).toBeDisabled();
+  await expect(page.getByRole('alert')).toHaveCount(0);
+  await pending.fulfill({ json: { demo: true, estimatedMinutes: 6, estimatedWalkingDistance: 0, route: [], navigation: [], mapNotice: 'Illustrative demo map.', reasoningSummary: 'Works chosen from this museum catalogue.', recommendationSource: 'ollama' } });
+  await expect(page.getByRole('heading', { name: 'Your itinerary', exact: true })).toBeVisible();
+  await expect(page.getByText('Qwen recommendation', { exact: false })).toBeVisible();
 });

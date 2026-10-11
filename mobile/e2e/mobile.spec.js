@@ -170,6 +170,7 @@ test('existing sample tours survive reload and produce a completed visit', async
   await denyLocation(page);
   await page.goto('/'); await enterWelcome(page); await startVisit(page);
   await page.getByRole('tab', { name: /Profile/ }).click();
+  await page.getByRole('button', { name: 'App Settings', exact: true }).click();
   await page.getByRole('button', { name: 'Northbank sample tour' }).click();
   await page.getByRole('button', { name: 'Plan my visit', exact: true }).click();
   await page.getByRole('button', { name: '60 minutes', exact: true }).click();
@@ -180,10 +181,14 @@ test('existing sample tours survive reload and produce a completed visit', async
   await page.getByRole('button', { name: 'Mark explored', exact: true }).first().click();
   await page.reload(); await enterWelcome(page); await startVisit(page);
   await page.getByRole('tab', { name: /Profile/ }).click();
+  await page.getByRole('button', { name: 'View saved artworks', exact: true }).click();
+  await expect(page.getByText('Make room for a favourite.', { exact: true })).toBeVisible();
+  await page.getByRole('tab', { name: /Profile/ }).click();
+  await page.getByRole('button', { name: 'App Settings', exact: true }).click();
   await page.getByRole('button', { name: 'Northbank sample tour' }).click();
   await expect(page.getByText(/1 explored/)).toBeVisible();
   await page.getByRole('button', { name: 'Finish my visit', exact: true }).click();
-  await expect(page.getByText('A day at Northbank')).toBeVisible();
+  await expect(page.getByText('A day at Northbank').filter({ visible: true })).toBeVisible();
 });
 
 test('preferences, private feedback and scan entry still work', async ({ page }) => {
@@ -192,11 +197,15 @@ test('preferences, private feedback and scan entry still work', async ({ page })
   await page.getByRole('tab', { name: /Scan/ }).click();
   await expect(page.getByRole('button', { name: 'Upload photo' })).toBeVisible();
   await page.getByRole('tab', { name: /Profile/ }).click();
+  await expect(page.getByRole('heading', { name: 'My Interests', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Open app settings', exact: true }).click();
   await page.getByRole('textbox', { name: 'Your name' }).fill('Yufei');
   await page.getByRole('button', { name: 'Save preferences', exact: true }).click();
   await expect(page.getByText('Your preferences are saved on this device.')).toBeVisible();
   await page.reload(); await enterWelcome(page); await startVisit(page);
   await page.getByRole('tab', { name: /Profile/ }).click();
+  await expect(page.getByRole('heading', { name: 'Yufei', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'App Settings', exact: true }).click();
   await expect(page.getByRole('textbox', { name: 'Your name' })).toHaveValue('Yufei');
   await page.getByRole('button', { name: 'Share feedback', exact: true }).click();
   await page.getByRole('textbox', { name: 'Your feedback' }).fill('Please add more details about the painting.');

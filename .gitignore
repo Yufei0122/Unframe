@@ -16,3 +16,7 @@ mobile/dist/
 mobile/ios/
 mobile/android/
 mobile/.env*
+!mobile/.env.example
+.venv/
+.local-ai/
+**/__pycache__/

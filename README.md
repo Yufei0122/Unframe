@@ -2,11 +2,15 @@
 
 A responsive museum companion with a local Node.js backend, persistent visitor data, and a curator workspace. Built from the Unframe proposal and the MONA *The O* case study.
 
-## Google AI and browser camera
+## Local AI and browser camera
 
-The mobile web **Scan** screen supports browser camera permission, capture/upload, Vertex image embedding search and Gemini explanations. Choose **The Met** (eight artworks) or **Brisbane GOMA** (four QAGOMA Collection works) from the discovery entrance. The bottom **Plan** tab offers a Gemini conversation about your time, interests, must-see artworks and access needs, then opens a personalised itinerary on a separate results page. See **[GOMA demo and official sources](GOMA-DEMO.md)** and **[AI setup, API examples and implementation report](AI-INTEGRATION.md)** for configuration, authentication, indexing, tests and limitations.
+The **Scan** screen samples the camera view and suggests artworks using local **OpenCLIP ViT-B-32 / laion2b_s34b_b79k**. Choose a candidate to confirm the artwork and request an **Ollama qwen3:4b** explanation grounded in catalogue notes. Scanning supports pause/resume and photo upload. Choose **The Met** (eight artworks) or **Brisbane GOMA** (four QAGOMA works). The **Plan** tab uses Qwen to discuss preferences and select recommended works; the existing deterministic planner enforces time and accessibility constraints. See **[GOMA sources](GOMA-DEMO.md)** and **[AI setup and verification](AI-INTEGRATION.md)** for configuration, indexing, tests and limitations.
 
-From the project root, run `npm.cmd install`, then `npm.cmd start` for the API. In a second terminal run `npm.cmd run mobile:web` and open http://localhost:8081. Google calls require `.env`, ADC and a generated collection index; browsing and local route fallback work without credentials.
+From the project root, run `npm.cmd install`, then `npm.cmd run ai:setup` to install Python dependencies and download the public models. Run `npm.cmd run ai:up` to check/start local model services, build a compatible 512-dimensional index when needed, and start Node at http://127.0.0.1:3000. In another terminal run `npm.cmd run mobile:web -- --port 8081` and open http://localhost:8081. No Google project, ADC, API key or paid account is required; Python virtual-environment activation is automatic.
+
+Run `npm.cmd run ai:doctor` for service/model/index readiness, or `npm.cmd run ai:doctor -- --smoke` for real embedding and structured Qwen checks. Opening Scan with camera access sends sampled frames to local services; Unframe does not persist them. Similarity is not probability or accuracy. CPU timeouts, service reuse, privacy and deployment evidence are documented in [AI-INTEGRATION.md](AI-INTEGRATION.md).
+
+**Verified on this Windows checkout (2026-10-11):** mobile web is at http://localhost:8081 and its new backend at http://127.0.0.1:3001, because the preexisting port-3000 server was preserved. The local `.env` and mobile API URL are configured accordingly. Both models, the twelve-artwork index, real explanations/routes and the corrected Chinese planning chat were exercised. See the [deployment evidence and limits](AI-INTEGRATION.md#verified-windows-deployment--2026-10-11-australiabrisbane) for test results and retained first-failure/retest records.
 
 ## iPhone / mobile app
 
@@ -22,7 +26,7 @@ Scan Expo’s QR code on your iPhone. See the mobile README for Expo Go compatib
 
 ## Run locally
 
-Requires **Node.js 22 or later**. Run `npm install` first. The original curator workspace needs no Google credentials; the optional AI features use Google authentication and image-decoding dependencies.
+Requires **Node.js 22 or later**. Run `npm install` first. The original curator workspace needs no model services; optional mobile AI uses local OpenCLIP, Ollama and image-decoding dependencies.
 
 ```sh
 npm start
@@ -141,4 +145,4 @@ Before a public release, add authenticated visitor and curator roles, a database
 | `PORT` | `3000` | Local HTTP port |
 | `UNFRAME_DATA_DIR` | `data/` in this project | Location of the JSON store |
 
-The application requires no external services. Keep the contents of the data directory private; feedback and visitor preferences are stored there.
+The original curator workspace requires no model services; mobile AI uses the local services described above. Keep the contents of the data directory private; feedback and visitor preferences are stored there.

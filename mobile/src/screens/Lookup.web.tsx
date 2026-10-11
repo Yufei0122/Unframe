@@ -8,8 +8,8 @@ import { Button, Icon, T, c, s, useRootNavigation } from '../ui';
 import { useMuseumLocation } from '../location';
 import { images } from '../assets';
 import { useStore } from '../store';
-import { requestAI } from '../ai';
-import type { RecognitionResult } from '../../../shared/ai-types';
+import { AI_TIMEOUT_MS, CLIP_TIMEOUT_MS, requestAI } from '../ai';
+import type { RecognitionResult, RecognitionCandidate, ConfirmationResult } from '../../../shared/ai-types';
 
 export function LookupScreen() {
   const { museumId } = useMuseumLocation();
@@ -21,77 +21,119 @@ function LookupContent() {
   const nav = useRootNavigation(), focused = useIsFocused();
   const { state } = useStore();
   const input = useRef<HTMLInputElement>(null), controller = useRef<AbortController | null>(null);
+  const [visible, setVisible] = useState(() => document.visibilityState !== 'hidden');
+  const [paused, setPaused] = useState(false), [cameraKey, setCameraKey] = useState(0);
   const [photo, setPhoto] = useState<Blob | null>(null), [preview, setPreview] = useState('');
-  const [busy, setBusy] = useState(false), [error, setError] = useState(''), [result, setResult] = useState<RecognitionResult | null>(null);
-  const [cameraKey, setCameraKey] = useState(0), [expanded, setExpanded] = useState(false);
+  const [busy, setBusy] = useState(false), [error, setError] = useState(''), [uploadError, setUploadError] = useState('');
+  const [candidates, setCandidates] = useState<RecognitionCandidate[]>([]), [message, setMessage] = useState('');
+  const [selected, setSelected] = useState<RecognitionCandidate | null>(null), [result, setResult] = useState<ConfirmationResult | null>(null);
+  const [expanded, setExpanded] = useState(false);
+  const active = focused && visible && !paused && !photo && !selected;
   function cancel() { controller.current?.abort(); controller.current = null; }
-  useEffect(() => { if (!focused) { cancel(); setBusy(false); } return cancel; }, [focused]);
+  useEffect(() => {
+    const update = () => {
+      const next = document.visibilityState !== 'hidden';
+      if (!next) { cancel(); setBusy(false); setCandidates([]); }
+      setVisible(next);
+    };
+    document.addEventListener('visibilitychange', update);
+    return () => document.removeEventListener('visibilitychange', update);
+  }, []);
+  useEffect(() => {
+    if (!focused) { cancel(); setBusy(false); setCandidates([]); }
+    return cancel;
+  }, [focused]);
   useEffect(() => { if (!photo) { setPreview(''); return; } const url = URL.createObjectURL(photo); setPreview(url); return () => URL.revokeObjectURL(url); }, [photo]);
-  function reset() { cancel(); setPhoto(null); setResult(null); setError(''); setBusy(false); setExpanded(false); setCameraKey(k => k + 1); }
+  function resume() {
+    cancel(); setPhoto(null); setSelected(null); setResult(null); setCandidates([]); setMessage('');
+    setError(''); setUploadError(''); setBusy(false); setExpanded(false); setPaused(false); setCameraKey(k => k + 1);
+  }
+  function pause() { cancel(); setBusy(false); setPaused(true); setCandidates([]); setMessage(''); }
   function close() {
-    cancel();
+    cancel(); setPaused(true);
     if (nav.getState().type === 'stack' && nav.canGoBack()) nav.goBack();
     else nav.navigate('Home', { screen: 'Discover' });
   }
   function choose(blob: Blob) {
-    if (!['image/jpeg', 'image/png', 'image/webp'].includes(blob.type)) { setError('Choose a JPEG, PNG or WebP image.'); return; }
-    if (blob.size > 5 * 1024 * 1024) { setError('Choose an image smaller than 5 MB.'); return; }
-    setPhoto(blob); setExpanded(false); void recognise(blob);
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(blob.type)) { setUploadError('Choose a JPEG, PNG or WebP image.'); return; }
+    if (blob.size > 5 * 1024 * 1024) { setUploadError('Choose an image smaller than 5 MB.'); return; }
+    cancel(); setPaused(true); setPhoto(blob); setSelected(null); setResult(null); setCandidates([]); setExpanded(false); setUploadError('');
+    void recognise(blob);
   }
   async function recognise(blob: Blob) {
-    cancel(); const request = new AbortController(); controller.current = request;
-    const timeout = setTimeout(() => request.abort(), 60000);
-    setBusy(true); setResult(null); setError('');
-    const form = new FormData(); form.append('image', blob, 'artwork-photo'); form.append('visitorPreferences', JSON.stringify(state.preferences.interests));
+    if (controller.current || !focused || document.visibilityState === 'hidden') return;
+    const request = new AbortController(); controller.current = request;
+    const timeout = setTimeout(() => request.abort(), CLIP_TIMEOUT_MS);
+    setBusy(true); setError('');
+    const form = new FormData(); form.append('image', blob, 'artwork-frame.jpg');
     try {
       const response = await requestAI<RecognitionResult>('artworks/recognise?museumId=' + museumId, form, request.signal);
-      if (controller.current === request && !request.signal.aborted) setResult(response);
-    } catch (error) {
-      if (controller.current === request) setError(request.signal.aborted ? 'Recognition timed out. Please try again.' : error instanceof Error ? error.message : 'Recognition failed.');
-    } finally { clearTimeout(timeout); if (controller.current === request) setBusy(false); }
+      if (controller.current !== request || request.signal.aborted) return;
+      // A legacy single match is still just a candidate; it never confirms itself.
+      const matches = response.candidates ?? (response.matched && response.artwork ? [{ artwork: response.artwork, similarity: response.similarity ?? 0 }] : []);
+      setCandidates(matches.slice(0, 3)); setMessage(matches.length ? '' : response.message || 'No close match yet. Move closer or try another angle.');
+    } catch (failure) {
+      if (controller.current === request) {
+        setError(request.signal.aborted ? 'Recognition timed out. Resume scanning to try again.' : failure instanceof Error ? failure.message : 'Recognition failed. Resume scanning to try again.');
+        setPaused(true); setCandidates([]);
+      }
+    } finally { clearTimeout(timeout); if (controller.current === request) { controller.current = null; setBusy(false); } }
   }
-  const art = result?.artwork, explanation = result?.aiExplanation;
-  function liveControls(ready: boolean, cameraError: string, capture: () => void) {
-    return <View style={styles.live}>
-      <View style={styles.finderArea}>
-        {cameraError ? <View style={styles.cameraMessage}><Icon name="camera-outline" size={34} color="white"/><T accessibilityRole="alert" style={styles.light}>{cameraError}</T><Pressable accessibilityRole="button" accessibilityLabel="Retry camera" onPress={reset} style={styles.retry}><T style={styles.light}>Try camera again</T></Pressable></View> : <>
-          <View pointerEvents="none" style={styles.finder}>{[styles.topLeft, styles.topRight, styles.bottomLeft, styles.bottomRight].map((corner, i) => <View key={i} style={[styles.corner, corner]}/>)}</View>
-          <T style={styles.hint}>{ready ? 'Place the artwork inside the frame' : 'Waiting for camera permission…'}</T>
-        </>}
-      </View>
-      <View style={styles.controls}>
-        {!!error && <T accessibilityRole="alert" style={styles.light}>{error}</T>}
-        <View style={styles.controlRow}>
-          <Pressable accessibilityRole="button" accessibilityLabel="Upload photo" onPress={() => input.current?.click()} style={styles.sideButton}><Icon name="images-outline" color="white" size={25}/><T style={styles.controlLabel}>Photos</T></Pressable>
-          <Pressable accessibilityRole="button" accessibilityLabel="Capture photo" accessibilityState={{ disabled: !ready }} disabled={!ready} onPress={capture} style={[styles.shutter, !ready && { opacity: .4 }]}><View style={styles.shutterInner}/></Pressable>
-          <View style={styles.sideButton}><Icon name="sparkles-outline" color="#DBCBAA" size={23}/><T style={styles.controlLabel}>Identify</T></View>
-        </View>
-        <T style={styles.privacy}>Capture or upload to identify with Google AI.{'\n'}Unframe does not save your photo.</T>
-      </View>
+  async function confirm(candidate: RecognitionCandidate) {
+    cancel(); setPaused(true); setSelected(candidate); setResult(null); setError(''); setUploadError(''); setBusy(true); setExpanded(false);
+    const request = new AbortController(); controller.current = request;
+    const timeout = setTimeout(() => request.abort(), AI_TIMEOUT_MS);
+    try {
+      const response = await requestAI<ConfirmationResult>('artworks/confirm', { museumId, artworkId: candidate.artwork.id, visitorPreferences: state.preferences.interests }, request.signal);
+      if (controller.current === request && !request.signal.aborted) setResult(response);
+    } catch (failure) {
+      if (controller.current === request) setError(request.signal.aborted ? 'Interpretation timed out. You can retry or open the collection details.' : failure instanceof Error ? failure.message : 'Interpretation is unavailable.');
+    } finally { clearTimeout(timeout); if (controller.current === request) { controller.current = null; setBusy(false); } }
+  }
+  const art = selected?.artwork, explanation = result?.aiExplanation;
+  function cameraOverlay(ready: boolean, cameraError: string) {
+    return <View style={[styles.finderArea, candidates.length > 0 && styles.finderWithCandidates]}>
+      {cameraError ? <View style={styles.cameraMessage}><Icon name="camera-outline" size={32} color="white"/><T accessibilityRole="alert" style={styles.light}>{cameraError}</T><Pressable accessibilityRole="button" accessibilityLabel="Retry camera" onPress={resume} style={styles.retry}><T style={styles.light}>Try camera again</T></Pressable></View> : <>
+        <View pointerEvents="none" style={styles.finder}>{[styles.topLeft, styles.topRight, styles.bottomLeft, styles.bottomRight].map((corner, i) => <View key={i} style={[styles.corner, corner]}/>)}</View>
+        <T style={styles.hint}>{ready ? 'Point at an artwork · scanning automatically' : 'Waiting for camera permission…'}</T>
+      </>}
     </View>;
   }
   return <SafeAreaView edges={['top', 'bottom']} style={styles.screen}>
     <View style={styles.stage}>
-      {focused && !photo && <CameraCapture key={cameraKey} onCapture={choose}>{({ ready, error: cameraError, capture }) => liveControls(ready, cameraError, capture)}</CameraCapture>}
+      {active && <CameraCapture key={cameraKey} onFrame={recognise} onUnavailable={() => { cancel(); setBusy(false); setCandidates([]); setMessage('Camera unavailable'); }}>{({ ready, error: cameraError }) => cameraOverlay(ready, cameraError)}</CameraCapture>}
       {!!preview && <Image source={{ uri: preview }} style={StyleSheet.absoluteFill} resizeMode="contain" accessibilityLabel="Selected artwork photo"/>}
+      {!active && !preview && <View pointerEvents="none" style={styles.pausedBackdrop}><Icon name={selected ? 'checkmark-circle-outline' : 'scan-outline'} size={52} color="#84968B"/></View>}
       <LinearGradient pointerEvents="none" colors={['#08130CE6', '#08130C00']} style={styles.topShade}/>
       <View style={styles.header}>
         <Pressable accessibilityRole="button" accessibilityLabel="Close scan" onPress={close} style={styles.close}><Icon name="close" size={24} color="white"/></Pressable>
         <View style={styles.heading}><T accessibilityRole="header" style={styles.title}>Scan artwork</T><T style={styles.museum}>{museum.shortName} · demo collection</T></View>
         <View style={{ width: 42 }}/>
       </View>
-      {!!photo && <View style={styles.resultArea}>
-        <View style={styles.resultActions}><Pressable accessibilityRole="button" accessibilityLabel="Retake photo" onPress={reset} style={styles.photoAction}><Icon name="camera-outline" color="white"/><T style={styles.light}>Retake</T></Pressable><Pressable accessibilityRole="button" accessibilityLabel="Upload photo" onPress={() => input.current?.click()} style={styles.photoAction}><Icon name="images-outline" color="white"/><T style={styles.light}>Photos</T></Pressable></View>
-        <ScrollView style={styles.sheet} contentContainerStyle={styles.sheetContent}>
-          {!!error && (busy || !!art) && <T accessibilityRole="alert" style={s.small}>{error}</T>}
-          {busy ? <View style={styles.loading}><ActivityIndicator color={c.green}/><T accessibilityLiveRegion="polite">Identifying artwork…</T></View> : art ? <>
-            <View style={styles.match}><Image source={images[art.id]} accessibilityLabel={art.title} style={styles.thumbnail}/><View style={{ flex: 1 }}><T style={styles.matched}>COLLECTION MATCH</T><T accessibilityRole="header" style={styles.artTitle}>{art.title}</T><T style={s.small}>{art.artist} · {art.year}</T></View></View>
-            <Button title="Open artwork details" icon="arrow-forward" onPress={() => nav.navigate('Artwork', { id: art.id })}/>
-            {!!result?.warning && <T style={s.small}>{result.warning}</T>}
-            {!!explanation && <><Pressable accessibilityRole="button" accessibilityLabel={expanded ? 'Hide AI interpretation' : 'Read AI interpretation'} accessibilityState={{ expanded }} onPress={() => setExpanded(!expanded)} style={styles.interpretation}><Icon name="sparkles-outline" size={17}/><T style={s.label}>AI interpretation</T><Icon name={expanded ? 'chevron-up' : 'chevron-down'} size={16}/></Pressable>{expanded && <View style={{ gap: 10 }}><T style={s.small}>{result?.interpretationLabel}</T><T>{explanation.summary}</T><T>{explanation.historicalContext}</T>{explanation.interestingFacts.map((fact, i) => <T key={i}>• {fact}</T>)}<T>{explanation.whyItMatters}</T>{explanation.suggestedNextArtwork && <Button title="Explore suggested artwork" secondary onPress={() => nav.navigate('Artwork', { id: explanation.suggestedNextArtwork! })}/>}</View>}</>}
-          </> : <><T accessibilityRole={error ? 'alert' : undefined} style={s.label}>{error || result?.message || 'Photo ready. Try identifying it again.'}</T><Button title="Try again" secondary icon="refresh-outline" onPress={() => { void recognise(photo); }}/></>}
-        </ScrollView>
-      </View>}
+      <View style={[styles.dock, selected && styles.selectedDock]}>
+        {selected && art ? <ScrollView style={styles.sheet} contentContainerStyle={styles.sheetContent}>
+          <View style={styles.match}><Image source={images[art.id]} accessibilityLabel={art.title} style={styles.thumbnail}/><View style={{ flex: 1 }}><T style={styles.eyebrow}>SELECTED BY YOU</T><T accessibilityRole="header" style={styles.artTitle}>{art.title}</T><T style={s.small}>{art.artist} · {art.year}</T></View></View>
+          <Button title="Open artwork details" icon="arrow-forward" onPress={() => nav.navigate('Artwork', { id: art.id })}/>
+          {busy && <View style={styles.loading}><ActivityIndicator color={c.green}/><T accessibilityLiveRegion="polite" style={s.small}>Preparing AI interpretation…</T></View>}
+          {!!error && <><T accessibilityRole="alert" style={s.small}>{error}</T><Button title="Retry interpretation" secondary onPress={() => { void confirm(selected); }}/></>}
+          {!busy && !result && !error && <><T style={s.small}>Interpretation was interrupted. Your selection is still available.</T><Button title="Retry interpretation" secondary onPress={() => { void confirm(selected); }}/></>}
+          {!!result?.warning && <T style={s.small}>{result.warning}</T>}
+          {!!explanation && <><Pressable accessibilityRole="button" accessibilityLabel={expanded ? 'Hide AI interpretation' : 'Read AI interpretation'} accessibilityState={{ expanded }} onPress={() => setExpanded(!expanded)} style={styles.interpretation}><Icon name="sparkles-outline" size={17}/><T style={s.label}>AI interpretation</T><Icon name={expanded ? 'chevron-up' : 'chevron-down'} size={16}/></Pressable>{expanded && <View style={{ gap: 10 }}><T style={s.small}>{result?.interpretationLabel}</T><T>{explanation.summary}</T><T>{explanation.historicalContext}</T>{explanation.interestingFacts.map((fact, i) => <T key={i}>• {fact}</T>)}<T>{explanation.whyItMatters}</T>{explanation.suggestedNextArtwork && <Button title="Explore suggested artwork" secondary onPress={() => nav.navigate('Artwork', { id: explanation.suggestedNextArtwork! })}/>}</View>}</>}
+        </ScrollView> : <>
+          {candidates.length > 0 && <View style={styles.candidatePanel}><View style={styles.candidateHeading}><T style={styles.candidateTitle}>Possible matches</T><T style={styles.candidateHint}>Tap the work you see</T></View><ScrollView style={styles.candidateList}>{candidates.map(candidate => <Pressable key={candidate.artwork.id} accessibilityRole="button" accessibilityLabel={'Select ' + candidate.artwork.title} onPress={() => { void confirm(candidate); }} style={styles.candidate}><Image source={images[candidate.artwork.id]} style={styles.candidateImage}/><View style={{ flex: 1 }}><T numberOfLines={1} style={styles.candidateName}>{candidate.artwork.title}</T><T numberOfLines={1} style={styles.candidateHint}>{candidate.artwork.artist}</T></View><Icon name="chevron-forward" color="#DBCBAA" size={18}/></Pressable>)}</ScrollView></View>}
+          <View style={styles.status} accessibilityLiveRegion="polite">
+            {busy && <ActivityIndicator color="#DBCBAA" size="small"/>}
+            <T style={styles.statusText}>{busy ? (photo ? 'Finding possible matches…' : 'Looking for artworks…') : candidates.length ? candidates.length + ' possible ' + (candidates.length === 1 ? 'match' : 'matches') + ' · choose to confirm' : error ? 'Scanning paused' : photo ? message || 'Choose a match or try another image' : paused ? 'Scanning paused' : message || 'Looking for artworks automatically'}</T>
+          </View>
+          {!!error && <T accessibilityRole="alert" style={styles.error}>{error}</T>}
+        </>}
+        {!!uploadError && <T accessibilityRole="alert" style={styles.error}>{uploadError}</T>}
+        <View style={styles.controls}>
+          <Pressable accessibilityRole="button" accessibilityLabel="Upload photo" onPress={() => input.current?.click()} style={styles.controlButton}><Icon name="images-outline" color="white" size={21}/><T style={styles.controlLabel}>Photos</T></Pressable>
+          <Pressable accessibilityRole="button" accessibilityLabel={active ? 'Pause scanning' : 'Resume scanning'} onPress={active ? pause : resume} style={styles.scanButton}><Icon name={active ? 'pause' : 'scan-outline'} color="#DBCBAA" size={19}/><T style={styles.controlLabel}>{active ? 'Pause scanning' : 'Resume scanning'}</T></Pressable>
+        </View>
+        {!selected && <T style={styles.privacy}>Sampled frames go to OpenCLIP on your local AI server.{'\n'}Unframe does not save your images.</T>}
+      </View>
       <input ref={input} aria-label="Upload artwork image" type="file" accept="image/jpeg,image/png,image/webp" style={{ display: 'none' }} onChange={event => { const file = event.target.files?.[0]; if (file) choose(file); event.target.value = ''; }}/>
     </View>
   </SafeAreaView>;
@@ -103,18 +145,21 @@ const styles = StyleSheet.create({
   header: { position: 'absolute', top: 14, left: 16, right: 16, flexDirection: 'row', alignItems: 'center', gap: 10 },
   close: { width: 42, height: 42, borderRadius: 24, backgroundColor: '#FFFFFF18', alignItems: 'center', justifyContent: 'center' },
   heading: { flex: 1, alignItems: 'center' }, title: { color: 'white', fontSize: 17, fontWeight: '500' }, museum: { color: '#D0D8D2', fontSize: 11, lineHeight: 18 },
-  live: { flex: 1, paddingTop: 90 }, finderArea: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 28, gap: 20 },
-  finder: { width: '100%', maxWidth: 310, height: '65%', maxHeight: 340, minHeight: 90 },
-  corner: { position: 'absolute', width: 30, height: 30, borderColor: '#FFFAE9' },
+  finderArea: { position: 'absolute', top: 82, left: 24, right: 24, bottom: 180, justifyContent: 'center', alignItems: 'center', gap: 16 }, finderWithCandidates: { bottom: 335 },
+  finder: { width: '100%', maxWidth: 310, flex: 1, maxHeight: 340, minHeight: 35 },
+  corner: { position: 'absolute', width: 26, height: 26, borderColor: '#FFFAE9' },
   topLeft: { left: 0, top: 0, borderTopWidth: 2, borderLeftWidth: 2, borderTopLeftRadius: 12 }, topRight: { right: 0, top: 0, borderTopWidth: 2, borderRightWidth: 2, borderTopRightRadius: 12 },
   bottomLeft: { left: 0, bottom: 0, borderBottomWidth: 2, borderLeftWidth: 2, borderBottomLeftRadius: 12 }, bottomRight: { right: 0, bottom: 0, borderBottomWidth: 2, borderRightWidth: 2, borderBottomRightRadius: 12 },
-  hint: { color: 'white', fontSize: 12, textAlign: 'center', backgroundColor: '#10191580', paddingHorizontal: 12, paddingVertical: 5, borderRadius: 15 },
-  cameraMessage: { alignItems: 'center', gap: 16, padding: 16 }, light: { color: 'white', fontSize: 12, lineHeight: 19, textAlign: 'center' }, retry: { padding: 12, borderRadius: 20, borderWidth: 1, borderColor: '#FFFFFF55' },
-  controls: { backgroundColor: '#101915DF', paddingTop: 20, paddingBottom: 18, paddingHorizontal: 22, gap: 16 }, controlRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' },
-  sideButton: { width: 64, minHeight: 54, alignItems: 'center', justifyContent: 'center', gap: 4 }, controlLabel: { color: '#D2DBD4', fontSize: 10, lineHeight: 16 },
-  shutter: { height: 76, width: 76, padding: 5, borderRadius: 40, borderWidth: 2, borderColor: 'white' }, shutterInner: { flex: 1, borderRadius: 36, backgroundColor: '#FFFEF8' },
-  privacy: { color: '#B9C4BC', textAlign: 'center', fontSize: 10, lineHeight: 16 },
-  resultArea: { position: 'absolute', bottom: 0, left: 0, right: 0, maxHeight: '65%' }, resultActions: { flexDirection: 'row', justifyContent: 'space-between', padding: 14 }, photoAction: { flexDirection: 'row', alignItems: 'center', gap: 8, padding: 12, borderRadius: 25, backgroundColor: '#101915D9' },
-  sheet: { backgroundColor: c.bg, borderTopLeftRadius: 24, borderTopRightRadius: 24, flexShrink: 1 }, sheetContent: { padding: 22, gap: 16 }, loading: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 12, minHeight: 62 },
-  match: { flexDirection: 'row', alignItems: 'center', gap: 14 }, thumbnail: { width: 62, height: 76, borderRadius: 9 }, matched: { fontSize: 9, lineHeight: 15, color: c.muted, letterSpacing: 1.3 }, artTitle: { fontSize: 20, lineHeight: 26, marginVertical: 3 }, interpretation: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 44, gap: 8 },
+  hint: { color: 'white', fontSize: 11, lineHeight: 17, textAlign: 'center', backgroundColor: '#101915AD', paddingHorizontal: 12, paddingVertical: 5, borderRadius: 15 },
+  cameraMessage: { alignItems: 'center', gap: 12, padding: 10 }, light: { color: 'white', fontSize: 12, lineHeight: 19, textAlign: 'center' }, retry: { padding: 12, borderRadius: 20, borderWidth: 1, borderColor: '#FFFFFF55' },
+  pausedBackdrop: { ...StyleSheet.absoluteFillObject, alignItems: 'center', justifyContent: 'center', paddingBottom: 180 },
+  dock: { position: 'absolute', bottom: 0, left: 0, right: 0, maxHeight: '70%', backgroundColor: '#101915F0', borderTopLeftRadius: 22, borderTopRightRadius: 22, paddingBottom: 10, overflow: 'hidden' }, selectedDock: { maxHeight: '76%' },
+  candidatePanel: { flexShrink: 1, paddingHorizontal: 18, paddingTop: 14 }, candidateHeading: { flexDirection: 'row', justifyContent: 'space-between', gap: 6, marginBottom: 5 }, candidateTitle: { color: '#F9F4E9', fontSize: 12, fontWeight: '600' }, candidateHint: { color: '#B9C4BC', fontSize: 10, lineHeight: 16 }, candidateList: { maxHeight: 202, flexShrink: 1 },
+  candidate: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 64, paddingVertical: 8, borderBottomWidth: 1, borderBottomColor: '#FFFFFF17' }, candidateImage: { width: 38, height: 46, borderRadius: 6 }, candidateName: { color: 'white', fontSize: 14, lineHeight: 20 },
+  status: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10, minHeight: 37, paddingHorizontal: 18, paddingTop: 8 }, statusText: { color: '#DBCBAA', fontSize: 11, lineHeight: 17, flexShrink: 1, textAlign: 'center' },
+  controls: { paddingHorizontal: 22, paddingVertical: 9, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
+  controlButton: { minHeight: 44, paddingHorizontal: 8, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', gap: 8 }, scanButton: { minHeight: 44, borderRadius: 24, backgroundColor: '#FFFFFF16', flexDirection: 'row', gap: 8, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 17 }, controlLabel: { color: '#F2F2E8', fontSize: 12, lineHeight: 18 },
+  privacy: { color: '#AAB8AE', textAlign: 'center', fontSize: 10, lineHeight: 15, paddingHorizontal: 18 }, error: { color: '#FFD6C4', fontSize: 11, lineHeight: 17, textAlign: 'center', paddingHorizontal: 20, paddingTop: 8 },
+  sheet: { backgroundColor: c.bg, borderTopLeftRadius: 22, borderTopRightRadius: 22, flexShrink: 1 }, sheetContent: { padding: 20, gap: 14 }, loading: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 12, minHeight: 38 },
+  match: { flexDirection: 'row', alignItems: 'center', gap: 14 }, thumbnail: { width: 56, height: 68, borderRadius: 9 }, eyebrow: { fontSize: 9, lineHeight: 15, color: c.muted, letterSpacing: 1.3 }, artTitle: { fontSize: 20, lineHeight: 26, marginVertical: 3 }, interpretation: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 44, gap: 8 },
 });

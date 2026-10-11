@@ -5,18 +5,26 @@ import type { RootStackParams } from '../model';
 import { Button, Notice, T, Title, s } from '../ui';
 import { FloorPlan, type Floor } from '../components/FloorPlan';
 import { museums } from '../museum';
+import { useStore } from '../store';
+import { saveMuseumRoute } from '../profileData';
+import { useMuseumLocation } from '../location';
 
 export function AIItineraryScreen({ route, navigation }: NativeStackScreenProps<RootStackParams, 'AIItinerary'>) {
   const itinerary = route.params.itinerary;
   const museumId = route.params.museumId || 'met';
   const { graph } = museums[museumId];
+  const { state, dispatch } = useStore();
+  const { selectMuseum } = useMuseumLocation();
+  const savedRoute = saveMuseumRoute(itinerary, museumId);
+  const isSaved = state.savedRoutes?.some(r => r.id === savedRoute.id);
   const [floor, setFloor] = useState<Floor>('1'), [room, setRoom] = useState<string | null>(null);
   return <ScrollView contentContainerStyle={s.page}>
     <Title>Your itinerary</Title>
     <T>{itinerary.estimatedMinutes} minutes · {itinerary.estimatedWalkingDistance} m walking (demo)</T>
-    <Button title="Edit visit preferences" secondary icon="options-outline" onPress={() => navigation.goBack()}/>
+    {!!itinerary.route.length && <Button title={isSaved ? 'Unsave route' : 'Save route'} icon={isSaved ? 'bookmark' : 'bookmark-outline'} secondary onPress={() => dispatch(isSaved ? { type: 'removeRoute', id: savedRoute.id } : { type: 'saveRoute', route: { ...savedRoute, savedAt: new Date().toISOString() } })}/>}
+    <Button title="Edit visit preferences" secondary icon="options-outline" onPress={() => { selectMuseum(museumId); navigation.navigate('Home', { screen: 'Plan' }); }}/>
     {!!itinerary.warning && <Notice>{itinerary.warning}</Notice>}
-    <T style={s.small}>{itinerary.recommendationSource === 'gemini' ? 'AI recommendation' : 'Local recommendation'} · {itinerary.reasoningSummary}</T>
+    <T style={s.small}>{itinerary.recommendationSource === 'ollama' ? 'Qwen recommendation' : 'Local rules recommendation'} · {itinerary.reasoningSummary}</T>
     <FloorPlan museumId={museumId} floor={floor} setFloor={setFloor} room={room} onRoom={setRoom} onSearch={() => navigation.navigate('Lookup')} height={300} routePaths={itinerary.navigation.map(n => n.nodes)}/>
     <T style={s.small}>{itinerary.mapNotice}</T>
     {itinerary.route.map((stop, i) => <View key={stop.artworkId} style={s.card}>

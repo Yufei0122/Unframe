@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button, Icon, T, c, serif, useRootNavigation } from '../ui';
 import { useStore } from '../store';
 import { useMuseumLocation } from '../location';
-import { requestAI } from '../ai';
+import { AI_TIMEOUT_MS, requestAI } from '../ai';
 import type { AIRoute, PlanningMessage, PlanningReply, VisitPreferences } from '../../../shared/ai-types';
 
 type ActiveRequest = { controller: AbortController; kind: 'chat' | 'route'; message?: string };
@@ -55,7 +55,7 @@ function PlanningChat() {
     if (!retry) setMessages(previous => [...previous, { role: 'user', content: message }]);
     setDraft(''); setError(''); setFailedMessage(null); setBusy('chat');
     const controller = new AbortController(); request.current = { controller, kind: 'chat', message };
-    const timeout = setTimeout(() => controller.abort(), 35000);
+    const timeout = setTimeout(() => controller.abort(), AI_TIMEOUT_MS);
     try {
       const response = await requestAI<PlanningReply>('routes/chat', { museumId, message, history, preferences }, controller.signal);
       if (request.current?.controller !== controller || controller.signal.aborted) return;
@@ -75,7 +75,7 @@ function PlanningChat() {
     if (request.current || failedMessage || draft.trim()) return;
     Keyboard.dismiss(); setBusy('route'); setError('');
     const controller = new AbortController(); request.current = { controller, kind: 'route' };
-    const timeout = setTimeout(() => controller.abort(), 35000);
+    const timeout = setTimeout(() => controller.abort(), AI_TIMEOUT_MS);
     try {
       const itinerary = await requestAI<AIRoute>('routes/plan', { museumId, ...preferences }, controller.signal);
       if (request.current?.controller !== controller || controller.signal.aborted) return;
@@ -123,7 +123,7 @@ function PlanningChat() {
           <Button title={busy === 'route' ? 'Planning your visit…' : 'Generate route'} icon="sparkles-outline" disabled={locked || !!draft.trim()} onPress={() => { void plan(); }}/>
           <T style={styles.summaryNote}>{draft.trim() ? 'Send your message to update these preferences.' : 'Your itinerary opens on a separate page.'}</T>
         </View>
-        <T style={styles.demoNote}>Demo artworks and illustrative indoor routes. GPS cannot locate you inside a gallery.</T>
+        <T style={styles.demoNote}>Messages and preferences are processed by Qwen on your local AI server and are not saved by Unframe. Demo artworks and illustrative indoor routes. GPS cannot locate you inside a gallery.</T>
       </ScrollView>
       <View style={styles.composerArea}>
         <View style={styles.composer}>

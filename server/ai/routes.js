@@ -14,19 +14,20 @@ export function validateRouteInput(input, collection, graph) {
   return { interests, availableMinutes, currentLocation, walkingPreference, accessibilityRequirements, mustSeeArtworkIds: [...new Set(mustSeeArtworkIds)] };
 }
 
-export function createRouteService({ gemini, collection, graph }) {
+export function createRouteService({ ollama, collection, graph }) {
   return { async plan(input) {
     const prefs = validateRouteInput(input, collection, graph);
     const stepFree = prefs.accessibilityRequirements.length > 0;
     const eligible = collection.filter(a => (!stepFree || a.accessible) && graph.nodes.some(n => n.id === a.id));
     if (!eligible.length) throw new AIError(422, 'NO_ROUTE', 'No artworks can be visited with these requirements.');
-    let recommendations, warning, recommendationSource = 'gemini';
-    try { recommendations = await gemini.generateRouteRecommendations(prefs, eligible); }
+    let recommendations, warning, errorCode, recommendationSource = 'ollama';
+    try { recommendations = await ollama.generateRouteRecommendations(prefs, eligible); }
     catch (error) {
       logFailure('recommendation', error); recommendationSource = 'local';
       const route = planRoute(eligible, { interests: prefs.interests, duration: 120, stepFree });
       recommendations = { recommendedArtworkIds: route.artworkIds, reasoningSummary: 'Local collection preferences were used because AI recommendations are unavailable.' };
-      warning = 'AI recommendations are unavailable. This itinerary uses local rules.';
+      errorCode = error instanceof AIError ? error.code : 'RECOMMENDATION_UNAVAILABLE';
+      warning = (error instanceof AIError ? error.message : 'Local AI recommendations are unavailable.') + ' This itinerary uses local rules.';
     }
     // Exact search over a small shortlist; physical shortest paths are always Dijkstra.
     const ids = [...new Set([...prefs.mustSeeArtworkIds, ...recommendations.recommendedArtworkIds, ...eligible.map(a => a.id)])].slice(0, 8);
@@ -54,7 +55,7 @@ export function createRouteService({ gemini, collection, graph }) {
     return {
       demo: graph.demo, mapNotice: graph.description, estimatedMinutes: Math.ceil(best.seconds / 60), estimatedWalkingDistance: best.distance,
       route: best.stops.map((a, i) => ({ order: i + 1, artworkId: a.id, title: a.title, galleryId: graph.nodes.find(n => n.id === a.id).galleryId, estimatedVisitMinutes: a.minutes })),
-      navigation: best.navigation, reasoningSummary: recommendations.reasoningSummary, recommendationSource, ...(warning ? { warning } : {}),
+      navigation: best.navigation, reasoningSummary: recommendations.reasoningSummary, recommendationSource, ...(warning ? { warning, errorCode } : {}),
     };
   } };
 }

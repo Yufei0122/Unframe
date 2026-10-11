@@ -1,0 +1,220 @@
+import { spawn, spawnSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { loadEnvFile } from 'node:process';
+import { createHash } from 'node:crypto';
+import { setTimeout as delay } from 'node:timers/promises';
+
+export const root = fileURLToPath(new URL('../', import.meta.url));
+try { loadEnvFile(path.join(root, '.env')); } catch (error) { if (error.code !== 'ENOENT') throw error; }
+export const python = path.join(root, '.venv', process.platform === 'win32' ? 'Scripts/python.exe' : 'bin/python');
+export const identity = { model: 'ViT-B-32', pretrained: 'laion2b_s34b_b79k', dimensions: 512, normalized: true };
+const children = new Set();
+let shutdownPromise;
+
+export function endpoint(name, fallback) {
+  const url = new URL(process.env[name] || fallback);
+  if (url.protocol !== 'http:' || !['127.0.0.1', 'localhost', '[::1]'].includes(url.hostname) || url.username || url.password || url.pathname !== '/' || url.search || url.hash) {
+    throw new Error(`${name} must be a loopback HTTP origin, for example ${fallback}.`);
+  }
+  return url.origin;
+}
+export const clipUrl = endpoint('OPENCLIP_URL', 'http://127.0.0.1:8001');
+export const ollamaUrl = endpoint('OLLAMA_URL', 'http://127.0.0.1:11434');
+export const ollamaModel = process.env.OLLAMA_MODEL || 'qwen3:4b';
+if (!/^[a-zA-Z0-9_.:/-]+$/.test(ollamaModel) || /cloud/i.test(ollamaModel)) throw new Error('OLLAMA_MODEL must name a locally installed model, not a cloud model.');
+
+export function spawnOwned(command, args, options = {}) {
+  const { managedStdin = false, ...spawnOptions } = options;
+  const child = spawn(command, args, { cwd: root, windowsHide: true, stdio: managedStdin ? ['pipe', 'inherit', 'inherit'] : 'inherit', ...spawnOptions });
+  child.managedStdin = managedStdin;
+  child.stdin?.on('error', () => { /* A child may close stdin before shutdown. */ });
+  children.add(child);
+  child.result = new Promise(resolve => {
+    child.once('error', error => { child.spawnError = error; children.delete(child); resolve({ error, code: 1 }); });
+    child.once('exit', (code, signal) => { children.delete(child); resolve({ code, signal }); });
+  });
+  return child;
+}
+
+export async function run(command, args, options) {
+  const result = await spawnOwned(command, args, options).result;
+  if (result.error) throw new Error(`Cannot start ${path.basename(command)}: ${result.error.message}`);
+  if (result.code !== 0) throw new Error(`${path.basename(command)} exited with ${result.code ?? result.signal}.`);
+}
+
+function terminateOwned(owned) {
+  for (const child of owned) {
+    if (!child.pid || child.exitCode !== null || child.signalCode !== null) continue;
+    // Never kill by process name or port: only this invocation's still-owned process tree.
+    if (process.platform === 'win32') {
+      const stopped = spawnSync('taskkill.exe', ['/PID', String(child.pid), '/T', '/F'], { windowsHide: true, stdio: 'ignore' });
+      // Restricted Windows shells may deny taskkill's process enumeration even
+      // though terminating the direct owned child is permitted.
+      if (stopped.status !== 0) child.kill('SIGTERM');
+    } else child.kill('SIGTERM');
+  }
+}
+
+function closeManagedInput(owned, force = false) {
+  for (const child of owned) {
+    if (child.managedStdin && child.stdin && !child.stdin.destroyed) {
+      child.stdin.end();
+      if (force) child.stdin.destroy();
+    }
+  }
+}
+
+export function stopOwned() {
+  if (shutdownPromise) return shutdownPromise;
+  const owned = [...children];
+  closeManagedInput(owned);
+  shutdownPromise = (async () => {
+    const cooperative = owned.filter(child => child.managedStdin);
+    if (cooperative.length) await Promise.race([Promise.all(cooperative.map(child => child.result)), delay(1500)]);
+    closeManagedInput(owned, true);
+    terminateOwned(owned);
+  })().finally(() => { shutdownPromise = undefined; });
+  return shutdownPromise;
+}
+
+export function installShutdown() {
+  for (const [signal, code] of [['SIGINT', 130], ['SIGTERM', 143]]) {
+    process.once(signal, () => { void stopOwned().finally(() => process.exit(code)); });
+  }
+  // Exit handlers cannot await. EOF still reaches a redirected Windows Python
+  // interpreter if process-tree termination is unavailable or this parent dies.
+  process.once('exit', () => { const owned = [...children]; closeManagedInput(owned, true); terminateOwned(owned); });
+}
+
+export async function getJSON(url, timeoutMs = 3000) {
+  let response;
+  try { response = await fetch(url, { signal: AbortSignal.timeout(timeoutMs) }); }
+  catch (error) {
+    if (error.cause?.code === 'ECONNREFUSED' || error.cause?.errors?.every(item => item.code === 'ECONNREFUSED')) return null;
+    throw new Error(`Cannot reach ${url}: ${error.name === 'TimeoutError' ? 'request timed out; check the process using this port' : error.cause?.code || error.message}.`);
+  }
+  if (!response.ok) throw new Error(`${url} returned HTTP ${response.status}; another or incompatible service may be using the port.`);
+  try { return await response.json(); } catch { throw new Error(`${url} did not return JSON; another service may be using the port.`); }
+}
+
+async function waitReady(url, child, validate) {
+  const timeout = Number(process.env.AI_STARTUP_TIMEOUT_MS || 600000);
+  if (!Number.isFinite(timeout) || timeout < 1000) throw new Error('AI_STARTUP_TIMEOUT_MS must be at least 1000.');
+  const deadline = Date.now() + timeout;
+  while (Date.now() < deadline) {
+    if (child.spawnError || child.exitCode !== null || child.signalCode !== null) throw new Error(`Service exited before ${url} was ready. Check the preceding error.`);
+    const value = await getJSON(url);
+    if (value) { validate(value); return value; }
+    await delay(1000);
+  }
+  throw new Error(`Timed out waiting for ${url}. Check free RAM, downloaded model files and AI_STARTUP_TIMEOUT_MS.`);
+}
+
+function validateClip(health) {
+  if (health.status !== 'ok' || Object.entries(identity).some(([key, value]) => health[key] !== value)) {
+    throw new Error('The service at OPENCLIP_URL has a different model identity. Stop or reconfigure that service explicitly; it was left untouched.');
+  }
+}
+
+export async function ensureClip() {
+  const existing = await getJSON(`${clipUrl}/health`);
+  if (existing) { validateClip(existing); console.log(`Reusing OpenCLIP at ${clipUrl}.`); return { reused: true, health: existing }; }
+  if (!existsSync(python)) throw new Error('Python environment is missing. Run npm.cmd run ai:setup first.');
+  const url = new URL(clipUrl);
+  if (url.hostname === '[::1]') throw new Error('Use OPENCLIP_URL=http://127.0.0.1:8001 for the bundled IPv4 service.');
+  const child = spawnOwned(python, ['-u', path.join(root, 'local-ai', 'server.py'), '--host', url.hostname, '--port', url.port || '80', '--managed-stdin'], { managedStdin: true });
+  const health = await waitReady(`${clipUrl}/health`, child, validateClip);
+  return { reused: false, child, health };
+}
+
+function ollamaExecutable() {
+  if (process.env.OLLAMA_EXE) return process.env.OLLAMA_EXE;
+  const local = process.platform === 'win32' && process.env.LOCALAPPDATA && path.join(process.env.LOCALAPPDATA, 'Programs', 'Ollama', 'ollama.exe');
+  return local && existsSync(local) ? local : 'ollama';
+}
+
+function validateOllama(value) {
+  if (typeof value.version !== 'string') throw new Error('OLLAMA_URL is not an Ollama API server.');
+}
+
+export async function ensureOllama() {
+  const existing = await getJSON(`${ollamaUrl}/api/version`);
+  if (existing) { validateOllama(existing); console.log(`Reusing Ollama ${existing.version} at ${ollamaUrl}.`); return { reused: true }; }
+  const child = spawnOwned(ollamaExecutable(), ['serve'], {
+    env: { ...process.env, OLLAMA_HOST: new URL(ollamaUrl).host, OLLAMA_NO_CLOUD: '1', OLLAMA_NUM_PARALLEL: '1', OLLAMA_MAX_LOADED_MODELS: '1' },
+  });
+  try { await waitReady(`${ollamaUrl}/api/version`, child, validateOllama); }
+  catch (error) { throw new Error(`${error.message} If Ollama is missing, install it from https://ollama.com/download/windows and rerun ai:setup.`); }
+  return { reused: false, child };
+}
+
+export async function requireOllamaModel() {
+  const tags = await getJSON(`${ollamaUrl}/api/tags`);
+  const model = tags?.models?.find(model => model.name === ollamaModel || model.model === ollamaModel);
+  if (model?.remote_model || model?.remote_host) throw new Error(`${ollamaModel} is a remote model alias. Install the actual local qwen3:4b weights; the existing alias was left untouched.`);
+  if (!model) {
+    throw new Error(`${ollamaModel} is not installed in the running Ollama server. Run npm.cmd run ai:setup.`);
+  }
+  console.log(`Ollama model ${ollamaModel} is installed.`);
+}
+
+export async function pullOllamaModel() {
+  const tags = await getJSON(`${ollamaUrl}/api/tags`);
+  if (tags?.models?.some(model => model.name === ollamaModel || model.model === ollamaModel)) return requireOllamaModel();
+  console.log(`Downloading public Ollama model ${ollamaModel}; existing models are preserved.`);
+  const response = await fetch(`${ollamaUrl}/api/pull`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ model: ollamaModel, stream: true }), signal: AbortSignal.timeout(3 * 60 * 60 * 1000),
+  });
+  if (!response.ok) throw new Error(`Ollama model download returned HTTP ${response.status}. Check registry access and disk space.`);
+  let pending = '', lastProgress = '', completed = false;
+  function report(line) {
+    if (!line.trim()) return;
+    const event = JSON.parse(line);
+    if (event.error) throw new Error(`Ollama download failed: ${event.error}`);
+    const progress = event.total ? `${event.status}: ${Math.floor((event.completed || 0) / event.total * 10) * 10}%` : event.status;
+    if (progress && progress !== lastProgress) { console.log(progress); lastProgress = progress; }
+    if (event.status === 'success') completed = true;
+  }
+  for await (const chunk of response.body) {
+    pending += Buffer.from(chunk).toString('utf8');
+    let boundary;
+    while ((boundary = pending.indexOf('\n')) >= 0) { report(pending.slice(0, boundary)); pending = pending.slice(boundary + 1); }
+  }
+  report(pending);
+  if (!completed) throw new Error('Ollama model download ended before completion. Rerun ai:setup to resume.');
+  await requireOllamaModel();
+}
+
+export async function ensureNode() {
+  const port = Number(process.env.PORT || 3000);
+  if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('PORT must be between 1 and 65535.');
+  const address = `http://127.0.0.1:${port}`;
+  const dataFile = path.resolve(process.env.UNFRAME_DATA_DIR || path.join(root, 'data'), 'unframe.json');
+  const workspace = createHash('sha256').update(process.platform === 'win32' ? dataFile.toLowerCase() : dataFile).digest('hex');
+  const validate = health => { if (health.app !== 'unframe' || health.workspace !== workspace) throw new Error(`Port ${port} belongs to another app or Unframe workspace; it was left untouched. Choose another PORT.`); };
+  const validateAI = async () => {
+    const status = await getJSON(`${address}/api/ai/status?museumId=met`, 15000);
+    const expected = { provider: 'local', embeddingModel: identity.model, embeddingPretrained: identity.pretrained, dimension: identity.dimensions, ollamaModel };
+    if (!status?.configuration || Object.entries(expected).some(([key, value]) => status.configuration[key] !== value)) {
+      throw new Error(`The Unframe process at ${address} is using an older or different AI configuration. It was left running. Stop it in its original terminal, then rerun npm.cmd run ai:up (or choose another PORT).`);
+    }
+  };
+  const existing = await getJSON(`${address}/api/health`);
+  if (existing) { validate(existing); await validateAI(); console.log(`Reusing Unframe backend at ${address}.`); return { reused: true }; }
+  const child = spawnOwned(process.execPath, [path.join(root, 'server', 'index.js')]);
+  await waitReady(`${address}/api/health`, child, validate);
+  await validateAI();
+  return { reused: false, child };
+}
+
+export async function keepRunning() {
+  const running = [...children];
+  if (!running.length) { console.log('All services were already running. No existing service will be stopped by this command.'); return; }
+  console.log('Ready. Keep this terminal open. Ctrl+C stops only processes started by this command.');
+  const result = await Promise.race(running.map(child => child.result));
+  if (shutdownPromise) return;
+  throw new Error(`A managed service exited (${result.code ?? result.signal ?? result.error?.message}). Other processes started by this command will stop.`);
+}

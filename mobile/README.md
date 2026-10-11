@@ -1,4 +1,4 @@
-﻿# Unframe mobile
+# Unframe mobile
 
 A native React Native + Expo application for iOS and Android. It includes native stack navigation, bottom tabs, device photo/camera access, speech, and persistent on-device data. It is not a WebView of the website.
 
@@ -15,6 +15,12 @@ Device location is requested on opening. The Met matches within 800 m with accur
 **Floor plans, gallery labels, floor assignments, blue position markers, accessibility and artwork distances are demonstration data.** GPS does not place the visitor on an indoor map. GOMA uses its own schematic, not an official floor plan. QAGOMA holds a shared collection across QAG and GOMA; inclusion here does not mean a work is currently displayed at GOMA. See [asset sources](assets/SOURCES.md).
 
 ## Start from Windows
+
+Profile’s **Saved Artworks**, **Saved Routes** and **Recent Activity** open dedicated pages with the Profile tab retained. Artwork search covers titles, artists and museums; filters include painting, sculpture, installation and saves in the last 30 days. Routes saved from an itinerary or the Northbank sample tour keep the original itinerary, museum and constraints. Route filters cover confirmed nearby museums, visits of 30 minutes or less, The Met and GOMA. The map shortcut opens the existing museum map. Removing a saved route offers Undo.
+
+Recent Activity combines completed visits with currently saved artworks and routes. New bookmarks record their save time; older bookmarks with no timestamp appear under **Saved on this device**. The AI filter shows saved Qwen-recommended itineraries; it does not manufacture an annual summary. Empty collections use empty states, and visual test fixtures are confined to isolated test browser contexts.
+
+The **Profile** tab is a cream-and-gold personal dashboard with editable interests, on-device collection statistics, artwork thumbnails and activity shortcuts. The pencil beside the avatar opens a photo-only editor: choose a picture, drag or use the position buttons, zoom, rotate, then **Save avatar**. Cancel preserves the existing avatar. The cropped 512 × 512 JPEG is saved only on this device and survives reloads; no avatar is sent to the AI server. The default portrait, gallery backdrop and reflection landscape are temporary SVG illustrations in `src/components/ProfileIllustrations.tsx`. Unframe Plus and the AI reflection card are labelled previews; no subscription or AI annual review is generated. Empty collections show suggestions from the selected museum without saving them. Name and preference editing, privacy controls, feedback drafts and the Northbank sample tour remain under **Profile → App Settings**.
 
 Run in PowerShell:
 
@@ -48,7 +54,7 @@ SDK 54 supports iOS 15.1 and later. See the [SDK platform requirements](https://
 
 ## Preview on the computer
 
-For browser camera and Google AI, also start the Node API with `npm.cmd start` **from the repository root in another terminal**. Follow [AI setup](../AI-INTEGRATION.md) to configure Google credentials and generate the artwork index. Open **Scan** to capture/upload, or the bottom **Plan** tab to chat about your visit and create an itinerary. Camera access requires HTTPS or localhost. Google AI configuration is server-only; Expo Go camera configuration is unchanged.
+For browser camera and local AI, run `npm.cmd run ai:setup` once, then `npm.cmd run ai:up` **from the repository root in another terminal**. Follow [AI setup](../AI-INTEGRATION.md) to install OpenCLIP and Ollama Qwen and generate the artwork index; `npm.cmd run ai:doctor -- --smoke` performs real model checks. No cloud credentials or paid account are required. Open **Scan** to start automatic scanning, then tap a possible artwork to confirm it. The bottom **Plan** tab lets you chat about your visit and create an itinerary. Browser camera access requires HTTPS or localhost. Model addresses and settings remain on the server.
 
 Run from any directory using the full project path:
 
@@ -63,26 +69,36 @@ If a previous installation exits with `TypeError: eventsQueue is not iterable`, 
 
 This runs the same React Native screens using React Native Web. On desktop windows 600 px or wider, the app automatically appears in a centred phone frame with a 390 px content width; narrower windows use the full viewport. No DevTools device mode is required. Keep the terminal open and use the URL it prints. Geolocation requires localhost or HTTPS and browser permission. This preview cannot validate native camera behaviour, audio output, signing, installation or gestures.
 
+### Native camera scanning
+
+Native Scan uses `expo-camera` to show the rear camera and sample frames automatically. It normalises samples to JPEG at no more than 960 px, waits three seconds after each recognition request before sampling again, and requires the same explicit candidate selection as the browser. Leaving the screen or backgrounding the app stops the camera and cancels requests; temporary frame files are deleted. A photo-library upload remains available. The native implementation still needs camera, permission and recognition testing on physical iOS/Android devices.
+
+Native requests require `EXPO_PUBLIC_API_URL` in `mobile/.env.local` to point to an absolute backend URL reachable by the phone. OpenCLIP and Ollama run on that backend computer. `localhost` and `127.0.0.1` refer to the phone itself; the default Node server also listens only on the computer's loopback interface, so simply substituting a LAN IP is insufficient. Use a suitable HTTPS development forwarder or explicitly configure the backend to be reachable on your trusted LAN, then restart Expo after setting the URL. Keep model services on loopback. See [AI setup and deployment limits](../AI-INTEGRATION.md).
+
+CPU inference may take several minutes. The client waits 330,000 ms for Qwen and 150,000 ms for OpenCLIP by default. Set `EXPO_PUBLIC_AI_TIMEOUT_MS` and `EXPO_PUBLIC_CLIP_TIMEOUT_MS` in `mobile/.env.local` if needed, then restart Expo; accepted values are whole milliseconds from 1,000 to 900,000. Keep each client timeout greater than the corresponding server timeout so the server can return its useful error or fallback. See `.env.example`. Leaving a screen or cancelling still aborts the request immediately.
+
 ## Features
 
 - **Home:** Selected museum's demo map, room selection, nearby cards, artwork/artist search and a full collection view; the Met schematic also has demo floor selection.
-- **Plan:** a dedicated chat with quick prompts, a fixed message composer and a summary of confirmed preferences. Gemini interprets time, interests, starting point, walking/access needs and must-see requests; **Generate route** opens a separate itinerary. Returning or switching tabs preserves the conversation; switching museums or choosing **New conversation** starts fresh. Enter sends, Shift+Enter adds a line. Failed messages can be retried or discarded, and leaving the tab cancels pending work.
-- **Scan:** opens directly into a camera view, with a shutter and photo-library shortcut. Capture/upload starts recognition; a compact result card opens artwork details or an optional AI interpretation. The separate Map tab has been removed; use the map on Home.
+- **Plan:** a dedicated chat with quick prompts, a fixed message composer and a summary of confirmed preferences. Local Qwen interprets time, interests, starting point, walking/access needs and must-see requests; **Generate route** opens a separate itinerary. Returning or switching tabs preserves the conversation; switching museums or choosing **New conversation** starts fresh. Enter sends, Shift+Enter adds a line. Failed messages can be retried or discarded, and leaving the tab cancels pending work.
+- **Scan:** opens the camera and automatically looks for possible artworks, like a camera scanner. Tap a candidate to confirm it and load an optional AI interpretation, then open its details or resume scanning. Browser Scan offers **Pause scanning**, **Resume scanning** and a **Photos** upload shortcut. The museum map remains on Home.
 - **Saved:** persistent bookmarks and optional completed-visit reflections.
 - **Profile:** preferences, larger text, history consent, feedback and the separate Northbank sample tour.
 - **Sample tour:** the existing fictional Northbank route planner and catalogue guide remain available. Active tour progress survives a restart.
-- **Photo lookup:** camera permission is requested on entering web Scan. Capture/upload starts Vertex similarity matching and Gemini interpretation; opening the camera alone sends no photo. Permission denial still allows uploading. Leaving Scan stops the camera and cancels pending recognition. Native photo lookup retains its existing manual flow.
-- **Met and GOMA route planning:** Gemini recommendations plus deterministic Dijkstra paths, demo-map overlay and ordered stops. Route generation can use local recommendations if Gemini is unavailable; conversational preference updates require the AI service and show an explicit retryable error on failure.
+- **Live artwork lookup:** browser Scan samples one frame at a time, waiting three seconds after each response before sending another. OpenCLIP ranks up to three records from the selected museum; only selecting a candidate requests a Qwen interpretation based on the catalogue record. Frames below the matching threshold keep scanning. Similarity is not an accuracy estimate or probability. Service errors pause scanning until retry. Pausing, hiding the browser or leaving Scan releases the camera and cancels requests; old results are ignored. Permission denial still permits a single-image upload.
+- **Met and GOMA route planning:** Qwen selects works, while deterministic Dijkstra paths enforce route order, time and accessibility constraints. The itinerary shows whether recommendations came from Qwen or local rules. Route generation falls back to local rules if Qwen is unavailable; conversational preference updates require the AI service and show an explicit retryable error on failure.
 - **Listen:** device text-to-speech. On iPhone, silent mode can prevent audio playback; turn it off to listen.
 - **Feedback:** local drafts and the native share sheet. Nothing is automatically sent to a museum.
 
-The eight Met paintings and four QAGOMA Collection works are real works; their introductory text is prototype copy. Northbank Gallery and its collection remain fictional. Device location and configurable Google AI are connected in the web flow. Live indoor positioning, multi-user accounts and museum synchronisation remain unavailable. Capturing or uploading a photo in web Scan sends it to the server and Google for recognition; Unframe does not persist it.
+The eight Met paintings and four QAGOMA Collection works are real works; their introductory text is prototype copy. Northbank Gallery and its collection remain fictional. Device location and local AI services are connected in the web flow. Live indoor positioning, multi-user accounts and museum synchronisation remain unavailable. Opening Scan with camera permission automatically sends sampled frames to your Node backend and local OpenCLIP service; uploads are sent on selection. Unframe does not persist these images. Matching compares the whole frame with catalogue reference images; it does not independently locate every artwork in a room.
+
+Automated mocked browser tests verify the app flow independently of the models. Real recognition requires a local 512-dimensional OpenCLIP index, and real interpretation and planning require Ollama `qwen3:4b`. Use the [local setup and live check](../AI-INTEGRATION.md) to verify the current computer; passing mocked tests alone does not verify model deployment.
 
 ## Device data
 
-Data is stored under `unframe.mobile.v1` using AsyncStorage on the device. The prototype stores bookmarks, preferences, active tours, completed visits and feedback drafts. Selected photos and location coordinates are not stored. The data is not encrypted; do not use this prototype to store sensitive information.
+Data is stored under `unframe.mobile.v1` using AsyncStorage on the device. The prototype stores bookmarks and their save times, saved route snapshots, preferences, the saved cropped avatar, active tours, completed visits and feedback drafts. Artwork recognition photos and location coordinates are not stored. Avatar photos are re-encoded locally without EXIF; only the cropped avatar is added to the saved collection data. The data is not encrypted; do not use this prototype to store sensitive information.
 
-Planning conversations stay in memory for the current museum session and are cleared on reload, museum change or New conversation. Sending a message transmits it, the latest eight messages and the current visit preferences through the backend to Google. Unframe does not write planning conversations to disk.
+Planning conversations stay in memory for the current museum session and are cleared on reload, museum change or New conversation. Sending a message transmits it, the latest eight messages and the current visit preferences through the backend to local Ollama Qwen. Unframe does not write planning conversations to disk. The AI models run on the backend computer, which may be separate from the phone; public model downloads require internet access during setup.
 
 The existing website remains a separate curator workspace. Its JSON database is not silently copied to the phone. The mobile and web clients share the bundled collection and core route/guide algorithms under `../shared/`, but changes made in the web editor do not sync to a running mobile installation.
 

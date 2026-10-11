@@ -9,6 +9,8 @@ For the five nearby-museum preview photographs, see [museum discovery image sour
 
 ## Additional catalogue works
 
+The Profile dashboard reuses the bundled artwork and museum images credited here. Its portrait, classical gallery and reflection landscape are temporary original SVG illustrations defined in `src/components/ProfileIllustrations.tsx`, not photographs of a visitor or additional catalogue artworks. They make no external image requests.
+
 Official records and API public-domain flags checked on 2026-10-03. These five images are from The Met Open Access collection and are bundled for offline viewing.
 
 - `wheat-field-with-cypresses.jpg`: Vincent van Gogh, *Wheat Field with Cypresses*, 1889, oil on canvas. [The Met record 436535](https://www.metmuseum.org/art/collection/search/436535). [Image](https://images.metmuseum.org/CRDImages/ep/web-large/DP-42549-001.jpg).
@@ -19,7 +21,7 @@ Official records and API public-domain flags checked on 2026-10-03. These five i
 
 The UI uses accurate metadata for these works instead of the mismatched artist/date labels in the design reference. Introductory text and Chinese translations are original prototype copy, not museum-approved interpretation. The floor plan is drawn in code as a design illustration; room placement, floor assignments, visit durations, accessibility, the blue marker and artwork distances are demo data, not The Met navigation data. Inclusion in this demo does not indicate that a work is currently on view; consult the official record for availability.
 
-The Met catalogue has eight artworks; the GOMA demo adds four below. After configuring Google Cloud, `npm.cmd run ai:index` rebuilds the recognition index for all twelve (twelve billable embedding requests). This command was not run when collecting the GOMA sources. Catalogue browsing and route planning do not require this index.
+The Met catalogue has eight artworks; the GOMA demo adds four below. After local AI setup, `npm.cmd run ai:index` rebuilds the recognition index for all twelve using bundled reference images and local OpenCLIP ViT-B-32 (`laion2b_s34b_b79k`), producing normalised 512-dimensional vectors with model identity metadata. Vectors from the former 1408-dimensional index are incompatible and must be rebuilt. Catalogue browsing and route planning do not require this index.
 
 ## Brisbane GOMA / QAGOMA assets
 

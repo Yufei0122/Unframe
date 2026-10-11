@@ -1,19 +1,20 @@
 import { catalogues } from './catalogues.js';
 import { readAIConfig, AIError, logFailure } from './config.js';
-import { createGoogleClient } from './google.js';
+import { createLocalClient } from './local-http.js';
 import { createEmbeddingService, createEmbeddingStore } from './embeddings.js';
-import { createGeminiService } from './gemini.js';
+import { createOllamaService } from './ollama.js';
 import { createRecognitionService } from './recognition.js';
 import { createRouteService } from './routes.js';
 import { createPlanningChatService } from './chat.js';
 import { readImageUpload, readLimited } from './images.js';
+import { getAIStatus } from './status.js';
 
-export function createAIHandler({ config = readAIConfig(), google = createGoogleClient(config), store = createEmbeddingStore(config) } = {}) {
-  const gemini = createGeminiService(config, google);
+export function createAIHandler({ config = readAIConfig(), clip = createLocalClient(config, 'OPENCLIP'), ollamaClient = createLocalClient(config, 'OLLAMA'), store = createEmbeddingStore(config) } = {}) {
+  const ollama = createOllamaService(config, ollamaClient);
   const services = new Map([...catalogues].map(([id, { collection, graph, museum }]) => [id, {
-    recognition: createRecognitionService({ config, embeddings: createEmbeddingService(config, google), store, gemini, collection }),
-    routes: createRouteService({ gemini, collection, graph }),
-    chat: createPlanningChatService({ gemini, collection, graph, museum }),
+    recognition: createRecognitionService({ config, embeddings: createEmbeddingService(config, clip), store, ollama, collection }),
+    routes: createRouteService({ ollama, collection, graph }),
+    chat: createPlanningChatService({ ollama, collection, graph, museum }),
   }]));
   const selectMuseum = (id = 'met') => {
     if (typeof id !== 'string' || !services.has(id)) throw new AIError(400, 'INVALID_MUSEUM', 'Choose a supported museum: met or goma.');
@@ -33,20 +34,27 @@ export function createAIHandler({ config = readAIConfig(), google = createGoogle
       const catalogue = catalogues.get(url.searchParams.get('museumId') ?? 'met');
       return catalogue ? send(res, 200, { museum: catalogue.museum, artworks: catalogue.collection, graph: catalogue.graph }) : send(res, 400, { error: 'Choose a supported museum: met or goma.', code: 'INVALID_MUSEUM' });
     }
-    if (req.method !== 'POST' || !['/api/ai/artworks/recognise', '/api/ai/routes/plan', '/api/ai/routes/chat'].includes(pathname)) return send(res, 404, { error: 'AI endpoint not found.' });
+    if (req.method === 'GET' && pathname === '/api/ai/status') {
+      const museumId = url.searchParams.get('museumId') ?? 'met';
+      const catalogue = catalogues.get(museumId);
+      if (!catalogue) return send(res, 400, { error: 'Choose a supported museum: met or goma.', code: 'INVALID_MUSEUM' });
+      return send(res, 200, await getAIStatus({ config, store, collection: catalogue.collection, museumId, clip, ollamaClient }));
+    }
+    if (req.method !== 'POST' || !['/api/ai/artworks/recognise', '/api/ai/artworks/confirm', '/api/ai/routes/plan', '/api/ai/routes/chat'].includes(pathname)) return send(res, 404, { error: 'AI endpoint not found.' });
     if (active >= 2) return send(res, 429, { error: 'AI is busy. Please try again shortly.' });
     active++;
     try {
       if (pathname === '/api/ai/artworks/recognise') {
         const { recognition } = selectMuseum(url.searchParams.get('museumId') ?? undefined);
-        const { image, preferences } = await readImageUpload(req);
-        return send(res, 200, await recognition.recognise(image, preferences));
+        const { image } = await readImageUpload(req);
+        return send(res, 200, await recognition.recognise(image));
       }
       if (!req.headers['content-type']?.includes('application/json')) throw new AIError(415, 'JSON_REQUIRED', 'Send application/json.');
       let input;
       const bytes = await readLimited(req, pathname === '/api/ai/routes/chat' ? 32000 : 16000);
       try { input = JSON.parse(bytes.toString('utf8')); } catch { throw new AIError(400, 'INVALID_JSON', 'Invalid JSON request.'); }
       const service = selectMuseum(input?.museumId);
+      if (pathname === '/api/ai/artworks/confirm') return send(res, 200, await service.recognition.confirm(input));
       return send(res, 200, await (pathname === '/api/ai/routes/chat' ? service.chat.reply(input) : service.routes.plan(input)));
     } catch (error) {
       logFailure('request', error);

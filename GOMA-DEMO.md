@@ -1,6 +1,6 @@
 # Brisbane GOMA demo
 
-Collected from official QAGOMA records and stories on 2026-10-03. No Google AI calls were made to collect these records or test the integration.
+Collected from official QAGOMA records and stories on 2026-10-03. The local AI integration uses these existing source-backed records; model output does not replace catalogue metadata.
 
 ## Museum
 
@@ -25,8 +25,8 @@ Local images are from QAGOMA's public Stories and Visit pages, with source links
 
 - Open the discovery entrance → **Brisbane** → **Choose GOMA** → **Start Visit**. Artwork cards, search, details, bilingual device speech and saved artworks work locally.
 - GOMA has a separate schematic map. The four room names, their positions, walking distances, durations and accessibility flags are invented for this demo. They are not the official GOMA floor plan.
-- The bottom **Plan** chat sends `museumId: "goma"` with conversational preference updates and route requests, then opens a separate result page. Its museum and graph are captured with the result. The backend limits recommendation IDs, starting points and must-see selections to that museum. Route generation uses a local fallback when Google recommendations are unavailable; failed chat messages remain retryable.
+- The bottom **Plan** chat sends `museumId: "goma"` with conversational preference updates and route requests, then opens a separate result page. Its museum and graph are captured with the result. The backend limits recommendation IDs, starting points and must-see selections to that museum. Route generation uses the existing deterministic fallback when local Ollama Qwen recommendations are unavailable; failed chat messages remain retryable.
 - `GET /api/ai/catalogue?museumId=goma` returns the GOMA catalogue and graph. `POST /api/ai/artworks/recognise?museumId=goma` searches only GOMA index entries. Omitting the museum still defaults to `met`; unknown IDs return 400.
-- Restart the Node backend to load the new catalogue. Browsing and route planning do not need new embeddings. Photo recognition of GOMA works requires rebuilding the reference index with `npm.cmd run ai:index` after configuring Google Cloud. It indexes all 12 artworks and makes 12 billable embedding requests. The collection work here did **not** run that command or change credentials.
+- Restart the Node backend after catalogue changes. Browsing and route planning do not need image embeddings. Run `npm.cmd run ai:setup`, then `npm.cmd run ai:up` to prepare local OpenCLIP/Ollama and index all 12 reference images. `npm.cmd run ai:index` rebuilds the complete 512-dimensional OpenCLIP index while the embedding service is running. No cloud account or billable requests are needed. See [AI-INTEGRATION.md](AI-INTEGRATION.md) for deployment evidence and limitations.
 
 Data lives in `shared/goma-collection.json`, `shared/goma-graph.json` and `shared/museums.json`. No database migration or new dependency is needed.

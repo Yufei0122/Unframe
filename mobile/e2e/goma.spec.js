@@ -71,14 +71,20 @@ test('GOMA route opens its own itinerary with a GOMA map and artwork', async ({ 
 });
 
 test('GOMA scan scopes image matching to the selected collection', async ({ page }) => {
+  const artwork = { id: 'goma-heritage', title: 'Heritage', artist: 'Cai Guo-Qiang', year: '2013', medium: 'Animal replicas', description: 'Collection notes', source: 'QAGOMA' };
   await page.route('**/api/ai/artworks/recognise*', async route => {
     expect(new URL(route.request().url()).searchParams.get('museumId')).toBe('goma');
-    await route.fulfill({ json: { matched: true, similarity: .96, artwork: { id: 'goma-heritage', title: 'Heritage', artist: 'Cai Guo-Qiang', year: '2013', medium: 'Animal replicas', description: 'Collection notes', source: 'QAGOMA' }, aiExplanation: null } });
+    await route.fulfill({ json: { matched: true, requiresConfirmation: true, candidates: [{ artwork, similarity: .96 }] } });
+  });
+  await page.route('**/api/ai/artworks/confirm', async route => {
+    expect(route.request().postDataJSON()).toMatchObject({ museumId: 'goma', artworkId: 'goma-heritage' });
+    await route.fulfill({ json: { artwork, aiExplanation: null } });
   });
   await chooseGoma(page);
   await page.getByRole('button', { name: 'Scan an artwork', exact: true }).click();
   await expect(page.getByText('GOMA · demo collection')).toBeVisible();
   await page.getByLabel('Upload artwork image').setInputFiles(path.resolve(__dirname, '../assets/goma-heritage.jpg'));
+  await page.getByRole('button', { name: 'Select Heritage', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Heritage', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Open artwork details' }).click();
   await expect(page.getByRole('heading', { name: 'Heritage', exact: true })).toBeVisible();

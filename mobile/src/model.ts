@@ -12,7 +12,8 @@ export interface Preferences { name: string; interests: string[]; duration: numb
 export interface Visit { id: string; date: string; artworkIds: string[]; summary: string }
 export interface Feedback { id: string; date: string; artworkId?: string; message: string; type: string }
 export interface ActiveTour extends RoutePlan { completed: string[]; skipped: string[] }
-export interface MobileState { version: 1; preferences: Preferences; saved: string[]; visits: Visit[]; feedback: Feedback[]; tour: ActiveTour | null }
+export type SavedRoute = { id: string; title: string; savedAt: string } & ({ kind: 'museum'; museumId: MuseumId; itinerary: AIRoute } | { kind: 'sample'; plan: RoutePlan });
+export interface MobileState { version: 1; preferences: Preferences; avatarUri?: string; saved: string[]; savedAt?: Record<string, string>; savedRoutes?: SavedRoute[]; visits: Visit[]; feedback: Feedback[]; tour: ActiveTour | null }
 export const initialState: MobileState = { version: 1, preferences: { name: 'Alex', interests: ['Nature', 'Colour'], duration: 30, stepFree: false, saveHistory: true, largeText: false }, saved: [], visits: [], feedback: [], tour: null };
 export type RootStackParams = {
   MuseumSelect: undefined;
@@ -25,5 +26,7 @@ export type RootStackParams = {
   Lookup: undefined;
   Feedback: { artworkId?: string } | undefined;
   About: undefined;
+  AppSettings: undefined;
 };
-export type TabParams = { Discover: undefined; Plan: undefined; Scan: undefined; Guide: { artworkId?: string } | undefined; Saved: undefined; You: undefined };
+export type ProfileStackParams = { ProfileHome: undefined; SavedArtworks: undefined; SavedRoutes: undefined; RecentActivity: { filter?: 'All' | 'Visits' | 'Saves' | 'Routes' | 'AI' } | undefined; SavedRouteDetails: { id: string } };
+export type TabParams = { Discover: undefined; Plan: undefined; Scan: undefined; Guide: { artworkId?: string } | undefined; Saved: { tab?: 'saved' | 'visits' } | undefined; You: NavigatorScreenParams<ProfileStackParams> | undefined };
