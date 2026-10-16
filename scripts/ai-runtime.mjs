@@ -5,6 +5,8 @@ import { fileURLToPath } from 'node:url';
 import { loadEnvFile } from 'node:process';
 import { createHash } from 'node:crypto';
 import { setTimeout as delay } from 'node:timers/promises';
+import net from 'node:net';
+import { planningVersion } from '../server/ai/planning-status.js';
 
 export const root = fileURLToPath(new URL('../', import.meta.url));
 try { loadEnvFile(path.join(root, '.env')); } catch (error) { if (error.code !== 'ENOENT') throw error; }
@@ -150,23 +152,24 @@ export async function ensureOllama() {
   return { reused: false, child };
 }
 
-export async function requireOllamaModel() {
+export async function requireOllamaModel(modelName = ollamaModel) {
   const tags = await getJSON(`${ollamaUrl}/api/tags`);
-  const model = tags?.models?.find(model => model.name === ollamaModel || model.model === ollamaModel);
-  if (model?.remote_model || model?.remote_host) throw new Error(`${ollamaModel} is a remote model alias. Install the actual local qwen3:4b weights; the existing alias was left untouched.`);
+  const model = tags?.models?.find(model => model.name === modelName || model.model === modelName);
+  if (model?.remote_model || model?.remote_host) throw new Error(`${modelName} is a remote model alias. Install actual local weights; the existing alias was left untouched.`);
   if (!model) {
-    throw new Error(`${ollamaModel} is not installed in the running Ollama server. Run npm.cmd run ai:setup.`);
+    throw new Error(`${modelName} is not installed in the running Ollama server. Run npm.cmd run ai:setup.`);
   }
-  console.log(`Ollama model ${ollamaModel} is installed.`);
+  console.log(`Ollama model ${modelName} is installed.`);
 }
 
-export async function pullOllamaModel() {
+export async function pullOllamaModel(modelName = ollamaModel) {
+  if (!/^[a-zA-Z0-9_.:/-]+$/.test(modelName) || /cloud/i.test(modelName)) throw new Error('Only a local model may be downloaded.');
   const tags = await getJSON(`${ollamaUrl}/api/tags`);
-  if (tags?.models?.some(model => model.name === ollamaModel || model.model === ollamaModel)) return requireOllamaModel();
-  console.log(`Downloading public Ollama model ${ollamaModel}; existing models are preserved.`);
+  if (tags?.models?.some(model => model.name === modelName || model.model === modelName)) return requireOllamaModel(modelName);
+  console.log(`Downloading public Ollama model ${modelName}; existing models are preserved.`);
   const response = await fetch(`${ollamaUrl}/api/pull`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ model: ollamaModel, stream: true }), signal: AbortSignal.timeout(3 * 60 * 60 * 1000),
+    body: JSON.stringify({ model: modelName, stream: true }), signal: AbortSignal.timeout(3 * 60 * 60 * 1000),
   });
   if (!response.ok) throw new Error(`Ollama model download returned HTTP ${response.status}. Check registry access and disk space.`);
   let pending = '', lastProgress = '', completed = false;
@@ -185,10 +188,10 @@ export async function pullOllamaModel() {
   }
   report(pending);
   if (!completed) throw new Error('Ollama model download ended before completion. Rerun ai:setup to resume.');
-  await requireOllamaModel();
+  await requireOllamaModel(modelName);
 }
 
-export async function ensureNode() {
+export async function ensureNode({ planningOnly = false } = {}) {
   const port = Number(process.env.PORT || 3000);
   if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('PORT must be between 1 and 65535.');
   const address = `http://127.0.0.1:${port}`;
@@ -196,8 +199,9 @@ export async function ensureNode() {
   const workspace = createHash('sha256').update(process.platform === 'win32' ? dataFile.toLowerCase() : dataFile).digest('hex');
   const validate = health => { if (health.app !== 'unframe' || health.workspace !== workspace) throw new Error(`Port ${port} belongs to another app or Unframe workspace; it was left untouched. Choose another PORT.`); };
   const validateAI = async () => {
-    const status = await getJSON(`${address}/api/ai/status?museumId=met`, 15000);
-    const expected = { provider: 'local', embeddingModel: identity.model, embeddingPretrained: identity.pretrained, dimension: identity.dimensions, ollamaModel };
+    const status = await getJSON(`${address}/api/ai/${planningOnly ? 'planning/status' : 'status?museumId=met'}`, 15000);
+    const expected = planningOnly ? { provider: 'local', ollamaModel, planningVersion }
+      : { provider: 'local', embeddingModel: identity.model, embeddingPretrained: identity.pretrained, dimension: identity.dimensions, ollamaModel, visionModel: process.env.OLLAMA_VISION_MODEL || 'qwen3-vl:4b', analysisVersion: 1, planningVersion };
     if (!status?.configuration || Object.entries(expected).some(([key, value]) => status.configuration[key] !== value)) {
       throw new Error(`The Unframe process at ${address} is using an older or different AI configuration. It was left running. Stop it in its original terminal, then rerun npm.cmd run ai:up (or choose another PORT).`);
     }
@@ -208,6 +212,24 @@ export async function ensureNode() {
   await waitReady(`${address}/api/health`, child, validate);
   await validateAI();
   return { reused: false, child };
+}
+
+export async function startMobileWeb() {
+  const occupied = await new Promise((resolve, reject) => {
+    const socket = net.connect({ host: '127.0.0.1', port: 8081 });
+    socket.setTimeout(2000);
+    socket.once('connect', () => { socket.destroy(); resolve(true); });
+    socket.once('timeout', () => { socket.destroy(); reject(new Error('Cannot check Expo port 8081.')); });
+    socket.once('error', error => error.code === 'ECONNREFUSED' ? resolve(false) : reject(error));
+  });
+  if (occupied) throw new Error('Port 8081 is already in use. Stop Expo in its original terminal, then rerun npm.cmd run ai:web. The existing process was left untouched.');
+  const cli = path.join(root, 'mobile', 'node_modules', 'expo', 'bin', 'cli');
+  if (!existsSync(cli)) throw new Error('Mobile dependencies are missing. Run npm.cmd --prefix mobile ci.');
+  const api = `http://127.0.0.1:${process.env.PORT || 3000}`;
+  console.log(`Starting mobile web on http://localhost:8081 with backend ${api}.`);
+  return spawnOwned(process.execPath, [cli, 'start', '--web', '--port', '8081', '--offline'], {
+    cwd: path.join(root, 'mobile'), env: { ...process.env, EXPO_PUBLIC_API_URL: api, EXPO_NO_TELEMETRY: '1' },
+  });
 }
 
 export async function keepRunning() {

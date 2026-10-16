@@ -14,18 +14,19 @@ import { parseExplanation } from '../server/ai/ollama.js';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const args = process.argv.slice(2);
-assert.ok(args.every(arg => arg === '--only-chat') && args.length <= 1, 'Usage: node scripts/validate-local-ai.mjs [--only-chat]');
+assert.ok(args.every(arg => ['--only-chat', '--recognition-only'].includes(arg)) && args.length <= 1, 'Usage: node scripts/validate-local-ai.mjs [--only-chat | --recognition-only]');
 const chatOnly = args.includes('--only-chat');
+const recognitionOnly = args.includes('--recognition-only');
 const config = readAIConfig();
 const port = Number(process.env.PORT || 3000);
 assert.ok(Number.isInteger(port) && port >= 1 && port <= 65535, 'PORT must be a valid local port.');
 const backend = `http://127.0.0.1:${port}`;
 const initialReport = path.join(root, '.local-ai', 'validation.json');
-const output = path.join(root, '.local-ai', chatOnly ? 'chat-validation.json' : 'validation.json');
+const output = path.join(root, '.local-ai', chatOnly ? 'chat-validation.json' : recognitionOnly ? 'recognition-validation.json' : 'validation.json');
 const report = {
   startedAt: new Date().toISOString(), completedAt: null, passed: false,
-  scope: chatOnly ? 'chinese_chat_retest_only' : 'full_local_ai_acceptance',
-  verification: chatOnly ? 'One real Node HTTP/Ollama Chinese chat request; no embedding, explanation or route requests repeated; no mocks' : 'real OpenCLIP embeddings and real Node HTTP/Ollama inference; no mocks',
+  scope: chatOnly ? 'chinese_chat_retest_only' : recognitionOnly ? 'catalogue_recognition_acceptance' : 'full_local_ai_acceptance',
+  verification: chatOnly ? 'One real Node HTTP/Ollama Chinese chat request; no embedding, explanation or route requests repeated; no mocks' : recognitionOnly ? 'Real OpenCLIP embeddings and Node HTTP catalogue recognition; no mocks; no guide/chat inference' : 'real OpenCLIP embeddings and real Node HTTP/Ollama inference; no mocks',
   model: { embedding: config.embeddingModel, pretrained: config.embeddingPretrained, dimensions: config.dimension, ollama: config.ollamaModel },
   backend, threshold: config.threshold,
   limitation: chatOnly ? 'Isolated Chinese chat retest. Initial embedding, recognition, explanation and route results remain in the unchanged initial report, including its first failed chat check. This retest does not repeat or replace those checks.' : 'Small, controlled sample of bundled references, mild transformations and six negative controls. Cosine similarity is neither probability nor accuracy. These results do not establish real visitor-camera accuracy or a general false-positive rate.',
@@ -253,6 +254,7 @@ try {
       assert.deepEqual(result.candidates, []);
       return { museumId, sample: image.name, matched: false };
     });
+    if (recognitionOnly) continue;
     await checkHttp(`${museumId}/real_ollama_confirmation`, async () => {
       const result = await httpJSON('artworks/confirm', { museumId, artworkId: artwork.id, visitorPreferences: ['Colour'] });
       assert.ok(!result.warning && !result.errorCode, `Explanation fell back: ${result.errorCode || result.warning}`);
@@ -269,6 +271,7 @@ try {
   }
 
   }
+  if (!recognitionOnly) {
   const museumId = 'goma';
   const artwork = catalogues.get(museumId).collection.find(artwork => artwork.accessible);
   await checkHttp('goma/real_chinese_planning_chat', async () => {
@@ -285,6 +288,7 @@ try {
     assert.ok(result.preferences.interests.some(value => /colour|color|色彩|颜色/i.test(value)), 'Colour interest was not captured.');
     return { museumId, provider: 'ollama', model: config.ollamaModel, message, result };
   });
+  }
 } catch (error) { fail('validation_setup_or_execution', error); }
 finally {
   const positives = report.references.map(row => row.expectedSimilarity);
@@ -301,7 +305,8 @@ finally {
   };
   report.passed = report.failures.length === 0 && (chatOnly
     ? report.http.length === 1
-    : report.references.length > 0 && report.negatives.length === 6 && report.http.length === 13);
+    : report.references.length === [...catalogues.values()].reduce((count, { collection }) => count + collection.length * 4, 0)
+      && report.negatives.length === 6 && report.http.length === (recognitionOnly ? catalogues.size * 4 : 13));
   report.completedAt = new Date().toISOString();
   await save();
   console.log(JSON.stringify({ passed: report.passed, ...report.summary, report: output, note: report.limitation }, null, 2));

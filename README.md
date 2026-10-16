@@ -5,6 +5,23 @@ Unframe is a React Native / Expo museum companion. **The mobile app is the only 
 ## Run on Windows
 
 Requires Node.js 22 or later. For a fresh checkout:
+The **Scan** screen samples the camera view and suggests artworks using local **OpenCLIP ViT-B-32 / laion2b_s34b_b79k**. Choose a candidate to confirm the artwork and request an **Ollama qwen3:4b** explanation grounded in catalogue notes. Scanning supports pause/resume and photo upload. Choose **The Met** (eight artworks) or **Brisbane GOMA** (four QAGOMA works). The **Plan** tab uses Qwen to discuss preferences and select recommended works; the existing deterministic planner enforces time and accessibility constraints. See **[GOMA sources](GOMA-DEMO.md)** and **[AI setup and verification](AI-INTEGRATION.md)** for configuration, indexing, tests and limitations.
+
+**Beyond the demo collection:** uploaded photos without a local match, or **Analyse any artwork**, use local **Qwen3-VL 4B** for visual observations and tentative identity suggestions. The backend searches The Met, the Art Institute of Chicago and Wikimedia Commons using suggested titles/artists, then compares up to three public reference images with OpenCLIP when available. Uncertain identities remain explicitly unconfirmed. No photograph is sent to these public search services. This supports investigating arbitrary images; it cannot guarantee the identity of every artwork.
+
+For an existing installation, run `npm.cmd run ai:setup:vision` once (the default vision download is approximately 3.3 GB). Stop the old backend/Expo terminals, then run **`npm.cmd run ai:web`** to start models, backend and Expo together, with the browser API URL automatically set to the backend's configured port. Keep that terminal open. The same AI commands work from `mobile`. Use `npm.cmd run ai:doctor -- --vision` for a real HTTP/vision check; see [the general-analysis workflow and verification limits](AI-INTEGRATION.md#general-artwork-analysis) before treating suggestions as identified artworks.
+
+From the project root, run `npm.cmd install`, then `npm.cmd run ai:setup` to install Python dependencies and download the public models. Run `npm.cmd run ai:up` to check/start local model services, build a compatible 512-dimensional index when needed, and start Node at http://127.0.0.1:3000. In another terminal run `npm.cmd run mobile:web -- --port 8081` and open http://localhost:8081. No Google project, ADC, API key or paid account is required; Python virtual-environment activation is automatic.
+
+Run `npm.cmd run ai:doctor` for service/model/index readiness, or `npm.cmd run ai:doctor -- --smoke` for real embedding and structured Qwen checks. Opening Scan with camera access sends sampled frames to local services; Unframe does not persist them. Similarity is not probability or accuracy. CPU timeouts, service reuse, privacy and deployment evidence are documented in [AI-INTEGRATION.md](AI-INTEGRATION.md).
+
+For **AI route planning only**, use `npm.cmd run ai:routes:verify`: it starts/reuses local Qwen, checks actual Chinese chat and constrained routes for both museums, then starts Expo. It does not require image models or an artwork embedding index. `npm.cmd run ai:routes` starts without repeating acceptance. [Route acceptance](AI-INTEGRATION.md#route-planning-independent-startup-and-strict-model-acceptance) requires Qwen results rather than counting a local-rule fallback as model success; reports are saved under `.local-ai/acceptance/routes-*.json`.
+
+**Verified on this Windows checkout (2026-10-11):** mobile web is at http://localhost:8081 and its new backend at http://127.0.0.1:3001, because the preexisting port-3000 server was preserved. The local `.env` and mobile API URL are configured accordingly. Both models, the twelve-artwork index, real explanations/routes and the corrected Chinese planning chat were exercised. See the [deployment evidence and limits](AI-INTEGRATION.md#verified-windows-deployment--2026-10-11-australiabrisbane) for test results and retained first-failure/retest records.
+
+## iPhone / mobile app
+
+The native iOS and Android app is in **[mobile/](mobile/README.md)**. It uses React Native and Expo, includes native navigation, camera/photo access and speech, and keeps visitor data on the device.
 
 ```powershell
 npm.cmd ci

@@ -19,9 +19,13 @@ export function readAIConfig(env = process.env) {
   };
   const ollamaModel = env.OLLAMA_MODEL || 'qwen3:4b';
   if (!/^[a-zA-Z0-9_.:/-]+$/.test(ollamaModel) || /cloud/i.test(ollamaModel)) throw new Error('OLLAMA_MODEL must be a locally installed model');
+  const visionModel = env.OLLAMA_VISION_MODEL || 'qwen3-vl:4b';
+  if (!/^[a-zA-Z0-9_.:/-]+$/.test(visionModel) || /cloud/i.test(visionModel)) throw new Error('OLLAMA_VISION_MODEL must be a locally installed vision model');
   return {
     clipUrl: localUrl('OPENCLIP_URL', 'http://127.0.0.1:8001'),
     ollamaUrl: localUrl('OLLAMA_URL', 'http://127.0.0.1:11434'), ollamaModel,
+    visionModel, visionTimeoutMs: integer('OLLAMA_VISION_TIMEOUT_MS', 540000, 1000, 720000),
+    publicSearch: env.ARTWORK_PUBLIC_SEARCH !== 'false',
     embeddingModel: 'ViT-B-32', embeddingPretrained: 'laion2b_s34b_b79k',
     dimension: 512, threshold,
     timeoutMs: integer('OLLAMA_TIMEOUT_MS', 300000, 1000, 1800000),

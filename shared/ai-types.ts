@@ -22,13 +22,26 @@ export interface RecognitionResult {
   artwork?: RecognisedArtwork;
   aiExplanation?: null;
 }
+export interface ArtworkAnalysis {
+  identityStatus: 'uncertain' | 'possible_match';
+  artworkPresence: 'likely' | 'uncertain' | 'unlikely';
+  description: string;
+  visualFeatures: string[];
+  visibleText: string[];
+  hypotheses: { title: string; artist: string | null; basis: string }[];
+  sources: { id: string; provider: string; title: string; artist: string | null; date: string | null; sourceUrl: string; imageUrl: string | null; visualCheck: 'similar' | 'different' | 'unavailable' | 'not_checked'; similarity: number | null }[];
+  search: { status: 'not_needed' | 'disabled' | 'completed' | 'partial' | 'unavailable'; providers: { name: string; status: string; results: number }[] };
+}
 export interface ConfirmationResult { artwork: RecognisedArtwork; aiExplanation: Explanation | null; warning?: string; errorCode?: string; interpretationLabel: string }
 export interface AIStatus {
   museumId: string;
   ready: boolean;
+  planningReady: boolean;
+  analysisReady: boolean;
+  analysisMessage: string;
   liveVerified: false;
-  configuration: { valid: boolean; provider: 'local'; embeddingModel: string; embeddingPretrained: string; dimension: number; ollamaModel: string };
-  services: { openclip: { available: boolean; code?: string }; ollama: { available: boolean; modelAvailable: boolean; code?: string } };
+  configuration: { valid: boolean; provider: 'local'; embeddingModel: string; embeddingPretrained: string; dimension: number; ollamaModel: string; visionModel: string; analysisVersion: number; planningVersion: number };
+  services: { openclip: { available: boolean; code?: string }; ollama: { available: boolean; modelAvailable: boolean; code?: string }; vision?: { available: boolean; model: string; code?: string } };
   index: { available: boolean; indexedArtworks: number; totalArtworks: number; code?: string };
   message: string;
 }
