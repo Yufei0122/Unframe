@@ -8,8 +8,9 @@ import { Button, Icon, T, c, s, useRootNavigation } from '../ui';
 import { useMuseumLocation } from '../location';
 import { images } from '../assets';
 import { useStore } from '../store';
-import { AI_TIMEOUT_MS, CLIP_TIMEOUT_MS, requestAI } from '../ai';
-import type { RecognitionResult, RecognitionCandidate, ConfirmationResult } from '../../../shared/ai-types';
+import { AI_TIMEOUT_MS, CLIP_TIMEOUT_MS, VISION_TIMEOUT_MS, requestAI } from '../ai';
+import { ArtworkAnalysisResult } from '../components/ArtworkAnalysisResult';
+import type { RecognitionResult, RecognitionCandidate, ConfirmationResult, ArtworkAnalysis } from '../../../shared/ai-types';
 
 export function LookupScreen() {
   const { museumId } = useMuseumLocation();
@@ -21,6 +22,7 @@ function LookupContent() {
   const nav = useRootNavigation(), focused = useIsFocused();
   const { state } = useStore();
   const input = useRef<HTMLInputElement>(null), controller = useRef<AbortController | null>(null);
+  const lastFrame = useRef<Blob | null>(null);
   const [visible, setVisible] = useState(() => document.visibilityState !== 'hidden');
   const [paused, setPaused] = useState(false), [cameraKey, setCameraKey] = useState(0);
   const [photo, setPhoto] = useState<Blob | null>(null), [preview, setPreview] = useState('');
@@ -28,28 +30,31 @@ function LookupContent() {
   const [candidates, setCandidates] = useState<RecognitionCandidate[]>([]), [message, setMessage] = useState('');
   const [selected, setSelected] = useState<RecognitionCandidate | null>(null), [result, setResult] = useState<ConfirmationResult | null>(null);
   const [expanded, setExpanded] = useState(false);
+  const [analysis, setAnalysis] = useState<ArtworkAnalysis | null>(null), [analysing, setAnalysing] = useState(false);
   const active = focused && visible && !paused && !photo && !selected;
   function cancel() { controller.current?.abort(); controller.current = null; }
   useEffect(() => {
     const update = () => {
       const next = document.visibilityState !== 'hidden';
-      if (!next) { cancel(); setBusy(false); setCandidates([]); }
+      if (!next) { cancel(); lastFrame.current = null; setBusy(false); setAnalysing(false); setCandidates([]); }
       setVisible(next);
     };
     document.addEventListener('visibilitychange', update);
     return () => document.removeEventListener('visibilitychange', update);
   }, []);
   useEffect(() => {
-    if (!focused) { cancel(); setBusy(false); setCandidates([]); }
-    return cancel;
+    if (!focused) { cancel(); lastFrame.current = null; setBusy(false); setAnalysing(false); setCandidates([]); }
+    return () => { cancel(); lastFrame.current = null; };
   }, [focused]);
   useEffect(() => { if (!photo) { setPreview(''); return; } const url = URL.createObjectURL(photo); setPreview(url); return () => URL.revokeObjectURL(url); }, [photo]);
   function resume() {
+    lastFrame.current = null; setAnalysis(null); setAnalysing(false);
     cancel(); setPhoto(null); setSelected(null); setResult(null); setCandidates([]); setMessage('');
     setError(''); setUploadError(''); setBusy(false); setExpanded(false); setPaused(false); setCameraKey(k => k + 1);
   }
   function pause() { cancel(); setBusy(false); setPaused(true); setCandidates([]); setMessage(''); }
   function close() {
+    lastFrame.current = null;
     cancel(); setPaused(true);
     if (nav.getState().type === 'stack' && nav.canGoBack()) nav.goBack();
     else nav.navigate('Home', { screen: 'Discover' });
@@ -57,10 +62,23 @@ function LookupContent() {
   function choose(blob: Blob) {
     if (!['image/jpeg', 'image/png', 'image/webp'].includes(blob.type)) { setUploadError('Choose a JPEG, PNG or WebP image.'); return; }
     if (blob.size > 5 * 1024 * 1024) { setUploadError('Choose an image smaller than 5 MB.'); return; }
-    cancel(); setPaused(true); setPhoto(blob); setSelected(null); setResult(null); setCandidates([]); setExpanded(false); setUploadError('');
-    void recognise(blob);
+    cancel(); setAnalysis(null); setAnalysing(false); setPaused(true); setPhoto(blob); setSelected(null); setResult(null); setCandidates([]); setExpanded(false); setUploadError('');
+    void recognise(blob, true);
   }
-  async function recognise(blob: Blob) {
+  async function analyse(blob: Blob) {
+    cancel(); setPaused(true); setPhoto(blob); setCandidates([]); setSelected(null); setResult(null); setAnalysis(null); setError(''); setBusy(true); setAnalysing(true);
+    const request = new AbortController(); controller.current = request;
+    const timeout = setTimeout(() => request.abort(), VISION_TIMEOUT_MS);
+    const form = new FormData(); form.append('image', blob, 'artwork.jpg');
+    try {
+      const result = await requestAI<ArtworkAnalysis>('artworks/analyse', form, request.signal);
+      if (controller.current === request && !request.signal.aborted) setAnalysis(result);
+    } catch (failure) {
+      if (controller.current === request) setError(request.signal.aborted ? 'Visual analysis timed out. Try again with a clearer photo.' : failure instanceof Error ? failure.message : 'Visual analysis is unavailable.');
+    } finally { clearTimeout(timeout); if (controller.current === request) { controller.current = null; setBusy(false); setAnalysing(false); } }
+  }
+  async function recognise(blob: Blob, analyseUnknown = false) {
+    lastFrame.current = blob;
     if (controller.current || !focused || document.visibilityState === 'hidden') return;
     const request = new AbortController(); controller.current = request;
     const timeout = setTimeout(() => request.abort(), CLIP_TIMEOUT_MS);
@@ -71,7 +89,8 @@ function LookupContent() {
       if (controller.current !== request || request.signal.aborted) return;
       // A legacy single match is still just a candidate; it never confirms itself.
       const matches = response.candidates ?? (response.matched && response.artwork ? [{ artwork: response.artwork, similarity: response.similarity ?? 0 }] : []);
-      setCandidates(matches.slice(0, 3)); setMessage(matches.length ? '' : response.message || 'No close match yet. Move closer or try another angle.');
+      setCandidates(matches.slice(0, 3)); setMessage(matches.length ? '' : response.message || 'No close match in this museum\'s demo collection. Check the selected museum and try a clear photo of the whole artwork.');
+      if (!matches.length && analyseUnknown) { clearTimeout(timeout); await analyse(blob); }
     } catch (failure) {
       if (controller.current === request) {
         setError(request.signal.aborted ? 'Recognition timed out. Resume scanning to try again.' : failure instanceof Error ? failure.message : 'Recognition failed. Resume scanning to try again.');
@@ -107,11 +126,11 @@ function LookupContent() {
       <LinearGradient pointerEvents="none" colors={['#08130CE6', '#08130C00']} style={styles.topShade}/>
       <View style={styles.header}>
         <Pressable accessibilityRole="button" accessibilityLabel="Close scan" onPress={close} style={styles.close}><Icon name="close" size={24} color="white"/></Pressable>
-        <View style={styles.heading}><T accessibilityRole="header" style={styles.title}>Scan artwork</T><T style={styles.museum}>{museum.shortName} · demo collection</T></View>
+        <View style={styles.heading}><T accessibilityRole="header" style={styles.title}>Scan artwork</T><T style={styles.museum}>{analysis || analysing ? 'Any artwork · visual analysis' : `${museum.shortName} · demo collection`}</T></View>
         <View style={{ width: 42 }}/>
       </View>
-      <View style={[styles.dock, selected && styles.selectedDock]}>
-        {selected && art ? <ScrollView style={styles.sheet} contentContainerStyle={styles.sheetContent}>
+      <View style={[styles.dock, (selected || analysis) && styles.selectedDock]}>
+        {analysis ? <ScrollView style={styles.sheet} contentContainerStyle={styles.sheetContent}><ArtworkAnalysisResult result={analysis}/></ScrollView> : selected && art ? <ScrollView style={styles.sheet} contentContainerStyle={styles.sheetContent}>
           <View style={styles.match}><Image source={images[art.id]} accessibilityLabel={art.title} style={styles.thumbnail}/><View style={{ flex: 1 }}><T style={styles.eyebrow}>SELECTED BY YOU</T><T accessibilityRole="header" style={styles.artTitle}>{art.title}</T><T style={s.small}>{art.artist} · {art.year}</T></View></View>
           <Button title="Open artwork details" icon="arrow-forward" onPress={() => nav.navigate('Artwork', { id: art.id })}/>
           {busy && <View style={styles.loading}><ActivityIndicator color={c.green}/><T accessibilityLiveRegion="polite" style={s.small}>Preparing AI interpretation…</T></View>}
@@ -123,16 +142,17 @@ function LookupContent() {
           {candidates.length > 0 && <View style={styles.candidatePanel}><View style={styles.candidateHeading}><T style={styles.candidateTitle}>Possible matches</T><T style={styles.candidateHint}>Tap the work you see</T></View><ScrollView style={styles.candidateList}>{candidates.map(candidate => <Pressable key={candidate.artwork.id} accessibilityRole="button" accessibilityLabel={'Select ' + candidate.artwork.title} onPress={() => { void confirm(candidate); }} style={styles.candidate}><Image source={images[candidate.artwork.id]} style={styles.candidateImage}/><View style={{ flex: 1 }}><T numberOfLines={1} style={styles.candidateName}>{candidate.artwork.title}</T><T numberOfLines={1} style={styles.candidateHint}>{candidate.artwork.artist}</T></View><Icon name="chevron-forward" color="#DBCBAA" size={18}/></Pressable>)}</ScrollView></View>}
           <View style={styles.status} accessibilityLiveRegion="polite">
             {busy && <ActivityIndicator color="#DBCBAA" size="small"/>}
-            <T style={styles.statusText}>{busy ? (photo ? 'Finding possible matches…' : 'Looking for artworks…') : candidates.length ? candidates.length + ' possible ' + (candidates.length === 1 ? 'match' : 'matches') + ' · choose to confirm' : error ? 'Scanning paused' : photo ? message || 'Choose a match or try another image' : paused ? 'Scanning paused' : message || 'Looking for artworks automatically'}</T>
+            <T style={styles.statusText}>{analysing ? 'Analysing the image and checking public sources… This can take several minutes.' : busy ? (photo ? 'Finding possible matches…' : 'Looking for artworks…') : candidates.length ? candidates.length + ' possible ' + (candidates.length === 1 ? 'match' : 'matches') + ' · choose to confirm' : error ? 'Scanning paused' : photo ? message || 'Choose a match or try another image' : paused ? 'Scanning paused' : message || 'Looking for artworks automatically'}</T>
           </View>
           {!!error && <T accessibilityRole="alert" style={styles.error}>{error}</T>}
         </>}
         {!!uploadError && <T accessibilityRole="alert" style={styles.error}>{uploadError}</T>}
+        {!selected && !analysis && !analysing && !!(photo || lastFrame.current) && <Pressable accessibilityRole="button" accessibilityLabel="Analyse any artwork" onPress={() => { const frame = photo || lastFrame.current; if (frame) void analyse(frame); }} style={styles.scanButton}><T style={styles.controlLabel}>Analyse any artwork</T></Pressable>}
         <View style={styles.controls}>
           <Pressable accessibilityRole="button" accessibilityLabel="Upload photo" onPress={() => input.current?.click()} style={styles.controlButton}><Icon name="images-outline" color="white" size={21}/><T style={styles.controlLabel}>Photos</T></Pressable>
           <Pressable accessibilityRole="button" accessibilityLabel={active ? 'Pause scanning' : 'Resume scanning'} onPress={active ? pause : resume} style={styles.scanButton}><Icon name={active ? 'pause' : 'scan-outline'} color="#DBCBAA" size={19}/><T style={styles.controlLabel}>{active ? 'Pause scanning' : 'Resume scanning'}</T></Pressable>
         </View>
-        {!selected && <T style={styles.privacy}>Sampled frames go to OpenCLIP on your local AI server.{'\n'}Unframe does not save your images.</T>}
+        {!selected && <T style={styles.privacy}>Sampled frames go to OpenCLIP on your local AI server.{'\n'}Photos can also be analysed locally; suggested titles and artists are searched in public catalogues. Your photos are not sent to those sources or saved.</T>}
       </View>
       <input ref={input} aria-label="Upload artwork image" type="file" accept="image/jpeg,image/png,image/webp" style={{ display: 'none' }} onChange={event => { const file = event.target.files?.[0]; if (file) choose(file); event.target.value = ''; }}/>
     </View>

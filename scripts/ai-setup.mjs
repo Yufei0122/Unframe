@@ -3,6 +3,8 @@ import { mkdir } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { ensureOllama, installShutdown, pullOllamaModel, python, root, run, stopOwned } from './ai-runtime.mjs';
+import { readAIConfig } from '../server/ai/config.js';
+import { inspectVisionModel } from '../server/ai/vision.js';
 
 installShutdown();
 const errors = [];
@@ -37,6 +39,7 @@ try {
   if (installed) await stage('Download and verify OpenCLIP weights', () => run(python, ['-u', path.join(root, 'local-ai', 'download.py')]));
   // An OpenCLIP download failure must not prevent the independent Ollama setup.
   await stage('Prepare Ollama Qwen3 4B', async () => { await ensureOllama(); await pullOllamaModel(); });
+  await stage('Prepare local vision model', async () => { const config = readAIConfig(); await ensureOllama(); await pullOllamaModel(config.visionModel); await inspectVisionModel(config); });
   if (errors.length) { console.error(`\nSetup incomplete (${errors.length} failed stage(s)). Rerun ai:setup after correcting the errors; downloaded files and existing models are reused.`); process.exitCode = 1; }
   else console.log('\nLocal models are installed. Run npm.cmd run ai:up, then npm.cmd run ai:doctor -- --smoke.');
 } finally { await stopOwned(); }

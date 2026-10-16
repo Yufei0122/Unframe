@@ -8,9 +8,14 @@ import { createRouteService } from './routes.js';
 import { createPlanningChatService } from './chat.js';
 import { readImageUpload, readLimited } from './images.js';
 import { getAIStatus } from './status.js';
+import { createVisionService } from './vision.js';
+import { createArtworkAnalysis } from './artwork-analysis.js';
+import { getPlanningStatus } from './planning-status.js';
 
-export function createAIHandler({ config = readAIConfig(), clip = createLocalClient(config, 'OPENCLIP'), ollamaClient = createLocalClient(config, 'OLLAMA'), store = createEmbeddingStore(config) } = {}) {
-  const ollama = createOllamaService(config, ollamaClient);
+export function createAIHandler({ config = readAIConfig(), clip = createLocalClient(config, 'OPENCLIP'), ollamaClient = createLocalClient(config, 'OLLAMA'), store = createEmbeddingStore(config), analysis } = {}) {
+  const gate = { active: false };
+  const ollama = createOllamaService(config, ollamaClient, gate);
+  const artworkAnalysis = analysis || createArtworkAnalysis(config, { vision: createVisionService(config, { gate }), embeddings: createEmbeddingService(config, clip) });
   const services = new Map([...catalogues].map(([id, { collection, graph, museum }]) => [id, {
     recognition: createRecognitionService({ config, embeddings: createEmbeddingService(config, clip), store, ollama, collection }),
     routes: createRouteService({ ollama, collection, graph }),
@@ -30,6 +35,7 @@ export function createAIHandler({ config = readAIConfig(), clip = createLocalCli
     if (origin && !sameOrigin && !config.allowedOrigins.includes(origin)) return send(res, 403, { error: 'This web origin is not allowed.' });
     if (origin) { res.setHeader('Access-Control-Allow-Origin', origin); res.setHeader('Vary', 'Origin'); }
     if (req.method === 'OPTIONS') { res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); res.writeHead(204); return res.end(); }
+    if (req.method === 'GET' && pathname === '/api/ai/planning/status') return send(res, 200, await getPlanningStatus({ config, client: ollamaClient }));
     if (req.method === 'GET' && pathname === '/api/ai/catalogue') {
       const catalogue = catalogues.get(url.searchParams.get('museumId') ?? 'met');
       return catalogue ? send(res, 200, { museum: catalogue.museum, artworks: catalogue.collection, graph: catalogue.graph }) : send(res, 400, { error: 'Choose a supported museum: met or goma.', code: 'INVALID_MUSEUM' });
@@ -40,10 +46,19 @@ export function createAIHandler({ config = readAIConfig(), clip = createLocalCli
       if (!catalogue) return send(res, 400, { error: 'Choose a supported museum: met or goma.', code: 'INVALID_MUSEUM' });
       return send(res, 200, await getAIStatus({ config, store, collection: catalogue.collection, museumId, clip, ollamaClient }));
     }
-    if (req.method !== 'POST' || !['/api/ai/artworks/recognise', '/api/ai/artworks/confirm', '/api/ai/routes/plan', '/api/ai/routes/chat'].includes(pathname)) return send(res, 404, { error: 'AI endpoint not found.' });
+    if (req.method !== 'POST' || !['/api/ai/artworks/recognise', '/api/ai/artworks/analyse', '/api/ai/artworks/confirm', '/api/ai/routes/plan', '/api/ai/routes/chat'].includes(pathname)) return send(res, 404, { error: 'AI endpoint not found.' });
     if (active >= 2) return send(res, 429, { error: 'AI is busy. Please try again shortly.' });
     active++;
+    const cancellation = new AbortController();
+    const disconnect = () => cancellation.abort();
+    res.once('close', disconnect);
     try {
+      if (pathname === '/api/ai/artworks/analyse') {
+        const { image } = await readImageUpload(req);
+        const result = await artworkAnalysis.analyse(image, cancellation.signal);
+        if (!res.destroyed) return send(res, 200, result);
+        return;
+      }
       if (pathname === '/api/ai/artworks/recognise') {
         const { recognition } = selectMuseum(url.searchParams.get('museumId') ?? undefined);
         const { image } = await readImageUpload(req);
@@ -55,10 +70,11 @@ export function createAIHandler({ config = readAIConfig(), clip = createLocalCli
       try { input = JSON.parse(bytes.toString('utf8')); } catch { throw new AIError(400, 'INVALID_JSON', 'Invalid JSON request.'); }
       const service = selectMuseum(input?.museumId);
       if (pathname === '/api/ai/artworks/confirm') return send(res, 200, await service.recognition.confirm(input));
-      return send(res, 200, await (pathname === '/api/ai/routes/chat' ? service.chat.reply(input) : service.routes.plan(input)));
+      const result = await (pathname === '/api/ai/routes/chat' ? service.chat.reply(input, cancellation.signal) : service.routes.plan(input, cancellation.signal));
+      if (!res.destroyed) return send(res, 200, result);
     } catch (error) {
       logFailure('request', error);
-      return send(res, error instanceof AIError ? error.status : 500, { error: error instanceof AIError ? error.message : 'AI request could not be completed. Please try again.', code: error instanceof AIError ? error.code : 'INTERNAL_ERROR' });
-    } finally { active--; }
+      if (!res.destroyed) return send(res, error instanceof AIError ? error.status : 500, { error: error instanceof AIError ? error.message : 'AI request could not be completed. Please try again.', code: error instanceof AIError ? error.code : 'INTERNAL_ERROR' });
+    } finally { res.removeListener('close', disconnect); active--; }
   };
 }

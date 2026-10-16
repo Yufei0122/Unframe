@@ -2,7 +2,89 @@
 
 Unframe uses **OpenCLIP ViT-B-32 / laion2b_s34b_b79k** for image matching and **Ollama qwen3:4b** for interpretation and recommendations. Inference runs on this computer. No Google project, ADC, API key, login or paid account is required. Initial dependency/model downloads need internet access; installed model inference is local.
 
+## Route planning: independent startup and strict model acceptance
+
+Route planning uses the local **`qwen3:4b` text model** to prioritise artworks and update conversational preferences. A deterministic graph search then enforces time, must-see works, starting location and accessibility. It does not require OpenCLIP, `qwen3-vl:4b`, an image index, or public museum search APIs.
+
+After applying the update, stop the old backend/Expo in their own terminals, then run from the root or `mobile`:
+
+```powershell
+npm.cmd run ai:routes:verify
+```
+
+The route update bundle's `INSTALL.cmd` runs the equivalent source-update and `ai-routes.mjs --web --verify` workflow. It reuses the installed Qwen model (downloads it only if missing), starts the correct workspace backend, runs strict real-model acceptance, then starts Expo with the root backend `PORT`. Existing image services and models are preserved but are not started or required. Ordinary subsequent route-only startup is `npm.cmd run ai:routes`. To verify an already running backend separately, use `npm.cmd run ai:validate:routes`.
+
+The 2026-10-14 installer preserves existing `.env.example` and `mobile/.env.example` byte-for-byte; differences in these unused templates no longer block an update. Missing templates are installed, and updated copies remain in the bundle's `payload` folder for reference. Actual `.env` files remain untouched. Other local source changes are still checked before any writes, with all conflicting paths reported together.
+
+`GET /api/ai/planning/status` checks the local text model and completion capability independently of image services. `ready: true` there means model presence/capability, **not a successful inference**. The general status also has `planningReady`, separate from combined scanner readiness. Backend `planningVersion: 2` prevents reusing an older process that lacks cancellation or the planning checks; stop an old process in its original terminal instead of killing it by port.
+
+The real acceptance creates an immutable `.local-ai/acceptance/routes-<timestamp>-<id>.json` containing model identity/digest, timings, actual responses and failures. Its 11 checks cover browser CORS and both museums: 30-minute AI routes; Chinese changes to 20 minutes, Colour, less walking, accessibility and preserved must-see IDs; AI routes using those edited preferences; rejection of impossible time and foreign-museum IDs. Every returned route is checked against actual graph edges, recomputed walking plus visit time, unique museum-local stops and required works. CPU requests run sequentially with a 15-second console heartbeat.
+
+The acceptance calls `POST /api/ai/routes/plan` with **`requireAI: true`**. This requires a real successful model call and propagates failures instead of accepting a deterministic fallback. It additionally requires `recommendationSource: "ollama"`, no warning/error, and a nonempty valid itinerary. Ordinary app requests retain the explicitly labelled local-rule fallback. **HTTP 200 or a visible itinerary alone does not prove Qwen worked.**
+
+Planning/chat disconnects now propagate cancellation to the upstream Ollama HTTP request and release the backend inference slot, preventing an abandoned request from blocking the next attempt. Obvious impossible visits are rejected before model inference. Tests cover these paths with a real HTTP transport and a simulated Ollama responder; those software tests do not constitute Windows model validation. Current Windows route validation remains pending until its real report is received. No model retraining was performed or needed for these runtime fixes.
+
+## General artwork analysis
+
+The general-analysis path adds **local `qwen3-vl:4b`**, separate from the text-only guide model. Any valid JPEG/PNG/WebP can be analysed even when it is not in the twelve-work catalogue. On web, an uploaded photo first tries the existing local catalogue; an unmatched photo proceeds to visual analysis. **Analyse any artwork** explicitly analyses the current camera view or selected photo. Native Scan offers a still-frame analysis button and **Analyse photo**. Automatic camera sampling remains the lightweight, museum-scoped OpenCLIP path; it never repeatedly invokes the larger vision model.
+
+For an already installed project, from either the root or `mobile`:
+
+```powershell
+npm.cmd run ai:setup:vision
+# Stop the previous backend and Expo in their own terminals before using ai:web.
+npm.cmd run ai:web
+```
+
+`ai:setup:vision` downloads only the missing vision model, preserves all existing models/caches/indexes, and checks Ollama's `vision` capability. The default [Qwen3-VL 4B package](https://ollama.com/library/qwen3-vl:4b) is approximately 3.3 GB and requires Ollama 0.12.7 or newer; the user's previously reported 0.34.0 satisfies this version requirement. Existing guide/scanner startup still works without this optional model and prints a specific warning. `ai:web` starts Expo at port 8081 and sets its public API URL from the backend's root `PORT` setting (including this Windows installation's 3001). It refuses an occupied Expo port and leaves existing processes intact.
+
+The analysis returns visible features, cautiously transcribed labels/signatures, and at most two **unverified** title/artist hypotheses. The server sends only those short title/artist queries to these public sources:
+
+- [The Met Collection API](https://metmuseum.github.io/)
+- [Art Institute of Chicago API](https://api.artic.edu/docs/)
+- [Wikimedia Commons image information](https://www.mediawiki.org/wiki/API:Imageinfo)
+
+No visitor image is uploaded to those services or persisted by Unframe. The Ollama [vision API](https://docs.ollama.com/capabilities/vision) receives a metadata-free, maximum-768-pixel image on loopback. Public reference images are downloaded only from a fixed HTTPS host allowlist, with redirect validation, response-size limits and timeouts. At most three references are compared with OpenCLIP under a shared 45-second search/comparison budget. Metadata-only search results never establish identity; even a visually similar source yields **possible match**, with an explicit unconfirmed label and original source link. General results are not automatically inserted into museum routes, favourites, or the catalogue, and do not claim authenticity or valuation.
+
+The providers have limited coverage. Unknown contemporary work, unusual views, reproductions, missing source images, network outages and wrong model guesses can all leave identity uncertain. A model description may itself be inaccurate. This is not a universal artwork identification database or a real-world accuracy guarantee. Existing local `0.80` matching threshold is unchanged; it is not a calibrated confidence probability for general-source images.
+
+Configuration: `OLLAMA_VISION_MODEL=qwen3-vl:4b`, `OLLAMA_VISION_TIMEOUT_MS=540000`, and `EXPO_PUBLIC_VISION_TIMEOUT_MS=660000` (keep the client deadline above model timeout plus search time). `ARTWORK_PUBLIC_SEARCH=false` disables external title/artist queries. Public retrieval needs access to `collectionapi.metmuseum.org`, `images.metmuseum.org`, `api.artic.edu`, `www.artic.edu`, `commons.wikimedia.org` and `upload.wikimedia.org`; source links also include `www.metmuseum.org`. Source failures preserve visual observations and are shown explicitly. Guide and vision generation share a single backend inference slot; vision unloads after completion. Navigating away/cancelling aborts the new HTTP analysis and upstream requests.
+
+After starting the updated backend, run in another terminal:
+
+```powershell
+npm.cmd run ai:doctor -- --vision
+# Optional real input outside the demo catalogue; the image itself is not saved.
+npm.cmd run ai:doctor -- --vision --image "C:\path\to\artwork.jpg"
+```
+
+`ready` in the status API describes the existing catalogue/guide services; `analysisReady` and `analysisMessage` separately describe the vision model. The new multipart endpoint is **`POST /api/ai/artworks/analyse`**, field **`image`**. The `--vision` check calls that actual HTTP endpoint and records whether public search and visual comparison succeeded; it does not label a plausible generated description as a confirmed identity.
+
+**Verification for this change:** automated backend tests cover local vision capability checks, model output validation, shared inference concurrency, HTTP image/origin validation, cancellation, fixed source hosts/redirects, bounded retrieval, unavailable sources, and tentative-only identity results. Metro browser tests use mocked model/source responses to verify unknown-image analysis, uncertainty display, cancellation, model-install errors, and preservation of automatic scanning. These tests do not establish real Qwen3-VL quality or public API availability. The current cloud executor has no installed Ollama vision weights and its network policy does not permit these public API hosts; real vision inference and external retrieval must be checked on Windows with the commands above. Physical native-camera analysis also remains unverified.
+
 ## Windows quick start
+
+### Install and verify the general-analysis update
+
+The general-artwork update's `INSTALL.cmd` installs the missing vision weights, starts the existing local services, and runs `ai:acceptance` before starting Expo. Stop the old backend and Expo with Ctrl+C in their own terminals first. Existing `.env` files, models, catalogue index and visitor data are preserved. Source files are backed up before replacement; unexpected local edits abort the entire update before any source writes. The installer also accepts the exact source hashes from the previous update bundle, so installing this revision over that bundle does not require manually overwriting files.
+
+From an already updated project, the same real acceptance can be repeated from the root or `mobile`:
+
+```powershell
+npm.cmd run ai:acceptance
+```
+
+This starts/reuses local services, runs the strict route acceptance described above, then checks the following sequentially. Expo starts only if all enabled checks pass:
+
+1. Real OpenCLIP: every bundled artwork with four input variants (48 inputs), six negative controls, and eight catalogue/status/recognition HTTP checks. This omits guide/chat generation and preserves the previous full `validation.json`. Results: `.local-ai/recognition-validation.json`.
+2. Real vision HTTP: browser-origin access, installed vision identity, Water Lilies, The Harvesters and a generated white negative. Positive controls must be classified as likely artworks. Identity abstention is allowed and counted separately; a leading title/artist that disagrees with the labelled control fails for review. A white image must not produce an artwork identity or reference. Reports retain actual model answers and timings, with a new `.local-ai/acceptance/vision-<timestamp>-<id>.json` for every run.
+3. When public search is enabled, a separate Water Lilies/Monet query must reach all three providers and download/decode a public reference. An unreachable provider fails full acceptance, even if local analysis works; the report identifies the source. `ARTWORK_PUBLIC_SEARCH=false` explicitly selects a local-only configuration and records retrieval as disabled, not verified.
+
+CPU vision checks can take several minutes each. The console prints a heartbeat every 15 seconds. A failed check produces a nonzero exit and an actionable report; it never silently substitutes a sample response. Only bundled/synthetic images are used by this automatic suite, and no uploaded visitor photo is saved. To rerun only the vision portion while services are running, use `npm.cmd run ai:validate:vision`.
+
+**Training and accuracy:** this deploys pretrained OpenCLIP and Qwen3-VL weights; installing models or generating the catalogue embedding index is not fine-tuning. No new training has been performed. Independent labelled photographs, including different views of the same work and non-art/difficult negatives, are needed for a train/validation/test split and a meaningful accuracy assessment. Keep photographs of the same capture session together when splitting, and reserve a held-out set before adjusting any threshold or model weights. The 12 reference images and their transformations are integration controls, not an independent test set or evidence that arbitrary artworks can be identified. A passed report proves only its stated checks, and permits an explicit uncertain identity.
+
+**2026-10-12 cloud revision:** the cloud runtime cannot execute commands on the Windows project. It has no model weights, and the enforced network allowlist does not include the vision registry or the public-source domains. The new installer/acceptance path is tested with controlled fixtures; its actual Windows download/inference run remains pending until the local installer is executed and its reports inspected.
 
 From PowerShell:
 
@@ -29,7 +111,9 @@ Open **http://localhost:8081** for mobile web. Node and the original curator wor
 
 | Command | Behavior |
 | --- | --- |
-| `npm.cmd run ai:setup` | Creates/reuses `.venv`, installs CPU PyTorch and Python dependencies, downloads/verifies OpenCLIP weights, checks/starts Ollama and installs `qwen3:4b`. Existing models are preserved. |
+| `npm.cmd run ai:setup` | Creates/reuses `.venv`, installs CPU PyTorch and Python dependencies, downloads/verifies OpenCLIP weights, checks/starts Ollama and installs the guide and vision models. Existing models are preserved. |
+| `npm.cmd run ai:setup:vision` | Installs/checks only the configured local vision model. |
+| `npm.cmd run ai:web` | Runs `ai:up` and Expo together with matching backend/frontend ports. |
 | `npm.cmd run ai:clip` | Starts only OpenCLIP, or reuses a compatible running service. |
 | `npm.cmd run ai:index` | Builds all twelve reference vectors; OpenCLIP must be running. Replaces the index only after the complete new index is validated. |
 | `npm.cmd run ai:up` | Checks/starts Ollama and OpenCLIP, rebuilds a missing/incompatible/stale index, then checks/starts Node. |
@@ -115,6 +199,18 @@ Invoke-RestMethod -Method Post -Uri http://127.0.0.1:3000/api/ai/artworks/confir
 ```
 
 ## Checks and troubleshooting
+
+### Windows service recovery — 2026-10-12 (Australia/Brisbane)
+
+The user's Windows diagnostic output showed `OPENCLIP_UNAVAILABLE`, with Ollama/Qwen available and both indexes complete (Met 8, GOMA 4). The initial `Missing script: "ai:doctor"` error came from running the root command in `mobile`. From that directory, `npm.cmd --prefix .. run ai:up` loaded OpenCLIP on port 8001, verified the existing index, reused Ollama and started the backend on port 3001. Keep that terminal open alongside Expo; installed weights alone do not keep the services running.
+
+A subsequent real HTTP request on the user's Windows machine returned `matched:true`, candidate `water-lilies` (Claude Monet), similarity `0.9999999999999989`, and `requiresConfirmation:true`:
+
+```powershell
+curl.exe --max-time 150 -sS -F "image=@D:/FlyFly/Study/Project/Unframe/mobile/assets/water-lilies.jpg;type=image/jpeg" "http://127.0.0.1:3001/api/ai/artworks/recognise?museumId=met"
+```
+
+This result was supplied by the user from their Windows machine, not generated by the cloud checkout. It verifies the backend/model/index path for a reference image, not browser routing, real-camera accuracy, or arbitrary artwork identification. The reported unmatched input was another artwork; its identity and library membership were not established. Recognition searches only the selected museum's bundled catalogue. An unmatched result means no sufficiently similar catalogue reference was found; it does not establish that the photograph contains no art. The cloud source now explains this scope in its no-match message; those source changes still need to be transferred to Windows to affect that running installation.
 
 ```powershell
 npm.cmd test

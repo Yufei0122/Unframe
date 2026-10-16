@@ -10,15 +10,35 @@ import { normalizeImage } from '../server/ai/images.js';
 
 try {
   const args = process.argv.slice(2);
-  if (args.some(arg => !['--smoke', '--live'].includes(arg))) throw new AIError(400, 'INVALID_ARGUMENT', 'Usage: npm.cmd run ai:doctor -- [--smoke]');
+  const visionCheck = args.includes('--vision');
+  const imageFlag = args.indexOf('--image');
+  const imageFile = imageFlag < 0 ? undefined : args[imageFlag + 1];
+  const flags = args.filter((_, index) => imageFlag < 0 || (index !== imageFlag && index !== imageFlag + 1));
+  if (flags.some(arg => !['--smoke', '--live', '--vision'].includes(arg)) || (imageFlag >= 0 && (!visionCheck || !imageFile || imageFile.startsWith('--')))) throw new AIError(400, 'INVALID_ARGUMENT', 'Usage: npm.cmd run ai:doctor -- [--smoke | --vision [--image path]]');
   const config = readAIConfig();
   const store = createEmbeddingStore(config);
   const services = await inspectLocalServices(config);
   const statuses = [];
   for (const [museumId, { collection }] of catalogues) statuses.push(await getAIStatus({ config, store, collection, museumId, services, verifySources: true }));
   console.log(JSON.stringify({ check: 'local_services_and_index', liveVerified: false, museums: statuses }, null, 2));
-  if (!statuses.every(status => status.ready)) {
-    console.error('Local setup is incomplete. Run npm.cmd run ai:setup, npm.cmd run ai:up, then npm.cmd run ai:doctor.');
+  if (visionCheck) {
+    if (!services.vision.available) throw new AIError(503, services.vision.code, 'The local vision model is unavailable. Run npm.cmd run ai:setup:vision.');
+    const port = Number(process.env.PORT || 3000);
+    if (!Number.isInteger(port) || port < 1 || port > 65535) throw new AIError(400, 'INVALID_PORT', 'PORT must be a valid backend port.');
+    const source = imageFile ? await readFile(imageFile) : await readFile(new URL('../mobile/assets/water-lilies.jpg', import.meta.url));
+    const mime = { jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp' }[(await sharp(source).metadata()).format];
+    const image = await normalizeImage(source, mime);
+    const form = new FormData(); form.append('image', new Blob([image], { type: 'image/jpeg' }), 'artwork.jpg');
+    console.log('Testing real visual analysis through the running backend. CPU inference can take several minutes.');
+    let response;
+    try { response = await fetch(`http://127.0.0.1:${port}/api/ai/artworks/analyse`, { method: 'POST', body: form, signal: AbortSignal.timeout(config.visionTimeoutMs + 65000) }); }
+    catch { throw new AIError(503, 'BACKEND_UNAVAILABLE', 'Cannot reach the updated backend. Restart ai:up and verify its PORT.'); }
+    const result = await response.json();
+    if (!response.ok) throw new AIError(response.status, result.code || 'VISION_HTTP_ERROR', result.error || 'The backend cannot analyse images. Restart it after updating the code.');
+    if (!['uncertain', 'possible_match'].includes(result.identityStatus) || typeof result.description !== 'string') throw new AIError(502, 'INVALID_VISION_RESULT', 'The backend returned an invalid visual analysis.');
+    console.log(JSON.stringify({ check: 'real_general_artwork_analysis', liveVerified: true, identityConfirmed: false, model: config.visionModel, result, note: 'Real HTTP and vision inference. This does not establish identification accuracy. Inspect search.status and visualCheck for source coverage; all identity suggestions remain unconfirmed.' }, null, 2));
+  } else if (!statuses.every(status => status.ready)) {
+    console.error('AI is not ready. Follow the service/index messages above. If models are already installed, run npm.cmd run ai:up and keep that terminal open, then rerun ai:doctor in another terminal.');
     process.exitCode = 1;
   } else if (args.some(arg => ['--smoke', '--live'].includes(arg))) {
     const embeddings = createEmbeddingService(config);

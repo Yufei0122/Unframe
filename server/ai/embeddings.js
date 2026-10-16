@@ -21,8 +21,8 @@ export function validateEmbeddingIdentity(data, config) {
   if (data?.model !== config.embeddingModel || data?.pretrained !== config.embeddingPretrained || data?.dimensions !== config.dimension || data?.normalized !== true) throw new AIError(502, 'OPENCLIP_MODEL_MISMATCH', 'OpenCLIP must use ViT-B-32 / laion2b_s34b_b79k with normalized 512-dimensional embeddings.');
 }
 export function createEmbeddingService(config, client = createLocalClient(config, 'OPENCLIP')) {
-  return { async generate(image) {
-    const data = await client.request('/embed', { imageBase64: image.toString('base64'), mimeType: 'image/jpeg' });
+  return { async generate(image, signal) {
+    const data = await client.request('/embed', { imageBase64: image.toString('base64'), mimeType: 'image/jpeg' }, undefined, signal);
     validateEmbeddingIdentity(data, config);
     if (!normalizedVector(data.embedding, config.dimension)) throw new AIError(502, 'INVALID_VECTOR', 'OpenCLIP returned an invalid or non-normalized image embedding.');
     return data.embedding;

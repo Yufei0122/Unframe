@@ -15,25 +15,38 @@ export function validateRouteInput(input, collection, graph) {
 }
 
 export function createRouteService({ ollama, collection, graph }) {
-  return { async plan(input) {
+  return { async plan(input, signal) {
     const prefs = validateRouteInput(input, collection, graph);
+    requireInput(input.requireAI === undefined || typeof input.requireAI === 'boolean', 'requireAI must be a boolean.');
+    if (signal?.aborted) throw new AIError(499, 'REQUEST_CANCELLED', 'The request was cancelled.');
     const stepFree = prefs.accessibilityRequirements.length > 0;
-    const eligible = collection.filter(a => (!stepFree || a.accessible) && graph.nodes.some(n => n.id === a.id));
-    if (!eligible.length) throw new AIError(422, 'NO_ROUTE', 'No artworks can be visited with these requirements.');
+    const options = { stepFree, metric: prefs.walkingPreference === 'less_walking' ? 'distance' : 'estimatedSeconds' };
+    // Reject obviously impossible visits before spending minutes on model inference.
+    const eligible = collection.filter(a => {
+      if (stepFree && !a.accessible) return false;
+      const leg = shortestPath(graph, prefs.currentLocation, a.id, options);
+      return leg && leg.estimatedSeconds + a.minutes * 60 <= prefs.availableMinutes * 60;
+    });
+    if (!eligible.length || prefs.mustSeeArtworkIds.some(id => !eligible.some(a => a.id === id))
+      || eligible.filter(a => prefs.mustSeeArtworkIds.includes(a.id)).reduce((sum, a) => sum + a.minutes, 0) > prefs.availableMinutes) {
+      throw new AIError(422, 'NO_ROUTE', 'No feasible route fits this time and these must-see/accessibility requirements. Increase the time or change the starting point or selections.');
+    }
     let recommendations, warning, errorCode, recommendationSource = 'ollama';
-    try { recommendations = await ollama.generateRouteRecommendations(prefs, eligible); }
+    try { recommendations = await ollama.generateRouteRecommendations(prefs, eligible, signal); }
     catch (error) {
+      if (signal?.aborted || error?.code === 'REQUEST_CANCELLED') throw new AIError(499, 'REQUEST_CANCELLED', 'The request was cancelled.');
+      if (input.requireAI) throw error instanceof AIError ? error : new AIError(503, 'RECOMMENDATION_UNAVAILABLE', 'Local AI recommendations are unavailable. Check Ollama and retry.');
       logFailure('recommendation', error); recommendationSource = 'local';
       const route = planRoute(eligible, { interests: prefs.interests, duration: 120, stepFree });
       recommendations = { recommendedArtworkIds: route.artworkIds, reasoningSummary: 'Local collection preferences were used because AI recommendations are unavailable.' };
       errorCode = error instanceof AIError ? error.code : 'RECOMMENDATION_UNAVAILABLE';
       warning = (error instanceof AIError ? error.message : 'Local AI recommendations are unavailable.') + ' This itinerary uses local rules.';
     }
+    if (signal?.aborted) throw new AIError(499, 'REQUEST_CANCELLED', 'The request was cancelled.');
     // Exact search over a small shortlist; physical shortest paths are always Dijkstra.
     const ids = [...new Set([...prefs.mustSeeArtworkIds, ...recommendations.recommendedArtworkIds, ...eligible.map(a => a.id)])].slice(0, 8);
     const works = ids.map(id => eligible.find(a => a.id === id)).filter(Boolean);
     if (prefs.mustSeeArtworkIds.some(id => !works.some(a => a.id === id))) throw new AIError(422, 'NO_ROUTE', 'A must-see artwork is not accessible with these requirements.');
-    const options = { stepFree, metric: prefs.walkingPreference === 'less_walking' ? 'distance' : 'estimatedSeconds' };
     const paths = new Map();
     for (const from of [prefs.currentLocation, ...ids]) for (const to of ids) paths.set(`${from}:${to}`, shortestPath(graph, from, to, options));
     const scores = new Map(works.map(a => [a.id, 10 + a.tags.filter(t => prefs.interests.some(i => i.toLowerCase() === t.toLowerCase())).length * 3 + Math.max(0, recommendations.recommendedArtworkIds.length - recommendations.recommendedArtworkIds.indexOf(a.id)) * (recommendations.recommendedArtworkIds.includes(a.id) ? 1 : 0)]));

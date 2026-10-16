@@ -46,12 +46,12 @@ export function assembleGroundedExplanation(selection, artwork, allowedIds) {
     suggestedNextArtwork: selection.suggestedNextArtwork,
   }, allowedIds);
 }
-export function createOllamaService(config, client = createLocalClient(config, 'OLLAMA')) {
+export function createOllamaService(config, client = createLocalClient(config, 'OLLAMA'), gate = { active: false }) {
   // One generation per backend instance keeps CPU memory bounded. Existing fallbacks handle busy requests.
-  let active = false;
-  async function generate(instruction, context, schema, latestMessage) {
-    if (active) throw new AIError(429, 'OLLAMA_BUSY', 'The local Qwen model is busy. Please retry after the current answer finishes.');
-    active = true;
+  async function generate(instruction, context, schema, latestMessage, signal) {
+    if (signal?.aborted) throw new AIError(499, 'REQUEST_CANCELLED', 'The request was cancelled.');
+    if (gate.active) throw new AIError(429, 'OLLAMA_BUSY', 'The local Qwen model is busy. Please retry after the current answer finishes.');
+    gate.active = true;
     try {
       const data = await client.request('/api/chat', {
         model: config.ollamaModel, stream: false, think: false, keep_alive: config.ollamaKeepAlive,
@@ -61,15 +61,15 @@ export function createOllamaService(config, client = createLocalClient(config, '
           { role: 'user', content: JSON.stringify(context) },
           ...(latestMessage === undefined ? [] : [{ role: 'user', content: latestMessage }]),
         ], format: schema,
-      });
+      }, undefined, signal);
       if (data?.done !== true || data.done_reason !== 'stop') throw new AIError(502, 'OLLAMA_INCOMPLETE', 'The local model returned an incomplete answer. Check OLLAMA_NUM_PREDICT and available memory.');
       if (typeof data.message?.content !== 'string' || data.message.content.length > 32000) throw new AIError(502, 'OLLAMA_JSON', 'The local model returned an invalid JSON answer.');
       try { return JSON.parse(data.message.content); }
       catch { throw new AIError(502, 'OLLAMA_JSON', 'The local model returned an invalid JSON answer.'); }
-    } finally { active = false; }
+    } finally { gate.active = false; }
   }
   return {
-    async generatePlanningReply(context) {
+    async generatePlanningReply(context, signal) {
       const schema = structuredClone(chatSchema);
       const chinese = /[\u3400-\u9fff]/u.test(context.message);
       if (chinese) schema.properties.reply.pattern = '^.*[㐀-鿿].*$';
@@ -78,7 +78,7 @@ export function createOllamaService(config, client = createLocalClient(config, '
       const languageInstruction = chinese ? '最新访客消息使用中文。reply 字段必须用自然中文回答，并包含汉字；不要因目录资料或历史消息是英文而改用英文。作品 ID、地点 ID、JSON 字段名和枚举值保持原样，不要翻译。' : 'Reply in the language of the latest visitor message, regardless of the catalogue or history language.';
       const { message, ...previousContext } = context;
       const editContext = { ...previousContext, artworks: context.artworks.map(({ id, title, artist, tags }) => ({ id, title, artist, tags })) };
-      return generate(languageInstruction + ' The JSON context contains preferences BEFORE the latest request. The final user message is the NEW request and overrides old preferences and history. FIRST return ALL updated preference fields, THEN reply with one brief confirmation or clarification. Apply every explicit change; preserve fields not changed, including must-see IDs. Extract requested time into availableMinutes. Map colour/color/色彩/颜色 to interest Colour; less walking/少走路 to walkingPreference less_walking; step-free/无障碍 to accessibilityRequirements containing step_free; wheelchair/轮椅 to wheelchair. Replace conflicting old interests when the request changes focus. Use only supplied artwork/location IDs. For an ambiguous change preserve that field and ask briefly. Reply must not contain an itinerary, artwork stop list, walking route, total visit-time calculation or claims that a route is feasible. The separate route engine runs only when the visitor presses Generate route.', editContext, schema, message);
+      return generate(languageInstruction + ' The JSON context contains preferences BEFORE the latest request. The final user message is the NEW request and overrides old preferences and history. FIRST return ALL updated preference fields, THEN reply with one brief confirmation or clarification. Apply every explicit change; preserve fields not changed, including must-see IDs. Extract requested time into availableMinutes. Map colour/color/色彩/颜色 to interest Colour; less walking/少走路 to walkingPreference less_walking; step-free/无障碍 to accessibilityRequirements containing step_free; wheelchair/轮椅 to wheelchair. Replace conflicting old interests when the request changes focus. Use only supplied artwork/location IDs. For an ambiguous change preserve that field and ask briefly. Reply must not contain an itinerary, artwork stop list, walking route, total visit-time calculation or claims that a route is feasible. The separate route engine runs only when the visitor presses Generate route.', editContext, schema, message, signal);
     },
     async generateArtworkExplanation(artwork, preferences, collection) {
       const { id, title, artist, year, medium, source, sourceUrl } = artwork;
@@ -93,11 +93,11 @@ export function createOllamaService(config, client = createLocalClient(config, '
       const result = await generate('Organise a grounded, extractive artwork explanation. Select one supplied summary note ID, one supplied interpretation note ID, and 1-3 supplied fact IDs in a helpful order for the visitor preferences. Return IDs only, never write or rewrite prose or invent facts. suggestedNextArtwork is null or a supplied nextArtworks ID. The application maps your selected IDs to exact catalogue text and labels interpretation separately.', { artwork: { id, title, artist, year, medium, source, sourceUrl }, ...choices, visitorPreferences: preferences, nextArtworks }, schema);
       return assembleGroundedExplanation(result, artwork, nextArtworks.map(a => a.id));
     },
-    async generateRouteRecommendations(preferences, collection) {
+    async generateRouteRecommendations(preferences, collection, signal) {
       const schema = structuredClone(routeSchema);
       schema.properties.recommendedArtworkIds.items.enum = collection.map(a => a.id);
       schema.properties.recommendedArtworkIds.maxItems = collection.length;
-      const result = await generate('Choose a prioritised list of existing artwork IDs matching interests. Include must-see IDs. Never invent IDs or facts. Select artworks only. Do not calculate routes, walking distances, time feasibility or accessibility; a deterministic graph engine enforces them. Return one short sentence of thematic reasoning.', { preferences, artworks: collection.map(({ id, title, artist, tags, minutes, accessible }) => ({ id, title, artist, tags, minutes, accessible })) }, schema);
+      const result = await generate('Choose a prioritised list of existing artwork IDs matching interests. Include must-see IDs. Never invent IDs or facts. Select artworks only. Do not calculate routes, walking distances, time feasibility or accessibility; a deterministic graph engine enforces them. Return one short sentence of thematic reasoning.', { preferences, artworks: collection.map(({ id, title, artist, tags, minutes, accessible }) => ({ id, title, artist, tags, minutes, accessible })) }, schema, undefined, signal);
       return parseRecommendations(result, collection.map(a => a.id));
     },
   };

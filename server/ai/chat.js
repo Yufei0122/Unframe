@@ -5,7 +5,7 @@ const preferenceKeys = ['interests', 'availableMinutes', 'currentLocation', 'wal
 const messageText = value => typeof value === 'string' && value.trim().length > 0 && value.length <= 600;
 
 export function createPlanningChatService({ ollama, collection, graph, museum }) {
-  return { async reply(input) {
+  return { async reply(input, signal) {
     requireInput(input && typeof input === 'object' && !Array.isArray(input), 'Send a planning message.');
     requireInput(messageText(input.message), 'Write a message of 1–600 characters.');
     const history = input.history ?? [];
@@ -16,7 +16,7 @@ export function createPlanningChatService({ ollama, collection, graph, museum })
       museum: { name: museum.name, shortName: museum.shortName },
       artworks: collection.map(({ id, title, artist, tags, minutes, accessible }) => ({ id, title, artist, tags, minutes, accessible })),
       startingPoints: graph.nodes.map(({ id, label }) => ({ id, label })),
-    });
+    }, signal);
     // Model output must be complete and belong to this museum before it can update the UI.
     if (!result || !messageText(result.reply) || !result.preferences || !preferenceKeys.every(key => Object.hasOwn(result.preferences, key))) {
       throw new AIError(502, 'INVALID_CHAT', 'The planning assistant returned an invalid answer. Please retry.');

@@ -101,3 +101,20 @@ test('same-workspace backend with stale Google configuration is rejected without
   api.stopOwned();
   assert.equal((await api.getJSON(`${address}/api/health`)).workspace, workspace);
 });
+
+test('route-only startup reuses a compatible backend without checking image services or indexes', async t => {
+  let workspace;
+  const urls = [];
+  const address = await mockServer(t, url => {
+    urls.push(url);
+    if (url === '/api/health') return { app: 'unframe', status: 'ok', workspace };
+    assert.equal(url, '/api/ai/planning/status');
+    return { ready: true, configuration: { provider: 'local', ollamaModel: 'qwen3:4b', planningVersion: 2 } };
+  });
+  const api = await runtime({ PORT: new URL(address).port, OLLAMA_MODEL: 'qwen3:4b' });
+  t.after(api.restore);
+  const dataFile = path.resolve(process.env.UNFRAME_DATA_DIR || path.join(api.root, 'data'), 'unframe.json');
+  workspace = createHash('sha256').update(process.platform === 'win32' ? dataFile.toLowerCase() : dataFile).digest('hex');
+  assert.equal((await api.ensureNode({ planningOnly: true })).reused, true);
+  assert.deepEqual(urls, ['/api/health', '/api/ai/planning/status']);
+});
