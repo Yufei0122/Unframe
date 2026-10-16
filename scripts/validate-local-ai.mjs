@@ -27,8 +27,8 @@ const report = {
   startedAt: new Date().toISOString(), completedAt: null, passed: false,
   scope: chatOnly ? 'chinese_chat_retest_only' : recognitionOnly ? 'catalogue_recognition_acceptance' : 'full_local_ai_acceptance',
   verification: chatOnly ? 'One real Node HTTP/Ollama Chinese chat request; no embedding, explanation or route requests repeated; no mocks' : recognitionOnly ? 'Real OpenCLIP embeddings and Node HTTP catalogue recognition; no mocks; no guide/chat inference' : 'real OpenCLIP embeddings and real Node HTTP/Ollama inference; no mocks',
-  model: { embedding: config.embeddingModel, pretrained: config.embeddingPretrained, dimensions: config.dimension, ollama: config.ollamaModel },
-  backend, threshold: config.threshold, responseBudgetMs: config.responseBudgetMs,
+  model: { embedding: config.embeddingModel, pretrained: config.embeddingPretrained, dimensions: config.dimension, guide: config.ollamaModel, planning: config.planningModel },
+  backend, threshold: config.threshold, recognitionBudgetMs: config.recognitionBudgetMs, responseBudgetMs: config.responseBudgetMs,
   limitation: chatOnly ? 'Isolated Chinese chat retest. Initial embedding, recognition, explanation and route results remain in the unchanged initial report, including its first failed chat check. This retest does not repeat or replace those checks.' : 'Small, controlled sample of bundled references, mild transformations and six negative controls. Cosine similarity is neither probability nor accuracy. These results do not establish real visitor-camera accuracy or a general false-positive rate.',
   references: [], negatives: [], http: [], failures: [],
 };
@@ -70,7 +70,7 @@ async function httpJSON(endpoint, body, { form, expectedStatus = 200 } = {}) {
   const response = await fetch(`${backend}/api/ai/${endpoint}`, {
     method: body !== undefined || form ? 'POST' : 'GET',
     ...(form ? { body: form } : body !== undefined ? { headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {}),
-    signal: AbortSignal.timeout(config.responseBudgetMs),
+    signal: AbortSignal.timeout(endpoint.startsWith('artworks/recognise') ? config.recognitionBudgetMs : config.responseBudgetMs),
   });
   const result = await response.json();
   const responseMs = Math.round(performance.now() - started);
@@ -78,7 +78,7 @@ async function httpJSON(endpoint, body, { form, expectedStatus = 200 } = {}) {
   // public-catalogue answer instead of only the assertion error.
   captureHttpResponse?.({ endpoint, status: response.status, responseMs, response: result });
   assert.equal(response.status, expectedStatus, `${endpoint}: HTTP ${response.status} ${result.code || ''} ${result.error || ''}`);
-  if (endpoint.startsWith('artworks/recognise')) assert.ok(responseMs < config.responseBudgetMs, `${endpoint} took ${responseMs} ms; target is below ${config.responseBudgetMs} ms.`);
+  if (endpoint.startsWith('artworks/recognise')) assert.ok(responseMs < config.recognitionBudgetMs, `${endpoint} took ${responseMs} ms; target is below ${config.recognitionBudgetMs} ms.`);
   return result;
 }
 
@@ -289,7 +289,7 @@ try {
     assert.ok(result.preferences.mustSeeArtworkIds.includes(artwork.id));
     assert.ok(result.preferences.mustSeeArtworkIds.every(id => catalogues.get(museumId).collection.some(item => item.id === id)));
     assert.ok(result.preferences.interests.some(value => /colour|color|色彩|颜色/i.test(value)), 'Colour interest was not captured.');
-    return { museumId, provider: 'ollama', model: config.ollamaModel, message, result };
+    return { museumId, provider: 'ollama', model: config.planningModel, message, result };
   });
   }
 } catch (error) { fail('validation_setup_or_execution', error); }

@@ -15,6 +15,7 @@
     "ai:up": "node scripts/ai-up.mjs",
     "ai:web": "node scripts/ai-up.mjs --web",
     "ai:acceptance": "node scripts/ai-up.mjs --web --verify",
+    "ai:verify:features": "node scripts/ai-up.mjs --features",
     "ai:routes": "node scripts/ai-routes.mjs --web",
     "ai:routes:verify": "node scripts/ai-routes.mjs --web --verify",
     "ai:doctor": "node scripts/check-ai.mjs",

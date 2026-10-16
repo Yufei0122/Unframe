@@ -13,6 +13,7 @@
     "ai:up": "npm --prefix .. run ai:up --",
     "ai:web": "npm --prefix .. run ai:web --",
     "ai:acceptance": "npm --prefix .. run ai:acceptance --",
+    "ai:verify:features": "npm --prefix .. run ai:verify:features --",
     "ai:routes": "npm --prefix .. run ai:routes --",
     "ai:routes:verify": "npm --prefix .. run ai:routes:verify --",
     "ai:validate:routes": "npm --prefix .. run ai:validate:routes --",

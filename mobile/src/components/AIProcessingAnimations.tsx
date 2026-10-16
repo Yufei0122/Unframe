@@ -54,13 +54,20 @@ export function RoutePlanningTransition({ label = 'Shaping your route…' }: { l
     travel.start(); breathing.start();
     return () => { travel.stop(); breathing.stop(); };
   }, [progress, pulse, reduced]);
-  const translateX = progress.interpolate({ inputRange: [0, 1], outputRange: [0, 140] });
+  const routeSteps = [0, .22, .38, .66, .82, 1];
+  const translateX = progress.interpolate({ inputRange: routeSteps, outputRange: [0, 42, 42, 94, 94, 146] });
+  const translateY = progress.interpolate({ inputRange: routeSteps, outputRange: [30, 30, 6, 6, 36, 36] });
   const scale = pulse.interpolate({ inputRange: [0, 1], outputRange: [.82, 1.18] });
   return <View testID="route-planning-transition" accessibilityRole="progressbar" accessibilityLabel={label} style={styles.routeWrap}>
-    <View style={styles.routeTrack}>
-      <View style={styles.routeLine}/>
-      {[0, 1, 2].map(index => <Animated.View key={index} style={[styles.routeStop, { left: index * 73, transform: [{ scale }] }]}><View style={styles.routeStopCore}/></Animated.View>)}
-      <Animated.View style={[styles.traveller, { transform: [{ translateX }] }]}><Icon name="sparkles" size={12} color="#FFFDF6"/></Animated.View>
+    <View style={styles.routeMap}>
+      <View style={[styles.mapRoom, styles.mapRoomOne]}/><View style={[styles.mapRoom, styles.mapRoomTwo]}/><View style={[styles.mapRoom, styles.mapRoomThree]}/>
+      <View style={[styles.routeSegment, { left: 12, top: 41, width: 42 }]}/>
+      <View style={[styles.routeSegmentVertical, { left: 53, top: 17, height: 25 }]}/>
+      <View style={[styles.routeSegment, { left: 53, top: 16, width: 52 }]}/>
+      <View style={[styles.routeSegmentVertical, { left: 104, top: 16, height: 31 }]}/>
+      <View style={[styles.routeSegment, { left: 104, top: 46, width: 52 }]}/>
+      {[[8, 35], [98, 10], [150, 40]].map(([left, top], index) => <Animated.View key={index} style={[styles.routeStop, { left, top, transform: [{ scale }] }]}><View style={styles.routeStopCore}/></Animated.View>)}
+      <Animated.View style={[styles.traveller, { transform: [{ translateX }, { translateY }] }]}><Icon name="navigate" size={12} color="#FFFDF6"/></Animated.View>
     </View>
     <T accessibilityLiveRegion="polite" style={styles.routeLabel}>{label}</T>
     <T style={styles.routeDetail}>Balancing your interests, time and walking preferences</T>
@@ -79,11 +86,14 @@ const styles = StyleSheet.create({
   bottomLeft: { left: 5, bottom: 5, borderLeftWidth: 1.5, borderBottomWidth: 1.5 }, bottomRight: { right: 5, bottom: 5, borderRightWidth: 1.5, borderBottomWidth: 1.5 },
   label: { color: '#F6F1E5', fontSize: 11, lineHeight: 17, textAlign: 'center' }, compactLabel: { flexShrink: 1, textAlign: 'left' },
   routeWrap: { borderRadius: 15, paddingVertical: 13, paddingHorizontal: 16, gap: 8, alignItems: 'center', backgroundColor: '#E5EADF', overflow: 'hidden' },
-  routeTrack: { width: 164, height: 26, justifyContent: 'center' },
-  routeLine: { position: 'absolute', left: 8, right: 8, top: 12, height: 2, borderRadius: 2, backgroundColor: '#A8B6A5' },
-  routeStop: { position: 'absolute', top: 6, width: 14, height: 14, borderRadius: 7, borderWidth: 2, borderColor: c.green, backgroundColor: '#E5EADF', alignItems: 'center', justifyContent: 'center' },
+  routeMap: { width: 180, height: 60, borderRadius: 12, backgroundColor: '#DCE4D7', borderWidth: 1, borderColor: '#C8D3C4', overflow: 'hidden' },
+  mapRoom: { position: 'absolute', borderRadius: 5, backgroundColor: '#EEF1E9', borderWidth: 1, borderColor: '#D2DBCE' },
+  mapRoomOne: { left: 6, top: 6, width: 38, height: 22 }, mapRoomTwo: { left: 66, top: 28, width: 28, height: 25 }, mapRoomThree: { right: 6, top: 6, width: 42, height: 26 },
+  routeSegment: { position: 'absolute', height: 3, borderRadius: 2, backgroundColor: '#8FA38E' },
+  routeSegmentVertical: { position: 'absolute', width: 3, borderRadius: 2, backgroundColor: '#8FA38E' },
+  routeStop: { position: 'absolute', width: 14, height: 14, borderRadius: 7, borderWidth: 2, borderColor: c.green, backgroundColor: '#E5EADF', alignItems: 'center', justifyContent: 'center' },
   routeStopCore: { width: 4, height: 4, borderRadius: 2, backgroundColor: c.green },
-  traveller: { position: 'absolute', left: 2, top: 1, width: 24, height: 24, borderRadius: 12, backgroundColor: c.green, alignItems: 'center', justifyContent: 'center', shadowColor: c.green, shadowOpacity: .25, shadowRadius: 5 },
+  traveller: { position: 'absolute', left: 4, top: 0, width: 24, height: 24, borderRadius: 12, backgroundColor: c.green, alignItems: 'center', justifyContent: 'center', shadowColor: c.green, shadowOpacity: .25, shadowRadius: 5 },
   routeLabel: { color: c.green, fontSize: 12, lineHeight: 18, fontWeight: '600', textAlign: 'center' },
   routeDetail: { color: c.muted, fontSize: 9, lineHeight: 14, textAlign: 'center' },
 });

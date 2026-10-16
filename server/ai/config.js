@@ -19,21 +19,25 @@ export function readAIConfig(env = process.env) {
   };
   const ollamaModel = env.OLLAMA_MODEL || 'qwen3:4b';
   if (!/^[a-zA-Z0-9_.:/-]+$/.test(ollamaModel) || /cloud/i.test(ollamaModel)) throw new Error('OLLAMA_MODEL must be a locally installed model');
+  const planningModel = env.OLLAMA_PLANNING_MODEL || 'qwen3:1.7b';
+  if (!/^[a-zA-Z0-9_.:/-]+$/.test(planningModel) || /cloud/i.test(planningModel)) throw new Error('OLLAMA_PLANNING_MODEL must be a locally installed model');
   const visionModel = env.OLLAMA_VISION_MODEL || 'qwen3-vl:4b';
   if (!/^[a-zA-Z0-9_.:/-]+$/.test(visionModel) || /cloud/i.test(visionModel)) throw new Error('OLLAMA_VISION_MODEL must be a locally installed vision model');
   return {
     clipUrl: localUrl('OPENCLIP_URL', 'http://127.0.0.1:8001'),
-    ollamaUrl: localUrl('OLLAMA_URL', 'http://127.0.0.1:11434'), ollamaModel,
+    ollamaUrl: localUrl('OLLAMA_URL', 'http://127.0.0.1:11434'), ollamaModel, planningModel,
     visionModel, visionTimeoutMs: integer('OLLAMA_VISION_TIMEOUT_MS', 14000, 1000, 720000),
     responseBudgetMs: integer('AI_RESPONSE_BUDGET_MS', 15000, 1000, 60000),
+    recognitionBudgetMs: integer('AI_RECOGNITION_BUDGET_MS', 5000, 1000, 15000),
     publicSearch: env.ARTWORK_PUBLIC_SEARCH !== 'false',
     embeddingModel: 'ViT-B-32', embeddingPretrained: 'laion2b_s34b_b79k',
     dimension: 512, threshold,
     timeoutMs: integer('OLLAMA_TIMEOUT_MS', 14000, 1000, 1800000),
-    clipTimeoutMs: integer('OPENCLIP_TIMEOUT_MS', 10000, 1000, 600000),
+    clipTimeoutMs: integer('OPENCLIP_TIMEOUT_MS', 4500, 1000, 600000),
     ollamaNumCtx: integer('OLLAMA_NUM_CTX', 2048, 2048, 32768),
     ollamaNumGpu: integer('OLLAMA_NUM_GPU', -1, -1, 999),
     ollamaNumPredict: integer('OLLAMA_NUM_PREDICT', 256, 128, 4096),
+    planningNumPredict: integer('OLLAMA_PLANNING_NUM_PREDICT', 192, 128, 1024),
     ollamaKeepAlive: env.OLLAMA_KEEP_ALIVE || '10m',
     embeddingsFile: path.resolve(env.ARTWORK_EMBEDDINGS_FILE || path.join(env.UNFRAME_DATA_DIR || path.join(root, 'data'), 'artwork-embeddings.json')),
     allowedOrigins: (env.AI_ALLOWED_ORIGINS || 'http://localhost:8081,http://127.0.0.1:8081,http://localhost:8082,http://127.0.0.1:8082,http://127.0.0.1:8091').split(',').map(s => s.trim()).filter(Boolean),

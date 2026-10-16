@@ -27,7 +27,7 @@ async function setup(t) {
   const state = { generationCalls: 0, hold: false, fail: false, onStart: () => {}, onCancel: () => {} };
   const ollamaUrl = await listen(t, async (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    if (req.url === '/api/tags') return res.end(JSON.stringify({ models: [{ name: config.ollamaModel, digest: 'test-fixture-not-real-weights' }] }));
+    if (req.url === '/api/tags') return res.end(JSON.stringify({ models: [{ name: config.planningModel, digest: 'test-fixture-not-real-weights' }] }));
     const chunks = []; for await (const chunk of req) chunks.push(chunk);
     const body = JSON.parse(Buffer.concat(chunks).toString());
     if (req.url === '/api/show') return res.end(JSON.stringify({ capabilities: ['completion'], details: { parameter_size: 'test-only' } }));
@@ -51,8 +51,8 @@ async function setup(t) {
 test('planning status requires a local completion model and reports no inference claim', async () => {
   for (const [tags, details, code] of [
     [{ models: [] }, {}, 'OLLAMA_MODEL_MISSING'],
-    [{ models: [{ name: config.ollamaModel, remote_host: 'cloud.invalid' }] }, {}, 'OLLAMA_REMOTE_MODEL'],
-    [{ models: [{ name: config.ollamaModel }] }, { capabilities: ['embedding'] }, 'OLLAMA_CAPABILITY'],
+    [{ models: [{ name: config.planningModel, remote_host: 'cloud.invalid' }] }, {}, 'OLLAMA_REMOTE_MODEL'],
+    [{ models: [{ name: config.planningModel }] }, { capabilities: ['embedding'] }, 'OLLAMA_CAPABILITY'],
   ]) {
     const status = await getPlanningStatus({ config, client: { request: async endpoint => endpoint === '/api/tags' ? tags : details } });
     assert.equal(status.ready, false); assert.equal(status.liveVerified, false); assert.equal(status.code, code);

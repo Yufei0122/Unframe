@@ -41,6 +41,8 @@ Open **http://localhost:8081**. Wide browser windows show the same mobile screen
 
 During model warmup, Unframe first uses the configured Ollama GPU placement. If Ollama returns a model-runner error, startup retries once on CPU and keeps that CPU setting for the current process. If both attempts fail, the terminal includes Ollama's bounded local error detail and an `ollama run <model>` diagnostic command instead of hiding the HTTP 500 cause.
 
+The two interactive AI features have independent models and acceptance budgets. Museum-catalogue recognition uses OpenCLIP and must finish below 5 seconds. Route preference understanding uses the smaller `qwen3:1.7b` planning model and every chat/route request must finish below 15 seconds; the deterministic graph engine still enforces time, walking and accessibility constraints. Run `npm.cmd run ai:verify:features` to start the required services and execute both real-model performance gates. The command exits unsuccessfully if either budget or correctness check fails and retains reports under `.local-ai`.
+
 ## Features
 
 - Museum selection and isolated The Met / GOMA catalogues, artwork details and maps.

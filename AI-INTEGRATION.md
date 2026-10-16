@@ -111,7 +111,7 @@ Open **http://localhost:8081** for mobile web. The Node API defaults to **http:/
 
 | Command | Behavior |
 | --- | --- |
-| `npm.cmd run ai:setup` | Creates/reuses `.venv`, installs CPU PyTorch and Python dependencies, downloads/verifies OpenCLIP weights, checks/starts Ollama and installs the guide and vision models. Existing models are preserved. |
+| `npm.cmd run ai:setup` | Creates/reuses `.venv`, installs CPU PyTorch and Python dependencies, downloads/verifies OpenCLIP weights, checks/starts Ollama and installs the guide, lightweight planning and vision models. Existing models are preserved. |
 | `npm.cmd run ai:setup:vision` | Installs/checks only the configured local vision model. |
 | `npm.cmd run ai:web` | Runs `ai:up` and Expo together with matching backend/frontend ports. |
 | `npm.cmd run ai:clip` | Starts only OpenCLIP, or reuses a compatible running service. |
@@ -121,6 +121,7 @@ Open **http://localhost:8081** for mobile web. The Node API defaults to **http:/
 | `npm.cmd run ai:doctor -- --smoke` | Uses real embeddings, artwork matching and structured Qwen output. This is a small integration check, not an accuracy benchmark. |
 | `npm.cmd run ai:validate` | Broader real-model acceptance: all 12 references and mild variants, 6 negative controls, both museums' HTTP recognition/confirmation/routes and a Chinese planning chat. Writes `.local-ai/validation.json`. |
 | `npm.cmd run ai:validate:routes` | Serial real Qwen planning acceptance: Chinese preference edits and resulting routes in both museums, then an English GOMA revision and route. Each run writes a new `.local-ai/qwen-routes-*.json`, preserving failed attempts. Fallback responses fail model acceptance even when HTTP returns 200. |
+| `npm.cmd run ai:verify:features` | Starts the real local services, requires catalogue recognition below 5 seconds and every planning request below 15 seconds, and exits nonzero unless both feature gates pass. |
 | `npm.cmd run ai:check` | Compatibility alias for the doctor; `--live` is an alias for `--smoke`. |
 
 Node 22+ and Python 3.10–3.13 are supported (Python 3.12 recommended). If Ollama is absent, install the official [Windows package](https://ollama.com/download/windows), then rerun setup. Setup stages report their own failures and reuse downloaded files on retry. TLS verification remains enabled.
@@ -138,11 +139,13 @@ This deployment targets an i7-10750H (6 cores/12 threads), approximately 16 GB R
 | `OPENCLIP_URL` | `http://127.0.0.1:8001`; loopback service origin |
 | `OPENCLIP_DEVICE` | `cpu` (CUDA requires a separately compatible driver/PyTorch installation) |
 | `OPENCLIP_THREADS` | `4`; bounded CPU parallelism |
-| `OPENCLIP_TIMEOUT_MS` | `10000`; embedding request timeout |
+| `OPENCLIP_TIMEOUT_MS` | `4500`; server embedding deadline for the 5-second recognition target |
 | `OPENCLIP_CACHE_DIR` | `.local-ai/cache`; downloaded public weights, never visitor images |
 | `OLLAMA_URL` | `http://127.0.0.1:11434`; loopback API origin |
 | `OLLAMA_MODEL` | `qwen3:4b` |
+| `OLLAMA_PLANNING_MODEL` | `qwen3:1.7b`; independent lightweight route preference/recommendation model |
 | `AI_RESPONSE_BUDGET_MS` | `15000`; successful interactive checks must finish below this limit |
+| `AI_RECOGNITION_BUDGET_MS` | `5000`; successful catalogue recognition must finish below this limit |
 | `OLLAMA_TIMEOUT_MS` | `14000`; server-side model deadline |
 | `OLLAMA_NUM_CTX` | `2048`; bounded interactive context |
 | `OLLAMA_NUM_GPU` | `-1`; automatic GPU-layer placement with CPU fallback |
@@ -156,7 +159,7 @@ This deployment targets an i7-10750H (6 cores/12 threads), approximately 16 GB R
 | `UNFRAME_DATA_DIR` | `data`; existing visitor state and default index directory |
 | `PYTHON_EXE`, `OLLAMA_EXE` | Optional executable paths when automatic discovery is unsuitable |
 
-Mobile web uses `EXPO_PUBLIC_API_URL` only when an explicit backend address is necessary. Browser localhost defaults to port 3000. AI, OpenCLIP and vision client deadlines default to 14,500 ms, leaving a small margin below the 15-second interaction budget. Restart Expo after changes. A phone's localhost refers to that phone, so the default Windows loopback service is not directly reachable from a physical phone. This deployment validates Windows mobile web, not a signed iOS/Android installation.
+Mobile web uses `EXPO_PUBLIC_API_URL` only when an explicit backend address is necessary. Browser localhost defaults to port 3000. Route/guide and vision client deadlines default to 14,500 ms; recognition uses 5,000 ms. Restart Expo after changes. A phone's localhost refers to that phone, so the default Windows loopback service is not directly reachable from a physical phone. This deployment validates Windows mobile web, not a signed iOS/Android installation.
 
 ## Recognition, privacy and catalogue isolation
 

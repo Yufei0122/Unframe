@@ -57,7 +57,7 @@ export async function runRouteAcceptance({ config = readAIConfig(), backend, out
     && !address.username && !address.password && address.pathname === '/' && !address.search && !address.hash, 'Use a local backend origin.');
   const reportFile = path.join(outputRoot, 'acceptance', `routes-${new Date().toISOString().replace(/[:.]/g, '-')}-${randomUUID().slice(0, 8)}.json`);
   const report = { startedAt: new Date().toISOString(), completedAt: null, passed: false, scope: 'local_qwen_route_acceptance',
-    backend: address.origin, configuredModel: config.ollamaModel, model: null, responseBudgetMs: config.responseBudgetMs,
+    backend: address.origin, configuredModel: config.planningModel, model: null, responseBudgetMs: config.responseBudgetMs,
     limitation: 'Controlled requests to both demo museum graphs. A passing report requires local Qwen recommendations without fallback; it does not establish real museum navigation accuracy. No image model or training is involved.',
     checks: [], failures: [] };
   async function save() {
@@ -94,7 +94,7 @@ export async function runRouteAcceptance({ config = readAIConfig(), backend, out
     const status = await request(row, '/api/ai/planning/status');
     report.model = status.model;
     assert.equal(status.configuration?.provider, 'local');
-    assert.equal(status.configuration?.ollamaModel, config.ollamaModel);
+    assert.equal(status.configuration?.planningModel, config.planningModel);
     assert.equal(status.configuration?.planningVersion, planningVersion, 'Stop the old backend and restart the updated one.');
     assert.equal(status.ready, true, status.message);
   });

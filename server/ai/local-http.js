@@ -25,7 +25,7 @@ export function createLocalClient(config, service, { fetchImpl = fetch } = {}) {
           throw new AIError(503, `${service}_UNAVAILABLE`, `${clip ? 'OpenCLIP' : 'Ollama'} is unavailable. Run npm.cmd run ai:up and npm.cmd run ai:doctor.`);
         }
         if (!response.ok) {
-          if (!clip && response.status === 404) throw new AIError(503, 'OLLAMA_MODEL_MISSING', `The local Ollama model ${config.ollamaModel} is unavailable. Run npm.cmd run ai:setup.`);
+          if (!clip && response.status === 404) throw new AIError(503, 'OLLAMA_MODEL_MISSING', `The local Ollama model ${payload?.model || config.ollamaModel} is unavailable. Run npm.cmd run ai:setup.`);
           throw new AIError(503, `${service}_HTTP_${response.status}`, `${clip ? 'OpenCLIP' : 'Ollama'} returned HTTP ${response.status}. Check local service logs and available memory.`);
         }
         try { return await response.json(); }

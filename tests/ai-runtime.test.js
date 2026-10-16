@@ -159,9 +159,9 @@ test('route-only startup reuses a compatible backend without checking image serv
     urls.push(url);
     if (url === '/api/health') return { app: 'unframe', status: 'ok', workspace };
     assert.equal(url, '/api/ai/planning/status');
-    return { ready: true, configuration: { provider: 'local', ollamaModel: 'qwen3:4b', planningVersion: 3 } };
+    return { ready: true, configuration: { provider: 'local', ollamaModel: 'qwen3:1.7b', planningModel: 'qwen3:1.7b', planningVersion: 4 } };
   });
-  const api = await runtime({ PORT: new URL(address).port, OLLAMA_MODEL: 'qwen3:4b' });
+  const api = await runtime({ PORT: new URL(address).port, OLLAMA_MODEL: 'qwen3:4b', OLLAMA_PLANNING_MODEL: 'qwen3:1.7b' });
   t.after(api.restore);
   const dataFile = path.resolve(process.env.UNFRAME_DATA_DIR || path.join(api.root, 'data'), 'unframe.json');
   workspace = createHash('sha256').update(process.platform === 'win32' ? dataFile.toLowerCase() : dataFile).digest('hex');

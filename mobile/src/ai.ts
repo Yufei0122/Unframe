@@ -1,7 +1,7 @@
 import { resolveAPIBase, resolveAITimeoutMs } from './apiConfig';
 // Model services remain behind Node. Expo configuration contains only public client settings.
 export const AI_TIMEOUT_MS = resolveAITimeoutMs(process.env.EXPO_PUBLIC_AI_TIMEOUT_MS, 14500);
-export const CLIP_TIMEOUT_MS = resolveAITimeoutMs(process.env.EXPO_PUBLIC_CLIP_TIMEOUT_MS, 14500);
+export const CLIP_TIMEOUT_MS = resolveAITimeoutMs(process.env.EXPO_PUBLIC_CLIP_TIMEOUT_MS, 5000);
 export const VISION_TIMEOUT_MS = resolveAITimeoutMs(process.env.EXPO_PUBLIC_VISION_TIMEOUT_MS, 14500);
 export async function requestAI<T>(path: string, body: FormData | object, signal: AbortSignal): Promise<T> {
   const location = typeof window !== 'undefined' && window.location?.hostname ? window.location : undefined;

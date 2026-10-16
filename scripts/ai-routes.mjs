@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { applyInteractivePerformanceProfile, ensureOllama, pullOllamaModel, ensureNode, startMobileWeb, installShutdown, keepRunning, root, run, stopOwned, warmOllamaModel } from './ai-runtime.mjs';
+import { applyInteractivePerformanceProfile, ensureOllama, pullOllamaModel, ensureNode, startMobileWeb, installShutdown, keepRunning, planningModel, root, run, stopOwned, warmOllamaModel } from './ai-runtime.mjs';
 
 installShutdown();
 try {
@@ -7,8 +7,8 @@ try {
   const migrated = applyInteractivePerformanceProfile();
   if (migrated.length) console.log(`Using the 15-second interactive profile for this run (${migrated.join(', ')}). Update .env from .env.example to make it explicit.`);
   await ensureOllama();
-  await pullOllamaModel(); // Reuses installed qwen3:4b. No CLIP/vision/index dependency.
-  await warmOllamaModel();
+  await pullOllamaModel(planningModel); // Independent lightweight route model; no CLIP/vision/index dependency.
+  await warmOllamaModel(planningModel);
   await ensureNode({ planningOnly: true });
   if (process.argv.includes('--verify')) await run(process.execPath, [path.join(root, 'scripts', 'validate-qwen-routes.mjs')]);
   if (process.argv.includes('--web')) await startMobileWeb();

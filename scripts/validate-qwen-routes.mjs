@@ -10,7 +10,7 @@ import { assertModelRoute } from './route-acceptance.mjs';
 
 assert.equal(process.argv.length, 2, 'Usage: npm.cmd run ai:validate:routes');
 const config = readAIConfig();
-assert.match(config.ollamaModel, /^qwen/i, 'This acceptance run requires a Qwen model.');
+assert.match(config.planningModel, /^qwen/i, 'This acceptance run requires a Qwen planning model.');
 const root = fileURLToPath(new URL('../', import.meta.url));
 const port = Number(process.env.PORT || 3000);
 assert.ok(Number.isInteger(port) && port > 0 && port < 65536);
@@ -20,7 +20,7 @@ const report = {
   startedAt: new Date().toISOString(), passed: false, backend,
   verification: 'Real Node HTTP and local Ollama Qwen inference; no mocks; local fallback always fails model acceptance.',
   limitation: 'Controlled planning cases on illustrative museum graphs, not surveyed navigation or a general model quality benchmark.',
-  config: { model: config.ollamaModel, timeoutMs: config.timeoutMs, responseBudgetMs: config.responseBudgetMs, numCtx: config.ollamaNumCtx, numGpu: config.ollamaNumGpu, numPredict: config.ollamaNumPredict, keepAlive: config.ollamaKeepAlive },
+  config: { model: config.planningModel, timeoutMs: config.timeoutMs, responseBudgetMs: config.responseBudgetMs, numCtx: config.ollamaNumCtx, numGpu: config.ollamaNumGpu, numPredict: config.planningNumPredict, keepAlive: config.ollamaKeepAlive },
   sourceHashes: {}, checks: [],
 };
 await mkdir(path.dirname(output), { recursive: true });
@@ -64,13 +64,13 @@ try {
   const tags = await json(`${config.ollamaUrl}/api/tags`);
   assert.equal(version.status, 200);
   assert.equal(tags.status, 200);
-  const model = tags.body.models.find(item => item.name === config.ollamaModel);
+  const model = tags.body.models.find(item => item.name === config.planningModel);
   assert.ok(model && !model.remote_host && !model.remote_model, 'Expected installed local model.');
   report.ollama = { version: version.body.version, model };
   for (const [museumId, { collection, graph }] of catalogues) {
     const status = await json(`${backend}/api/ai/status?museumId=${museumId}`);
     assert.equal(status.status, 200);
-    assert.equal(status.body.configuration?.ollamaModel, config.ollamaModel);
+    assert.equal(status.body.configuration?.planningModel, config.planningModel);
     assert.equal(status.body.services?.ollama?.modelAvailable, true);
     const preferences = { interests: ['Nature'], availableMinutes: 30, currentLocation: 'entrance', walkingPreference: 'balanced', accessibilityRequirements: [], mustSeeArtworkIds: [collection.find(a => a.accessible).id] };
     const message = '我想看色彩丰富的作品，只有20分钟，需要无障碍路线，尽量少走路，请保留我已经选好的必看作品。';
