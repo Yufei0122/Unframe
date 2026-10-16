@@ -16,7 +16,6 @@
     "ai:acceptance": "node scripts/ai-up.mjs --web --verify",
     "ai:routes": "node scripts/ai-routes.mjs --web",
     "ai:routes:verify": "node scripts/ai-routes.mjs --web --verify",
-    "ai:validate:routes": "node scripts/validate-ai-routes.mjs",
     "ai:doctor": "node scripts/check-ai.mjs",
     "ai:validate": "node scripts/validate-local-ai.mjs",
     "ai:validate:routes": "node scripts/validate-qwen-routes.mjs",

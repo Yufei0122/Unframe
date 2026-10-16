@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useIsFocused } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -10,6 +10,7 @@ import { images } from '../assets';
 import { useStore } from '../store';
 import { AI_TIMEOUT_MS, CLIP_TIMEOUT_MS, VISION_TIMEOUT_MS, requestAI } from '../ai';
 import { ArtworkAnalysisResult } from '../components/ArtworkAnalysisResult';
+import { ArtworkScanTransition } from '../components/AIProcessingAnimations';
 import type { RecognitionResult, RecognitionCandidate, ConfirmationResult, ArtworkAnalysis } from '../../../shared/ai-types';
 
 export function LookupScreen() {
@@ -133,16 +134,16 @@ function LookupContent() {
         {analysis ? <ScrollView style={styles.sheet} contentContainerStyle={styles.sheetContent}><ArtworkAnalysisResult result={analysis}/></ScrollView> : selected && art ? <ScrollView style={styles.sheet} contentContainerStyle={styles.sheetContent}>
           <View style={styles.match}><Image source={images[art.id]} accessibilityLabel={art.title} style={styles.thumbnail}/><View style={{ flex: 1 }}><T style={styles.eyebrow}>SELECTED BY YOU</T><T accessibilityRole="header" style={styles.artTitle}>{art.title}</T><T style={s.small}>{art.artist} · {art.year}</T></View></View>
           <Button title="Open artwork details" icon="arrow-forward" onPress={() => nav.navigate('Artwork', { id: art.id })}/>
-          {busy && <View style={styles.loading}><ActivityIndicator color={c.green}/><T accessibilityLiveRegion="polite" style={s.small}>Preparing AI interpretation…</T></View>}
+          {busy && <View style={styles.darkAnimation}><ArtworkScanTransition compact label="Preparing your AI interpretation…"/></View>}
           {!!error && <><T accessibilityRole="alert" style={s.small}>{error}</T><Button title="Retry interpretation" secondary onPress={() => { void confirm(selected); }}/></>}
           {!busy && !result && !error && <><T style={s.small}>Interpretation was interrupted. Your selection is still available.</T><Button title="Retry interpretation" secondary onPress={() => { void confirm(selected); }}/></>}
           {!!result?.warning && <T style={s.small}>{result.warning}</T>}
           {!!explanation && <><Pressable accessibilityRole="button" accessibilityLabel={expanded ? 'Hide AI interpretation' : 'Read AI interpretation'} accessibilityState={{ expanded }} onPress={() => setExpanded(!expanded)} style={styles.interpretation}><Icon name="sparkles-outline" size={17}/><T style={s.label}>AI interpretation</T><Icon name={expanded ? 'chevron-up' : 'chevron-down'} size={16}/></Pressable>{expanded && <View style={{ gap: 10 }}><T style={s.small}>{result?.interpretationLabel}</T><T>{explanation.summary}</T><T>{explanation.historicalContext}</T>{explanation.interestingFacts.map((fact, i) => <T key={i}>• {fact}</T>)}<T>{explanation.whyItMatters}</T>{explanation.suggestedNextArtwork && <Button title="Explore suggested artwork" secondary onPress={() => nav.navigate('Artwork', { id: explanation.suggestedNextArtwork! })}/>}</View>}</>}
         </ScrollView> : <>
           {candidates.length > 0 && <View style={styles.candidatePanel}><View style={styles.candidateHeading}><T style={styles.candidateTitle}>Possible matches</T><T style={styles.candidateHint}>Tap the work you see</T></View><ScrollView style={styles.candidateList}>{candidates.map(candidate => <Pressable key={candidate.artwork.id} accessibilityRole="button" accessibilityLabel={'Select ' + candidate.artwork.title} onPress={() => { void confirm(candidate); }} style={styles.candidate}><Image source={images[candidate.artwork.id]} style={styles.candidateImage}/><View style={{ flex: 1 }}><T numberOfLines={1} style={styles.candidateName}>{candidate.artwork.title}</T><T numberOfLines={1} style={styles.candidateHint}>{candidate.artwork.artist}</T></View><Icon name="chevron-forward" color="#DBCBAA" size={18}/></Pressable>)}</ScrollView></View>}
+          {busy && <ArtworkScanTransition compact label={analysing ? 'Reading the artwork and checking sources…' : 'Comparing the artwork with this collection…'}/>}
           <View style={styles.status} accessibilityLiveRegion="polite">
-            {busy && <ActivityIndicator color="#DBCBAA" size="small"/>}
-            <T style={styles.statusText}>{analysing ? 'Analysing the image and checking public sources… This can take several minutes.' : busy ? (photo ? 'Finding possible matches…' : 'Looking for artworks…') : candidates.length ? candidates.length + ' possible ' + (candidates.length === 1 ? 'match' : 'matches') + ' · choose to confirm' : error ? 'Scanning paused' : photo ? message || 'Choose a match or try another image' : paused ? 'Scanning paused' : message || 'Looking for artworks automatically'}</T>
+            <T style={styles.statusText}>{analysing ? 'Analysing the image and checking public sources… Target: under 15 seconds.' : busy ? (photo ? 'Finding possible matches…' : 'Looking for artworks…') : candidates.length ? candidates.length + ' possible ' + (candidates.length === 1 ? 'match' : 'matches') + ' · choose to confirm' : error ? 'Scanning paused' : photo ? message || 'Choose a match or try another image' : paused ? 'Scanning paused' : message || 'Looking for artworks automatically'}</T>
           </View>
           {!!error && <T accessibilityRole="alert" style={styles.error}>{error}</T>}
         </>}
@@ -180,6 +181,6 @@ const styles = StyleSheet.create({
   controls: { paddingHorizontal: 22, paddingVertical: 9, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
   controlButton: { minHeight: 44, paddingHorizontal: 8, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', gap: 8 }, scanButton: { minHeight: 44, borderRadius: 24, backgroundColor: '#FFFFFF16', flexDirection: 'row', gap: 8, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 17 }, controlLabel: { color: '#F2F2E8', fontSize: 12, lineHeight: 18 },
   privacy: { color: '#AAB8AE', textAlign: 'center', fontSize: 10, lineHeight: 15, paddingHorizontal: 18 }, error: { color: '#FFD6C4', fontSize: 11, lineHeight: 17, textAlign: 'center', paddingHorizontal: 20, paddingTop: 8 },
-  sheet: { backgroundColor: c.bg, borderTopLeftRadius: 22, borderTopRightRadius: 22, flexShrink: 1 }, sheetContent: { padding: 20, gap: 14 }, loading: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 12, minHeight: 38 },
+  sheet: { backgroundColor: c.bg, borderTopLeftRadius: 22, borderTopRightRadius: 22, flexShrink: 1 }, sheetContent: { padding: 20, gap: 14 }, darkAnimation: { backgroundColor: '#24372F', borderRadius: 14, paddingHorizontal: 10, paddingVertical: 5 },
   match: { flexDirection: 'row', alignItems: 'center', gap: 14 }, thumbnail: { width: 56, height: 68, borderRadius: 9 }, eyebrow: { fontSize: 9, lineHeight: 15, color: c.muted, letterSpacing: 1.3 }, artTitle: { fontSize: 20, lineHeight: 26, marginVertical: 3 }, interpretation: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 44, gap: 8 },
 });

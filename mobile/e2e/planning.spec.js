@@ -16,7 +16,7 @@ test('chat fits a small screen, handles keyboard input and retries without losin
     return route.fulfill(++calls === 1 ? { status: 503, json: { error: 'Local Ollama Qwen is temporarily unavailable.' } } : { json: { reply: 'We will take a relaxed, step-free route.', preferences: { ...input.preferences, walkingPreference: 'less_walking', accessibilityRequirements: ['step_free'] } } });
   });
   await openPlan(page);
-  await expect(page.getByRole('tab')).toHaveCount(5);
+  await expect(page.getByRole('tab')).toHaveCount(4);
   const composer = page.getByRole('textbox', { name: 'Message your visit planner' });
   await expect(composer).toBeInViewport();
   await expect(page.getByRole('button', { name: 'Send message', exact: true })).toBeInViewport();
@@ -96,17 +96,16 @@ test('leaving Plan during generation prevents a late route from opening', async 
   await expect(page.getByRole('button', { name: 'Generate route', exact: true })).toBeEnabled();
 });
 
-test('local CPU generation can exceed the former 35-second limit and identifies Qwen recommendations', async ({ page }) => {
+test('route planning shows its transition and stops before the 15-second interaction limit', async ({ page }) => {
   let pending;
   await page.route('**/api/ai/routes/plan', route => { pending = route; });
   await openPlan(page);
   await page.clock.install();
   await page.getByRole('button', { name: 'Generate route', exact: true }).click();
   await expect.poll(() => !!pending).toBe(true);
-  await page.clock.fastForward(40000);
-  await expect(page.getByRole('button', { name: 'Planning your visit…', exact: true })).toBeDisabled();
-  await expect(page.getByRole('alert')).toHaveCount(0);
-  await pending.fulfill({ json: { demo: true, estimatedMinutes: 6, estimatedWalkingDistance: 0, route: [], navigation: [], mapNotice: 'Illustrative demo map.', reasoningSummary: 'Works chosen from this museum catalogue.', recommendationSource: 'ollama' } });
-  await expect(page.getByRole('heading', { name: 'Your itinerary', exact: true })).toBeVisible();
-  await expect(page.getByText('Qwen recommendation', { exact: false })).toBeVisible();
+  await expect(page.getByTestId('route-planning-transition')).toBeVisible();
+  await page.clock.fastForward(14501);
+  await expect(page.getByRole('alert')).toContainText('Planning took too long.');
+  await expect(page.getByRole('button', { name: 'Generate route', exact: true })).toBeEnabled();
+  await pending.abort().catch(() => {});
 });

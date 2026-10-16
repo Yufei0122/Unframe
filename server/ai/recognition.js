@@ -2,11 +2,11 @@ import { AIError, logFailure, requireInput } from './config.js';
 import { cosineSimilarity } from './embeddings.js';
 export const MAX_RECOGNITION_CANDIDATES = 3;
 export function createRecognitionService({ config, embeddings, store, ollama, collection }) {
-  return { async recognise(image) {
+  return { async recognise(image, signal) {
     if (!collection.length) throw new AIError(503, 'EMPTY_COLLECTION', 'No artworks are available in this collection.');
     const records = (await store.load()).filter(r => collection.some(a => a.id === r.artworkId));
     if (!records.length) throw new AIError(503, 'EMPTY_INDEX', 'No indexed artworks are available. Run npm run ai:index.');
-    const query = await embeddings.generate(image);
+    const query = await embeddings.generate(image, signal);
     const scores = new Map();
     for (const record of records) {
       const similarity = cosineSimilarity(query, record.vector);

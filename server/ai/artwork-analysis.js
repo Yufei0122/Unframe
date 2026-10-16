@@ -5,12 +5,14 @@ import { normalizeImage } from './images.js';
 
 export function createArtworkAnalysis(config, { vision = createVisionService(config), catalogues = createPublicCatalogues(), embeddings = createEmbeddingService(config) } = {}) {
   return { async analyse(image, signal) {
+    const started = performance.now();
     const observation = await vision.analyse(image, signal);
     signal?.throwIfAborted();
     const result = { ...observation, identityStatus: 'uncertain', sources: [], search: { status: config.publicSearch ? 'not_needed' : 'disabled', providers: [] } };
     if (!config.publicSearch || !observation.hypotheses.length) return result;
     // Network searches and optional reference comparisons have a shared bounded budget.
-    const deadline = AbortSignal.timeout(45000);
+    const remaining = Math.max(1, config.responseBudgetMs - Math.round(performance.now() - started) - 750);
+    const deadline = AbortSignal.timeout(Math.min(3000, remaining));
     const searchSignal = signal ? AbortSignal.any([signal, deadline]) : deadline;
     const found = await catalogues.search(observation.hypotheses, searchSignal);
     result.search.providers = found.providers;

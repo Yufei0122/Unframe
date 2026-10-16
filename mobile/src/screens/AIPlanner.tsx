@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { ActivityIndicator, Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button, Icon, T, c, serif, useRootNavigation } from '../ui';
@@ -7,6 +7,7 @@ import { useStore } from '../store';
 import { useMuseumLocation } from '../location';
 import { AI_TIMEOUT_MS, requestAI } from '../ai';
 import type { AIRoute, PlanningMessage, PlanningReply, VisitPreferences } from '../../../shared/ai-types';
+import { RoutePlanningTransition } from '../components/AIProcessingAnimations';
 
 type ActiveRequest = { controller: AbortController; kind: 'chat' | 'route'; message?: string };
 
@@ -110,7 +111,7 @@ function PlanningChat() {
           <View style={[styles.bubble, message.role === 'user' && styles.userBubble]}><T style={[styles.message, message.role === 'user' && styles.userText]}>{message.content}</T></View>
         </View>)}
         {messages.length === 1 && <View style={styles.prompts}>{prompts.map(prompt => <Pressable key={prompt.label} accessibilityRole="button" accessibilityLabel={prompt.label} disabled={locked} onPress={() => { void send(prompt.message); }} style={styles.prompt}><T style={styles.promptText}>{prompt.label}</T><Icon name="arrow-up-outline" size={15} color={c.green}/></Pressable>)}</View>}
-        {busy === 'chat' && <View style={styles.thinking} accessibilityLiveRegion="polite"><ActivityIndicator size="small" color={c.green}/><T style={styles.detail}>Thinking about your visit…</T></View>}
+        {busy === 'chat' && <RoutePlanningTransition label="Understanding your preferences…"/>}
         {!!error && <View style={styles.errorBox}><T accessibilityRole="alert" style={styles.errorText}>{error}</T>{failedMessage && <View style={styles.errorActions}>
           <Button title="Retry message" secondary disabled={!!busy} onPress={() => { void send(failedMessage, true); }}/>
           <Pressable accessibilityRole="button" accessibilityLabel="Discard message" onPress={() => { setMessages(previous => previous.slice(0, -1)); setFailedMessage(null); setError(''); }} style={styles.discard}><T style={styles.detail}>Discard message</T></Pressable>
@@ -120,6 +121,7 @@ function PlanningChat() {
           <T style={styles.detail}>{preferences.interests.length ? preferences.interests.join(' · ') : 'Open to discovering something new'}</T>
           <T style={styles.detail}>From {museum.graph.nodes.find(node => node.id === preferences.currentLocation)?.label} · {preferences.walkingPreference === 'less_walking' ? 'Less walking' : 'Balanced walk'}{preferences.accessibilityRequirements.length ? ' · Step-free' : ''}</T>
           {!!preferences.mustSeeArtworkIds.length && <T style={styles.detail}>Must see: {preferences.mustSeeArtworkIds.map(id => museum.artworks.find(art => art.id === id)?.title).join(', ')}</T>}
+          {busy === 'route' && <RoutePlanningTransition/>}
           <Button title={busy === 'route' ? 'Planning your visit…' : 'Generate route'} icon="sparkles-outline" disabled={locked || !!draft.trim()} onPress={() => { void plan(); }}/>
           <T style={styles.summaryNote}>{draft.trim() ? 'Send your message to update these preferences.' : 'Your itinerary opens on a separate page.'}</T>
         </View>

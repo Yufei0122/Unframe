@@ -28,7 +28,7 @@ const report = {
   scope: chatOnly ? 'chinese_chat_retest_only' : recognitionOnly ? 'catalogue_recognition_acceptance' : 'full_local_ai_acceptance',
   verification: chatOnly ? 'One real Node HTTP/Ollama Chinese chat request; no embedding, explanation or route requests repeated; no mocks' : recognitionOnly ? 'Real OpenCLIP embeddings and Node HTTP catalogue recognition; no mocks; no guide/chat inference' : 'real OpenCLIP embeddings and real Node HTTP/Ollama inference; no mocks',
   model: { embedding: config.embeddingModel, pretrained: config.embeddingPretrained, dimensions: config.dimension, ollama: config.ollamaModel },
-  backend, threshold: config.threshold,
+  backend, threshold: config.threshold, responseBudgetMs: config.responseBudgetMs,
   limitation: chatOnly ? 'Isolated Chinese chat retest. Initial embedding, recognition, explanation and route results remain in the unchanged initial report, including its first failed chat check. This retest does not repeat or replace those checks.' : 'Small, controlled sample of bundled references, mild transformations and six negative controls. Cosine similarity is neither probability nor accuracy. These results do not establish real visitor-camera accuracy or a general false-positive rate.',
   references: [], negatives: [], http: [], failures: [],
 };
@@ -66,16 +66,19 @@ async function checkHttp(name, action) {
 }
 
 async function httpJSON(endpoint, body, { form, expectedStatus = 200 } = {}) {
+  const started = performance.now();
   const response = await fetch(`${backend}/api/ai/${endpoint}`, {
     method: body !== undefined || form ? 'POST' : 'GET',
     ...(form ? { body: form } : body !== undefined ? { headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {}),
-    signal: AbortSignal.timeout(Math.max(config.timeoutMs, config.clipTimeoutMs) + 30000),
+    signal: AbortSignal.timeout(config.responseBudgetMs),
   });
   const result = await response.json();
+  const responseMs = Math.round(performance.now() - started);
   // Capture before assertions so a language/semantic failure retains the actual
   // public-catalogue answer instead of only the assertion error.
-  captureHttpResponse?.({ endpoint, status: response.status, response: result });
+  captureHttpResponse?.({ endpoint, status: response.status, responseMs, response: result });
   assert.equal(response.status, expectedStatus, `${endpoint}: HTTP ${response.status} ${result.code || ''} ${result.error || ''}`);
+  if (endpoint.startsWith('artworks/recognise')) assert.ok(responseMs < config.responseBudgetMs, `${endpoint} took ${responseMs} ms; target is below ${config.responseBudgetMs} ms.`);
   return result;
 }
 

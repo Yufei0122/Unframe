@@ -83,7 +83,7 @@ Native Scan uses `expo-camera` to show the rear camera and sample frames automat
 
 Native requests require `EXPO_PUBLIC_API_URL` in `mobile/.env.local` to point to an absolute backend URL reachable by the phone. OpenCLIP and Ollama run on that backend computer. `localhost` and `127.0.0.1` refer to the phone itself; the default Node server also listens only on the computer's loopback interface, so simply substituting a LAN IP is insufficient. Use a suitable HTTPS development forwarder or explicitly configure the backend to be reachable on your trusted LAN, then restart Expo after setting the URL. Keep model services on loopback. See [AI setup and deployment limits](../AI-INTEGRATION.md).
 
-CPU inference may take several minutes. The client waits 330,000 ms for Qwen and 150,000 ms for OpenCLIP by default. Set `EXPO_PUBLIC_AI_TIMEOUT_MS` and `EXPO_PUBLIC_CLIP_TIMEOUT_MS` in `mobile/.env.local` if needed, then restart Expo; accepted values are whole milliseconds from 1,000 to 900,000. Keep each client timeout greater than the corresponding server timeout so the server can return its useful error or fallback. See `.env.example`. Leaving a screen or cancelling still aborts the request immediately.
+Interactive AI requests have a 15-second target. The Qwen, OpenCLIP and vision client deadlines default to 14,500 ms, while the model service defaults to 14,000 ms. `ai:up` preloads Qwen and temporarily migrates the former slow-profile values when it detects them; copy the current values from `.env.example` to make that configuration explicit. Real acceptance fails any valid scan, chat, route or vision response that exceeds the target. Leaving a screen or cancelling aborts the request immediately.
 
 ## Features
 

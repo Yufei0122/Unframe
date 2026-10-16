@@ -43,7 +43,7 @@ export async function getAIStatus({ config, store, collection, museumId, clip, o
     museumId, ready, planningReady: serviceStatus.ollama.available && serviceStatus.ollama.modelAvailable,
     analysisReady: serviceStatus.vision?.available === true, liveVerified: false,
     analysisMessage: serviceStatus.vision?.available ? 'General visual analysis is available. Public reference search needs internet access; identities remain unconfirmed.' : 'General visual analysis needs a local vision model. Run npm.cmd run ai:setup:vision, then ai:doctor -- --vision.',
-    configuration: { valid: true, provider: 'local', embeddingModel: config.embeddingModel, embeddingPretrained: config.embeddingPretrained, dimension: config.dimension, ollamaModel: config.ollamaModel, visionModel: config.visionModel, analysisVersion: 1, planningVersion },
+    configuration: { valid: true, provider: 'local', embeddingModel: config.embeddingModel, embeddingPretrained: config.embeddingPretrained, dimension: config.dimension, ollamaModel: config.ollamaModel, visionModel: config.visionModel, analysisVersion: 2, planningVersion, responseBudgetMs: config.responseBudgetMs },
     services: serviceStatus, index,
     message: problems.length ? problems.join(' ') : 'Local services, model and index are ready. Run npm.cmd run ai:doctor -- --smoke for real inference checks.',
   };

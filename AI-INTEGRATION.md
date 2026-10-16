@@ -16,9 +16,9 @@ The route update bundle's `INSTALL.cmd` runs the equivalent source-update and `a
 
 The 2026-10-14 installer preserves existing `.env.example` and `mobile/.env.example` byte-for-byte; differences in these unused templates no longer block an update. Missing templates are installed, and updated copies remain in the bundle's `payload` folder for reference. Actual `.env` files remain untouched. Other local source changes are still checked before any writes, with all conflicting paths reported together.
 
-`GET /api/ai/planning/status` checks the local text model and completion capability independently of image services. `ready: true` there means model presence/capability, **not a successful inference**. The general status also has `planningReady`, separate from combined scanner readiness. Backend `planningVersion: 2` prevents reusing an older process that lacks cancellation or the planning checks; stop an old process in its original terminal instead of killing it by port.
+`GET /api/ai/planning/status` checks the local text model and completion capability independently of image services. `ready: true` there means model presence/capability, **not a successful inference**. The general status also has `planningReady`, separate from combined scanner readiness. Backend `planningVersion: 3` prevents reusing an older process that lacks cancellation, performance settings or the planning checks; stop an old process in its original terminal instead of killing it by port.
 
-The real acceptance creates an immutable `.local-ai/acceptance/routes-<timestamp>-<id>.json` containing model identity/digest, timings, actual responses and failures. Its 11 checks cover browser CORS and both museums: 30-minute AI routes; Chinese changes to 20 minutes, Colour, less walking, accessibility and preserved must-see IDs; AI routes using those edited preferences; rejection of impossible time and foreign-museum IDs. Every returned route is checked against actual graph edges, recomputed walking plus visit time, unique museum-local stops and required works. CPU requests run sequentially with a 15-second console heartbeat.
+Route-only acceptance creates a new `.local-ai/qwen-routes-<timestamp>-<id>.json` containing model identity, source hashes, timings, actual responses and failures. Its six checks cover both museums: Chinese changes to 20 minutes, Colour, less walking, accessibility and preserved must-see IDs; AI routes using those edited preferences; plus an English GOMA revision to 35 minutes, removal of must-see works and a second valid route. Every returned route is checked against actual graph edges, recomputed walking plus visit time, unique museum-local stops and required works. Every interactive POST must complete in less than `AI_RESPONSE_BUDGET_MS` (15,000 ms by default), otherwise acceptance fails even if the eventual payload is valid. The complete `ai:acceptance` workflow additionally runs the broader 11-check route/CORS/invalid-input suite before recognition and vision acceptance.
 
 The acceptance calls `POST /api/ai/routes/plan` with **`requireAI: true`**. This requires a real successful model call and propagates failures instead of accepting a deterministic fallback. It additionally requires `recommendationSource: "ollama"`, no warning/error, and a nonempty valid itinerary. Ordinary app requests retain the explicitly labelled local-rule fallback. **HTTP 200 or a visible itinerary alone does not prove Qwen worked.**
 
@@ -44,11 +44,11 @@ The analysis returns visible features, cautiously transcribed labels/signatures,
 - [Art Institute of Chicago API](https://api.artic.edu/docs/)
 - [Wikimedia Commons image information](https://www.mediawiki.org/wiki/API:Imageinfo)
 
-No visitor image is uploaded to those services or persisted by Unframe. The Ollama [vision API](https://docs.ollama.com/capabilities/vision) receives a metadata-free, maximum-768-pixel image on loopback. Public reference images are downloaded only from a fixed HTTPS host allowlist, with redirect validation, response-size limits and timeouts. At most three references are compared with OpenCLIP under a shared 45-second search/comparison budget. Metadata-only search results never establish identity; even a visually similar source yields **possible match**, with an explicit unconfirmed label and original source link. General results are not automatically inserted into museum routes, favourites, or the catalogue, and do not claim authenticity or valuation.
+No visitor image is uploaded to those services or persisted by Unframe. The Ollama [vision API](https://docs.ollama.com/capabilities/vision) receives a metadata-free, maximum-512-pixel image on loopback. Public reference images are downloaded only from a fixed HTTPS host allowlist, with redirect validation, response-size limits and timeouts. Source lookup and optional OpenCLIP comparison use at most three seconds of the remaining 15-second response budget. Metadata-only search results never establish identity; even a visually similar source yields **possible match**, with an explicit unconfirmed label and original source link. General results are not automatically inserted into museum routes, favourites, or the catalogue, and do not claim authenticity or valuation.
 
 The providers have limited coverage. Unknown contemporary work, unusual views, reproductions, missing source images, network outages and wrong model guesses can all leave identity uncertain. A model description may itself be inaccurate. This is not a universal artwork identification database or a real-world accuracy guarantee. Existing local `0.80` matching threshold is unchanged; it is not a calibrated confidence probability for general-source images.
 
-Configuration: `OLLAMA_VISION_MODEL=qwen3-vl:4b`, `OLLAMA_VISION_TIMEOUT_MS=540000`, and `EXPO_PUBLIC_VISION_TIMEOUT_MS=660000` (keep the client deadline above model timeout plus search time). `ARTWORK_PUBLIC_SEARCH=false` disables external title/artist queries. Public retrieval needs access to `collectionapi.metmuseum.org`, `images.metmuseum.org`, `api.artic.edu`, `www.artic.edu`, `commons.wikimedia.org` and `upload.wikimedia.org`; source links also include `www.metmuseum.org`. Source failures preserve visual observations and are shown explicitly. Guide and vision generation share a single backend inference slot; vision unloads after completion. Navigating away/cancelling aborts the new HTTP analysis and upstream requests.
+Configuration: `OLLAMA_VISION_MODEL=qwen3-vl:4b`, `OLLAMA_VISION_TIMEOUT_MS=14000`, `AI_RESPONSE_BUDGET_MS=15000`, and `EXPO_PUBLIC_VISION_TIMEOUT_MS=14500`. `ARTWORK_PUBLIC_SEARCH=false` disables external title/artist queries. Public retrieval needs access to `collectionapi.metmuseum.org`, `images.metmuseum.org`, `api.artic.edu`, `www.artic.edu`, `commons.wikimedia.org` and `upload.wikimedia.org`; source links also include `www.metmuseum.org`. Source failures preserve visual observations and are shown explicitly. Guide and vision generation share a single backend inference slot. The current model remains warm for ten minutes by default. Navigating away or reaching the deadline aborts the HTTP analysis and upstream requests.
 
 After starting the updated backend, run in another terminal:
 
@@ -80,7 +80,7 @@ This starts/reuses local services, runs the strict route acceptance described ab
 2. Real vision HTTP: browser-origin access, installed vision identity, Water Lilies, The Harvesters and a generated white negative. Positive controls must be classified as likely artworks. Identity abstention is allowed and counted separately; a leading title/artist that disagrees with the labelled control fails for review. A white image must not produce an artwork identity or reference. Reports retain actual model answers and timings, with a new `.local-ai/acceptance/vision-<timestamp>-<id>.json` for every run.
 3. When public search is enabled, a separate Water Lilies/Monet query must reach all three providers and download/decode a public reference. An unreachable provider fails full acceptance, even if local analysis works; the report identifies the source. `ARTWORK_PUBLIC_SEARCH=false` explicitly selects a local-only configuration and records retrieval as disabled, not verified.
 
-CPU vision checks can take several minutes each. The console prints a heartbeat every 15 seconds. A failed check produces a nonzero exit and an actionable report; it never silently substitutes a sample response. Only bundled/synthetic images are used by this automatic suite, and no uploaded visitor photo is saved. To rerun only the vision portion while services are running, use `npm.cmd run ai:validate:vision`.
+Vision checks have the same strict 15-second response budget as the app. Hardware that cannot complete a real result in time fails with a nonzero exit and an actionable report; the validator never silently substitutes a sample response. Only bundled/synthetic images are used by this automatic suite, and no uploaded visitor photo is saved. To rerun only the vision portion while services are running, use `npm.cmd run ai:validate:vision`.
 
 **Training and accuracy:** this deploys pretrained OpenCLIP and Qwen3-VL weights; installing models or generating the catalogue embedding index is not fine-tuning. No new training has been performed. Independent labelled photographs, including different views of the same work and non-art/difficult negatives, are needed for a train/validation/test split and a meaningful accuracy assessment. Keep photographs of the same capture session together when splitting, and reserve a held-out set before adjusting any threshold or model weights. The 12 reference images and their transformations are integration controls, not an independent test set or evidence that arbitrary artworks can be identified. A passed report proves only its stated checks, and permits an explicit uncertain identity.
 
@@ -131,22 +131,23 @@ The scripts identify existing services before reusing them. An unrelated process
 
 The root `.env` is loaded by Node and deployment scripts; existing process variables take precedence. Never overwrite a configured `.env` wholesale. `.env`, `.venv`, `.local-ai`, generated vectors and visitor data are gitignored.
 
-This deployment targets an i7-10750H (6 cores/12 threads), approximately 16 GB RAM and GTX 1660 Ti (6 GB). Its installed NVIDIA driver 442.23 is too old for the chosen current PyTorch CUDA packages, so CPU execution is the default. No graphics-driver change is required. Free RAM was below 1 GB at the initial inspection; close unused applications if model loading fails or paging makes inference slow.
+This deployment targets an i7-10750H (6 cores/12 threads), approximately 16 GB RAM and GTX 1660 Ti (6 GB). Ollama now uses automatic GPU placement (`OLLAMA_NUM_GPU=-1`) and falls back to CPU when GPU offload is unavailable. Meeting the 15-second requirement depends on the actual driver, available VRAM/RAM and a warmed model; the real acceptance report is authoritative. Close unused applications if model loading fails or paging makes inference slow.
 
 | Variable | Default / purpose |
 | --- | --- |
 | `OPENCLIP_URL` | `http://127.0.0.1:8001`; loopback service origin |
 | `OPENCLIP_DEVICE` | `cpu` (CUDA requires a separately compatible driver/PyTorch installation) |
 | `OPENCLIP_THREADS` | `4`; bounded CPU parallelism |
-| `OPENCLIP_TIMEOUT_MS` | `120000`; embedding request timeout |
+| `OPENCLIP_TIMEOUT_MS` | `10000`; embedding request timeout |
 | `OPENCLIP_CACHE_DIR` | `.local-ai/cache`; downloaded public weights, never visitor images |
 | `OLLAMA_URL` | `http://127.0.0.1:11434`; loopback API origin |
 | `OLLAMA_MODEL` | `qwen3:4b` |
-| `OLLAMA_TIMEOUT_MS` | `300000`; CPU generation may take minutes |
-| `OLLAMA_NUM_CTX` | `4096`; context window |
-| `OLLAMA_NUM_GPU` | `0`; CPU inference on this machine |
-| `OLLAMA_NUM_PREDICT` | `768`; bounded response length |
-| `OLLAMA_KEEP_ALIVE` | `0`; unload Qwen after requests to reduce idle RAM |
+| `AI_RESPONSE_BUDGET_MS` | `15000`; successful interactive checks must finish below this limit |
+| `OLLAMA_TIMEOUT_MS` | `14000`; server-side model deadline |
+| `OLLAMA_NUM_CTX` | `2048`; bounded interactive context |
+| `OLLAMA_NUM_GPU` | `-1`; automatic GPU-layer placement with CPU fallback |
+| `OLLAMA_NUM_PREDICT` | `256`; compact structured response limit |
+| `OLLAMA_KEEP_ALIVE` | `10m`; keep the warmed model loaded between interactions |
 | `ARTWORK_MATCH_THRESHOLD` | `0.80`; cosine similarity cutoff, not probability or accuracy |
 | `ARTWORK_EMBEDDINGS_FILE` | `data/artwork-embeddings.json`; explicit override supported |
 | `AI_STARTUP_TIMEOUT_MS` | `600000`; allowance for slow model startup |
@@ -155,7 +156,7 @@ This deployment targets an i7-10750H (6 cores/12 threads), approximately 16 GB R
 | `UNFRAME_DATA_DIR` | `data`; existing visitor state and default index directory |
 | `PYTHON_EXE`, `OLLAMA_EXE` | Optional executable paths when automatic discovery is unsuitable |
 
-Mobile web uses `EXPO_PUBLIC_API_URL` only when an explicit backend address is necessary. Browser localhost defaults to port 3000. Optional `EXPO_PUBLIC_AI_TIMEOUT_MS` (330000) and `EXPO_PUBLIC_CLIP_TIMEOUT_MS` (150000) should exceed backend timeouts. Restart Expo after changes. A phone's localhost refers to that phone, so the default Windows loopback service is not directly reachable from a physical phone. This deployment validates Windows mobile web, not a signed iOS/Android installation.
+Mobile web uses `EXPO_PUBLIC_API_URL` only when an explicit backend address is necessary. Browser localhost defaults to port 3000. AI, OpenCLIP and vision client deadlines default to 14,500 ms, leaving a small margin below the 15-second interaction budget. Restart Expo after changes. A phone's localhost refers to that phone, so the default Windows loopback service is not directly reachable from a physical phone. This deployment validates Windows mobile web, not a signed iOS/Android installation.
 
 ## Recognition, privacy and catalogue isolation
 
@@ -283,7 +284,7 @@ The original backend already occupied port 3000 and was left running. This insta
 | OpenCLIP | http://127.0.0.1:8001/health — running on CPU, 4 threads; fixed model/weight identity, 512 dimensions |
 | Ollama | http://127.0.0.1:11434 — existing 0.34.0 service reused; local Qwen3 4.0B Q4_K_M installed |
 
-Qwen unloads its weights after requests because `OLLAMA_KEEP_ALIVE=0`; the Ollama service remains available and reloads on demand. The preexisting `gemma3:270m` model was preserved. OpenCLIP weights are cached under `.local-ai/cache`, dependencies under `.venv`. `ai:up` currently owns the OpenCLIP process and reuses the separately running Node/Ollama services. Startup processes were left running for use after this task; rerun the documented commands after a reboot or stopped session.
+This historical Windows run used `OLLAMA_KEEP_ALIVE=0`. Current startup migrates that legacy value in memory to the 15-second profile, preloads Qwen and keeps it warm for ten minutes. The preexisting `gemma3:270m` model was preserved. OpenCLIP weights are cached under `.local-ai/cache`, dependencies under `.venv`.
 
 All six requested command forms were actually executed: setup, clip, index, up, doctor and doctor with smoke. Setup installed CPU PyTorch 2.8.0, torchvision 0.23.0 and OpenCLIP 3.3.0. Pip's initial sandbox cache-write failure was diagnosed and retried with the required local permission; the setup now defaults its pip cache to `.local-ai/pip-cache`. TLS verification stayed enabled. Public Hugging Face downloads completed without an account/token.
 

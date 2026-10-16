@@ -34,10 +34,10 @@ test('vision requires a local image-capable model and sends bounded images to th
     return { done: true, done_reason: 'stop', message: { content: JSON.stringify(observation) } };
   } };
   assert.deepEqual(await createVisionService(config, { client }).analyse(jpeg), observation);
-  assert.equal(sent.model, 'qwen3-vl:4b'); assert.equal(sent.keep_alive, 0); assert.equal(sent.think, false);
+  assert.equal(sent.model, 'qwen3-vl:4b'); assert.equal(sent.keep_alive, '10m'); assert.equal(sent.think, false);
   const image = Buffer.from(sent.messages[1].images[0], 'base64');
   const metadata = await sharp(image).metadata();
-  assert.ok(metadata.width <= 768 && metadata.height <= 768); assert.equal(metadata.exif, undefined);
+  assert.ok(metadata.width <= 512 && metadata.height <= 512); assert.equal(metadata.exif, undefined);
   await assert.rejects(inspectVisionModel(config, { request: async () => ({ models: [{ name: config.visionModel, remote_host: 'remote.invalid' }] }) }), { code: 'VISION_REMOTE_MODEL' });
   await assert.rejects(inspectVisionModel(config, { request: async () => ({ models: [] }) }), { code: 'VISION_MODEL_MISSING' });
   await assert.rejects(inspectVisionModel(config, { request: async endpoint => endpoint === '/api/tags' ? { models: [{ name: config.visionModel }] } : { capabilities: ['completion'] } }), { code: 'VISION_NOT_SUPPORTED' });

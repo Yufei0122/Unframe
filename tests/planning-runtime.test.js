@@ -118,3 +118,15 @@ test('strict acceptance records model failure instead of counting deterministic 
   assert.equal(report.passed, false); assert.equal(report.summary.qwenRoutesPassed, 0); assert.equal(report.summary.chineseChatsPassed, 0);
   assert.ok(report.failures.some(row => /OLLAMA_HTTP_500/.test(row.message)));
 });
+
+test('route acceptance rejects successful responses that exceed the interaction budget', async t => {
+  const fixture = await setup(t);
+  const outputRoot = await mkdtemp(path.join(os.tmpdir(), 'route-performance-test-')); t.after(() => rm(outputRoot, { recursive: true, force: true }));
+  const slowFetch = async (url, init) => {
+    await new Promise(resolve => setTimeout(resolve, 25));
+    return fetch(url, { ...init, signal: undefined });
+  };
+  const { report } = await runRouteAcceptance({ ...fixture, config: { ...fixture.config, responseBudgetMs: 20 }, outputRoot, fetchImpl: slowFetch, log: () => {} });
+  assert.equal(report.passed, false);
+  assert.ok(report.failures.some(row => /target is below 20 ms/.test(row.message)));
+});

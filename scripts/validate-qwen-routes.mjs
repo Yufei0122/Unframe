@@ -20,7 +20,7 @@ const report = {
   startedAt: new Date().toISOString(), passed: false, backend,
   verification: 'Real Node HTTP and local Ollama Qwen inference; no mocks; local fallback always fails model acceptance.',
   limitation: 'Controlled planning cases on illustrative museum graphs, not surveyed navigation or a general model quality benchmark.',
-  config: { model: config.ollamaModel, timeoutMs: config.timeoutMs, numCtx: config.ollamaNumCtx, numGpu: config.ollamaNumGpu, numPredict: config.ollamaNumPredict, keepAlive: config.ollamaKeepAlive },
+  config: { model: config.ollamaModel, timeoutMs: config.timeoutMs, responseBudgetMs: config.responseBudgetMs, numCtx: config.ollamaNumCtx, numGpu: config.ollamaNumGpu, numPredict: config.ollamaNumPredict, keepAlive: config.ollamaKeepAlive },
   sourceHashes: {}, checks: [],
 };
 await mkdir(path.dirname(output), { recursive: true });
@@ -28,7 +28,7 @@ async function save() {
   await writeFile(`${output}.tmp`, JSON.stringify(report, null, 2));
   await rename(`${output}.tmp`, output);
 }
-async function json(url, body, timeout = 10000) {
+async function json(url, body, timeout = config.responseBudgetMs) {
   const response = await fetch(url, { redirect: 'error', signal: AbortSignal.timeout(timeout), ...(body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {}) });
   return { status: response.status, body: await response.json() };
 }
@@ -38,10 +38,11 @@ async function check(name, endpoint, input, validate) {
   await save();
   const started = performance.now();
   console.log(`REAL ${name}`);
-  const heartbeat = setInterval(() => console.log(`Waiting ${name}: ${Math.round((performance.now() - started) / 1000)}s`), 15000);
   try {
-    row.response = await json(`${backend}/api/ai/${endpoint}`, input, config.timeoutMs + 15000);
+    row.response = await json(`${backend}/api/ai/${endpoint}`, input);
+    row.elapsedMs = Math.round(performance.now() - started);
     assert.equal(row.response.status, 200, JSON.stringify(row.response.body));
+    assert.ok(row.elapsedMs < config.responseBudgetMs, `${endpoint} took ${row.elapsedMs} ms; target is below ${config.responseBudgetMs} ms.`);
     validate(row.response.body);
     row.passed = true;
     console.log(`PASS ${name}`);
@@ -51,8 +52,7 @@ async function check(name, endpoint, input, validate) {
     console.error(`FAIL ${name}: ${error.message}`);
     return null;
   } finally {
-    clearInterval(heartbeat);
-    row.elapsedMs = Math.round(performance.now() - started);
+    row.elapsedMs ??= Math.round(performance.now() - started);
     await save();
   }
 }
@@ -87,7 +87,7 @@ try {
       report.checks.push({ name: `${museumId}/route_from_chat`, passed: false, skipped: true, reason: 'Chat failed; do not substitute manual or fallback preferences.' });
       continue;
     }
-    await check(`${museumId}/route_from_chat`, 'routes/plan', { museumId, ...chat.preferences }, result => assertModelRoute(result, chat.preferences, collection, graph));
+    await check(`${museumId}/route_from_chat`, 'routes/plan', { museumId, ...chat.preferences, requireAI: true }, result => assertModelRoute(result, chat.preferences, collection, graph));
     if (museumId === 'goma') {
       const followup = await check('goma/english_revision', 'routes/chat', {
         museumId, preferences: chat.preferences, history: [{ role: 'user', content: message }, { role: 'assistant', content: chat.reply }],
@@ -99,7 +99,7 @@ try {
         assert.match(result.reply, /[a-zA-Z]/);
         assert.doesNotMatch(result.reply, /[\u3400-\u9fff]/u);
       });
-      if (followup) await check('goma/route_from_revision', 'routes/plan', { museumId, ...followup.preferences }, result => assertModelRoute(result, followup.preferences, collection, graph));
+      if (followup) await check('goma/route_from_revision', 'routes/plan', { museumId, ...followup.preferences, requireAI: true }, result => assertModelRoute(result, followup.preferences, collection, graph));
       else report.checks.push({ name: 'goma/route_from_revision', passed: false, skipped: true, reason: 'Revision failed.' });
     }
   }

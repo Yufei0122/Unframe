@@ -7,6 +7,7 @@ import { createOllamaService } from '../server/ai/ollama.js';
 import { createRecognitionService } from '../server/ai/recognition.js';
 import { getAIStatus, inspectLocalServices } from '../server/ai/status.js';
 import { normalizeImage } from '../server/ai/images.js';
+import { applyInteractivePerformanceProfile } from './ai-runtime.mjs';
 
 try {
   const args = process.argv.slice(2);
@@ -15,6 +16,7 @@ try {
   const imageFile = imageFlag < 0 ? undefined : args[imageFlag + 1];
   const flags = args.filter((_, index) => imageFlag < 0 || (index !== imageFlag && index !== imageFlag + 1));
   if (flags.some(arg => !['--smoke', '--live', '--vision'].includes(arg)) || (imageFlag >= 0 && (!visionCheck || !imageFile || imageFile.startsWith('--')))) throw new AIError(400, 'INVALID_ARGUMENT', 'Usage: npm.cmd run ai:doctor -- [--smoke | --vision [--image path]]');
+  applyInteractivePerformanceProfile();
   const config = readAIConfig();
   const store = createEmbeddingStore(config);
   const services = await inspectLocalServices(config);
@@ -29,9 +31,9 @@ try {
     const mime = { jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp' }[(await sharp(source).metadata()).format];
     const image = await normalizeImage(source, mime);
     const form = new FormData(); form.append('image', new Blob([image], { type: 'image/jpeg' }), 'artwork.jpg');
-    console.log('Testing real visual analysis through the running backend. CPU inference can take several minutes.');
+    console.log(`Testing real visual analysis through the running backend (target < ${config.responseBudgetMs} ms).`);
     let response;
-    try { response = await fetch(`http://127.0.0.1:${port}/api/ai/artworks/analyse`, { method: 'POST', body: form, signal: AbortSignal.timeout(config.visionTimeoutMs + 65000) }); }
+    try { response = await fetch(`http://127.0.0.1:${port}/api/ai/artworks/analyse`, { method: 'POST', body: form, signal: AbortSignal.timeout(config.responseBudgetMs) }); }
     catch { throw new AIError(503, 'BACKEND_UNAVAILABLE', 'Cannot reach the updated backend. Restart ai:up and verify its PORT.'); }
     const result = await response.json();
     if (!response.ok) throw new AIError(response.status, result.code || 'VISION_HTTP_ERROR', result.error || 'The backend cannot analyse images. Restart it after updating the code.');
@@ -64,7 +66,7 @@ try {
       if (unrelatedResult.matched) throw new AIError(502, 'LIVE_UNRELATED_MATCH', 'An unrelated exterior photograph passed the matching threshold. Calibrate ARTWORK_MATCH_THRESHOLD before using recognition.');
       let explanation;
       if (!live.length) {
-        console.log(`Smoke: ${museumId} real Qwen structured explanation (CPU inference may take several minutes).`);
+        console.log(`Smoke: ${museumId} real Qwen structured explanation (target < ${config.responseBudgetMs} ms).`);
         explanation = await ollama.generateArtworkExplanation(artwork, [], collection);
       }
       live.push({ museumId, embedding: 'passed', referenceRetrieval: { artworkId: artwork.id, similarity: result.candidates[0].similarity }, transformedReferenceSimilarity: transformedResult.candidates[0].similarity, unrelatedImageRejected: true, maxUnrelatedSimilarity, threshold: config.threshold, ...(explanation ? { explanation } : {}) });

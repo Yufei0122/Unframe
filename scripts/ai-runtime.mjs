@@ -27,6 +27,22 @@ export const ollamaUrl = endpoint('OLLAMA_URL', 'http://127.0.0.1:11434');
 export const ollamaModel = process.env.OLLAMA_MODEL || 'qwen3:4b';
 if (!/^[a-zA-Z0-9_.:/-]+$/.test(ollamaModel) || /cloud/i.test(ollamaModel)) throw new Error('OLLAMA_MODEL must name a locally installed model, not a cloud model.');
 
+export function applyInteractivePerformanceProfile(env = process.env) {
+  const legacy = {
+    OPENCLIP_TIMEOUT_MS: ['120000', '10000'], OLLAMA_VISION_TIMEOUT_MS: ['540000', '14000'],
+    OLLAMA_TIMEOUT_MS: ['300000', '14000'], OLLAMA_NUM_CTX: ['4096', '2048'], OLLAMA_NUM_GPU: ['0', '-1'],
+    OLLAMA_NUM_PREDICT: ['768', '256'], OLLAMA_KEEP_ALIVE: ['0', '10m'],
+    EXPO_PUBLIC_AI_TIMEOUT_MS: ['330000', '14500'], EXPO_PUBLIC_CLIP_TIMEOUT_MS: ['150000', '14500'],
+    EXPO_PUBLIC_VISION_TIMEOUT_MS: ['660000', '14500'],
+  };
+  const changed = [];
+  if (!env.AI_RESPONSE_BUDGET_MS) { env.AI_RESPONSE_BUDGET_MS = '15000'; changed.push('AI_RESPONSE_BUDGET_MS'); }
+  for (const [key, [before, after]] of Object.entries(legacy)) {
+    if (env[key] === undefined || env[key] === before) { if (env[key] !== after) changed.push(key); env[key] = after; }
+  }
+  return changed;
+}
+
 export function spawnOwned(command, args, options = {}) {
   const { managedStdin = false, ...spawnOptions } = options;
   const child = spawn(command, args, { cwd: root, windowsHide: true, stdio: managedStdin ? ['pipe', 'inherit', 'inherit'] : 'inherit', ...spawnOptions });
@@ -162,6 +178,23 @@ export async function requireOllamaModel(modelName = ollamaModel) {
   console.log(`Ollama model ${modelName} is installed.`);
 }
 
+export async function warmOllamaModel(modelName = ollamaModel) {
+  const timeout = Number(process.env.AI_STARTUP_TIMEOUT_MS || 600000);
+  const started = performance.now();
+  console.log(`Warming ${modelName}; first startup may take longer than the 15-second interaction budget.`);
+  let response;
+  try {
+    response = await fetch(`${ollamaUrl}/api/generate`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: modelName, stream: false, keep_alive: process.env.OLLAMA_KEEP_ALIVE || '10m' }),
+      signal: AbortSignal.timeout(timeout),
+    });
+  } catch (error) { throw new Error(`Cannot warm ${modelName}: ${error.cause?.code || error.name}.`); }
+  if (!response.ok) { await response.body?.cancel(); throw new Error(`Cannot warm ${modelName}: Ollama returned HTTP ${response.status}.`); }
+  try { await response.json(); } catch { throw new Error(`Cannot warm ${modelName}: Ollama returned invalid JSON.`); }
+  console.log(`${modelName} is warm (${Math.round(performance.now() - started)} ms).`);
+}
+
 export async function pullOllamaModel(modelName = ollamaModel) {
   if (!/^[a-zA-Z0-9_.:/-]+$/.test(modelName) || /cloud/i.test(modelName)) throw new Error('Only a local model may be downloaded.');
   const tags = await getJSON(`${ollamaUrl}/api/tags`);
@@ -201,7 +234,7 @@ export async function ensureNode({ planningOnly = false } = {}) {
   const validateAI = async () => {
     const status = await getJSON(`${address}/api/ai/${planningOnly ? 'planning/status' : 'status?museumId=met'}`, 15000);
     const expected = planningOnly ? { provider: 'local', ollamaModel, planningVersion }
-      : { provider: 'local', embeddingModel: identity.model, embeddingPretrained: identity.pretrained, dimension: identity.dimensions, ollamaModel, visionModel: process.env.OLLAMA_VISION_MODEL || 'qwen3-vl:4b', analysisVersion: 1, planningVersion };
+      : { provider: 'local', embeddingModel: identity.model, embeddingPretrained: identity.pretrained, dimension: identity.dimensions, ollamaModel, visionModel: process.env.OLLAMA_VISION_MODEL || 'qwen3-vl:4b', analysisVersion: 2, planningVersion };
     if (!status?.configuration || Object.entries(expected).some(([key, value]) => status.configuration[key] !== value)) {
       throw new Error(`The Unframe process at ${address} is using an older or different AI configuration. It was left running. Stop it in its original terminal, then rerun npm.cmd run ai:up (or choose another PORT).`);
     }

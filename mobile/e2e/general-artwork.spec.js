@@ -13,7 +13,6 @@ test('an unknown uploaded photo receives visual analysis with uncertainty and so
   await page.route('**/api/ai/artworks/recognise*', route => route.fulfill({ json: { matched: false, candidates: [] } }));
   await page.route('**/api/ai/artworks/analyse', route => { analyses++; expect(route.request().headers()['content-type']).toContain('multipart/form-data'); return route.fulfill({ json: result }); });
   await openScan(page);
-  await expect(page.getByRole('button', { name: 'Analyse any artwork' })).toBeVisible();
   expect(analyses).toBe(0, 'Camera sampling must not repeatedly invoke the large vision model');
   await page.getByLabel('Upload artwork image').setInputFiles(photo);
   await expect(page.getByRole('heading', { name: 'Artwork identity uncertain' })).toBeVisible();
@@ -30,6 +29,7 @@ test('resuming during general analysis discards the late result and restarts lig
   await page.route('**/api/ai/artworks/analyse', route => { pending = route; });
   await openScan(page);
   await page.getByLabel('Upload artwork image').setInputFiles(photo);
+  await expect(page.getByTestId('artwork-scan-transition')).toBeVisible();
   await expect(page.getByText('Analysing the image and checking public sources…', { exact: false })).toBeVisible();
   await page.getByRole('button', { name: 'Resume scanning', exact: true }).click();
   await pending.fulfill({ json: result }).catch(() => {});

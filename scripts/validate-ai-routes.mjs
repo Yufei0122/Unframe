@@ -57,7 +57,7 @@ export async function runRouteAcceptance({ config = readAIConfig(), backend, out
     && !address.username && !address.password && address.pathname === '/' && !address.search && !address.hash, 'Use a local backend origin.');
   const reportFile = path.join(outputRoot, 'acceptance', `routes-${new Date().toISOString().replace(/[:.]/g, '-')}-${randomUUID().slice(0, 8)}.json`);
   const report = { startedAt: new Date().toISOString(), completedAt: null, passed: false, scope: 'local_qwen_route_acceptance',
-    backend: address.origin, configuredModel: config.ollamaModel, model: null,
+    backend: address.origin, configuredModel: config.ollamaModel, model: null, responseBudgetMs: config.responseBudgetMs,
     limitation: 'Controlled requests to both demo museum graphs. A passing report requires local Qwen recommendations without fallback; it does not establish real museum navigation accuracy. No image model or training is involved.',
     checks: [], failures: [] };
   async function save() {
@@ -67,25 +67,26 @@ export async function runRouteAcceptance({ config = readAIConfig(), backend, out
   }
   async function check(name, action) {
     const row = { name, passed: false }; report.checks.push(row);
-    const start = performance.now(); log(`Checking ${name}. Qwen CPU inference may take several minutes.`);
-    const heartbeat = setInterval(() => log(`Waiting ${name}: ${Math.round((performance.now() - start) / 1000)} seconds.`), 15000); heartbeat.unref();
+    const start = performance.now(); log(`Checking ${name} (target < ${config.responseBudgetMs} ms).`);
     try { await action(row); row.passed = true; log(`PASS ${name}`); }
     catch (error) { row.error = error.message; report.failures.push({ name, message: error.message }); log(`FAIL ${name}: ${error.message}`); }
-    finally { clearInterval(heartbeat); row.elapsedMs = Math.round(performance.now() - start); await save(); }
+    finally { row.elapsedMs = Math.round(performance.now() - start); await save(); }
     return row.passed;
   }
   async function request(row, endpoint, body, expectedStatus = 200) {
+    const started = performance.now();
     let response;
     try {
       response = await fetchImpl(`${address.origin}${endpoint}`, { method: body ? 'POST' : 'GET',
         headers: { Origin: 'http://localhost:8081', ...(body ? { 'Content-Type': 'application/json' } : {}) },
-        ...(body ? { body: JSON.stringify(body) } : {}), signal: AbortSignal.timeout(body ? config.timeoutMs + 30000 : 15000) });
+        ...(body ? { body: JSON.stringify(body) } : {}), signal: AbortSignal.timeout(body ? config.responseBudgetMs : 15000) });
     } catch (error) { throw new Error(`Cannot reach ${address.origin}${endpoint} (${error.cause?.code || error.name}). Start npm.cmd run ai:routes and check PORT.`); }
     let result;
     try { result = await response.json(); } catch { throw new Error(`HTTP ${response.status} did not return JSON. Restart the updated backend.`); }
-    row.httpStatus = response.status; row.actual = result;
+    row.httpStatus = response.status; row.actual = result; row.responseMs = Math.round(performance.now() - started);
     assert.equal(response.status, expectedStatus, `${endpoint}: HTTP ${response.status} ${result.code || ''} ${result.error || ''}`);
     assert.equal(response.headers.get('access-control-allow-origin'), 'http://localhost:8081', 'The browser cannot access this backend.');
+    if (body) assert.ok(row.responseMs < config.responseBudgetMs, `${endpoint} took ${row.responseMs} ms; target is below ${config.responseBudgetMs} ms.`);
     return result;
   }
   await save();

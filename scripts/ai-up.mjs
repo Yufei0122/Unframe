@@ -1,4 +1,4 @@
-import { ensureClip, ensureOllama, ensureNode, startMobileWeb, installShutdown, keepRunning, requireOllamaModel, root, run, stopOwned } from './ai-runtime.mjs';
+import { applyInteractivePerformanceProfile, ensureClip, ensureOllama, ensureNode, startMobileWeb, installShutdown, keepRunning, requireOllamaModel, root, run, stopOwned, warmOllamaModel } from './ai-runtime.mjs';
 import { readAIConfig } from '../server/ai/config.js';
 import { createEmbeddingStore } from '../server/ai/embeddings.js';
 import path from 'node:path';
@@ -7,8 +7,11 @@ import { inspectVisionModel } from '../server/ai/vision.js';
 installShutdown();
 try {
   if (process.argv.slice(2).some(arg => !['--web', '--verify'].includes(arg))) throw new Error('Usage: npm.cmd run ai:up -- [--web] [--verify]');
+  const migrated = applyInteractivePerformanceProfile();
+  if (migrated.length) console.log(`Using the 15-second interactive profile for this run (${migrated.join(', ')}). Update .env from .env.example to make it explicit.`);
   await ensureOllama();
   await requireOllamaModel();
+  await warmOllamaModel();
   try { await inspectVisionModel(readAIConfig()); console.log('General artwork visual analysis is available.'); }
   catch (error) { console.warn(`General visual analysis is unavailable: ${error.message} Existing catalogue scanning can still start.`); }
   await ensureClip();

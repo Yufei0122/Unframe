@@ -37,7 +37,7 @@ async function fixture(t, { failSecond = false, ready = true, publicSearch = fal
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
     if (req.url === '/api/health') return res.end(JSON.stringify({ app: 'unframe' }));
-    if (req.url.startsWith('/api/ai/status')) return res.end(JSON.stringify({ analysisReady: ready, analysisMessage: 'Missing test model', configuration: { visionModel: config.visionModel, analysisVersion: 1 }, services: { vision: { available: ready } } }));
+    if (req.url.startsWith('/api/ai/status')) return res.end(JSON.stringify({ analysisReady: ready, analysisMessage: 'Missing test model', configuration: { visionModel: config.visionModel, analysisVersion: 2 }, services: { vision: { available: ready } } }));
     assert.equal(req.url, '/api/ai/artworks/analyse');
     assert.match(req.headers['content-type'], /^multipart\/form-data/);
     calls++;

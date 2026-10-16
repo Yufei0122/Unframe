@@ -40,7 +40,7 @@ test('configuration is local, model identity is fixed and CPU inference is confi
   assert.throws(() => readAIConfig({ ARTWORK_MATCH_THRESHOLD: 'bad' }));
   assert.equal(config.ollamaModel, 'qwen3:4b'); assert.equal(config.dimension, 512);
   assert.equal(config.embeddingModel, 'ViT-B-32'); assert.equal(config.embeddingPretrained, 'laion2b_s34b_b79k');
-  assert.equal(config.timeoutMs, 300000); assert.equal(config.ollamaNumGpu, 0);
+  assert.equal(config.timeoutMs, 14000); assert.equal(config.responseBudgetMs, 15000); assert.equal(config.ollamaNumGpu, -1);
   assert.equal(readAIConfig({ OLLAMA_TIMEOUT_MS: '600000' }).timeoutMs, 600000);
   assert.throws(() => readAIConfig({ OPENCLIP_URL: 'https://external.example' }));
   assert.throws(() => readAIConfig({ OLLAMA_MODEL: 'qwen3:cloud' }));
@@ -119,8 +119,8 @@ test('Qwen uses local metadata, think:false and JSON schema; rejects truncated, 
   const client = createOllamaService(config, { request: async (endpoint, body) => { assert.equal(endpoint, '/api/chat'); payload = body; return jsonCandidate(explanationSelection); } });
   await client.generateArtworkExplanation(collection[0], ['Nature'], collection);
   assert.equal(payload.think, false); assert.equal(payload.stream, false); assert.equal(payload.format.type, 'object');
-  assert.equal(payload.options.num_gpu, 0); assert.equal(payload.options.num_ctx, 4096);
-  assert.equal(payload.keep_alive, '0'); assert.match(payload.messages[1].content, /Claude Monet/);
+  assert.equal(payload.options.num_gpu, -1); assert.equal(payload.options.num_ctx, 2048);
+  assert.equal(payload.options.num_predict, 256); assert.equal(payload.keep_alive, '10m'); assert.match(payload.messages[1].content, /Claude Monet/);
   assert.ok(!payload.messages[1].content.includes('goma-'));
   await assert.rejects(createOllamaService(config, { request: async () => ({ done: true, done_reason: 'length' }) }).generateArtworkExplanation(collection[0], [], collection), { code: 'OLLAMA_INCOMPLETE' });
   await assert.rejects(createOllamaService(config, { request: async () => ({ done: true, done_reason: 'stop', message: { content: 'not json' } }) }).generateArtworkExplanation(collection[0], [], collection), { code: 'OLLAMA_JSON' });

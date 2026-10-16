@@ -62,7 +62,9 @@ export function createAIHandler({ config = readAIConfig(), clip = createLocalCli
       if (pathname === '/api/ai/artworks/recognise') {
         const { recognition } = selectMuseum(url.searchParams.get('museumId') ?? undefined);
         const { image } = await readImageUpload(req);
-        return send(res, 200, await recognition.recognise(image));
+        const result = await recognition.recognise(image, cancellation.signal);
+        if (!res.destroyed) return send(res, 200, result);
+        return;
       }
       if (!req.headers['content-type']?.includes('application/json')) throw new AIError(415, 'JSON_REQUIRED', 'Send application/json.');
       let input;

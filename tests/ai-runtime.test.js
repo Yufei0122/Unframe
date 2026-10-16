@@ -26,6 +26,17 @@ async function runtime(env) {
 
 const clipIdentity = { status: 'ok', model: 'ViT-B-32', pretrained: 'laion2b_s34b_b79k', dimensions: 512, normalized: true };
 
+test('interactive profile migrates legacy slow defaults without overwriting explicit tuning', async () => {
+  const api = await runtime({});
+  const env = { OLLAMA_TIMEOUT_MS: '300000', OLLAMA_NUM_GPU: '0', OLLAMA_NUM_CTX: '3072' };
+  const changed = api.applyInteractivePerformanceProfile(env);
+  assert.equal(env.AI_RESPONSE_BUDGET_MS, '15000');
+  assert.equal(env.OLLAMA_TIMEOUT_MS, '14000'); assert.equal(env.OLLAMA_NUM_GPU, '-1');
+  assert.equal(env.OLLAMA_NUM_CTX, '3072', 'A non-legacy custom value must be preserved.');
+  assert.ok(changed.includes('OLLAMA_TIMEOUT_MS') && !changed.includes('OLLAMA_NUM_CTX'));
+  api.restore();
+});
+
 test('reused OpenCLIP and Ollama survive shutdown while owned subprocess is stopped', { timeout: 15000 }, async t => {
   const clip = await mockServer(t, () => clipIdentity);
   const ollama = await mockServer(t, () => ({ version: 'test-only' }));
@@ -109,7 +120,7 @@ test('route-only startup reuses a compatible backend without checking image serv
     urls.push(url);
     if (url === '/api/health') return { app: 'unframe', status: 'ok', workspace };
     assert.equal(url, '/api/ai/planning/status');
-    return { ready: true, configuration: { provider: 'local', ollamaModel: 'qwen3:4b', planningVersion: 2 } };
+    return { ready: true, configuration: { provider: 'local', ollamaModel: 'qwen3:4b', planningVersion: 3 } };
   });
   const api = await runtime({ PORT: new URL(address).port, OLLAMA_MODEL: 'qwen3:4b' });
   t.after(api.restore);

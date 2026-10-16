@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, AppState, Image, Linking, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { AppState, Image, Linking, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CameraView, useCameraPermissions } from 'expo-camera';
@@ -14,6 +14,7 @@ import { useStore } from '../store';
 import { AI_TIMEOUT_MS, CLIP_TIMEOUT_MS, VISION_TIMEOUT_MS, requestAI } from '../ai';
 import { createNativeScanLoop } from '../nativeScanLoop';
 import { ArtworkAnalysisResult } from '../components/ArtworkAnalysisResult';
+import { ArtworkScanTransition } from '../components/AIProcessingAnimations';
 import type { ArtworkAnalysis, ConfirmationResult, RecognitionCandidate, RecognitionResult } from '../../../shared/ai-types';
 
 export function LookupScreen() {
@@ -224,8 +225,9 @@ function NativeLookupContent() {
         </> : <View style={styles.cameraMessage}><Icon name="camera-outline" size={34} color="white"/><T accessibilityRole={cameraError ? 'alert' : undefined} style={styles.light}>{cameraMessage}</T>{!!permission && (!permission.granted || !!cameraError || paused) && <Pressable accessibilityRole="button" accessibilityLabel={paused ? 'Resume scanning' : 'Enable camera'} onPress={() => { void retryCamera(); }} style={styles.retry}><T style={styles.light}>{paused ? 'Resume scanning' : permission.canAskAgain ? 'Enable camera' : 'Camera settings'}</T></Pressable>}</View>}
       </View>
       <View style={styles.sheet}>
-        <View style={styles.statusRow}><Icon name="scan-outline" color={c.green}/><T accessibilityLiveRegion="polite" style={[s.label, { flex: 1 }]}>{candidates.length ? 'Choose the artwork in view' : 'Find the work in front of you'}</T>{busy && <ActivityIndicator size="small" color={c.green}/>}</View>
-        {!!error ? <><T accessibilityRole="alert" style={s.small}>{error}</T><Button title="Try scanning again" secondary onPress={scanAgain}/></> : <T style={s.small}>{analysing ? 'Analysing the image and checking public sources… This can take several minutes.' : message}</T>}
+        <View style={styles.statusRow}><Icon name="scan-outline" color={c.green}/><T accessibilityLiveRegion="polite" style={[s.label, { flex: 1 }]}>{candidates.length ? 'Choose the artwork in view' : 'Find the work in front of you'}</T></View>
+        {(busy || analysing) && <View style={styles.scanAnimation}><ArtworkScanTransition compact label={analysing ? 'Reading the artwork and checking sources…' : 'Comparing the artwork with this collection…'}/></View>}
+        {!!error ? <><T accessibilityRole="alert" style={s.small}>{error}</T><Button title="Try scanning again" secondary onPress={scanAgain}/></> : <T style={s.small}>{analysing ? 'Analysing the image and checking public sources… Target: under 15 seconds.' : message}</T>}
         {analysing ? <Button title="Cancel analysis" secondary onPress={scanAgain}/> : <View style={{ gap: 8 }}>{cameraVisible && <Button title="Analyse any artwork" secondary disabled={busy || !cameraReady} onPress={analyseCamera}/>}<Button title="Analyse photo" secondary onPress={analysePhoto}/></View>}
         {!!candidates.length && <ScrollView style={styles.candidateList} contentContainerStyle={{ paddingBottom: 4 }}>{candidates.map(candidate => <Pressable key={candidate.artwork.id} accessibilityRole="button" accessibilityLabel={`Confirm ${candidate.artwork.title} by ${candidate.artwork.artist}`} onPress={() => { void choose(candidate); }} style={styles.candidate}>
           <Image source={images[candidate.artwork.id]} style={styles.thumbnail}/><View style={{ flex: 1 }}><T style={styles.artTitle}>{candidate.artwork.title}</T><T style={s.small}>{candidate.artwork.artist} · {candidate.artwork.year}</T><T style={styles.matchLabel}>Possible match · tap to confirm</T></View><Icon name="chevron-forward" size={18}/>
@@ -236,7 +238,7 @@ function NativeLookupContent() {
     </> : <View style={styles.resultArea}><ScrollView style={styles.resultSheet} contentContainerStyle={styles.resultContent}>
       <View style={styles.statusRow}><Image source={images[art.id]} style={styles.thumbnail}/><View style={{ flex: 1 }}><T style={styles.matchLabel}>YOUR SELECTED WORK</T><T accessibilityRole="header" style={styles.artTitle}>{art.title}</T><T style={s.small}>{art.artist} · {art.year}</T></View></View>
       <Button title="Open artwork details" icon="arrow-forward" onPress={() => { cancelConfirmation(); nav.navigate('Artwork', { id: art.id }); }}/>
-      {confirming && <View style={styles.statusRow}><ActivityIndicator color={c.green}/><T accessibilityLiveRegion="polite" style={s.small}>Preparing your AI interpretation…</T></View>}
+      {confirming && <View style={styles.scanAnimation}><ArtworkScanTransition compact label="Preparing your AI interpretation…"/></View>}
       {!!error && <T accessibilityRole="alert" style={s.small}>{error}</T>}
       {!result && !confirming && <Button title="Retry interpretation" secondary onPress={() => { void choose(selected!); }}/>}
       {!!result?.warning && <T style={s.small}>{result.warning}</T>}
@@ -260,6 +262,6 @@ const styles = StyleSheet.create({
   sheet: { maxHeight: '52%', backgroundColor: c.bg, borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 18, gap: 10 },
   statusRow: { flexDirection: 'row', alignItems: 'center', gap: 12 }, candidateList: { flexShrink: 1 }, candidate: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: c.border },
   thumbnail: { width: 54, height: 64, borderRadius: 8 }, artTitle: { fontSize: 16, lineHeight: 22, fontWeight: '500' }, matchLabel: { color: c.green, fontSize: 9, lineHeight: 16, letterSpacing: .7 },
-  privacy: { color: c.muted, fontSize: 10, lineHeight: 15 }, pause: { alignSelf: 'center', paddingHorizontal: 15, paddingVertical: 8 },
+  privacy: { color: c.muted, fontSize: 10, lineHeight: 15 }, pause: { alignSelf: 'center', paddingHorizontal: 15, paddingVertical: 8 }, scanAnimation: { backgroundColor: '#24372F', borderRadius: 14, paddingHorizontal: 10, paddingVertical: 5 },
   resultArea: { position: 'absolute', left: 0, right: 0, bottom: 0, maxHeight: '70%' }, resultSheet: { backgroundColor: c.bg, borderTopLeftRadius: 24, borderTopRightRadius: 24 }, resultContent: { padding: 22, gap: 16 },
 });
