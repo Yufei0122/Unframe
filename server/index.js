@@ -39,7 +39,11 @@ async function body(req) {
 }
 function assert(condition, message) { if (!condition) throw Object.assign(new Error(message), { status: 400 }); }
 const allowedInterests = ['Nature', 'Colour', 'Sculpture', 'Form', 'Reflection'];
-const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.png': 'image/png' };
+// The Expo app is the only UI; Node serves APIs and redirects browser entry points.
+const mobileWebUrl = new URL(process.env.MOBILE_WEB_URL || 'http://localhost:8081');
+if (!['http:', 'https:'].includes(mobileWebUrl.protocol) || mobileWebUrl.username || mobileWebUrl.password) {
+  throw new Error('MOBILE_WEB_URL must be an http:// or https:// mobile preview URL without credentials.');
+}
 
 const server = http.createServer(async (req, res) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
@@ -111,12 +115,11 @@ const server = http.createServer(async (req, res) => {
       return send(res, 404, { error: 'Endpoint not found' });
     }
     if (req.method !== 'GET' && req.method !== 'HEAD') return send(res, 405, { error: 'Method not allowed' });
-    const relative = decodeURIComponent(route === '/' ? '/index.html' : route);
-    const publicDir = path.join(root, 'public');
-    const file = path.resolve(publicDir, `.${relative}`);
-    if (!file.startsWith(publicDir + path.sep)) return send(res, 403, { error: 'Forbidden' });
-    try { const data = await readFile(file); res.writeHead(200, { 'Content-Type': `${mime[path.extname(file)] || 'application/octet-stream'}; charset=utf-8` }); res.end(req.method === 'HEAD' ? undefined : data); }
-    catch (error) { if (error.code === 'ENOENT' || error.code === 'EISDIR') return send(res, 404, { error: 'Not found' }); throw error; }
+    if (route === '/' || route === '/index.html') {
+      res.writeHead(302, { Location: mobileWebUrl.href, 'Cache-Control': 'no-store' });
+      return res.end();
+    }
+    return send(res, 404, { error: 'Page not found. Open the mobile app.', mobileUrl: mobileWebUrl.href });
   } catch (error) { if (!error.status) console.error(error); send(res, error.status || 500, { error: error.status ? error.message : 'Something went wrong. Please try again.' }); }
 });
 if (!await startLocalServer(server, { port, workspace, dataFile })) process.exitCode = 1;

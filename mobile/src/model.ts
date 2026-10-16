@@ -28,5 +28,5 @@ export type RootStackParams = {
   About: undefined;
   AppSettings: undefined;
 };
-export type ProfileStackParams = { ProfileHome: undefined; SavedArtworks: undefined; SavedRoutes: undefined; RecentActivity: { filter?: 'All' | 'Visits' | 'Saves' | 'Routes' | 'AI' } | undefined; SavedRouteDetails: { id: string } };
-export type TabParams = { Discover: undefined; Plan: undefined; Scan: undefined; Guide: { artworkId?: string } | undefined; Saved: { tab?: 'saved' | 'visits' } | undefined; You: NavigatorScreenParams<ProfileStackParams> | undefined };
+export type ProfileStackParams = { ProfileHome: undefined; SavedArtworks: undefined; SavedRoutes: undefined; RecentActivity: { filter?: 'All' | 'Visits' | 'Saves' | 'Routes' | 'AI' } | undefined; SavedRouteDetails: { id: string }; VisitDetails: { id: string } };
+export type TabParams = { Discover: undefined; Plan: undefined; Scan: undefined; Guide: { artworkId?: string } | undefined; You: NavigatorScreenParams<ProfileStackParams> | undefined };

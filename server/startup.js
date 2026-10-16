@@ -7,7 +7,7 @@ export async function startLocalServer(server, { port, workspace, dataFile }) {
           const response = await fetch(`${address}/api/health`, { signal: AbortSignal.timeout(2000) });
           const health = await response.json();
           if (response.ok && health.app === 'unframe' && health.workspace === workspace) {
-            console.log(`Unframe is already running at ${address}\nOpen this address in your browser. No second server is needed.\nTo restart it in development mode, stop the existing server in its terminal first.`);
+            console.log(`Unframe is already running at ${address}\nThis is the backend API. Open the Expo mobile preview (default http://localhost:8081). No second server is needed.\nTo restart it in development mode, stop the existing server in its terminal first.`);
             resolve(true);
             return;
           }
@@ -19,7 +19,7 @@ export async function startLocalServer(server, { port, workspace, dataFile }) {
       resolve(false);
     });
     server.listen(port, '127.0.0.1', () => {
-      console.log(`Unframe is ready at ${address}\nKeep this terminal open while using the app. Press Ctrl+C to stop.\nLocal demo workspace · data saved to ${dataFile}`);
+      console.log(`Unframe API is ready at ${address}\nStart the mobile UI with npm.cmd run mobile:web -- --port 8081. Keep this terminal open while using the app. Press Ctrl+C to stop.\nLocal demo workspace · data saved to ${dataFile}`);
       resolve(true);
     });
   });

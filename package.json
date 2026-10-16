@@ -24,8 +24,8 @@
     "test:mobile:e2e": "playwright test --config playwright.mobile.config.js",
     "test:mobile:web-dev": "playwright test --config playwright.mobile-dev.config.js",
     "test": "node --test tests/domain.test.js tests/api.test.js tests/ai.test.js tests/ai-runtime.test.js",
-    "test:e2e": "playwright test",
-    "check": "node --check server/index.js && node --check server/domain.js && node --check public/app.js"
+    "test:e2e": "npm run test:mobile:e2e",
+    "check": "node --check server/index.js && node --check server/domain.js"
   },
   "engines": {
     "node": ">=22"

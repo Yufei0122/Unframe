@@ -25,7 +25,7 @@ npm.cmd run ai:doctor -- --smoke
 npm.cmd run mobile:web -- --port 8081
 ```
 
-Open **http://localhost:8081** for mobile web. Node and the original curator workspace are at **http://127.0.0.1:3000**. OpenCLIP listens on **127.0.0.1:8001**, Ollama on **127.0.0.1:11434**. Keep startup terminals open. No manual virtual-environment activation is needed.
+Open **http://localhost:8081** for mobile web. The Node API defaults to **http://127.0.0.1:3000** (this checkout uses port 3001). Its browser entry redirects to the mobile preview; there is no separate desktop or curator UI. OpenCLIP listens on **127.0.0.1:8001**, Ollama on **127.0.0.1:11434**. Keep startup terminals open. No manual virtual-environment activation is needed.
 
 | Command | Behavior |
 | --- | --- |
@@ -140,7 +140,7 @@ Node transport and browser tests use mocks; Python HTTP tests also use a mock en
 - **Camera unavailable:** Use localhost/HTTPS, allow browser permission or choose Photos. Physical-device camera behavior still needs device testing.
 - **Similarity is low:** Improve framing and lighting. Do not lower the threshold merely to force a result; validate positives and unrelated negatives first.
 
-The original Northbank curator workspace and visitor persistence are unchanged. No Git commit, push or PR is part of setup. The API remains a local prototype, with its existing curator and visitor privilege model.
+The separate Northbank curator UI has been removed; existing backend APIs and JSON persistence are retained. No Git commit, push or PR is part of setup. The API remains a local prototype, with its existing curator and visitor privilege model.
 
 Official API/model references: [OpenCLIP](https://github.com/mlfoundations/open_clip), [Ollama chat API](https://docs.ollama.com/api/chat), [Ollama structured outputs](https://docs.ollama.com/capabilities/structured-outputs).
 

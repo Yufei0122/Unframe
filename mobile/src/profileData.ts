@@ -54,7 +54,7 @@ export function activityDateLabel(date: string | undefined, now = new Date()) {
   return activityDateGroup(date, now) === 'TODAY' ? value.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) : value.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
-export interface ProfileActivity { id: string; kind: 'Visits' | 'Saves' | 'Routes'; date?: string; label: string; title: string; subtitle: string; body: string; coverId?: string; museumId?: MuseumId; artworkId?: string; routeId?: string; ai?: boolean }
+export interface ProfileActivity { id: string; kind: 'Visits' | 'Saves' | 'Routes'; date?: string; label: string; title: string; subtitle: string; body: string; coverId?: string; museumId?: MuseumId; artworkId?: string; routeId?: string; visitId?: string; ai?: boolean }
 export function profileActivity(state: MobileState): ProfileActivity[] {
   const entries: ProfileActivity[] = state.saved.flatMap(id => {
     const a = artwork(id); if (!a) return [];
@@ -62,7 +62,7 @@ export function profileActivity(state: MobileState): ProfileActivity[] {
   });
   for (const visit of state.visits) {
     const a = visit.artworkIds.map(artwork).find(Boolean), museum = a && museumForArtwork(a.id);
-    entries.push({ id: `visit-${visit.id}`, kind: 'Visits', date: visit.date, label: 'Completed a visit', title: museum ? `A day at ${museum.shortName}` : 'A day at Northbank', subtitle: museum?.name || 'Northbank Gallery · Sample visit', body: visit.summary, coverId: a?.id });
+    entries.push({ id: `visit-${visit.id}`, kind: 'Visits', visitId: visit.id, date: visit.date, label: 'Completed a visit', title: museum ? `A day at ${museum.shortName}` : 'A day at Northbank', subtitle: museum?.name || 'Northbank Gallery · Sample visit', body: visit.summary, coverId: a?.id });
   }
   for (const route of state.savedRoutes || []) {
     const info = savedRouteInfo(route), ai = route.kind === 'museum' && route.itinerary.recommendationSource === 'ollama';
