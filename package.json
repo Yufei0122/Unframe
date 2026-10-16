@@ -13,6 +13,7 @@
     "ai:up": "node scripts/ai-up.mjs",
     "ai:doctor": "node scripts/check-ai.mjs",
     "ai:validate": "node scripts/validate-local-ai.mjs",
+    "ai:validate:routes": "node scripts/validate-qwen-routes.mjs",
     "ai:check": "node scripts/check-ai.mjs",
     "test:ai": "node --test tests/ai.test.js tests/ai-runtime.test.js",
     "mobile": "npm --prefix mobile start",

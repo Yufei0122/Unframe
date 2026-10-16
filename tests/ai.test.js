@@ -20,6 +20,7 @@ import { shortestPath } from '../server/ai/graph.js';
 import { normalizeImage, MAX_IMAGE_BYTES } from '../server/ai/images.js';
 import { createAIHandler } from '../server/ai/handler.js';
 import { getAIStatus } from '../server/ai/status.js';
+import { assertModelRoute } from '../scripts/route-acceptance.mjs';
 
 const config = readAIConfig({});
 const vector = (position = 0) => Array.from({ length: 512 }, (_, i) => i === position ? 1 : 0);
@@ -315,6 +316,20 @@ test('route endpoint returns bounded itinerary and graceful provider fallback', 
     assert.equal(response.status, 200); assert.equal(response.headers.get('access-control-allow-origin'), 'http://localhost:8081');
     const result = await response.json(); assert.ok(result.estimatedMinutes <= 15); assert.equal(result.recommendationSource, state === 'ok' ? 'ollama' : 'local');
   }
+});
+
+test('real-model acceptance rejects usable fallbacks and independently checks route constraints', async () => {
+  const preferences = { interests: ['Nature'], availableMinutes: 30, currentLocation: 'entrance', walkingPreference: 'balanced', accessibilityRequirements: ['step_free'], mustSeeArtworkIds: [collection[0].id] };
+  const route = await createRouteService({ ollama, collection, graph }).plan(preferences);
+  assertModelRoute(route, preferences, collection, graph);
+  const fallback = await createRouteService({ ollama: { generateRouteRecommendations: unavailable }, collection, graph }).plan(preferences);
+  assert.ok(fallback.route.length > 0);
+  assert.throws(() => assertModelRoute(fallback, preferences, collection, graph), /fallback is not a model success/);
+  assert.throws(() => assertModelRoute({ ...route, warning: 'Provider failed' }, preferences, collection, graph), /provider warning/);
+  assert.throws(() => assertModelRoute(route, { ...preferences, availableMinutes: 1 }, collection, graph), /exceeds budget/);
+  const tampered = structuredClone(route);
+  tampered.navigation[0].nodes = ['entrance', 'invented', route.route[0].artworkId];
+  assert.throws(() => assertModelRoute(tampered, preferences, collection, graph), /navigation edge/);
 });
 test('AI endpoints reject untrusted origin, invalid JSON, invalid IDs and oversized bodies', async () => {
   const post = (body, headers = {}) => fetch(`${base}/routes/plan`, { method: 'POST', headers: { 'Content-Type': 'application/json', ...headers }, body });
