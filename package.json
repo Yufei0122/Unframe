@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch server/index.js",
-    "start": "node server/index.js",
+    "start": "node scripts/ai-up.mjs --web",
+    "server": "node server/index.js",
     "ai:index": "node scripts/index-artworks.mjs",
     "ai:setup": "node scripts/ai-setup.mjs",
     "ai:setup:vision": "node scripts/ai-setup-vision.mjs",

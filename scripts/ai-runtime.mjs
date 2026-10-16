@@ -247,6 +247,10 @@ export async function ensureNode({ planningOnly = false } = {}) {
   return { reused: false, child };
 }
 
+export function isUnframeMobileHTML(value) {
+  return typeof value === 'string' && /<title>\s*Unframe\s*<\/title>/i.test(value) && /<div\s+id=["']root["']><\/div>/i.test(value);
+}
+
 export async function startMobileWeb() {
   const occupied = await new Promise((resolve, reject) => {
     const socket = net.connect({ host: '127.0.0.1', port: 8081 });
@@ -255,7 +259,17 @@ export async function startMobileWeb() {
     socket.once('timeout', () => { socket.destroy(); reject(new Error('Cannot check Expo port 8081.')); });
     socket.once('error', error => error.code === 'ECONNREFUSED' ? resolve(false) : reject(error));
   });
-  if (occupied) throw new Error('Port 8081 is already in use. Stop Expo in its original terminal, then rerun npm.cmd run ai:web. The existing process was left untouched.');
+  if (occupied) {
+    try {
+      const response = await fetch('http://127.0.0.1:8081/', { redirect: 'error', signal: AbortSignal.timeout(5000) });
+      const html = await response.text();
+      if (response.ok && isUnframeMobileHTML(html)) {
+        console.log('Reusing the existing Unframe mobile web preview at http://localhost:8081.');
+        return { reused: true };
+      }
+    } catch { /* A listener that is not a readable Unframe preview must not be reused. */ }
+    throw new Error('Port 8081 is already in use by another application. Stop that application or its terminal, then rerun npm.cmd start. The existing process was left untouched.');
+  }
   const cli = path.join(root, 'mobile', 'node_modules', 'expo', 'bin', 'cli');
   if (!existsSync(cli)) throw new Error('Mobile dependencies are missing. Run npm.cmd --prefix mobile ci.');
   const api = `http://127.0.0.1:${process.env.PORT || 3000}`;

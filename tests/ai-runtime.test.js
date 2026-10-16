@@ -26,6 +26,14 @@ async function runtime(env) {
 
 const clipIdentity = { status: 'ok', model: 'ViT-B-32', pretrained: 'laion2b_s34b_b79k', dimensions: 512, normalized: true };
 
+test('only an Unframe Expo document is eligible for safe mobile preview reuse', async () => {
+  const api = await runtime({});
+  assert.equal(api.isUnframeMobileHTML('<html><title>Unframe</title><div id="root"></div></html>'), true);
+  assert.equal(api.isUnframeMobileHTML('<html><title>Another app</title><div id="root"></div></html>'), false);
+  assert.equal(api.isUnframeMobileHTML('<html><title>Unframe</title></html>'), false);
+  api.restore();
+});
+
 test('interactive profile migrates legacy slow defaults without overwriting explicit tuning', async () => {
   const api = await runtime({});
   const env = { OLLAMA_TIMEOUT_MS: '300000', OLLAMA_NUM_GPU: '0', OLLAMA_NUM_CTX: '3072' };

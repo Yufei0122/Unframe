@@ -59,7 +59,7 @@ test('another workspace on the same port gets an actionable error without stoppi
   await assert.rejects(execFileAsync(process.execPath, ['server/index.js'], { env: { ...process.env, PORT: String(port), UNFRAME_DATA_DIR: path.join(directory, 'other-workspace') }, windowsHide: true, timeout: 7000 }), error => {
     assert.equal(error.code, 1);
     assert.match(error.stderr, /already in use by another server/);
-    assert.match(error.stderr, /npm.cmd start/);
+    assert.match(error.stderr, /npm.cmd run server/);
     assert.doesNotMatch(error.stderr, /Unhandled 'error'/);
     return true;
   });

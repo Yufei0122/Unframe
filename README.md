@@ -9,7 +9,7 @@ The **Scan** screen samples the camera view and suggests artworks using local **
 
 **Beyond the demo collection:** uploaded photos without a local match, or **Analyse any artwork**, use local **Qwen3-VL 4B** for visual observations and tentative identity suggestions. The backend searches The Met, the Art Institute of Chicago and Wikimedia Commons using suggested titles/artists, then compares up to three public reference images with OpenCLIP when available. Uncertain identities remain explicitly unconfirmed. No photograph is sent to these public search services. This supports investigating arbitrary images; it cannot guarantee the identity of every artwork.
 
-For an existing installation, run `npm.cmd run ai:setup:vision` once (the default vision download is approximately 3.3 GB). Stop the old backend/Expo terminals, then run **`npm.cmd run ai:web`** to start models, backend and Expo together, with the browser API URL automatically set to the backend's configured port. Keep that terminal open. The same AI commands work from `mobile`. Use `npm.cmd run ai:doctor -- --vision` for a real HTTP/vision check; see [the general-analysis workflow and verification limits](AI-INTEGRATION.md#general-artwork-analysis) before treating suggestions as identified artworks.
+For an existing installation, run `npm.cmd run ai:setup:vision` once (the default vision download is approximately 3.3 GB). Then run **`npm.cmd start`** to start models, backend and Expo together, with the browser API URL automatically set to the backend's configured port. Keep that terminal open. An existing Unframe preview on port 8081 is safely reused; an unrelated application on that port is reported instead of being stopped. The same AI commands work from `mobile`. Use `npm.cmd run ai:doctor -- --vision` for a real HTTP/vision check; see [the general-analysis workflow and verification limits](AI-INTEGRATION.md#general-artwork-analysis) before treating suggestions as identified artworks.
 
 From the project root, run `npm.cmd install`, then `npm.cmd run ai:setup` to install Python dependencies and download the public models. Run `npm.cmd run ai:up` to check/start local model services, preload Qwen, build a compatible 512-dimensional index when needed, and start Node at http://127.0.0.1:3000. In another terminal run `npm.cmd run mobile:web -- --port 8081` and open http://localhost:8081. Interactive scan and route checks use a strict 15-second response budget. No Google project, ADC, API key or paid account is required; Python virtual-environment activation is automatic.
 
@@ -29,21 +29,15 @@ npm.cmd --prefix mobile ci
 npm.cmd run ai:setup
 ```
 
-Start the backend and local models in one terminal:
+Start the complete local app in one terminal:
 
 ```powershell
-npm.cmd run ai:up
-```
-
-Start the mobile preview in another:
-
-```powershell
-npm.cmd run mobile:web -- --port 8081
+npm.cmd start
 ```
 
 Open **http://localhost:8081**. Wide browser windows show the same mobile screens inside a phone frame. For Expo Go on a physical phone, use `npm.cmd run mobile` and follow [mobile setup](mobile/README.md).
 
-`npm.cmd start` starts only the Node backend; `npm.cmd run dev` starts it with file watching. They do not start Expo or the model services. The backend defaults to port 3000; this checkout's `.env` uses **3001**, matching `mobile/.env.local`. Visiting `/` or `/index.html` on the backend redirects to the mobile preview. Keep Expo running for this redirect to work. `MOBILE_WEB_URL` can change its destination when using another preview port or a deployed mobile web build.
+`npm.cmd start` starts the complete local app: Ollama, OpenCLIP, the Node backend and the Expo web preview. `npm.cmd run ai:web` is an equivalent explicit command. For backend-only development use `npm.cmd run server`, or `npm.cmd run dev` for file watching. The backend defaults to port 3000; this checkout's `.env` may use **3001**. The startup command passes that same port to Expo automatically. Visiting the backend root redirects to the mobile preview. `MOBILE_WEB_URL` can change its destination when using another preview port or a deployed mobile web build.
 
 ## Features
 

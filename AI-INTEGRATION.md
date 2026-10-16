@@ -32,11 +32,11 @@ For an already installed project, from either the root or `mobile`:
 
 ```powershell
 npm.cmd run ai:setup:vision
-# Stop the previous backend and Expo in their own terminals before using ai:web.
-npm.cmd run ai:web
+# Starts/reuses local services and opens the complete browser app.
+npm.cmd start
 ```
 
-`ai:setup:vision` downloads only the missing vision model, preserves all existing models/caches/indexes, and checks Ollama's `vision` capability. The default [Qwen3-VL 4B package](https://ollama.com/library/qwen3-vl:4b) is approximately 3.3 GB and requires Ollama 0.12.7 or newer; the user's previously reported 0.34.0 satisfies this version requirement. Existing guide/scanner startup still works without this optional model and prints a specific warning. `ai:web` starts Expo at port 8081 and sets its public API URL from the backend's root `PORT` setting (including this Windows installation's 3001). It refuses an occupied Expo port and leaves existing processes intact.
+`ai:setup:vision` downloads only the missing vision model, preserves all existing models/caches/indexes, and checks Ollama's `vision` capability. The default [Qwen3-VL 4B package](https://ollama.com/library/qwen3-vl:4b) is approximately 3.3 GB and requires Ollama 0.12.7 or newer; the user's previously reported 0.34.0 satisfies this version requirement. Existing guide/scanner startup still works without this optional model and prints a specific warning. `npm.cmd start` and its explicit alias `npm.cmd run ai:web` start Expo at port 8081 and set its public API URL from the backend's root `PORT` setting (including this Windows installation's 3001). They reuse an existing Unframe Expo page and reject an unrelated listener without stopping it.
 
 The analysis returns visible features, cautiously transcribed labels/signatures, and at most two **unverified** title/artist hypotheses. The server sends only those short title/artist queries to these public sources:
 
