@@ -39,6 +39,8 @@ Open **http://localhost:8081**. Wide browser windows show the same mobile screen
 
 `npm.cmd start` starts the complete local app: Ollama, OpenCLIP, the Node backend and the Expo web preview. `npm.cmd run ai:web` is an equivalent explicit command. For backend-only development use `npm.cmd run server`, or `npm.cmd run dev` for file watching. The backend defaults to port 3000; this checkout's `.env` may use **3001**. The startup command passes that same port to Expo automatically. Visiting the backend root redirects to the mobile preview. `MOBILE_WEB_URL` can change its destination when using another preview port or a deployed mobile web build.
 
+During model warmup, Unframe first uses the configured Ollama GPU placement. If Ollama returns a model-runner error, startup retries once on CPU and keeps that CPU setting for the current process. If both attempts fail, the terminal includes Ollama's bounded local error detail and an `ollama run <model>` diagnostic command instead of hiding the HTTP 500 cause.
+
 ## Features
 
 - Museum selection and isolated The Met / GOMA catalogues, artwork details and maps.

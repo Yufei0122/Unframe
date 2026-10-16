@@ -182,16 +182,38 @@ export async function warmOllamaModel(modelName = ollamaModel) {
   const timeout = Number(process.env.AI_STARTUP_TIMEOUT_MS || 600000);
   const started = performance.now();
   console.log(`Warming ${modelName}; first startup may take longer than the 15-second interaction budget.`);
-  let response;
-  try {
-    response = await fetch(`${ollamaUrl}/api/generate`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: modelName, stream: false, keep_alive: process.env.OLLAMA_KEEP_ALIVE || '10m' }),
-      signal: AbortSignal.timeout(timeout),
-    });
-  } catch (error) { throw new Error(`Cannot warm ${modelName}: ${error.cause?.code || error.name}.`); }
-  if (!response.ok) { await response.body?.cancel(); throw new Error(`Cannot warm ${modelName}: Ollama returned HTTP ${response.status}.`); }
-  try { await response.json(); } catch { throw new Error(`Cannot warm ${modelName}: Ollama returned invalid JSON.`); }
+  const configuredGpu = Number(process.env.OLLAMA_NUM_GPU ?? -1);
+  const options = numGpu => ({ num_ctx: Number(process.env.OLLAMA_NUM_CTX || 2048), num_gpu: numGpu });
+  async function attempt(numGpu) {
+    let response;
+    try {
+      response = await fetch(`${ollamaUrl}/api/generate`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: modelName, prompt: '', stream: false, keep_alive: process.env.OLLAMA_KEEP_ALIVE || '10m', options: options(numGpu) }),
+        signal: AbortSignal.timeout(timeout),
+      });
+    } catch (error) { throw new Error(error.cause?.code || error.name); }
+    let data;
+    try { data = await response.json(); }
+    catch { throw new Error(`HTTP ${response.status}: invalid JSON response`); }
+    if (!response.ok) {
+      const detail = typeof data?.error === 'string' ? data.error.replace(/[\u0000-\u001f]+/gu, ' ').trim().slice(0, 500) : 'no error detail';
+      throw new Error(`HTTP ${response.status}: ${detail}`);
+    }
+    return data;
+  }
+  try { await attempt(configuredGpu); }
+  catch (firstError) {
+    if (configuredGpu === 0) throw new Error(`Cannot warm ${modelName}: ${firstError.message}. Run "ollama run ${modelName}" to inspect or repair the local model.`);
+    console.warn(`Ollama could not load ${modelName} with GPU acceleration (${firstError.message}). Retrying on CPU for this run.`);
+    try {
+      await attempt(0);
+      process.env.OLLAMA_NUM_GPU = '0';
+      console.log(`${modelName} loaded on CPU. Unframe will use OLLAMA_NUM_GPU=0 for this run.`);
+    } catch (cpuError) {
+      throw new Error(`Cannot warm ${modelName}. GPU attempt: ${firstError.message}. CPU attempt: ${cpuError.message}. Run "ollama run ${modelName}" to inspect or repair the local model, then retry npm.cmd start.`);
+    }
+  }
   console.log(`${modelName} is warm (${Math.round(performance.now() - started)} ms).`);
 }
 

@@ -81,6 +81,37 @@ test('a remote Ollama alias cannot satisfy the local model requirement', async t
   assert.equal((await api.getJSON(`${address}/api/tags`)).models[0].remote_model, 'qwen3:4b');
 });
 
+test('Ollama warmup exposes the local error and falls back from GPU to CPU', async t => {
+  const attempts = [];
+  const server = http.createServer(async (req, res) => {
+    let body = ''; for await (const chunk of req) body += chunk;
+    const payload = JSON.parse(body); attempts.push(payload);
+    res.writeHead(payload.options.num_gpu === 0 ? 200 : 500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(payload.options.num_gpu === 0 ? { done: true } : { error: 'model runner stopped on the GPU' }));
+  });
+  server.listen(0, '127.0.0.1'); await once(server, 'listening');
+  t.after(() => new Promise(resolve => server.close(resolve)));
+  const api = await runtime({ OLLAMA_URL: `http://127.0.0.1:${server.address().port}`, OLLAMA_NUM_GPU: '-1', OLLAMA_NUM_CTX: '2048' });
+  t.after(api.restore);
+  await api.warmOllamaModel('qwen3:4b');
+  assert.deepEqual(attempts.map(item => item.options.num_gpu), [-1, 0]);
+  assert.ok(attempts.every(item => item.prompt === '' && item.options.num_ctx === 2048));
+  assert.equal(process.env.OLLAMA_NUM_GPU, '0');
+});
+
+test('Ollama warmup reports provider details when CPU fallback also fails', async t => {
+  const server = http.createServer(async (req, res) => {
+    for await (const _ of req) { /* consume request */ }
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: 'model requires more system memory' }));
+  });
+  server.listen(0, '127.0.0.1'); await once(server, 'listening');
+  t.after(() => new Promise(resolve => server.close(resolve)));
+  const api = await runtime({ OLLAMA_URL: `http://127.0.0.1:${server.address().port}`, OLLAMA_NUM_GPU: '-1' });
+  t.after(api.restore);
+  await assert.rejects(api.warmOllamaModel('qwen3:4b'), /model requires more system memory[\s\S]*ollama run qwen3:4b/);
+});
+
 test('managed Python stdin EOF closes the actual interpreter and its HTTP listener gracefully', { timeout: 15000 }, async t => {
   const api = await runtime({});
   if (!existsSync(api.python)) return t.skip('Run ai:setup to install the local Python environment.');
