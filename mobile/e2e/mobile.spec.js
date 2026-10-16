@@ -43,11 +43,15 @@ test('welcome → museum → artwork, saved works survive reload', async ({ page
   await page.getByRole('button', { name: 'Save artwork', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Unsave artwork', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Back to museum' }).click();
-  await page.getByRole('tab', { name: /Saved/ }).click();
+  await expect(page.getByRole('tab', { name: /Saved/ })).toHaveCount(0);
+  await page.getByRole('tab', { name: /Profile/ }).click();
+  await page.getByRole('button', { name: 'View saved artworks', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Explore Water Lilies' })).toBeVisible();
   await page.reload(); await enterWelcome(page);
   await startVisit(page);
-  await page.getByRole('tab', { name: /Saved/ }).click();
+  await expect(page.getByRole('tab', { name: /Saved/ })).toHaveCount(0);
+  await page.getByRole('tab', { name: /Profile/ }).click();
+  await page.getByRole('button', { name: 'View saved artworks', exact: true }).click();
   await page.getByRole('button', { name: 'Explore Water Lilies' }).click();
   await page.getByRole('button', { name: 'Unsave artwork', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Save artwork', exact: true })).toBeVisible();
@@ -188,7 +192,12 @@ test('existing sample tours survive reload and produce a completed visit', async
   await page.getByRole('button', { name: 'Northbank sample tour' }).click();
   await expect(page.getByText(/1 explored/)).toBeVisible();
   await page.getByRole('button', { name: 'Finish my visit', exact: true }).click();
-  await expect(page.getByText('A day at Northbank').filter({ visible: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Recent Activity', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'View activity: A day at Northbank', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Visit reflection', exact: true })).toBeVisible();
+  await expect(page.getByText('A reflection from your visited works · Template-generated')).toBeVisible();
+  await page.getByRole('button', { name: /^Revisit / }).first().click();
+  await expect(page.getByRole('button', { name: 'Back to museum' })).toBeVisible();
 });
 
 test('preferences, private feedback and scan entry still work', async ({ page }) => {

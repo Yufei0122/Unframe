@@ -44,7 +44,7 @@ From the repository root you can also use:
 npm.cmd run mobile
 ```
 
-**Use the QR code printed by Expo, not `127.0.0.1:3000` on your phone.** That address belongs to the separate desktop museum workspace.
+**Use the QR code printed by Expo, not `127.0.0.1:3000` on your phone.** That is the default backend API address, not the Expo app. The separate desktop museum workspace has been removed.
 
 ### Expo Go compatibility
 
@@ -90,8 +90,8 @@ CPU inference may take several minutes. The client waits 330,000 ms for Qwen and
 - **Home:** Selected museum's demo map, room selection, nearby cards, artwork/artist search and a full collection view; the Met schematic also has demo floor selection.
 - **Plan:** a dedicated chat with quick prompts, a fixed message composer and a summary of confirmed preferences. Local Qwen interprets time, interests, starting point, walking/access needs and must-see requests; **Generate route** opens a separate itinerary. Returning or switching tabs preserves the conversation; switching museums or choosing **New conversation** starts fresh. Enter sends, Shift+Enter adds a line. Failed messages can be retried or discarded, and leaving the tab cancels pending work.
 - **Scan:** opens the camera and automatically looks for possible artworks, like a camera scanner. Tap a candidate to confirm it and load an optional AI interpretation, then open its details or resume scanning. Browser Scan offers **Pause scanning**, **Resume scanning** and a **Photos** upload shortcut. The museum map remains on Home.
-- **Saved:** persistent bookmarks and optional completed-visit reflections.
-- **Profile:** preferences, larger text, history consent, feedback and the separate Northbank sample tour.
+- **Profile:** Saved Artworks, Saved Routes and Recent Activity are the single home for saved content. The duplicate Saved bottom tab has been removed. Completed visits open Recent Activity; tap a visit to read its full reflection and revisit its artworks.
+- **App Settings (inside Profile):** preferences, larger text, history consent, feedback and the separate Northbank sample tour.
 - **Sample tour:** the existing fictional Northbank route planner and catalogue guide remain available. Active tour progress survives a restart.
 - **Live artwork lookup:** browser Scan samples one frame at a time, waiting three seconds after each response before sending another. OpenCLIP ranks up to three records from the selected museum; only selecting a candidate requests a Qwen interpretation based on the catalogue record. Frames below the matching threshold keep scanning. Similarity is not an accuracy estimate or probability. Service errors pause scanning until retry. Pausing, hiding the browser or leaving Scan releases the camera and cancels requests; old results are ignored. Permission denial still permits a single-image upload.
 - **Met and GOMA route planning:** Qwen selects works, while deterministic Dijkstra paths enforce route order, time and accessibility constraints. The itinerary shows whether recommendations came from Qwen or local rules. Route generation falls back to local rules if Qwen is unavailable; conversational preference updates require the AI service and show an explicit retryable error on failure.
@@ -108,7 +108,7 @@ Data is stored under `unframe.mobile.v1` using AsyncStorage on the device. The p
 
 Planning conversations stay in memory for the current museum session and are cleared on reload, museum change or New conversation. Sending a message transmits it, the latest eight messages and the current visit preferences through the backend to local Ollama Qwen. Unframe does not write planning conversations to disk. The AI models run on the backend computer, which may be separate from the phone; public model downloads require internet access during setup.
 
-The existing website remains a separate curator workspace. Its JSON database is not silently copied to the phone. The mobile and web clients share the bundled collection and core route/guide algorithms under `../shared/`, but changes made in the web editor do not sync to a running mobile installation.
+The mobile app is the only UI; the separate website and curator workspace have been removed. Existing backend JSON files are preserved, but are not copied or synchronised to the phone. The mobile app and backend share bundled collection data and core route/guide algorithms under `../shared/`.
 
 ## Build an actual iOS installation
 
@@ -152,7 +152,7 @@ src/store.tsx           AsyncStorage hydration and queued persistence
 assets/                 Bundled artwork images and 1024px app icon
 tests/                  Persistence, consent and tour-state tests
 e2e/                    Browser tests of the React Native Web preview
-../shared/              Collection and route/guide logic shared with the web app
+../shared/              Collection and route/guide logic shared with the backend
 ```
 
 ## Validate

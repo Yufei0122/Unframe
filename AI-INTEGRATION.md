@@ -107,7 +107,7 @@ npm.cmd run ai:doctor -- --smoke
 npm.cmd run mobile:web -- --port 8081
 ```
 
-Open **http://localhost:8081** for mobile web. Node and the original curator workspace are at **http://127.0.0.1:3000**. OpenCLIP listens on **127.0.0.1:8001**, Ollama on **127.0.0.1:11434**. Keep startup terminals open. No manual virtual-environment activation is needed.
+Open **http://localhost:8081** for mobile web. The Node API defaults to **http://127.0.0.1:3000** (this checkout uses port 3001). Its browser entry redirects to the mobile preview; there is no separate desktop or curator UI. OpenCLIP listens on **127.0.0.1:8001**, Ollama on **127.0.0.1:11434**. Keep startup terminals open. No manual virtual-environment activation is needed.
 
 | Command | Behavior |
 | --- | --- |
@@ -120,6 +120,7 @@ Open **http://localhost:8081** for mobile web. Node and the original curator wor
 | `npm.cmd run ai:doctor` | Checks service/model identity and catalogue/index readiness. Does not claim successful inference merely because services respond. |
 | `npm.cmd run ai:doctor -- --smoke` | Uses real embeddings, artwork matching and structured Qwen output. This is a small integration check, not an accuracy benchmark. |
 | `npm.cmd run ai:validate` | Broader real-model acceptance: all 12 references and mild variants, 6 negative controls, both museums' HTTP recognition/confirmation/routes and a Chinese planning chat. Writes `.local-ai/validation.json`. |
+| `npm.cmd run ai:validate:routes` | Serial real Qwen planning acceptance: Chinese preference edits and resulting routes in both museums, then an English GOMA revision and route. Each run writes a new `.local-ai/qwen-routes-*.json`, preserving failed attempts. Fallback responses fail model acceptance even when HTTP returns 200. |
 | `npm.cmd run ai:check` | Compatibility alias for the doctor; `--live` is an alias for `--smoke`. |
 
 Node 22+ and Python 3.10–3.13 are supported (Python 3.12 recommended). If Ollama is absent, install the official [Windows package](https://ollama.com/download/windows), then rerun setup. Setup stages report their own failures and reuse downloaded files on retry. TLS verification remains enabled.
@@ -233,12 +234,41 @@ Node transport and browser tests use mocks; Python HTTP tests also use a mock en
 - **Wrong model/missing/stale index:** Run `ai:setup`, start `ai:clip`, then `ai:index`; `ai:up` also handles an index rebuild. An old incompatible index is retained after failure but never queried.
 - **Port already in use:** Compatible services are reused. For another application choose a free `PORT`, `OPENCLIP_URL` or `OLLAMA_URL`; do not terminate unrelated services.
 - **Old backend on port 3000:** Stop it in its own terminal and run `ai:up` again, or use a new port and update the mobile API URL.
+- **Expo cache permission error:** For local web development with installed dependencies, `$env:EXPO_OFFLINE='1'; npm.cmd run mobile:web -- --port 8081` skips online dependency validation and its profile cache. This does not change Qwen inference or backend routing.
 - **Camera unavailable:** Use localhost/HTTPS, allow browser permission or choose Photos. Physical-device camera behavior still needs device testing.
 - **Similarity is low:** Improve framing and lighting. Do not lower the threshold merely to force a result; validate positives and unrelated negatives first.
 
-The original Northbank curator workspace and visitor persistence are unchanged. No Git commit, push or PR is part of setup. The API remains a local prototype, with its existing curator and visitor privilege model.
+The separate Northbank curator UI has been removed; existing backend APIs and JSON persistence are retained. No Git commit, push or PR is part of setup. The API remains a local prototype, with its existing curator and visitor privilege model.
 
 Official API/model references: [OpenCLIP](https://github.com/mlfoundations/open_clip), [Ollama chat API](https://docs.ollama.com/api/chat), [Ollama structured outputs](https://docs.ollama.com/capabilities/structured-outputs).
+
+## Qwen route deployment recheck — session dated 2026-10-17
+
+At the start of this recheck, Ollama was available but Node 3001, OpenCLIP 8001 and Metro 8081 were stopped. `ai:up` restored OpenCLIP and Node using the existing valid index and installed weights. Ollama now reports **0.40.3**; the local model remains **qwen3:4b**, Q4_K_M, digest `359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7`. CPU settings and the configured model were preserved. No model download or provider/prompt change was needed.
+
+The initial real GOMA route request succeeded in 30.4 seconds with `recommendationSource: "ollama"`. The new `npm.cmd run ai:validate:routes` then passed **6/6 actual HTTP inference checks**: Chinese preference editing in both museums, routes generated from those returned preferences, an English GOMA revision with Chinese history, and its resulting route. The three route responses were all `ollama`, with **zero fallback responses**:
+
+| Case | Requested budget | Recomputed itinerary | Request time |
+| --- | --- | --- | --- |
+| Met after Chinese preference edit | 20 min | 20 min | 39.6 s |
+| GOMA after Chinese preference edit | 20 min | 16 min | 25.5 s |
+| GOMA after English revision/removing must-sees | 35 min | 23 min | 25.3 s |
+
+Acceptance independently checks museum membership, must-sees, duplicate stops, accessible graph edges, walking distance and walking-plus-viewing time. Qwen selects artworks; the deterministic graph engine produces the feasible itinerary. A 200 response with `recommendationSource: "local"`, a warning or a provider error fails model acceptance. Failed chat checks do not receive manually substituted preferences. Every run preserves its requests, responses, timings, model identity and relevant source hashes in a uniquely named report.
+
+A separate **real missing-model control** called Ollama with an intentionally nonexistent model name without modifying deployment settings or pulling weights. It returned `OLLAMA_MODEL_MISSING` and a usable `local` route. The acceptance guard rejected it; this control is **not a model success**. Automated backend tests passed **52/52**, including fallback rejection and independently corrupted navigation/time checks; these automated tests use mocked model responses and are separate from the real checks above.
+
+Services were left running at **http://localhost:8081** (mobile web), **http://127.0.0.1:3001** (API), **8001** (OpenCLIP) and **11434** (Ollama). Metro initially failed to write its profile cache; starting it with `EXPO_OFFLINE=1` succeeded. The HTML and compiled JavaScript both returned HTTP 200, and the bundle points at API 3001. No connected browser was available for this recheck, so this is HTTP/bundle verification, **not UI click verification**. Services require restarting after their process/session stops. No new image-recognition accuracy evaluation was performed.
+
+Local evidence:
+
+- `.local-ai/qwen-routes-1792163695331-2b33e86c-8982-4677-8801-3747120dd26b.json`: six real checks, three model routes, zero fallbacks.
+- `.local-ai/qwen-route-baseline-1792163562630.json`: initial real route request.
+- `.local-ai/qwen-fallback-control-1792163922870.json`: actual missing-model control, explicitly `modelSuccess: false`.
+- `.local-ai/qwen-frontend-delivery.json`: HTML/bundle delivery and configured API address.
+- `.local-ai/qwen-deployment-verification.json`: final service health and references to acceptance evidence.
+
+The heading uses the client session date. Evidence retains the host's raw UTC timestamps, which differ from the supplied client date; timestamps have not been rewritten. Previous deployment reports below remain historical evidence.
 
 ## Verified Windows deployment — 2026-10-11 (Australia/Brisbane)
 

@@ -100,12 +100,6 @@ export function ProfileScreen() {
       </View>
       <View style={p.cards}>
         {storageError && <Notice>{storageError}</Notice>}{!!message && <Notice>{message}</Notice>}
-        <Pressable accessibilityRole="button" accessibilityLabel="Discover Unframe Plus preview" onPress={() => setPanel({ title: 'Unframe Plus', body: 'More art. Broader perspectives. This membership card is a design preview. Memberships and paid subscriptions are not available in this app.' })}>
-          <LinearGradient colors={['#F9F0DF', '#FFFCF7', '#F1E6D5']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={p.plus}>
-            <LinearGradient colors={['#D8BB86', '#B38A50']} style={p.crown}><Svg width={25} height={25} viewBox="0 0 30 30" accessible={false}><Path d="M4 9l5 5 6-9 6 9 5-5-3 14H7L4 9zm4 17h14" fill="#FFF" stroke="#FFF" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"/></Svg></LinearGradient>
-            <View style={{ flex: 1 }}><T style={[p.plusTitle, compact && { fontSize: 18 }]}>Unframe Plus</T><T style={p.plusBody}>More art. Broader perspectives.</T></View><T style={p.previewPill}>Preview</T><Icon name="chevron-forward-outline" size={17} color="#6F573C"/>
-          </LinearGradient>
-        </Pressable>
         <View style={p.card}>
           <View style={p.heading}><T accessibilityRole="header" style={p.cardTitle}>My Interests</T><Pressable accessibilityRole="button" accessibilityLabel="Edit interests" hitSlop={10} onPress={() => settings()} style={p.headingAction}><T style={p.edit}>Edit</T></Pressable></View>
           <View style={p.interests}>{state.preferences.interests.length ? state.preferences.interests.map(interest => {

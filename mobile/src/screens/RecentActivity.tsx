@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Image, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import type { ProfileStackParams } from '../model';
+import { artwork, type ProfileStackParams } from '../model';
 import { images, museumImages } from '../assets';
 import { activityDateGroup, activityDateLabel, profileActivity } from '../profileData';
 import { useStore } from '../store';
@@ -24,10 +24,25 @@ export function RecentActivityScreen({ route }: NativeStackScreenProps<ProfileSt
     {searching && <ProfileSearch inputRef={input} value={query} onChange={setQuery} label="Search your activity…"/>}
     <ProfileFilters<Filter> items={[...filters]} value={filter} onChange={setFilter}/>
     {!entries.length && <CollectionEmpty title="Your story is still unfolding." body={filter === 'AI' ? 'Saved itineraries recommended by Qwen will appear here.' : filter === 'Visits' ? 'Finish a visit with visit history enabled to keep a reflection here.' : 'Save an artwork or a route, or complete a visit, to add a new moment.'} action={filter !== 'All' || query ? 'Show all activity' : 'Explore the collection'} onPress={() => filter !== 'All' || query ? (setFilter('All'), setQuery('')) : nav.navigate('Home', { screen: 'Discover' })}/>}
-    {groups.map(group => <View style={styles.group} key={group.label}><T style={styles.dateGroup}>{group.label}</T>{group.entries.map(entry => <Pressable key={entry.id} accessibilityRole="button" accessibilityLabel={`View activity: ${entry.title}`} onPress={() => entry.artworkId ? nav.navigate('Artwork', { id: entry.artworkId }) : entry.routeId ? navigation.navigate('SavedRouteDetails', { id: entry.routeId }) : nav.navigate('Home', { screen: 'Saved', params: { tab: 'visits' } })} style={[pageStyles.card, styles.row]}>
+    {groups.map(group => <View style={styles.group} key={group.label}><T style={styles.dateGroup}>{group.label}</T>{group.entries.map(entry => <Pressable key={entry.id} accessibilityRole="button" accessibilityLabel={`View activity: ${entry.title}`} onPress={() => entry.artworkId ? nav.navigate('Artwork', { id: entry.artworkId }) : entry.routeId ? navigation.navigate('SavedRouteDetails', { id: entry.routeId }) : entry.visitId ? navigation.navigate('VisitDetails', { id: entry.visitId }) : undefined} style={[pageStyles.card, styles.row]}>
       <View style={styles.thumbnail}>{entry.ai ? <ReflectionIllustration/> : entry.coverId || entry.museumId ? <Image source={entry.coverId ? images[entry.coverId] : museumImages[entry.museumId!]} style={styles.image}/> : <ReflectionIllustration/>}</View>
       <View style={styles.body}><View style={styles.metaRow}><Icon name={entry.ai ? 'sparkles' : icons[entry.kind]} size={16} color={entry.ai ? '#AB76BF' : c.gold}/><T style={styles.event}>{entry.label}</T><T style={styles.time}>{activityDateLabel(entry.date)}</T></View><T style={styles.title}>{entry.title}</T><T style={styles.subtitle}>{entry.subtitle}</T><T numberOfLines={2} style={styles.description}>{entry.body}</T></View><Icon name="chevron-forward-outline" size={18} color="#4D4841"/>
     </Pressable>)}</View>)}
+  </ProfilePage>;
+}
+export function VisitDetailsScreen({ route }: NativeStackScreenProps<ProfileStackParams, 'VisitDetails'>) {
+  const { state } = useStore(), nav = useRootNavigation();
+  const visit = state.visits.find(item => item.id === route.params.id);
+  return <ProfilePage title="Visit reflection" subtitle={visit ? new Date(visit.date).toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Your museum moments.'}>
+    {visit ? <>
+      <View style={pageStyles.card}><T>{visit.summary}</T><T style={styles.description}>A reflection from your visited works · Template-generated</T></View>
+      {visit.artworkIds.map(id => {
+        const a = artwork(id); if (!a) return null;
+        return <Pressable key={id} accessibilityRole="button" accessibilityLabel={`Revisit ${a.title}`} onPress={() => nav.navigate('Artwork', { id })} style={[pageStyles.card, styles.row]}>
+          <Image source={images[id]} style={styles.thumbnail}/><View style={styles.body}><T style={styles.title}>{a.title}</T><T style={styles.subtitle}>{a.artist}</T></View><Icon name="chevron-forward-outline" size={18}/>
+        </Pressable>;
+      })}
+    </> : <CollectionEmpty title="This visit is no longer saved." body="Visit history may have been cleared on this device."/>}
   </ProfilePage>;
 }
 const styles = StyleSheet.create({

@@ -19,7 +19,7 @@ async function request(route, method = 'GET', data, headers = {}) {
 }
 before(async () => {
   directory = await mkdtemp(path.join(tmpdir(), 'unframe-api-'));
-  child = spawn(process.execPath, ['server/index.js'], { env: { ...process.env, PORT: String(port), UNFRAME_DATA_DIR: directory }, stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true });
+  child = spawn(process.execPath, ['server/index.js'], { env: { ...process.env, PORT: String(port), UNFRAME_DATA_DIR: directory, MOBILE_WEB_URL: 'http://localhost:8081' }, stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true });
   let ready = false;
   for (let i = 0; i < 60; i++) {
     try { const response = await request('/state'); if (response.status === 200) { ready = true; break; } } catch {}
@@ -32,9 +32,19 @@ after(async () => {
   if (directory && path.dirname(directory) === path.resolve(tmpdir()) && path.basename(directory).startsWith('unframe-api-')) await rm(directory, { recursive: true, force: true });
 });
 
-test('static shell and artwork assets are available', async () => {
-  const shell = await fetch(base); assert.equal(shell.status, 200); assert.match(await shell.text(), /Unframe/);
-  const asset = await fetch(`${base}/assets/riverlight.svg`); assert.equal(asset.status, 200); assert.match(asset.headers.get('content-type'), /image\/svg/);
+test('browser entry points redirect to the mobile app and legacy web files are unavailable', async () => {
+  for (const route of ['/', '/index.html']) {
+    for (const method of ['GET', 'HEAD']) {
+      const response = await fetch(`${base}${route}`, { method, redirect: 'manual' });
+      assert.equal(response.status, 302);
+      assert.equal(response.headers.get('location'), 'http://localhost:8081/');
+      assert.equal(await response.text(), '');
+    }
+  }
+  for (const route of ['/app.js', '/styles.css', '/assets/riverlight.svg']) {
+    assert.equal((await fetch(`${base}${route}`)).status, 404);
+  }
+  assert.equal((await request('/health')).status, 200);
 });
 
 test('starting the same workspace twice reports its running URL without crashing', async () => {
