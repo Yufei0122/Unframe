@@ -35,6 +35,7 @@ export function applyInteractivePerformanceProfile(env = process.env) {
     OPENCLIP_TIMEOUT_MS: ['120000', '4500'], OLLAMA_VISION_TIMEOUT_MS: ['540000', '14000'],
     OLLAMA_TIMEOUT_MS: ['300000', '14000'], OLLAMA_NUM_CTX: ['4096', '2048'], OLLAMA_NUM_GPU: ['0', '-1'],
     OLLAMA_NUM_PREDICT: ['768', '256'], OLLAMA_KEEP_ALIVE: ['0', '10m'],
+    OLLAMA_PLANNING_NUM_PREDICT: ['192', '1024'],
     EXPO_PUBLIC_AI_TIMEOUT_MS: ['330000', '14500'], EXPO_PUBLIC_CLIP_TIMEOUT_MS: ['150000', '5000'],
     EXPO_PUBLIC_VISION_TIMEOUT_MS: ['660000', '14500'],
   };
@@ -185,12 +186,13 @@ export async function requireOllamaModel(modelName = ollamaModel) {
   console.log(`Ollama model ${modelName} is installed.`);
 }
 
-export async function warmOllamaModel(modelName = ollamaModel) {
+export async function warmOllamaModel(modelName = ollamaModel, { planning = false } = {}) {
   const timeout = Number(process.env.AI_STARTUP_TIMEOUT_MS || 600000);
   const started = performance.now();
   console.log(`Warming ${modelName}; startup time is measured separately from planning responses.`);
   const configuredGpu = Number(process.env.OLLAMA_NUM_GPU ?? -1);
-  const options = numGpu => ({ num_ctx: Number(process.env.OLLAMA_NUM_CTX || 2048), num_gpu: numGpu });
+  const config = readAIConfig();
+  const options = numGpu => ({ num_ctx: planning ? config.planningNumCtx : config.ollamaNumCtx, num_gpu: numGpu });
   async function attempt(numGpu) {
     let response;
     try {

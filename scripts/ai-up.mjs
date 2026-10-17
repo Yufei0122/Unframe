@@ -8,11 +8,11 @@ installShutdown();
 try {
   if (process.argv.slice(2).some(arg => !['--web', '--verify', '--features'].includes(arg))) throw new Error('Usage: npm.cmd run ai:up -- [--web] [--verify] [--features]');
   const migrated = applyInteractivePerformanceProfile();
-  if (migrated.length) console.log(`Using the 15-second interactive profile for this run (${migrated.join(', ')}). Update .env from .env.example to make it explicit.`);
+  if (migrated.length) console.log(`Using updated inference settings for this run (${migrated.join(', ')}). Planning has no generation deadline.`);
   await ensureOllama();
   await requireOllamaModel();
   await pullOllamaModel(planningModel);
-  await warmOllamaModel(planningModel);
+  await warmOllamaModel(planningModel, { planning: true });
   try { await inspectVisionModel(readAIConfig()); console.log('General artwork visual analysis is available.'); }
   catch (error) { console.warn(`General visual analysis is unavailable: ${error.message} Existing catalogue scanning can still start.`); }
   await ensureClip();
@@ -25,7 +25,7 @@ try {
   }
   await ensureNode();
   if (process.argv.includes('--features')) {
-    console.log('Verifying the independent feature budgets: recognition <5s; AI route requests <15s.');
+    console.log('Verifying recognition latency and complete AI routes; planning has no time limit.');
     await run(process.execPath, [path.join(root, 'scripts', 'validate-local-ai.mjs'), '--recognition-only']);
     await run(process.execPath, [path.join(root, 'scripts', 'validate-qwen-routes.mjs')]);
     console.log('Both feature performance gates passed with real local models.');

@@ -17,18 +17,25 @@ export async function runPlanningBenchmark({ config = readAIConfig(), backend = 
   const reportFile = path.join(outputRoot, 'benchmarks', `planning-${new Date().toISOString().replace(/[:.]/g, '-')}-${randomUUID().slice(0, 8)}.json`);
   const report = { startedAt: new Date().toISOString(), completedAt: null, passed: false,
     backend, model: null, configuration: null, timeoutMs: 0, checks: [],
-    limitation: 'End-to-end wall time for two fixed Met planning conversations. The first request may already use a loaded model; no model is forcibly unloaded. Repeat timings are individual samples, not a general performance guarantee.' };
+    limitation: 'End-to-end wall time including any output-limit retry for two fixed Met planning conversations. The first request may already use a loaded model; no model is forcibly unloaded. Repeat timings are individual samples, not a general performance guarantee.' };
   async function save() {
     await mkdir(path.dirname(reportFile), { recursive: true });
     await writeFile(`${reportFile}.tmp`, JSON.stringify(report, null, 2));
     await rename(`${reportFile}.tmp`, reportFile);
   }
-  async function request(endpoint, body) {
+  async function request(endpoint, body, row) {
     const requestSignal = body ? signal : (signal ? AbortSignal.any([signal, AbortSignal.timeout(15000)]) : AbortSignal.timeout(15000));
     const response = await fetchImpl(`${backend}${endpoint}`, { method: body ? 'POST' : 'GET', signal: requestSignal,
       ...(body ? { headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {}) });
     const result = await response.json();
-    assert.equal(response.status, 200, `${result.code || response.status}: ${result.error || 'Backend request failed.'}`);
+    if (row) { row.httpStatus = response.status; row.response = result; }
+    if (response.status !== 200) {
+      const last = result.details?.attempts?.at(-1);
+      const diagnostics = last ? ` (reason: ${last.doneReason}; generated tokens: ${last.generatedTokens ?? 'unknown'}; output limit: ${last.numPredict}; setting: ${result.details.outputSetting})` : '';
+      const error = new Error(`${result.code || response.status}: ${result.error || 'Backend request failed.'}${diagnostics}`);
+      error.code = result.code || `HTTP_${response.status}`;
+      throw error;
+    }
     return result;
   }
   async function measure(name, action) {
@@ -49,7 +56,7 @@ export async function runPlanningBenchmark({ config = readAIConfig(), backend = 
     return row.passed;
   }
   const ready = await measure('preflight', async row => {
-    const status = await request('/api/ai/planning/status');
+    const status = await request('/api/ai/planning/status', undefined, row);
     report.model = status.model; report.configuration = status.configuration;
     row.ready = status.ready;
     assert.equal(status.configuration?.planningVersion, planningVersion, 'Restart the updated backend before timing.');
@@ -64,14 +71,14 @@ export async function runPlanningBenchmark({ config = readAIConfig(), backend = 
     let updated;
     const chatOK = await measure(`chat_${sample}`, async row => {
       row.response = await request('/api/ai/routes/chat', { museumId: 'met', preferences, history: [],
-        message: 'I have 30 minutes. Help me explore the highlights.' });
+        message: 'I have 30 minutes. Help me explore the highlights.' }, row);
       assert.ok(typeof row.response.reply === 'string' && row.response.reply.trim(), 'The model did not return a reply.');
       updated = validateRouteInput(row.response.preferences, collection, graph);
       assert.equal(updated.availableMinutes, 30, 'The model did not apply the requested 30-minute visit.');
     });
     if (!chatOK) break;
     const routeOK = await measure(`route_${sample}`, async row => {
-      row.response = await request('/api/ai/routes/plan', { museumId: 'met', ...updated, requireAI: true });
+      row.response = await request('/api/ai/routes/plan', { museumId: 'met', ...updated, requireAI: true }, row);
       row.verified = assertAIRoute(row.response, updated, collection, graph);
     });
     if (!routeOK) break;

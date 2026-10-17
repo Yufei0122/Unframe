@@ -16,7 +16,7 @@ The route update bundle's `INSTALL.cmd` runs the equivalent source-update and `a
 
 The 2026-10-14 installer preserves existing `.env.example` and `mobile/.env.example` byte-for-byte; differences in these unused templates no longer block an update. Missing templates are installed, and updated copies remain in the bundle's `payload` folder for reference. Actual `.env` files remain untouched. Other local source changes are still checked before any writes, with all conflicting paths reported together.
 
-`GET /api/ai/planning/status` checks the local text model and completion capability independently of image services. `ready: true` there means model presence/capability, **not a successful inference**. The general status also has `planningReady`, separate from combined scanner readiness. Backend `planningVersion: 5` and the effective Ollama URL, artwork timeout, unlimited planning setting, context, GPU, output-token and keep-alive settings prevent startup from silently reusing an older/differently configured process; stop an old process in its original terminal instead of killing it by port.
+`GET /api/ai/planning/status` checks the local text model and completion capability independently of image services. `ready: true` there means model presence/capability, **not a successful inference**. The general status also has `planningReady`, separate from combined scanner readiness. Backend `planningVersion: 6` and the effective Ollama URL, artwork timeout, unlimited planning setting, context, GPU, output-token and keep-alive settings prevent startup from silently reusing an older/differently configured process; stop an old process in its original terminal instead of killing it by port.
 
 Route-only acceptance creates a new `.local-ai/qwen-routes-<timestamp>-<id>.json` containing model identity, source hashes, timings, actual responses and failures. Its six checks cover both museums: Chinese changes to 20 minutes, Colour, less walking, accessibility and preserved must-see IDs; AI routes using those edited preferences; plus an English GOMA revision to 35 minutes, removal of must-see works and a second valid route. Every returned route is checked against actual graph edges, recomputed walking plus visit time, unique museum-local stops and required works. Every interactive POST must complete in less than `AI_RESPONSE_BUDGET_MS` (15,000 ms by default), otherwise acceptance fails even if the eventual payload is valid. The complete `ai:acceptance` workflow additionally runs the broader 11-check route/CORS/invalid-input suite before recognition and vision acceptance.
 
@@ -121,7 +121,7 @@ Open **http://localhost:8081** for mobile web. The Node API defaults to **http:/
 | `npm.cmd run ai:doctor -- --smoke` | Uses real embeddings, artwork matching and structured Qwen output. This is a small integration check, not an accuracy benchmark. |
 | `npm.cmd run ai:validate` | Broader real-model acceptance: all 12 references and mild variants, 6 negative controls, both museums' HTTP recognition/confirmation/routes and a Chinese planning chat. Writes `.local-ai/validation.json`. |
 | `npm.cmd run ai:validate:routes` | Serial real Qwen planning acceptance: Chinese preference edits and resulting routes in both museums, then an English GOMA revision and route. Each run writes a new `.local-ai/qwen-routes-*.json`, preserving failed attempts. Fallback responses fail model acceptance even when HTTP returns 200. |
-| `npm.cmd run ai:verify:features` | Starts the real local services, requires catalogue recognition below 5 seconds and every planning request below 15 seconds, and exits nonzero unless both feature gates pass. |
+| `npm.cmd run ai:verify:features` | Starts the real local services, requires catalogue recognition below 5 seconds and complete, correct planning responses without a generation deadline, and exits nonzero unless both feature gates pass. |
 | `npm.cmd run ai:check` | Compatibility alias for the doctor; `--live` is an alias for `--smoke`. |
 
 Node 22+ and Python 3.10–3.13 are supported (Python 3.12 recommended). If Ollama is absent, install the official [Windows package](https://ollama.com/download/windows), then rerun setup. Setup stages report their own failures and reuse downloaded files on retry. TLS verification remains enabled.
@@ -132,7 +132,7 @@ The scripts identify existing services before reusing them. An unrelated process
 
 The root `.env` is loaded by Node and deployment scripts; existing process variables take precedence. Never overwrite a configured `.env` wholesale. `.env`, `.venv`, `.local-ai`, generated vectors and visitor data are gitignored.
 
-This deployment targets an i7-10750H (6 cores/12 threads), approximately 16 GB RAM and GTX 1660 Ti (6 GB). Ollama now uses automatic GPU placement (`OLLAMA_NUM_GPU=-1`) and falls back to CPU when GPU offload is unavailable. Meeting the 15-second requirement depends on the actual driver, available VRAM/RAM and a warmed model; the real acceptance report is authoritative. Close unused applications if model loading fails or paging makes inference slow.
+This deployment targets an i7-10750H (6 cores/12 threads), approximately 16 GB RAM and GTX 1660 Ti (6 GB). Ollama now uses automatic GPU placement (`OLLAMA_NUM_GPU=-1`) and falls back to CPU when GPU offload is unavailable. Meeting artwork response budgets depends on the actual driver, available VRAM/RAM and a warmed model; planning has no time limit and the real acceptance report is authoritative. Close unused applications if model loading fails or paging makes inference slow.
 
 | Variable | Default / purpose |
 | --- | --- |
@@ -149,7 +149,9 @@ This deployment targets an i7-10750H (6 cores/12 threads), approximately 16 GB R
 | `OLLAMA_TIMEOUT_MS` | `14000`; artwork text deadline; planning ignores this limit |
 | `OLLAMA_NUM_CTX` | `2048`; bounded interactive context |
 | `OLLAMA_NUM_GPU` | `-1`; automatic GPU-layer placement with CPU fallback |
-| `OLLAMA_NUM_PREDICT` | `256`; compact structured response limit |
+| `OLLAMA_NUM_PREDICT` | `256`; artwork structured response limit |
+| `OLLAMA_PLANNING_NUM_PREDICT` | `1024`; initial planning output limit (128–4096); one output-length retry up to `min(4096, max(1024, initial * 2))` if that increases the budget |
+| `OLLAMA_PLANNING_NUM_CTX` | `4096` or the larger general context when unset; independent planning context, also used for warm-up |
 | `OLLAMA_KEEP_ALIVE` | `10m`; keep the warmed model loaded between interactions |
 | `ARTWORK_MATCH_THRESHOLD` | `0.80`; cosine similarity cutoff, not probability or accuracy |
 | `ARTWORK_EMBEDDINGS_FILE` | `data/artwork-embeddings.json`; explicit override supported |
@@ -163,7 +165,11 @@ Mobile web uses `EXPO_PUBLIC_API_URL` only when an explicit backend address is n
 
 ### Planning without a deadline and measuring actual duration
 
-Planning chat and route generation now wait for a completed response or explicit cancellation. Both the mobile timers and the backend model timer are disabled for these two operations, even if an existing `.env` still specifies `OLLAMA_TIMEOUT_MS=300000`. `planningVersion: 5` and `planningTimeoutMs: 0` identify the new behavior. Other artwork services and short readiness checks retain their deadlines. Local model requests use cancellable loopback sockets to avoid Node fetch's separate five-minute response-header limit.
+Planning chat and route generation now wait for a completed response or explicit cancellation. Both the mobile timers and the backend model timer are disabled for these two operations, even if an existing `.env` still specifies `OLLAMA_TIMEOUT_MS=300000`. `planningVersion: 6` and `planningTimeoutMs: 0` identify the new behavior. Other artwork services and short readiness checks retain their deadlines. Local model requests use cancellable loopback sockets to avoid Node fetch's separate five-minute response-header limit.
+
+Planning has a separate output-token budget as well as no time deadline. The old 192-token default can truncate the six-field preference JSON plus reply. The new initial default is 1024 tokens; this is a ceiling, not a request to generate that many tokens. The launcher migrates the old `OLLAMA_PLANNING_NUM_PREDICT=192` value to 1024 in memory, without editing `.env`. Other explicit values remain configured.
+
+Only an Ollama response with `done: true` and `done_reason: "length"` triggers one regeneration using a larger bounded budget, normally 2048 tokens. It uses the original prompt/schema and stays cancellable; partial JSON is discarded. Missing completion flags, invalid JSON, transport failures and artwork explanations are not retried by this policy. Both attempts share the same busy gate. A valid answer still requires a natural stop, complete JSON and all existing museum/route checks. Incomplete responses expose only stop reason, token counts, limits and duration metrics in `details.attempts`, never raw model output or thinking. The benchmark saves the HTTP error body and code, includes retry time in successful durations and never counts a failed request as a successful sample.
 
 The Plan screen shows elapsed seconds and a **Cancel request** button. A completed reply shows its duration; the most recent route duration remains on Plan when returning from the itinerary. Cancelling, leaving Plan or starting a new conversation aborts upstream inference and ignores late responses.
 
@@ -305,7 +311,7 @@ The original backend already occupied port 3000 and was left running. This insta
 | OpenCLIP | http://127.0.0.1:8001/health — running on CPU, 4 threads; fixed model/weight identity, 512 dimensions |
 | Ollama | http://127.0.0.1:11434 — existing 0.34.0 service reused; local Qwen3 4.0B Q4_K_M installed |
 
-This historical Windows run used `OLLAMA_KEEP_ALIVE=0`. Current startup migrates that legacy value in memory to the 15-second profile, preloads Qwen and keeps it warm for ten minutes. The preexisting `gemma3:270m` model was preserved. OpenCLIP weights are cached under `.local-ai/cache`, dependencies under `.venv`.
+This historical Windows run used `OLLAMA_KEEP_ALIVE=0`. Current startup migrates that legacy value in memory to the current inference settings, preloads Qwen and keeps it warm for ten minutes. The preexisting `gemma3:270m` model was preserved. OpenCLIP weights are cached under `.local-ai/cache`, dependencies under `.venv`.
 
 All six requested command forms were actually executed: setup, clip, index, up, doctor and doctor with smoke. Setup installed CPU PyTorch 2.8.0, torchvision 0.23.0 and OpenCLIP 3.3.0. Pip's initial sandbox cache-write failure was diagnosed and retried with the required local permission; the setup now defaults its pip cache to `.local-ai/pip-cache`. TLS verification stayed enabled. Public Hugging Face downloads completed without an account/token.
 

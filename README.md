@@ -11,7 +11,7 @@ The **Scan** screen samples the camera view and suggests artworks using local **
 
 For an existing installation, run `npm.cmd run ai:setup:vision` once (the default vision download is approximately 3.3 GB). Then run **`npm.cmd start`** to start models, backend and Expo together, with the browser API URL automatically set to the backend's configured port. Keep that terminal open. An existing Unframe preview on port 8081 is safely reused; an unrelated application on that port is reported instead of being stopped. The same AI commands work from `mobile`. Use `npm.cmd run ai:doctor -- --vision` for a real HTTP/vision check; see [the general-analysis workflow and verification limits](AI-INTEGRATION.md#general-artwork-analysis) before treating suggestions as identified artworks.
 
-From the project root, run `npm.cmd install`, then `npm.cmd run ai:setup` to install Python dependencies and download the public models. Run `npm.cmd run ai:up` to check/start local model services, preload Qwen, build a compatible 512-dimensional index when needed, and start Node at http://127.0.0.1:3000. In another terminal run `npm.cmd run mobile:web -- --port 8081` and open http://localhost:8081. Interactive scan and route checks use a strict 15-second response budget. No Google project, ADC, API key or paid account is required; Python virtual-environment activation is automatic.
+From the project root, run `npm.cmd install`, then `npm.cmd run ai:setup` to install Python dependencies and download the public models. Run `npm.cmd run ai:up` to check/start local model services, preload Qwen, build a compatible 512-dimensional index when needed, and start Node at http://127.0.0.1:3000. In another terminal run `npm.cmd run mobile:web -- --port 8081` and open http://localhost:8081. Artwork checks retain bounded response budgets; planning chat and routes wait until completion or cancellation. No Google project, ADC, API key or paid account is required; Python virtual-environment activation is automatic.
 
 Run `npm.cmd run ai:doctor` for service/model/index readiness, or `npm.cmd run ai:doctor -- --smoke` for real embedding and structured Qwen checks. Opening Scan with camera access sends sampled frames to local services; Unframe does not persist them. Similarity is not probability or accuracy. CPU timeouts, service reuse, privacy and deployment evidence are documented in [AI-INTEGRATION.md](AI-INTEGRATION.md).
 
@@ -41,7 +41,7 @@ Open **http://localhost:8081**. Wide browser windows show the same mobile screen
 
 During model warmup, Unframe first uses the configured Ollama GPU placement. If Ollama returns a model-runner error, startup retries once on CPU and keeps that CPU setting for the current process. If both attempts fail, the terminal includes Ollama's bounded local error detail and an `ollama run <model>` diagnostic command instead of hiding the HTTP 500 cause.
 
-The two interactive AI features have independent models and acceptance budgets. Museum-catalogue recognition uses OpenCLIP and must finish below 5 seconds. Route preference understanding uses the smaller `qwen3:1.7b` planning model and every chat/route request must finish below 15 seconds; the deterministic graph engine still enforces time, walking and accessibility constraints. Run `npm.cmd run ai:verify:features` to start the required services and execute both real-model performance gates. The command exits unsuccessfully if either budget or correctness check fails and retains reports under `.local-ai`.
+The two interactive AI features have independent models and acceptance budgets. Museum-catalogue recognition uses OpenCLIP and must finish below 5 seconds. Route preference understanding uses the smaller `qwen3:1.7b` planning model with no automatic chat/route deadline; the deterministic graph engine still enforces time, walking and accessibility constraints. Run `npm.cmd run ai:verify:features` to start the required services and check both real-model features. The command exits unsuccessfully if recognition exceeds its budget or a correctness check fails and retains reports under `.local-ai`.
 
 ## Features
 
@@ -100,3 +100,5 @@ npm.cmd run test:e2e
 | `EXPO_PUBLIC_API_URL` | See mobile configuration | Mobile connection to the Node API |
 
 Model configuration is described in `.env.example` and [AI-INTEGRATION.md](AI-INTEGRATION.md). Keep existing configuration and user data private.
+
+To measure planning on your computer, run `npm.cmd run ai:routes:timing`. It records first/repeat chat and route durations in `.local-ai/benchmarks/`, including any bounded retry after output truncation. Planning defaults to 1024 output tokens and a separate 4096-token context; model warm-up is reported separately.

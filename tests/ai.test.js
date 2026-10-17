@@ -125,7 +125,7 @@ test('Qwen uses local metadata, think:false and JSON schema; rejects truncated, 
   assert.equal(payload.options.num_predict, 256); assert.equal(payload.keep_alive, '10m'); assert.match(payload.messages[1].content, /Claude Monet/);
   assert.ok(!payload.messages[1].content.includes('goma-'));
   await client.generateRouteRecommendations({ interests: ['Nature'], mustSeeArtworkIds: [] }, collection);
-  assert.equal(payload.model, 'qwen3:1.7b'); assert.equal(payload.options.num_predict, 192);
+  assert.equal(payload.model, 'qwen3:1.7b'); assert.equal(payload.options.num_predict, 1024); assert.equal(payload.options.num_ctx, 4096);
   await assert.rejects(createOllamaService(config, { request: async () => ({ done: true, done_reason: 'length' }) }).generateArtworkExplanation(collection[0], [], collection), { code: 'OLLAMA_INCOMPLETE' });
   await assert.rejects(createOllamaService(config, { request: async () => ({ done: true, done_reason: 'stop', message: { content: 'not json' } }) }).generateArtworkExplanation(collection[0], [], collection), { code: 'OLLAMA_JSON' });
   let finish;
@@ -499,4 +499,79 @@ test('explicit additions, removals and negated preserve instructions remain edit
     const result = await service.reply({ message, preferences });
     assert.deepEqual(result.preferences.mustSeeArtworkIds, ids);
   }
+});
+
+test('planning output and context budgets are independent, bounded, and preserve explicit tuning', () => {
+  assert.equal(config.planningNumPredict, 1024); assert.equal(config.planningRetryNumPredict, 2048);
+  assert.equal(config.planningNumCtx, 4096);
+  const legacy = readAIConfig({ OLLAMA_PLANNING_NUM_PREDICT: '192' });
+  assert.equal(legacy.planningNumPredict, 192); assert.equal(legacy.planningRetryNumPredict, 1024);
+  assert.equal(readAIConfig({ OLLAMA_NUM_CTX: '8192' }).planningNumCtx, 8192);
+  const tuned = readAIConfig({ OLLAMA_PLANNING_NUM_PREDICT: '4096', OLLAMA_PLANNING_NUM_CTX: '6144' });
+  assert.equal(tuned.planningNumPredict, 4096); assert.equal(tuned.planningRetryNumPredict, 4096); assert.equal(tuned.planningNumCtx, 6144);
+  for (const value of ['-1', '0', '127', '4097', 'NaN']) assert.throws(() => readAIConfig({ OLLAMA_PLANNING_NUM_PREDICT: value }));
+});
+
+test('planning and artwork budgets follow the operation even when model names match', async () => {
+  const calls = [];
+  const service = createOllamaService({ ...config, ollamaModel: config.planningModel }, { request: async (_endpoint, body, timeout) => {
+    calls.push({ body, timeout });
+    return jsonCandidate(body.format.properties.recommendedArtworkIds ? recommendation : explanationSelection);
+  } });
+  await service.generateArtworkExplanation(collection[0], [], collection);
+  await service.generateRouteRecommendations({ interests: [], mustSeeArtworkIds: [] }, collection);
+  assert.deepEqual(calls.map(({ body, timeout }) => [body.options.num_predict, body.options.num_ctx, timeout]), [[256, 2048, undefined], [1024, 4096, 0]]);
+});
+
+test('a truncated planning answer is regenerated once with a larger budget and the original request', async t => {
+  const log = t.mock.method(console, 'warn', () => {});
+  const cfg = readAIConfig({ OLLAMA_PLANNING_NUM_PREDICT: '192' });
+  const calls = [], controller = new AbortController();
+  const service = createOllamaService(cfg, { request: async (_endpoint, body, timeout, signal) => {
+    calls.push(structuredClone(body)); assert.equal(timeout, 0); assert.equal(signal, controller.signal);
+    return calls.length === 1
+      ? { done: true, done_reason: 'length', eval_count: 192, prompt_eval_count: 1300, message: { content: '{"recommendedArtworkIds": ["unfinished' } }
+      : jsonCandidate(recommendation);
+  } });
+  assert.deepEqual(await service.generateRouteRecommendations({ interests: ['Nature'], mustSeeArtworkIds: [] }, collection, controller.signal), recommendation);
+  assert.deepEqual(calls.map(body => body.options.num_predict), [192, 1024]);
+  assert.deepEqual(calls[1].messages, calls[0].messages); assert.deepEqual(calls[1].format, calls[0].format);
+  assert.equal(log.mock.callCount(), 1);
+  assert.equal(JSON.parse(log.mock.calls[0].arguments[0]).nextNumPredict, 1024);
+  assert.ok(!log.mock.calls[0].arguments[0].includes('unfinished'));
+});
+
+test('planning retries only a finished response with an output-length stop, and never loops indefinitely', async t => {
+  t.mock.method(console, 'warn', () => {});
+  for (const [data, count] of [
+    [{ done: true, done_reason: 'length', eval_count: 1024, message: { content: JSON.stringify(recommendation) } }, 2],
+    [{ done: false, done_reason: 'length' }, 1], [{ done: true }, 1], [{ done: true, done_reason: 'load' }, 1],
+  ]) {
+    let calls = 0;
+    const service = createOllamaService(config, { request: async () => { calls++; return data; } });
+    await assert.rejects(service.generateRouteRecommendations({ interests: [], mustSeeArtworkIds: [] }, collection), error => {
+      assert.equal(error.code, 'OLLAMA_INCOMPLETE'); assert.equal(error.details.outputSetting, 'OLLAMA_PLANNING_NUM_PREDICT');
+      assert.equal(error.details.attempts.length, count);
+      assert.ok(!JSON.stringify(error.details).includes('reasoningSummary'));
+      assert.equal(error.details.attempts.at(-1).doneReason, data.done_reason || 'unknown');
+      return true;
+    });
+    assert.equal(calls, count);
+  }
+  let calls = 0;
+  const capped = createOllamaService(readAIConfig({ OLLAMA_PLANNING_NUM_PREDICT: '4096' }), { request: async () => { calls++; return { done: true, done_reason: 'length' }; } });
+  await assert.rejects(capped.generateRouteRecommendations({ interests: [], mustSeeArtworkIds: [] }, collection), { code: 'OLLAMA_INCOMPLETE' });
+  assert.equal(calls, 1);
+});
+
+test('cancellation between a truncated response and retry stops further generation and releases the gate', async () => {
+  const controller = new AbortController(); let calls = 0;
+  const service = createOllamaService(config, { request: async () => {
+    calls++;
+    if (calls === 1) { controller.abort(); return { done: true, done_reason: 'length' }; }
+    return jsonCandidate(recommendation);
+  } });
+  await assert.rejects(service.generateRouteRecommendations({ interests: [], mustSeeArtworkIds: [] }, collection, controller.signal), { code: 'REQUEST_CANCELLED' });
+  assert.equal(calls, 1);
+  assert.deepEqual(await service.generateRouteRecommendations({ interests: [], mustSeeArtworkIds: [] }, collection), recommendation);
 });

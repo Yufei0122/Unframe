@@ -76,7 +76,8 @@ export function createAIHandler({ config = readAIConfig(), clip = createLocalCli
       if (!res.destroyed) return send(res, 200, result);
     } catch (error) {
       logFailure('request', error);
-      if (!res.destroyed) return send(res, error instanceof AIError ? error.status : 500, { error: error instanceof AIError ? error.message : 'AI request could not be completed. Please try again.', code: error instanceof AIError ? error.code : 'INTERNAL_ERROR' });
+      if (!res.destroyed) return send(res, error instanceof AIError ? error.status : 500, { error: error instanceof AIError ? error.message : 'AI request could not be completed. Please try again.', code: error instanceof AIError ? error.code : 'INTERNAL_ERROR',
+        ...(error instanceof AIError && error.code === 'OLLAMA_INCOMPLETE' && error.details ? { details: error.details } : {}) });
     } finally { res.removeListener('close', disconnect); active--; }
   };
 }

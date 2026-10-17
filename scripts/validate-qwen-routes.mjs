@@ -22,7 +22,7 @@ const report = {
   startedAt: new Date().toISOString(), passed: false, backend,
   verification: 'Real Node HTTP and local Ollama Qwen inference; no mocks; local fallback always fails model acceptance.',
   limitation: 'Controlled planning cases on illustrative museum graphs, not surveyed navigation or a general model quality benchmark.',
-  config: { model: config.planningModel, timeoutMs: 0, numCtx: config.ollamaNumCtx, numGpu: config.ollamaNumGpu, numPredict: config.planningNumPredict, keepAlive: config.ollamaKeepAlive },
+  config: { model: config.planningModel, timeoutMs: 0, numCtx: config.planningNumCtx, numGpu: config.ollamaNumGpu, numPredict: config.planningNumPredict, retryNumPredict: config.planningRetryNumPredict, keepAlive: config.ollamaKeepAlive },
   sourceHashes: {}, checks: [],
 };
 await mkdir(path.dirname(output), { recursive: true });

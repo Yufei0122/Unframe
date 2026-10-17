@@ -38,12 +38,16 @@ test('only an Unframe Expo document is eligible for safe mobile preview reuse', 
 
 test('interactive profile migrates legacy slow defaults without overwriting explicit tuning', async () => {
   const api = await runtime({});
-  const env = { OLLAMA_TIMEOUT_MS: '300000', OLLAMA_NUM_GPU: '0', OLLAMA_NUM_CTX: '3072' };
+  const env = { OLLAMA_TIMEOUT_MS: '300000', OLLAMA_NUM_GPU: '0', OLLAMA_NUM_CTX: '3072', OLLAMA_PLANNING_NUM_PREDICT: '192' };
   const changed = api.applyInteractivePerformanceProfile(env);
   assert.equal(env.AI_RESPONSE_BUDGET_MS, '15000');
   assert.equal(env.OLLAMA_TIMEOUT_MS, '14000'); assert.equal(env.OLLAMA_NUM_GPU, '-1');
   assert.equal(env.OLLAMA_NUM_CTX, '3072', 'A non-legacy custom value must be preserved.');
   assert.ok(changed.includes('OLLAMA_TIMEOUT_MS') && !changed.includes('OLLAMA_NUM_CTX'));
+  assert.equal(env.OLLAMA_PLANNING_NUM_PREDICT, '1024');
+  const tuned = { OLLAMA_PLANNING_NUM_PREDICT: '768', OLLAMA_PLANNING_NUM_CTX: '8192' };
+  api.applyInteractivePerformanceProfile(tuned);
+  assert.equal(tuned.OLLAMA_PLANNING_NUM_PREDICT, '768'); assert.equal(tuned.OLLAMA_PLANNING_NUM_CTX, '8192');
   api.restore();
 });
 
@@ -181,9 +185,24 @@ test('startup rejects stale inference settings for both route-only and full star
   const api = await runtime({ PORT: new URL(address).port }); t.after(api.restore);
   const dataFile = path.resolve(process.env.UNFRAME_DATA_DIR || path.join(api.root, 'data'), 'unframe.json');
   workspace = createHash('sha256').update(process.platform === 'win32' ? dataFile.toLowerCase() : dataFile).digest('hex');
-  for (const planningOnly of [true, false]) for (const key of ['planningVersion', 'ollamaUrl', 'timeoutMs', 'planningTimeoutMs', 'numCtx', 'numGpu', 'numPredict', 'keepAlive']) {
+  for (const planningOnly of [true, false]) for (const key of ['planningVersion', 'ollamaUrl', 'timeoutMs', 'planningTimeoutMs', 'numCtx', 'numGpu', 'numPredict', 'retryNumPredict', 'keepAlive']) {
     stale = { [key]: 'stale-setting' };
     await assert.rejects(api.ensureNode({ planningOnly }), /older or different AI configuration/, key);
     assert.equal((await api.getJSON(`${address}/api/health`)).status, 'ok', 'Existing backend is left running.');
   }
+});
+
+test('planning warmup uses the planning context rather than the artwork context', async t => {
+  let payload;
+  const server = http.createServer(async (req, res) => {
+    let body = ''; for await (const chunk of req) body += chunk;
+    payload = JSON.parse(body);
+    res.writeHead(200, { 'Content-Type': 'application/json' }); res.end('{"done":true}');
+  });
+  server.listen(0, '127.0.0.1'); await once(server, 'listening');
+  t.after(() => new Promise(resolve => server.close(resolve)));
+  const api = await runtime({ OLLAMA_URL: `http://127.0.0.1:${server.address().port}`, OLLAMA_NUM_GPU: '0', OLLAMA_NUM_CTX: '2048', OLLAMA_PLANNING_NUM_CTX: '6144' });
+  t.after(api.restore);
+  await api.warmOllamaModel('qwen3:1.7b', { planning: true });
+  assert.equal(payload.options.num_ctx, 6144); assert.equal(payload.options.num_gpu, 0); assert.equal(payload.prompt, '');
 });

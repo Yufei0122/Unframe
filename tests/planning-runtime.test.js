@@ -31,7 +31,7 @@ async function listen(t, handler) {
 }
 
 async function setup(t, overrides = {}) {
-  const state = { generationCalls: 0, delayMs: 0, hold: false, fail: false, onStart: () => {}, onCancel: () => {} };
+  const state = { generationCalls: 0, delayMs: 0, hold: false, holdFromBudget: Infinity, fail: false, truncateBelow: 0, onStart: () => {}, onCancel: () => {} };
   const ollamaUrl = await listen(t, async (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     if (req.url === '/api/version') return res.end(JSON.stringify({ version: 'test-fixture' }));
@@ -41,9 +41,13 @@ async function setup(t, overrides = {}) {
     if (req.url === '/api/show') return res.end(JSON.stringify({ capabilities: ['completion'], details: { parameter_size: 'test-only' } }));
     assert.equal(req.url, '/api/chat');
     state.generationCalls++;
-    if (state.hold) { res.once('close', () => state.onCancel()); state.onStart(); return; }
+    if (state.hold || body.options.num_predict >= state.holdFromBudget) { res.once('close', () => state.onCancel()); state.onStart(); return; }
     if (state.fail) { res.statusCode = 500; return res.end('{}'); }
     if (state.delayMs) await delay(state.delayMs);
+    if (body.options.num_predict < state.truncateBelow) {
+      return res.end(JSON.stringify({ done: true, done_reason: 'length', eval_count: body.options.num_predict,
+        prompt_eval_count: 1300, eval_duration: 1000000000, message: { content: '{"preferences":', thinking: 'Do not include private model text in diagnostics.' } }));
+    }
     const context = JSON.parse(body.messages[1].content);
     const chinese = /[\u3400-\u9fff]/u.test(body.messages.at(-1).content);
     const value = body.format.properties.reply
@@ -256,4 +260,47 @@ test('the six-case CLI used by ai:routes:verify accepts correct slow planning re
   assert.equal(report.checks.length, 6);
   assert.ok(report.checks.every(row => row.passed && row.elapsedMs >= 1100));
   assert.equal(report.config.timeoutMs, 0);
+});
+
+test('timing includes truncation retries while accepting only complete planning responses', async t => {
+  const fixture = await setup(t, { planningNumPredict: 192, planningRetryNumPredict: 1024, timeoutMs: 20 });
+  fixture.state.truncateBelow = 1024; fixture.state.delayMs = 40;
+  const outputRoot = await mkdtemp(path.join(os.tmpdir(), 'planning-retry-timing-'));
+  t.after(() => rm(outputRoot, { recursive: true, force: true }));
+  const { report } = await runPlanningBenchmark({ ...fixture, outputRoot, log: () => {} });
+  assert.equal(report.passed, true, JSON.stringify(report.checks));
+  assert.equal(fixture.state.generationCalls, 8);
+  assert.ok(Object.values(report.timings).every(ms => ms >= 80));
+  assert.equal(report.configuration.retryNumPredict, 1024);
+});
+
+test('exhausted output retries retain safe diagnostics and the actual HTTP error in the timing report', async t => {
+  const fixture = await setup(t); fixture.state.truncateBelow = Infinity;
+  const outputRoot = await mkdtemp(path.join(os.tmpdir(), 'planning-output-failure-'));
+  t.after(() => rm(outputRoot, { recursive: true, force: true }));
+  const { report } = await runPlanningBenchmark({ ...fixture, outputRoot, log: () => {} });
+  assert.equal(report.passed, false); assert.deepEqual(report.timings, {}); assert.equal(fixture.state.generationCalls, 2);
+  const failed = report.checks.at(-1);
+  assert.equal(failed.httpStatus, 502); assert.equal(failed.code, 'OLLAMA_INCOMPLETE');
+  assert.match(failed.error, /reason: length; generated tokens: 2048; output limit: 2048; setting: OLLAMA_PLANNING_NUM_PREDICT/);
+  assert.equal(failed.response.details.outputSetting, 'OLLAMA_PLANNING_NUM_PREDICT');
+  assert.deepEqual(failed.response.details.attempts.map(row => [row.doneReason, row.generatedTokens, row.numPredict]), [['length', 1024, 1024], ['length', 2048, 2048]]);
+  assert.ok(!JSON.stringify(failed.response.details).includes('private model text'));
+});
+
+test('cancelling during the expanded-budget retry aborts upstream work and releases the busy gate', { timeout: 5000 }, async t => {
+  const { state, post } = await setup(t, { planningNumPredict: 192, planningRetryNumPredict: 1024 });
+  state.truncateBelow = 1024; state.holdFromBudget = 1024;
+  const started = new Promise(resolve => { state.onStart = resolve; });
+  const closed = new Promise(resolve => { state.onCancel = resolve; });
+  const controller = new AbortController();
+  const pending = post('chat', { preferences, message: 'I have 30 minutes.' }, controller.signal).catch(error => error);
+  await started;
+  const busy = await post('plan', { ...preferences, requireAI: true });
+  assert.equal(busy.status, 429); assert.equal((await busy.json()).code, 'OLLAMA_BUSY');
+  controller.abort(); await pending; await closed;
+  state.truncateBelow = 0; state.holdFromBudget = Infinity;
+  const next = await post('plan', { ...preferences, requireAI: true });
+  assert.equal(next.status, 200); assert.equal((await next.json()).recommendationSource, 'ollama');
+  assert.equal(state.generationCalls, 3);
 });

@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { readAIConfig } from '../server/ai/config.js';
 import { applyInteractivePerformanceProfile, ensureOllama, pullOllamaModel, ensureNode, startMobileWeb, installShutdown, keepRunning, planningModel, root, run, stopOwned, warmOllamaModel } from './ai-runtime.mjs';
 
 installShutdown();
@@ -9,7 +10,10 @@ try {
   console.log('Planning chat/routes: no automatic timeout or 15-second acceptance limit; Ctrl+C cancels.');
   await ensureOllama();
   await pullOllamaModel(planningModel); // Independent lightweight route model; no CLIP/vision/index dependency.
-  await warmOllamaModel(planningModel);
+  await warmOllamaModel(planningModel, { planning: true });
+  const config = readAIConfig();
+  const retry = config.planningRetryNumPredict > config.planningNumPredict ? `one retry up to ${config.planningRetryNumPredict} tokens only after truncation` : 'retry disabled at the maximum output budget';
+  console.log(`Planning output: up to ${config.planningNumPredict} tokens; ${retry}; context ${config.planningNumCtx}.`);
   await ensureNode({ planningOnly: true });
   if (process.argv.includes('--timing')) await run(process.execPath, [path.join(root, 'scripts', 'benchmark-planning.mjs')]);
   if (process.argv.includes('--verify')) await run(process.execPath, [path.join(root, 'scripts', 'validate-qwen-routes.mjs')]);

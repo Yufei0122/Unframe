@@ -1,13 +1,13 @@
 import { AIError } from './config.js';
 import { createLocalClient } from './local-http.js';
 
-export const planningVersion = 5;
+export const planningVersion = 6;
 
 export function planningConfiguration(config) {
   return { provider: 'local', ollamaModel: config.ollamaModel, planningModel: config.planningModel, planningVersion,
     ollamaUrl: config.ollamaUrl, timeoutMs: config.timeoutMs, planningTimeoutMs: 0,
-    numCtx: config.ollamaNumCtx, numGpu: config.ollamaNumGpu,
-    numPredict: config.planningNumPredict, keepAlive: config.ollamaKeepAlive };
+    numCtx: config.planningNumCtx, numGpu: config.ollamaNumGpu,
+    numPredict: config.planningNumPredict, retryNumPredict: config.planningRetryNumPredict, keepAlive: config.ollamaKeepAlive };
 }
 
 // Route planning depends only on the local text model, not CLIP, vision or an image index.
