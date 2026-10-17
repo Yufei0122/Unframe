@@ -5,6 +5,8 @@ import { once } from 'node:events';
 import path from 'node:path';
 import { createHash, randomUUID } from 'node:crypto';
 import { existsSync } from 'node:fs';
+import { readAIConfig } from '../server/ai/config.js';
+import { planningConfiguration } from '../server/ai/planning-status.js';
 
 async function mockServer(t, responseFor) {
   const server = http.createServer((req, res) => {
@@ -159,7 +161,7 @@ test('route-only startup reuses a compatible backend without checking image serv
     urls.push(url);
     if (url === '/api/health') return { app: 'unframe', status: 'ok', workspace };
     assert.equal(url, '/api/ai/planning/status');
-    return { ready: true, configuration: { provider: 'local', ollamaModel: 'qwen3:1.7b', planningModel: 'qwen3:1.7b', planningVersion: 4 } };
+    return { ready: true, configuration: planningConfiguration(readAIConfig()) };
   });
   const api = await runtime({ PORT: new URL(address).port, OLLAMA_MODEL: 'qwen3:4b', OLLAMA_PLANNING_MODEL: 'qwen3:1.7b' });
   t.after(api.restore);
@@ -167,4 +169,21 @@ test('route-only startup reuses a compatible backend without checking image serv
   workspace = createHash('sha256').update(process.platform === 'win32' ? dataFile.toLowerCase() : dataFile).digest('hex');
   assert.equal((await api.ensureNode({ planningOnly: true })).reused, true);
   assert.deepEqual(urls, ['/api/health', '/api/ai/planning/status']);
+});
+
+test('startup rejects stale inference settings for both route-only and full startup', async t => {
+  let workspace, stale;
+  const address = await mockServer(t, url => url === '/api/health'
+    ? { app: 'unframe', status: 'ok', workspace }
+    : { configuration: { ...planningConfiguration(readAIConfig()), embeddingModel: clipIdentity.model,
+      embeddingPretrained: clipIdentity.pretrained, dimension: clipIdentity.dimensions,
+      visionModel: readAIConfig().visionModel, analysisVersion: 2, ...stale } });
+  const api = await runtime({ PORT: new URL(address).port }); t.after(api.restore);
+  const dataFile = path.resolve(process.env.UNFRAME_DATA_DIR || path.join(api.root, 'data'), 'unframe.json');
+  workspace = createHash('sha256').update(process.platform === 'win32' ? dataFile.toLowerCase() : dataFile).digest('hex');
+  for (const planningOnly of [true, false]) for (const key of ['planningVersion', 'ollamaUrl', 'timeoutMs', 'planningTimeoutMs', 'numCtx', 'numGpu', 'numPredict', 'keepAlive']) {
+    stale = { [key]: 'stale-setting' };
+    await assert.rejects(api.ensureNode({ planningOnly }), /older or different AI configuration/, key);
+    assert.equal((await api.getJSON(`${address}/api/health`)).status, 'ok', 'Existing backend is left running.');
+  }
 });

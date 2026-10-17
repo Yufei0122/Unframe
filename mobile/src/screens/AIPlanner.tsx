@@ -1,15 +1,29 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button, Icon, T, c, serif, useRootNavigation } from '../ui';
 import { useStore } from '../store';
 import { useMuseumLocation } from '../location';
-import { AI_TIMEOUT_MS, requestAI } from '../ai';
+import { requestAI } from '../ai';
 import type { AIRoute, PlanningMessage, PlanningReply, VisitPreferences } from '../../../shared/ai-types';
 import { RoutePlanningTransition } from '../components/AIProcessingAnimations';
 
-type ActiveRequest = { controller: AbortController; kind: 'chat' | 'route'; message?: string };
+type ActiveRequest = { controller: AbortController; kind: 'chat' | 'route'; message?: string; startedAt: number };
+
+function PlanningWait({ startedAt, onCancel }: { startedAt: number; onCancel: () => void }) {
+  const [seconds, setSeconds] = useState(0);
+  useEffect(() => {
+    const update = () => setSeconds(Math.floor((performance.now() - startedAt) / 1000));
+    update();
+    const timer = setInterval(update, 1000);
+    return () => clearInterval(timer);
+  }, [startedAt]);
+  return <View style={{ gap: 8 }}>
+    <T style={styles.detail} testID="planning-elapsed">Waiting {seconds}s · You can cancel at any time.</T>
+    <Button title="Cancel request" secondary onPress={onCancel}/>
+  </View>;
+}
 
 export function AIPlannerScreen() {
   const { museumId } = useMuseumLocation();
@@ -31,6 +45,7 @@ function PlanningChat() {
   const [busy, setBusy] = useState<'chat' | 'route' | null>(null);
   const [error, setError] = useState('');
   const [failedMessage, setFailedMessage] = useState<string | null>(null);
+  const [lastDuration, setLastDuration] = useState<string | null>(null);
   const request = useRef<ActiveRequest | null>(null);
   const scroll = useRef<ScrollView>(null);
 
@@ -46,7 +61,7 @@ function PlanningChat() {
   useFocusEffect(useCallback(() => cancel, [cancel]));
 
   function reset() {
-    cancel(); setMessages([welcome]); setPreferences(defaults()); setDraft(''); setError(''); setFailedMessage(null);
+    cancel(); setMessages([welcome]); setPreferences(defaults()); setDraft(''); setError(''); setFailedMessage(null); setLastDuration(null);
   }
 
   async function send(content = draft, retry = false) {
@@ -55,19 +70,19 @@ function PlanningChat() {
     const history = (retry ? messages.slice(0, -1) : messages).slice(-8);
     if (!retry) setMessages(previous => [...previous, { role: 'user', content: message }]);
     setDraft(''); setError(''); setFailedMessage(null); setBusy('chat');
-    const controller = new AbortController(); request.current = { controller, kind: 'chat', message };
-    const timeout = setTimeout(() => controller.abort(), AI_TIMEOUT_MS);
+    const controller = new AbortController(), startedAt = performance.now();
+    request.current = { controller, kind: 'chat', message, startedAt }; setLastDuration(null);
     try {
       const response = await requestAI<PlanningReply>('routes/chat', { museumId, message, history, preferences }, controller.signal);
       if (request.current?.controller !== controller || controller.signal.aborted) return;
       setPreferences(response.preferences);
+      setLastDuration(`Reply received in ${((performance.now() - startedAt) / 1000).toFixed(1)}s.`);
       setMessages(previous => [...previous, { role: 'assistant', content: response.reply }]);
     } catch (failure) {
       if (request.current?.controller !== controller) return;
       setFailedMessage(message);
-      setError(controller.signal.aborted ? 'The assistant took too long to reply. Please retry.' : failure instanceof Error ? failure.message : 'Could not send your message. Please retry.');
+      setError(failure instanceof Error ? failure.message : 'Could not send your message. Please retry.');
     } finally {
-      clearTimeout(timeout);
       if (request.current?.controller === controller) { request.current = null; setBusy(null); }
     }
   }
@@ -75,18 +90,18 @@ function PlanningChat() {
   async function plan() {
     if (request.current || failedMessage || draft.trim()) return;
     Keyboard.dismiss(); setBusy('route'); setError('');
-    const controller = new AbortController(); request.current = { controller, kind: 'route' };
-    const timeout = setTimeout(() => controller.abort(), AI_TIMEOUT_MS);
+    const controller = new AbortController(), startedAt = performance.now();
+    request.current = { controller, kind: 'route', startedAt }; setLastDuration(null);
     try {
       const itinerary = await requestAI<AIRoute>('routes/plan', { museumId, ...preferences }, controller.signal);
       if (request.current?.controller !== controller || controller.signal.aborted) return;
+      setLastDuration(`Route received in ${((performance.now() - startedAt) / 1000).toFixed(1)}s.`);
       request.current = null; setBusy(null);
       nav.navigate('AIItinerary', { itinerary, museumId });
     } catch (failure) {
       if (request.current?.controller !== controller) return;
-      setError(controller.signal.aborted ? 'Planning took too long. Please try again.' : failure instanceof Error ? failure.message : 'Could not plan this visit.');
+      setError(failure instanceof Error ? failure.message : 'Could not plan this visit.');
     } finally {
-      clearTimeout(timeout);
       if (request.current?.controller === controller) { request.current = null; setBusy(null); }
     }
   }
@@ -112,6 +127,8 @@ function PlanningChat() {
         </View>)}
         {messages.length === 1 && <View style={styles.prompts}>{prompts.map(prompt => <Pressable key={prompt.label} accessibilityRole="button" accessibilityLabel={prompt.label} disabled={locked} onPress={() => { void send(prompt.message); }} style={styles.prompt}><T style={styles.promptText}>{prompt.label}</T><Icon name="arrow-up-outline" size={15} color={c.green}/></Pressable>)}</View>}
         {busy === 'chat' && <RoutePlanningTransition label="Understanding your preferences…"/>}
+        {busy && request.current && <PlanningWait startedAt={request.current.startedAt} onCancel={cancel}/>}
+        {!busy && lastDuration && <T style={styles.detail} testID="planning-duration">{lastDuration}</T>}
         {!!error && <View style={styles.errorBox}><T accessibilityRole="alert" style={styles.errorText}>{error}</T>{failedMessage && <View style={styles.errorActions}>
           <Button title="Retry message" secondary disabled={!!busy} onPress={() => { void send(failedMessage, true); }}/>
           <Pressable accessibilityRole="button" accessibilityLabel="Discard message" onPress={() => { setMessages(previous => previous.slice(0, -1)); setFailedMessage(null); setError(''); }} style={styles.discard}><T style={styles.detail}>Discard message</T></Pressable>

@@ -16,7 +16,7 @@ The route update bundle's `INSTALL.cmd` runs the equivalent source-update and `a
 
 The 2026-10-14 installer preserves existing `.env.example` and `mobile/.env.example` byte-for-byte; differences in these unused templates no longer block an update. Missing templates are installed, and updated copies remain in the bundle's `payload` folder for reference. Actual `.env` files remain untouched. Other local source changes are still checked before any writes, with all conflicting paths reported together.
 
-`GET /api/ai/planning/status` checks the local text model and completion capability independently of image services. `ready: true` there means model presence/capability, **not a successful inference**. The general status also has `planningReady`, separate from combined scanner readiness. Backend `planningVersion: 3` prevents reusing an older process that lacks cancellation, performance settings or the planning checks; stop an old process in its original terminal instead of killing it by port.
+`GET /api/ai/planning/status` checks the local text model and completion capability independently of image services. `ready: true` there means model presence/capability, **not a successful inference**. The general status also has `planningReady`, separate from combined scanner readiness. Backend `planningVersion: 5` and the effective Ollama URL, artwork timeout, unlimited planning setting, context, GPU, output-token and keep-alive settings prevent startup from silently reusing an older/differently configured process; stop an old process in its original terminal instead of killing it by port.
 
 Route-only acceptance creates a new `.local-ai/qwen-routes-<timestamp>-<id>.json` containing model identity, source hashes, timings, actual responses and failures. Its six checks cover both museums: Chinese changes to 20 minutes, Colour, less walking, accessibility and preserved must-see IDs; AI routes using those edited preferences; plus an English GOMA revision to 35 minutes, removal of must-see works and a second valid route. Every returned route is checked against actual graph edges, recomputed walking plus visit time, unique museum-local stops and required works. Every interactive POST must complete in less than `AI_RESPONSE_BUDGET_MS` (15,000 ms by default), otherwise acceptance fails even if the eventual payload is valid. The complete `ai:acceptance` workflow additionally runs the broader 11-check route/CORS/invalid-input suite before recognition and vision acceptance.
 
@@ -144,9 +144,9 @@ This deployment targets an i7-10750H (6 cores/12 threads), approximately 16 GB R
 | `OLLAMA_URL` | `http://127.0.0.1:11434`; loopback API origin |
 | `OLLAMA_MODEL` | `qwen3:4b` |
 | `OLLAMA_PLANNING_MODEL` | `qwen3:1.7b`; independent lightweight route preference/recommendation model |
-| `AI_RESPONSE_BUDGET_MS` | `15000`; successful interactive checks must finish below this limit |
+| `AI_RESPONSE_BUDGET_MS` | `15000`; artwork acceptance budget; planning has no time limit |
 | `AI_RECOGNITION_BUDGET_MS` | `5000`; successful catalogue recognition must finish below this limit |
-| `OLLAMA_TIMEOUT_MS` | `14000`; server-side model deadline |
+| `OLLAMA_TIMEOUT_MS` | `14000`; artwork text deadline; planning ignores this limit |
 | `OLLAMA_NUM_CTX` | `2048`; bounded interactive context |
 | `OLLAMA_NUM_GPU` | `-1`; automatic GPU-layer placement with CPU fallback |
 | `OLLAMA_NUM_PREDICT` | `256`; compact structured response limit |
@@ -159,7 +159,25 @@ This deployment targets an i7-10750H (6 cores/12 threads), approximately 16 GB R
 | `UNFRAME_DATA_DIR` | `data`; existing visitor state and default index directory |
 | `PYTHON_EXE`, `OLLAMA_EXE` | Optional executable paths when automatic discovery is unsuitable |
 
-Mobile web uses `EXPO_PUBLIC_API_URL` only when an explicit backend address is necessary. Browser localhost defaults to port 3000. Route/guide and vision client deadlines default to 14,500 ms; recognition uses 5,000 ms. Restart Expo after changes. A phone's localhost refers to that phone, so the default Windows loopback service is not directly reachable from a physical phone. This deployment validates Windows mobile web, not a signed iOS/Android installation.
+Mobile web uses `EXPO_PUBLIC_API_URL` only when an explicit backend address is necessary. Artwork client deadlines remain 14,500 ms for text/vision and 5,000 ms for recognition. Planning chat/routes have no automatic deadline. Restart Node and Expo after changes. A phone’s localhost refers to that phone; this setup validates Windows mobile web.
+
+### Planning without a deadline and measuring actual duration
+
+Planning chat and route generation now wait for a completed response or explicit cancellation. Both the mobile timers and the backend model timer are disabled for these two operations, even if an existing `.env` still specifies `OLLAMA_TIMEOUT_MS=300000`. `planningVersion: 5` and `planningTimeoutMs: 0` identify the new behavior. Other artwork services and short readiness checks retain their deadlines. Local model requests use cancellable loopback sockets to avoid Node fetch's separate five-minute response-header limit.
+
+The Plan screen shows elapsed seconds and a **Cancel request** button. A completed reply shows its duration; the most recent route duration remains on Plan when returning from the itinerary. Cancelling, leaving Plan or starting a new conversation aborts upstream inference and ignores late responses.
+
+Stop the previous backend/Expo in their original terminals so the updated code can load. To start the text services and measure real inference, from the repository root run:
+
+```powershell
+npm.cmd run ai:routes:timing
+```
+
+This command sequentially measures `chat_first`, `route_first`, `chat_repeat`, and `route_repeat` using the screenshot's 30-minute highlights request for The Met. It prints elapsed time every 15 seconds and final durations in seconds, and saves millisecond timings plus actual responses in `.local-ai/benchmarks/planning-<timestamp>-<id>.json`. There is no generation deadline; Ctrl+C cancels. Startup only needs the text model and shuts down only the services it started after testing. It uses the independent planning model and the launcher’s effective inference settings, including GPU-to-CPU fallback, and records those settings. The first request is not guaranteed to be cold: the test does not unload an already running model. Individual samples are not a general speed guarantee.
+
+If the updated backend is already running, use `npm.cmd run ai:timing:routes` instead. To use the app interactively afterward, run `npm.cmd run ai:routes`. No timeout environment override is needed. Both timing and route acceptance require a real Qwen result; fallback routes and failed/cancelled requests are never counted as successful timing samples. Preflight failures are recorded without inventing model timings.
+
+Controlled regression checks cover backend responses exceeding a configured deadline, browser requests after two hours of virtual clock advancement, explicit cancellation, and timing-report success/failure. These use simulated model responses. The cloud workspace cannot access the Windows Ollama process; real model performance remains unmeasured here. Earlier transport verification with a real loopback server delayed headers for 310 seconds: original Node fetch failed after 301 seconds with `UND_ERR_HEADERS_TIMEOUT`, while the replacement completed after 310 seconds. That was a transport test, not an inference measurement.
 
 ## Recognition, privacy and catalogue isolation
 
@@ -330,3 +348,5 @@ npm.cmd run ai:validate -- --only-chat
 Main implementation files: `local-ai/` (Python service/model/validation), `scripts/ai-*.mjs` (Windows setup and lifecycle), `scripts/index-artworks.mjs`, `scripts/check-ai.mjs`, `scripts/validate-local-ai.mjs`, `server/ai/` (local transport, Ollama, index, recognition/status/chat/routes), `shared/ai-types.ts`, relevant `mobile/src` screens/API settings/tests, root package files/env example/ignore rules, and the README/AI/GOMA/mobile documentation. User changes already present in other mobile files were retained.
 
 There is no remaining installation or service blocker in this session. **Not validated:** photographs from an actual museum visit, physical-phone camera/permissions, general recognition accuracy, or production indoor route data. The small controlled sample is not an accuracy percentage, confidence probability or general false-positive-rate estimate. Chat replies and route reasoning still include model-generated language and can require review; factual artwork explanations are restricted to catalogue text. This remains the existing local museum prototype.
+
+The route launcher no longer applies the 15-second acceptance limit to planning. `ai:routes:verify` retains the six real Met/GOMA checks and prints each completed request’s duration. Model warm-up time is separate from these response timings. For explicit requests to keep the existing must-see selection, the JSON schema constrains that array to the existing IDs and the backend rejects additions/removals; requests that explicitly add or remove works remain editable.

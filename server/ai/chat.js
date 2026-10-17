@@ -1,5 +1,6 @@
 import { AIError, requireInput } from './config.js';
 import { validateRouteInput } from './routes.js';
+import { preservedMustSeeIds } from './planning-constraints.js';
 
 const preferenceKeys = ['interests', 'availableMinutes', 'currentLocation', 'walkingPreference', 'accessibilityRequirements', 'mustSeeArtworkIds'];
 const messageText = value => typeof value === 'string' && value.trim().length > 0 && value.length <= 600;
@@ -27,6 +28,10 @@ export function createPlanningChatService({ ollama, collection, graph, museum })
     let updated;
     try { updated = validateRouteInput(result.preferences, collection, graph); }
     catch { throw new AIError(502, 'INVALID_CHAT', 'The planning assistant returned invalid visit preferences. Please retry.'); }
+    const preserved = preservedMustSeeIds(input.message, preferences);
+    if (preserved !== undefined && JSON.stringify(updated.mustSeeArtworkIds) !== JSON.stringify(preserved)) {
+      throw new AIError(502, 'INVALID_CHAT', 'The planning assistant changed your preserved must-see selection. Please retry.');
+    }
     return { reply: result.reply.trim(), preferences: updated };
   } };
 }

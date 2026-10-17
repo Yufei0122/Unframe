@@ -1,14 +1,19 @@
 import { AIError } from './config.js';
 import { createLocalClient } from './local-http.js';
 
-export const planningVersion = 4;
+export const planningVersion = 5;
+
+export function planningConfiguration(config) {
+  return { provider: 'local', ollamaModel: config.ollamaModel, planningModel: config.planningModel, planningVersion,
+    ollamaUrl: config.ollamaUrl, timeoutMs: config.timeoutMs, planningTimeoutMs: 0,
+    numCtx: config.ollamaNumCtx, numGpu: config.ollamaNumGpu,
+    numPredict: config.planningNumPredict, keepAlive: config.ollamaKeepAlive };
+}
 
 // Route planning depends only on the local text model, not CLIP, vision or an image index.
 export async function getPlanningStatus({ config, client = createLocalClient(config, 'OLLAMA') }) {
   const result = { ready: false, liveVerified: false,
-    configuration: { provider: 'local', ollamaModel: config.planningModel, planningModel: config.planningModel, planningVersion,
-      timeoutMs: config.timeoutMs, responseBudgetMs: config.responseBudgetMs, numCtx: config.ollamaNumCtx,
-      numGpu: config.ollamaNumGpu, numPredict: config.planningNumPredict, keepAlive: config.ollamaKeepAlive },
+    configuration: planningConfiguration(config),
     model: null };
   try {
     const tags = await client.request('/api/tags', undefined, 5000);

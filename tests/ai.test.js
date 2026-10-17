@@ -457,3 +457,46 @@ test('chat HTTP endpoint supports GOMA preferences and reports provider failures
   assert.equal(failure.status, 503);
   assert.equal((await failure.json()).reply, undefined);
 });
+
+test('explicitly preserving must-see works constrains exact IDs for both museums, including an empty list', async () => {
+  for (const catalogue of [collection, gomaCollection]) for (const ids of [[], [catalogue[0].id]]) {
+    const preferences = { interests: ['Nature'], availableMinutes: 30, currentLocation: 'entrance', walkingPreference: 'balanced', accessibilityRequirements: [], mustSeeArtworkIds: ids };
+    for (const message of ['我想看色彩丰富的作品，只有20分钟，需要无障碍路线，尽量少走路，请保留我已经选好的必看作品。', 'Use 20 minutes and keep my existing must-see artworks.']) {
+      const service = createOllamaService(config, { request: async (_endpoint, body, timeout) => {
+        assert.equal(timeout, 0, 'Planning has no model deadline.');
+        assert.equal(body.model, config.planningModel, 'Use the independent lightweight planning model.');
+        assert.equal(body.options.num_predict, config.planningNumPredict);
+        assert.deepEqual(body.format.properties.preferences.properties.mustSeeArtworkIds.const, ids);
+        return jsonCandidate({ reply: '已保留必看作品。', preferences: { ...preferences, availableMinutes: 20 } });
+      } });
+      await service.generatePlanningReply({ message, preferences, artworks: catalogue, startingPoints: [{ id: 'entrance' }], history: [] });
+    }
+  }
+});
+
+test('GOMA chat rejects an extra valid artwork when the visitor explicitly keeps the selected must-see list', async () => {
+  const preferences = { interests: ['Colour'], availableMinutes: 20, currentLocation: 'entrance', walkingPreference: 'less_walking', accessibilityRequirements: ['step_free'], mustSeeArtworkIds: ['goma-obliteration-room'] };
+  for (const ids of [['goma-obliteration-room', 'goma-soul-under-the-moon'], []]) {
+    const service = createPlanningChatService({ collection: gomaCollection, graph: gomaGraph, museum: { name: 'GOMA' },
+      ollama: { generatePlanningReply: async () => ({ reply: '已保留必看作品。', preferences: { ...preferences, mustSeeArtworkIds: ids } }) } });
+    await assert.rejects(service.reply({ message: '请保留我已经选好的必看作品。', preferences }), { status: 502, code: 'INVALID_CHAT' });
+    assert.deepEqual(preferences.mustSeeArtworkIds, ['goma-obliteration-room']);
+  }
+});
+
+test('explicit additions, removals and negated preserve instructions remain editable', async () => {
+  const preferences = { interests: ['Colour'], availableMinutes: 20, currentLocation: 'entrance', walkingPreference: 'balanced', accessibilityRequirements: [], mustSeeArtworkIds: ['goma-obliteration-room'] };
+  for (const [message, ids] of [
+    ['Keep my existing must-see artworks and also include Heritage.', ['goma-obliteration-room', 'goma-heritage']],
+    ['保留我已选的必看作品，再加入 Heritage。', ['goma-obliteration-room', 'goma-heritage']],
+    ['Remove all must-see artworks.', []], ['不要保留必看作品。', []], ["Don't keep my must-see artworks.", []],
+  ]) {
+    const service = createPlanningChatService({ collection: gomaCollection, graph: gomaGraph, museum: { name: 'GOMA' },
+      ollama: createOllamaService(config, { request: async (_endpoint, body) => {
+        assert.equal(Object.hasOwn(body.format.properties.preferences.properties.mustSeeArtworkIds, 'const'), false);
+        return jsonCandidate({ reply: '已更新必看作品。', preferences: { ...preferences, mustSeeArtworkIds: ids } });
+      } }) });
+    const result = await service.reply({ message, preferences });
+    assert.deepEqual(result.preferences.mustSeeArtworkIds, ids);
+  }
+});

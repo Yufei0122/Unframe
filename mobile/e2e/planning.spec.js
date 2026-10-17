@@ -96,7 +96,7 @@ test('leaving Plan during generation prevents a late route from opening', async 
   await expect(page.getByRole('button', { name: 'Generate route', exact: true })).toBeEnabled();
 });
 
-test('route planning shows its transition and stops before the 15-second interaction limit', async ({ page }) => {
+test('route generation has no automatic deadline and still applies a completed response', async ({ page }) => {
   let pending;
   await page.route('**/api/ai/routes/plan', route => { pending = route; });
   await openPlan(page);
@@ -104,8 +104,44 @@ test('route planning shows its transition and stops before the 15-second interac
   await page.getByRole('button', { name: 'Generate route', exact: true }).click();
   await expect.poll(() => !!pending).toBe(true);
   await expect(page.getByTestId('route-planning-transition')).toBeVisible();
-  await page.clock.fastForward(14501);
-  await expect(page.getByRole('alert')).toContainText('Planning took too long.');
+  await page.clock.fastForward(7200000);
+  await expect(page.getByRole('button', { name: 'Planning your visit…', exact: true })).toBeDisabled();
+  await expect(page.getByRole('alert')).toHaveCount(0);
+  await expect(page.getByTestId('planning-elapsed')).toContainText('Waiting 7200s');
+  await pending.fulfill({ json: { demo: true, estimatedMinutes: 6, estimatedWalkingDistance: 0, route: [], navigation: [], mapNotice: 'Illustrative demo map.', reasoningSummary: 'Works chosen from this museum catalogue.', recommendationSource: 'ollama' } });
+  await expect(page.getByRole('heading', { name: 'Your itinerary', exact: true })).toBeVisible();
+  await expect(page.getByText('Qwen recommendation', { exact: false })).toBeVisible();
+});
+
+test('slow planning chat survives the former client deadline and applies the completed reply', async ({ page }) => {
+  let pending;
+  await page.route('**/api/ai/routes/chat', route => { pending = route; });
+  await openPlan(page); await page.clock.install();
+  await page.getByRole('button', { name: '30-minute highlights', exact: true }).click();
+  await expect.poll(() => !!pending).toBe(true);
+  await page.clock.fastForward(7200000);
+  await expect(page.getByRole('alert')).toHaveCount(0);
+  await expect(page.getByTestId('planning-elapsed')).toContainText('Waiting 7200s');
+  await expect(page.getByRole('button', { name: 'Send message', exact: true })).toBeDisabled();
+  const { preferences } = pending.request().postDataJSON();
+  await pending.fulfill({ json: { reply: 'Your 30-minute highlights visit is ready to plan.', preferences: { ...preferences, availableMinutes: 30 } } });
+  await expect(page.getByText('Your 30-minute highlights visit is ready to plan.', { exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Generate route', exact: true })).toBeEnabled();
-  await pending.abort().catch(() => {});
+  await expect(page.getByText('I have 30 minutes. Help me explore the highlights.', { exact: true })).toHaveCount(1);
+  await expect(page.getByTestId('planning-duration')).toContainText('Reply received in 7200');
+});
+
+for (const endpoint of ['chat', 'plan']) test(`manually cancelling an unlimited ${endpoint} request ignores its late response`, async ({ page }) => {
+  let pending;
+  await page.route(`**/api/ai/routes/${endpoint}`, route => { pending = route; });
+  await openPlan(page); await page.clock.install();
+  await page.getByRole('button', { name: endpoint === 'chat' ? '30-minute highlights' : 'Generate route', exact: true }).click();
+  await expect.poll(() => !!pending).toBe(true);
+  await page.clock.fastForward(7200000);
+  await page.getByRole('button', { name: 'Cancel request', exact: true }).click();
+  await expect(page.getByTestId('planning-elapsed')).toHaveCount(0);
+  await expect(page.getByRole('alert')).toContainText(endpoint === 'chat' ? 'Your message was paused.' : 'Route generation was paused.');
+  await pending.fulfill({ json: { reply: 'This late reply must be ignored.', preferences: {} } }).catch(() => {});
+  await expect(page.getByText('This late reply must be ignored.', { exact: true })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Your itinerary', exact: true })).toHaveCount(0);
 });

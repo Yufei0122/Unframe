@@ -5,6 +5,8 @@ import { createHash, randomUUID } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { readAIConfig } from '../server/ai/config.js';
+import { loopbackFetch } from '../server/ai/loopback-fetch.js';
+import { planningVersion } from '../server/ai/planning-status.js';
 import { catalogues } from '../server/ai/catalogues.js';
 import { assertModelRoute } from './route-acceptance.mjs';
 
@@ -20,7 +22,7 @@ const report = {
   startedAt: new Date().toISOString(), passed: false, backend,
   verification: 'Real Node HTTP and local Ollama Qwen inference; no mocks; local fallback always fails model acceptance.',
   limitation: 'Controlled planning cases on illustrative museum graphs, not surveyed navigation or a general model quality benchmark.',
-  config: { model: config.planningModel, timeoutMs: config.timeoutMs, responseBudgetMs: config.responseBudgetMs, numCtx: config.ollamaNumCtx, numGpu: config.ollamaNumGpu, numPredict: config.planningNumPredict, keepAlive: config.ollamaKeepAlive },
+  config: { model: config.planningModel, timeoutMs: 0, numCtx: config.ollamaNumCtx, numGpu: config.ollamaNumGpu, numPredict: config.planningNumPredict, keepAlive: config.ollamaKeepAlive },
   sourceHashes: {}, checks: [],
 };
 await mkdir(path.dirname(output), { recursive: true });
@@ -28,8 +30,8 @@ async function save() {
   await writeFile(`${output}.tmp`, JSON.stringify(report, null, 2));
   await rename(`${output}.tmp`, output);
 }
-async function json(url, body, timeout = config.responseBudgetMs) {
-  const response = await fetch(url, { redirect: 'error', signal: AbortSignal.timeout(timeout), ...(body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {}) });
+async function json(url, body) {
+  const response = await loopbackFetch(url, body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : { signal: AbortSignal.timeout(10000) });
   return { status: response.status, body: await response.json() };
 }
 async function check(name, endpoint, input, validate) {
@@ -37,21 +39,23 @@ async function check(name, endpoint, input, validate) {
   report.checks.push(row);
   await save();
   const started = performance.now();
-  console.log(`REAL ${name}`);
+  console.log(`REAL ${name}: no generation deadline; Ctrl+C cancels.`);
+  const heartbeat = setInterval(() => console.log(`WAIT ${name}: ${Math.round((performance.now() - started) / 1000)}s elapsed.`), 15000);
+  heartbeat.unref();
   try {
     row.response = await json(`${backend}/api/ai/${endpoint}`, input);
     row.elapsedMs = Math.round(performance.now() - started);
     assert.equal(row.response.status, 200, JSON.stringify(row.response.body));
-    assert.ok(row.elapsedMs < config.responseBudgetMs, `${endpoint} took ${row.elapsedMs} ms; target is below ${config.responseBudgetMs} ms.`);
     validate(row.response.body);
     row.passed = true;
-    console.log(`PASS ${name}`);
+    console.log(`PASS ${name}: ${(row.elapsedMs / 1000).toFixed(2)}s`);
     return row.response.body;
   } catch (error) {
     row.error = { code: error.code || error.name, message: error.message };
     console.error(`FAIL ${name}: ${error.message}`);
     return null;
   } finally {
+    clearInterval(heartbeat);
     row.elapsedMs ??= Math.round(performance.now() - started);
     await save();
   }
@@ -68,10 +72,12 @@ try {
   assert.ok(model && !model.remote_host && !model.remote_model, 'Expected installed local model.');
   report.ollama = { version: version.body.version, model };
   for (const [museumId, { collection, graph }] of catalogues) {
-    const status = await json(`${backend}/api/ai/status?museumId=${museumId}`);
+    const status = await json(`${backend}/api/ai/planning/status`);
     assert.equal(status.status, 200);
     assert.equal(status.body.configuration?.planningModel, config.planningModel);
-    assert.equal(status.body.services?.ollama?.modelAvailable, true);
+    assert.equal(status.body.configuration?.planningVersion, planningVersion, 'Restart the updated backend.');
+    assert.equal(status.body.configuration?.planningTimeoutMs, 0, 'The backend still has a planning deadline.');
+    assert.equal(status.body.ready, true, status.body.message);
     const preferences = { interests: ['Nature'], availableMinutes: 30, currentLocation: 'entrance', walkingPreference: 'balanced', accessibilityRequirements: [], mustSeeArtworkIds: [collection.find(a => a.accessible).id] };
     const message = '我想看色彩丰富的作品，只有20分钟，需要无障碍路线，尽量少走路，请保留我已经选好的必看作品。';
     const chat = await check(`${museumId}/chinese_preferences`, 'routes/chat', { museumId, preferences, history: [], message }, result => {

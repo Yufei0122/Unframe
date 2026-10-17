@@ -8,6 +8,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import sharp from 'sharp';
 import { catalogues } from '../server/ai/catalogues.js';
 import { readAIConfig } from '../server/ai/config.js';
+import { loopbackFetch } from '../server/ai/loopback-fetch.js';
 import { createEmbeddingService, createEmbeddingStore, cosineSimilarity, referenceImageUrl } from '../server/ai/embeddings.js';
 import { normalizeImage } from '../server/ai/images.js';
 import { parseExplanation } from '../server/ai/ollama.js';
@@ -50,7 +51,7 @@ function fail(stage, error) {
 async function checkHttp(name, action) {
   console.log(`HTTP ${name} (real inference can take several minutes on CPU).`);
   const started = performance.now();
-  const heartbeat = setInterval(() => console.log(`Waiting ${name}: ${Math.round((performance.now() - started) / 1000)} seconds; request timeout ${Math.round(config.timeoutMs / 1000)} seconds.`), 15000);
+  const heartbeat = setInterval(() => console.log(`Waiting ${name}: ${Math.round((performance.now() - started) / 1000)} seconds; planning requests have no automatic timeout.`), 15000);
   heartbeat.unref();
   const actualResponses = [];
   captureHttpResponse = response => actualResponses.push(response);
@@ -67,10 +68,11 @@ async function checkHttp(name, action) {
 
 async function httpJSON(endpoint, body, { form, expectedStatus = 200 } = {}) {
   const started = performance.now();
-  const response = await fetch(`${backend}/api/ai/${endpoint}`, {
+  const planning = endpoint.startsWith('routes/');
+  const response = await (planning ? loopbackFetch : fetch)(`${backend}/api/ai/${endpoint}`, {
     method: body !== undefined || form ? 'POST' : 'GET',
     ...(form ? { body: form } : body !== undefined ? { headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {}),
-    signal: AbortSignal.timeout(endpoint.startsWith('artworks/recognise') ? config.recognitionBudgetMs : config.responseBudgetMs),
+    ...(planning ? {} : { signal: AbortSignal.timeout(endpoint.startsWith('artworks/recognise') ? config.recognitionBudgetMs : config.responseBudgetMs) }),
   });
   const result = await response.json();
   const responseMs = Math.round(performance.now() - started);

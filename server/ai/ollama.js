@@ -1,5 +1,6 @@
 import { AIError } from './config.js';
 import { createLocalClient } from './local-http.js';
+import { preservedMustSeeIds } from './planning-constraints.js';
 
 const text = { type: 'string', minLength: 1, maxLength: 3000 };
 const object = properties => ({ type: 'object', additionalProperties: false, properties, required: Object.keys(properties) });
@@ -48,7 +49,7 @@ export function assembleGroundedExplanation(selection, artwork, allowedIds) {
 }
 export function createOllamaService(config, client = createLocalClient(config, 'OLLAMA'), gate = { active: false }) {
   // One generation per backend instance keeps CPU memory bounded. Existing fallbacks handle busy requests.
-  async function generate(model, instruction, context, schema, latestMessage, signal) {
+  async function generate(model, instruction, context, schema, latestMessage, signal, timeoutOverride) {
     if (signal?.aborted) throw new AIError(499, 'REQUEST_CANCELLED', 'The request was cancelled.');
     if (gate.active) throw new AIError(429, 'OLLAMA_BUSY', 'The local Qwen model is busy. Please retry after the current answer finishes.');
     gate.active = true;
@@ -61,7 +62,7 @@ export function createOllamaService(config, client = createLocalClient(config, '
           { role: 'user', content: JSON.stringify(context) },
           ...(latestMessage === undefined ? [] : [{ role: 'user', content: latestMessage }]),
         ], format: schema,
-      }, undefined, signal);
+      }, timeoutOverride, signal);
       if (data?.done !== true || data.done_reason !== 'stop') throw new AIError(502, 'OLLAMA_INCOMPLETE', 'The local model returned an incomplete answer. Check OLLAMA_NUM_PREDICT and available memory.');
       if (typeof data.message?.content !== 'string' || data.message.content.length > 32000) throw new AIError(502, 'OLLAMA_JSON', 'The local model returned an invalid JSON answer.');
       try { return JSON.parse(data.message.content); }
@@ -75,10 +76,12 @@ export function createOllamaService(config, client = createLocalClient(config, '
       if (chinese) schema.properties.reply.pattern = '^.*[㐀-鿿].*$';
       schema.properties.preferences.properties.currentLocation.enum = context.startingPoints.map(n => n.id);
       schema.properties.preferences.properties.mustSeeArtworkIds.items.enum = context.artworks.map(a => a.id);
+      const preserved = preservedMustSeeIds(context.message, context.preferences);
+      if (preserved !== undefined) schema.properties.preferences.properties.mustSeeArtworkIds.const = preserved;
       const languageInstruction = chinese ? '最新访客消息使用中文。reply 字段必须用自然中文回答，并包含汉字；不要因目录资料或历史消息是英文而改用英文。作品 ID、地点 ID、JSON 字段名和枚举值保持原样，不要翻译。' : 'Reply in the language of the latest visitor message, regardless of the catalogue or history language.';
       const { message, ...previousContext } = context;
       const editContext = { ...previousContext, artworks: context.artworks.map(({ id, title, artist, tags }) => ({ id, title, artist, tags })) };
-      return generate(config.planningModel, languageInstruction + ' The JSON context contains preferences BEFORE the latest request. The final user message is the NEW request and overrides old preferences and history. FIRST return ALL updated preference fields, THEN reply with one brief confirmation or clarification. Apply every explicit change; preserve fields not changed, including must-see IDs. Extract requested time into availableMinutes. Map colour/color/色彩/颜色 to interest Colour; less walking/少走路 to walkingPreference less_walking; step-free/无障碍 to accessibilityRequirements containing step_free; wheelchair/轮椅 to wheelchair. Replace conflicting old interests when the request changes focus. Use only supplied artwork/location IDs. For an ambiguous change preserve that field and ask briefly. Reply must not contain an itinerary, artwork stop list, walking route, total visit-time calculation or claims that a route is feasible. The separate route engine runs only when the visitor presses Generate route.', editContext, schema, message, signal);
+      return generate(config.planningModel, languageInstruction + ' The JSON context contains preferences BEFORE the latest request. The final user message is the NEW request and overrides old preferences and history. FIRST return ALL updated preference fields, THEN reply with one brief confirmation or clarification. Apply every explicit change; preserve fields not changed, including must-see IDs. mustSeeArtworkIds means works the visitor explicitly selected, never thematic recommendations; changing interests alone must not add IDs. A const constraint on that list requires an exact copy, with no additions or removals. Extract requested time into availableMinutes. Map colour/color/色彩/颜色 to interest Colour; less walking/少走路 to walkingPreference less_walking; step-free/无障碍 to accessibilityRequirements containing step_free; wheelchair/轮椅 to wheelchair. Replace conflicting old interests when the request changes focus. Use only supplied artwork/location IDs. For an ambiguous change preserve that field and ask briefly. Reply must not contain an itinerary, artwork stop list, walking route, total visit-time calculation or claims that a route is feasible. The separate route engine runs only when the visitor presses Generate route.', editContext, schema, message, signal, 0);
     },
     async generateArtworkExplanation(artwork, preferences, collection) {
       const { id, title, artist, year, medium, source, sourceUrl } = artwork;
@@ -97,7 +100,7 @@ export function createOllamaService(config, client = createLocalClient(config, '
       const schema = structuredClone(routeSchema);
       schema.properties.recommendedArtworkIds.items.enum = collection.map(a => a.id);
       schema.properties.recommendedArtworkIds.maxItems = collection.length;
-      const result = await generate(config.planningModel, 'Choose a prioritised list of existing artwork IDs matching interests. Include must-see IDs. Never invent IDs or facts. Select artworks only. Do not calculate routes, walking distances, time feasibility or accessibility; a deterministic graph engine enforces them. Return one short sentence of thematic reasoning.', { preferences, artworks: collection.map(({ id, title, artist, tags, minutes, accessible }) => ({ id, title, artist, tags, minutes, accessible })) }, schema, undefined, signal);
+      const result = await generate(config.planningModel, 'Choose a prioritised list of existing artwork IDs matching interests. Include must-see IDs. Never invent IDs or facts. Select artworks only. Do not calculate routes, walking distances, time feasibility or accessibility; a deterministic graph engine enforces them. Return one short sentence of thematic reasoning.', { preferences, artworks: collection.map(({ id, title, artist, tags, minutes, accessible }) => ({ id, title, artist, tags, minutes, accessible })) }, schema, undefined, signal, 0);
       return parseRecommendations(result, collection.map(a => a.id));
     },
   };

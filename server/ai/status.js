@@ -1,7 +1,7 @@
 import { createLocalClient } from './local-http.js';
 import { validateEmbeddingIdentity } from './embeddings.js';
 import { inspectVisionModel } from './vision.js';
-import { planningVersion } from './planning-status.js';
+import { planningConfiguration } from './planning-status.js';
 
 export async function inspectLocalServices(config, { clip = createLocalClient(config, 'OPENCLIP'), ollamaClient = createLocalClient(config, 'OLLAMA') } = {}) {
   const [openclip, ollama, vision] = await Promise.all([
@@ -46,7 +46,7 @@ export async function getAIStatus({ config, store, collection, museumId, clip, o
     museumId, ready, recognitionReady, planningReady: serviceStatus.ollama.available && serviceStatus.ollama.planningModelAvailable,
     analysisReady: serviceStatus.vision?.available === true, liveVerified: false,
     analysisMessage: serviceStatus.vision?.available ? 'General visual analysis is available. Public reference search needs internet access; identities remain unconfirmed.' : 'General visual analysis needs a local vision model. Run npm.cmd run ai:setup:vision, then ai:doctor -- --vision.',
-    configuration: { valid: true, provider: 'local', embeddingModel: config.embeddingModel, embeddingPretrained: config.embeddingPretrained, dimension: config.dimension, ollamaModel: config.ollamaModel, planningModel: config.planningModel, visionModel: config.visionModel, analysisVersion: 2, planningVersion, recognitionBudgetMs: config.recognitionBudgetMs, responseBudgetMs: config.responseBudgetMs },
+    configuration: { valid: true, ...planningConfiguration(config), embeddingModel: config.embeddingModel, embeddingPretrained: config.embeddingPretrained, dimension: config.dimension, visionModel: config.visionModel, analysisVersion: 2, recognitionBudgetMs: config.recognitionBudgetMs, responseBudgetMs: config.responseBudgetMs },
     services: serviceStatus, index,
     message: problems.length ? problems.join(' ') : 'Local services, model and index are ready. Run npm.cmd run ai:doctor -- --smoke for real inference checks.',
   };

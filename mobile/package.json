@@ -16,6 +16,8 @@
     "ai:verify:features": "npm --prefix .. run ai:verify:features --",
     "ai:routes": "npm --prefix .. run ai:routes --",
     "ai:routes:verify": "npm --prefix .. run ai:routes:verify --",
+    "ai:routes:timing": "npm --prefix .. run ai:routes:timing --",
+    "ai:timing:routes": "npm --prefix .. run ai:timing:routes --",
     "ai:validate:routes": "npm --prefix .. run ai:validate:routes --",
     "ai:doctor": "npm --prefix .. run ai:doctor --",
     "ai:index": "npm --prefix .. run ai:index --",

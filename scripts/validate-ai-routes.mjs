@@ -5,6 +5,7 @@ import { randomUUID } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readAIConfig } from '../server/ai/config.js';
+import { loopbackFetch } from '../server/ai/loopback-fetch.js';
 import { catalogues } from '../server/ai/catalogues.js';
 import { planningVersion } from '../server/ai/planning-status.js';
 import { validateRouteInput } from '../server/ai/routes.js';
@@ -49,7 +50,7 @@ export function assertAIRoute(route, preferences, collection, graph) {
   return { stops: ids.length, verifiedSeconds: seconds, verifiedWalkingDistance: distance };
 }
 
-export async function runRouteAcceptance({ config = readAIConfig(), backend, outputRoot = path.join(root, '.local-ai'), fetchImpl = fetch, log = console.log } = {}) {
+export async function runRouteAcceptance({ config = readAIConfig(), backend, outputRoot = path.join(root, '.local-ai'), fetchImpl = loopbackFetch, log = console.log } = {}) {
   const port = Number(process.env.PORT || 3000);
   assert.ok(Number.isInteger(port) && port > 0 && port <= 65535, 'PORT must be 1–65535.');
   const address = new URL(backend || `http://127.0.0.1:${port}`);
@@ -57,7 +58,7 @@ export async function runRouteAcceptance({ config = readAIConfig(), backend, out
     && !address.username && !address.password && address.pathname === '/' && !address.search && !address.hash, 'Use a local backend origin.');
   const reportFile = path.join(outputRoot, 'acceptance', `routes-${new Date().toISOString().replace(/[:.]/g, '-')}-${randomUUID().slice(0, 8)}.json`);
   const report = { startedAt: new Date().toISOString(), completedAt: null, passed: false, scope: 'local_qwen_route_acceptance',
-    backend: address.origin, configuredModel: config.planningModel, model: null, responseBudgetMs: config.responseBudgetMs,
+    backend: address.origin, configuredModel: config.planningModel, model: null, planningTimeoutMs: 0,
     limitation: 'Controlled requests to both demo museum graphs. A passing report requires local Qwen recommendations without fallback; it does not establish real museum navigation accuracy. No image model or training is involved.',
     checks: [], failures: [] };
   async function save() {
@@ -67,7 +68,7 @@ export async function runRouteAcceptance({ config = readAIConfig(), backend, out
   }
   async function check(name, action) {
     const row = { name, passed: false }; report.checks.push(row);
-    const start = performance.now(); log(`Checking ${name} (target < ${config.responseBudgetMs} ms).`);
+    const start = performance.now(); log(`Checking ${name} (planning has no deadline).`);
     try { await action(row); row.passed = true; log(`PASS ${name}`); }
     catch (error) { row.error = error.message; report.failures.push({ name, message: error.message }); log(`FAIL ${name}: ${error.message}`); }
     finally { row.elapsedMs = Math.round(performance.now() - start); await save(); }
@@ -79,14 +80,13 @@ export async function runRouteAcceptance({ config = readAIConfig(), backend, out
     try {
       response = await fetchImpl(`${address.origin}${endpoint}`, { method: body ? 'POST' : 'GET',
         headers: { Origin: 'http://localhost:8081', ...(body ? { 'Content-Type': 'application/json' } : {}) },
-        ...(body ? { body: JSON.stringify(body) } : {}), signal: AbortSignal.timeout(body ? config.responseBudgetMs : 15000) });
+        ...(body ? { body: JSON.stringify(body) } : { signal: AbortSignal.timeout(15000) }) });
     } catch (error) { throw new Error(`Cannot reach ${address.origin}${endpoint} (${error.cause?.code || error.name}). Start npm.cmd run ai:routes and check PORT.`); }
     let result;
     try { result = await response.json(); } catch { throw new Error(`HTTP ${response.status} did not return JSON. Restart the updated backend.`); }
     row.httpStatus = response.status; row.actual = result; row.responseMs = Math.round(performance.now() - started);
     assert.equal(response.status, expectedStatus, `${endpoint}: HTTP ${response.status} ${result.code || ''} ${result.error || ''}`);
     assert.equal(response.headers.get('access-control-allow-origin'), 'http://localhost:8081', 'The browser cannot access this backend.');
-    if (body) assert.ok(row.responseMs < config.responseBudgetMs, `${endpoint} took ${row.responseMs} ms; target is below ${config.responseBudgetMs} ms.`);
     return result;
   }
   await save();
@@ -118,7 +118,7 @@ export async function runRouteAcceptance({ config = readAIConfig(), backend, out
       assert.equal(next.currentLocation, preferences.currentLocation);
       assert.ok(next.accessibilityRequirements.includes('step_free') || next.accessibilityRequirements.includes('wheelchair'));
       assert.ok(next.interests.some(value => /colour|color|色彩|颜色/i.test(value)));
-      assert.ok(next.mustSeeArtworkIds.includes(mustSee), 'The chat dropped the existing must-see artwork.');
+      assert.deepEqual(next.mustSeeArtworkIds, preferences.mustSeeArtworkIds, 'The chat changed the existing must-see selection.');
       updated = next;
     });
     await check(`${museumId}/qwen_accessible_route_after_chat`, async row => {
