@@ -50,7 +50,7 @@ export function ArtworkScreen({ route, navigation }: NativeStackScreenProps<Root
       <View style={styles.sheet}>
         <View style={styles.titleRow}><T accessibilityRole="header" style={styles.title}>{a.title}</T><Pressable accessibilityRole="button" accessibilityLabel={saved ? 'Remove from saved artworks' : 'Save artwork'} accessibilityState={{ selected: saved }} aria-pressed={saved} onPress={save} style={styles.heart}><Icon name={saved ? 'heart' : 'heart-outline'} size={27} color={saved ? '#A35E48' : '#17241D'}/></Pressable></View>
         <T style={styles.artist}>{a.artist}</T><T style={styles.metadata}>{a.year}</T><T style={styles.metadata}>{museumArt?.medium || a.category}</T><T style={styles.metadata}>{museum ? museum.name : 'Northbank Gallery · Fictional collection'}</T>
-        {museum?.id === 'goma' && <T style={styles.metadata}>QAGOMA Collection · demo placement, display not confirmed</T>}
+        {museum?.id === 'goma' && <T style={styles.metadata}>QAGOMA Collection · check current display information</T>}
         <T accessibilityRole="header" style={styles.aboutTitle}>{language === 'zh' ? '关于作品' : 'About the Artwork'}</T>
         <T style={styles.description}>{language === 'zh' && museumArt ? museumArt.chineseIntroduction : `${a.description}${expanded ? `\n\n${a.detail}` : ''}`}</T>
         {language === 'en' && <Pressable accessibilityRole="button" accessibilityLabel={expanded ? 'Read less about the artwork' : 'Read more about the artwork'} onPress={() => setExpanded(!expanded)} style={{ paddingVertical: 7, alignSelf: 'flex-start' }}><T style={{ fontSize: 11, lineHeight: 18, color: c.muted }}>{expanded ? 'Read less −' : 'A closer look +'}</T></Pressable>}

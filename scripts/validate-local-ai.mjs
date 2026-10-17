@@ -232,7 +232,7 @@ try {
       assert.equal(status.configuration.embeddingModel, config.embeddingModel);
       assert.equal(status.configuration.embeddingPretrained, config.embeddingPretrained);
       assert.equal(status.configuration.ollamaModel, config.ollamaModel);
-      assert.equal(status.ready, true, status.message);
+      assert.equal(recognitionOnly ? status.recognitionReady : status.ready, true, status.message);
       const catalogue = await httpJSON(`catalogue?museumId=${museumId}`);
       assert.deepEqual(catalogue.artworks.map(item => item.id), collection.map(item => item.id));
       return { museumId, configuration: status.configuration, catalogueArtworkIds: catalogue.artworks.map(item => item.id) };

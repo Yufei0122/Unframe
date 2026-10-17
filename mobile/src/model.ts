@@ -23,6 +23,7 @@ export type RootStackParams = {
   Artwork: { id: string };
   Planner: undefined;
   AIItinerary: { itinerary: AIRoute; museumId?: MuseumId; returnToPlanner?: boolean };
+  NearbyArtworks: undefined;
   Lookup: undefined;
   Feedback: { artworkId?: string } | undefined;
   About: undefined;

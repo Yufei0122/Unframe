@@ -82,7 +82,7 @@ function NativeLookupContent() {
         ...previous.flatMap(item => next.find(candidate => candidate.artwork.id === item.artwork.id) || []),
         ...next.filter(item => !previous.some(candidate => candidate.artwork.id === item.artwork.id)),
       ]);
-      setMessage(next.length ? 'Possible matches — tap the work you see to confirm.' : response.message || 'No close match in this museum\'s demo collection. Check the selected museum and try a clear photo of the whole artwork.');
+      setMessage(next.length ? 'Possible matches — tap the work you see to confirm.' : response.message || 'No close match in this museum collection. Try a clear photo of the whole artwork.');
     },
     onError(value) { setCandidates([]); setError(value instanceof Error ? value.message : 'Scanning is unavailable. Please try again.'); },
     onBusy: setBusy,
@@ -214,7 +214,7 @@ function NativeLookupContent() {
     <LinearGradient pointerEvents="none" colors={['#08130CE6', '#08130C00']} style={styles.topShade}/>
     <View style={styles.header}>
       <Pressable accessibilityRole="button" accessibilityLabel="Close scan" onPress={close} style={styles.close}><Icon name="close" size={24} color="white"/></Pressable>
-      <View style={styles.heading}><T accessibilityRole="header" style={styles.title}>Scan artwork</T><T style={styles.museum}>{analysis || analysing ? 'Any artwork · visual analysis' : `${museum.shortName} · demo collection`}</T></View>
+      <View style={styles.heading}><T accessibilityRole="header" style={styles.title}>Scan artwork</T><T style={styles.museum}>{analysis || analysing ? 'Any artwork · visual analysis' : museum.shortName}</T></View>
       <View style={{ width: 42 }}/>
     </View>
     {analysis ? <View style={styles.resultArea}><ScrollView style={styles.resultSheet} contentContainerStyle={styles.resultContent}><ArtworkAnalysisResult result={analysis}/><Button title="Scan another artwork" secondary onPress={scanAgain}/><Button title="Analyse another photo" secondary onPress={analysePhoto}/></ScrollView></View> : !art ? <>

@@ -19,7 +19,7 @@ export async function startLocalServer(server, { port, workspace, dataFile }) {
       resolve(false);
     });
     server.listen(port, '127.0.0.1', () => {
-      console.log(`Unframe API is ready at ${address}\nStart the mobile UI with npm.cmd run mobile:web -- --port 8081. Keep this terminal open while using the app. Press Ctrl+C to stop.\nLocal demo workspace · data saved to ${dataFile}`);
+      console.log(`Unframe API is ready at ${address}\nStart the mobile UI with npm.cmd run mobile:web -- --port 8081. Keep this terminal open while using the app. Press Ctrl+C to stop.\nLocal workspace · data saved to ${dataFile}`);
       resolve(true);
     });
   });

@@ -278,8 +278,8 @@ test('route opens a separate itinerary page and preserves preferences when retur
   await expect(page.getByTestId('route-preview-card')).toBeVisible();
   await page.getByRole('button', { name: 'View full itinerary', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Your itinerary', exact: true })).toBeVisible();
-  await expect(page.getByText('6 minutes · 72 m walking (demo)')).toBeVisible();
-  await page.getByRole('button', { name: 'Edit visit preferences', exact: true }).click();
+  await expect(page.getByText('6 minutes · 72 m walking')).toBeVisible();
+  await page.getByRole('button', { name: 'Back to planner', exact: true }).click();
   await expect(page.getByTestId('planning-answer-card')).toContainText('Monet');
   await expect(page.getByTestId('planning-answer-card')).toContainText('Step-free');
   await expect(page.getByRole('heading', { name: 'Your itinerary', exact: true })).not.toBeVisible();

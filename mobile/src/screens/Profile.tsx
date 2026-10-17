@@ -44,8 +44,6 @@ export function ProfileScreen() {
   const compact = width < 360;
   const showQuote = !compact && !state.preferences.largeText && state.preferences.name.length <= 14;
   const roomyCards = compact && state.preferences.largeText;
-  const savedArtworks = state.saved.map(artwork).filter(a => a !== undefined);
-  const featured = (savedArtworks.length ? savedArtworks : museum.artworks).slice(0, 4);
   const favouriteMuseums = [...new Set(state.saved.map(id => museumForArtwork(id)?.shortName).filter(Boolean))];
   const visitedMuseums = [...new Set(state.visits.flatMap(visit => visit.artworkIds.map(id => museumForArtwork(id)?.id)).filter(Boolean))];
   const cities = visitedMuseums.map(id => id === 'met' ? 'New York' : 'Brisbane');
@@ -66,7 +64,7 @@ export function ProfileScreen() {
     { value: state.visits.length, label: 'Visits\nCompleted', icon: 'book-outline', onPress: () => openSaved('visits') },
     { value: state.saved.length, label: 'Saved\nArtworks', icon: 'bookmark-outline', onPress: () => openSaved() },
     { value: favouriteMuseums.length, label: 'Favourite\nMuseums', icon: 'library-outline', onPress: () => setPanel({ title: 'Favourite Museums', body: favouriteMuseums.length ? `Your saved artworks come from ${favouriteMuseums.join(' and ')}.` : 'Save an artwork to start a collection of favourite museums.' }) },
-    { value: cities.length, label: 'Cities\nExplored', icon: 'globe-outline', onPress: () => setPanel({ title: 'Cities Explored', body: cities.length ? `Your completed museum visits span ${cities.join(' and ')}.` : 'Cities from your completed museum visits will appear here. Sample gallery visits do not add a city.' }) },
+    { value: cities.length, label: 'Cities\nExplored', icon: 'globe-outline', onPress: () => setPanel({ title: 'Cities Explored', body: cities.length ? `Your completed museum visits span ${cities.join(' and ')}.` : 'Cities from your completed museum visits will appear here.' }) },
   ];
   const shortcuts: { title: string; icon: IconName; onPress: () => void }[] = [
     { title: 'App Settings', icon: 'settings-outline', onPress: () => settings() },
@@ -116,11 +114,6 @@ export function ProfileScreen() {
             <View style={p.explorer}><T style={p.explorerTitle}>Curious{`\n`}Explorer</T><T style={p.explorerTagline}>ART BRINGS{`\n`}OUT A BRIGHTER{`\n`}YOU</T></View>
           </View><Icon name="chevron-forward-outline" size={18} color="#685E68"/>
         </Pressable>
-        <View style={p.card}>
-          <Heading title="Saved Artworks" icon="images" onPress={() => openSaved()} label="View saved artworks"/>
-          {!savedArtworks.length && <T style={p.collectionHint}>A little inspiration to start your collection.</T>}
-          <View style={p.artworks}>{featured.map(item => <Pressable key={item.id} accessibilityRole="button" accessibilityLabel={`View ${item.title}`} onPress={() => nav.navigate('Artwork', { id: item.id })} style={p.artwork}><View style={p.artworkImage}><Image source={images[item.id]} accessibilityLabel={item.title} style={{ width: '100%', height: '100%' }}/></View><T numberOfLines={2} style={p.artworkTitle}>{item.title}</T><T numberOfLines={1} style={p.artist}>{item.artist}</T></Pressable>)}</View>
-        </View>
         <View style={[p.splitRow, roomyCards && { flexDirection: 'column' }]}>
           <Pressable accessibilityRole="button" accessibilityLabel="View saved routes" onPress={openRoutes} style={[p.card, p.halfCard]}>
             <Heading title="Saved Routes" icon="location"/>
@@ -191,9 +184,6 @@ const p = StyleSheet.create({
   explorer: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingTop: 15 },
   explorerTitle: { fontFamily: serif, fontSize: 18, lineHeight: 20, color: '#493452', textAlign: 'center' },
   explorerTagline: { fontSize: 5.5, lineHeight: 9, letterSpacing: 1.4, color: '#66516D', marginTop: 7 },
-  collectionHint: { fontSize: 10, lineHeight: 14, color: muted, marginTop: -4 }, artworks: { flexDirection: 'row', gap: 6 },
-  artwork: { width: '23.7%', gap: 2 }, artworkImage: { width: '100%', aspectRatio: 1.27, borderRadius: 5, overflow: 'hidden', backgroundColor: '#E7E0D7' },
-  artworkTitle: { color: '#302C28', fontSize: 10, lineHeight: 12, marginTop: 2 }, artist: { color: '#8A8178', fontSize: 9, lineHeight: 11 },
   splitRow: { flexDirection: 'row', gap: 7 }, halfCard: { flex: 1, padding: 9, gap: 8 },
   miniContent: { flexDirection: 'row', alignItems: 'center', gap: 6 }, miniImage: { width: 40, height: 40, borderRadius: 5, backgroundColor: '#ECE1E7' },
   miniText: { flex: 1, gap: 4 }, miniTitle: { fontFamily: serif, fontSize: 12, lineHeight: 14, color: ink }, miniDetail: { fontSize: 8, lineHeight: 11, color: muted },

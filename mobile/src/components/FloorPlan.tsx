@@ -71,7 +71,7 @@ export function FloorPlan({ museumId = 'met', floor, setFloor, room, onRoom, onS
     </View>
     <View style={styles.floors}>{floors.map(value => <Pressable key={value} accessibilityRole="button" accessibilityLabel={`Floor ${value}`} accessibilityState={{ selected: floor === value }} aria-pressed={floor === value} onPress={() => setFloor(value)} style={[styles.floor, floor === value && styles.activeFloor]}><T style={[styles.floorText, floor === value && { color: 'white' }]}>{value}</T></Pressable>)}</View>
     <View style={styles.tools}>
-      <Pressable accessibilityRole="button" accessibilityLabel="Reset demo map position" onPress={() => { setFloor('1'); onRoom(null); }} style={styles.tool}><Icon name="locate-outline" size={21}/></Pressable>
+      <Pressable accessibilityRole="button" accessibilityLabel="Reset map position" onPress={() => { setFloor('1'); onRoom(null); }} style={styles.tool}><Icon name="locate-outline" size={21}/></Pressable>
       <Pressable accessibilityRole="button" accessibilityLabel="Search nearby artworks" onPress={onSearch} style={styles.tool}><Icon name="search-outline" size={22}/></Pressable>
     </View>
   </View>;

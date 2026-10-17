@@ -80,7 +80,7 @@ export function MuseumSelectScreen({ navigation }: NativeStackScreenProps<RootSt
           <Icon name="location" size={24} color="#29434C"/><View style={{ flex: 1 }}><T style={styles.eyebrow}>{meters != null && meters < 800 && coordinates?.accuracy != null && coordinates.accuracy <= 300 ? 'LOCATED NEAR' : 'EXPLORE MUSEUMS'}</T><T style={styles.area}>{place.area}</T></View>
         </View>
         <Animated.View pointerEvents="none" style={[styles.copy, { opacity: fade, transform: [{ translateY: fade.interpolate({ inputRange: [0, 1], outputRange: [13, 0] }) }] }]}>
-          <T style={styles.featured}>{place.demoMuseumId ? 'FEATURED · VISIT DEMO' : 'AROUND YOU · MUSEUM PREVIEW'}</T>
+          <T style={styles.featured}>{place.demoMuseumId ? 'FEATURED MUSEUM' : 'AROUND YOU'}</T>
           <T testID="preview-title" accessibilityRole="header" style={[styles.museumTitle, height < 700 && { fontSize: 36, lineHeight: 39 }]}>{place.title}</T>
           <T style={styles.subtitle}>{place.description}</T>
         </Animated.View>
@@ -100,7 +100,7 @@ export function MuseumSelectScreen({ navigation }: NativeStackScreenProps<RootSt
         <View style={styles.mapHeader}><View style={styles.cities}>{(['new-york', 'brisbane'] as CityId[]).map(id => <Pressable key={id} accessibilityRole="button" accessibilityLabel={'Show ' + (id === 'new-york' ? 'New York' : 'Brisbane')} accessibilityState={{ selected: city === id }} aria-pressed={city === id} onPress={() => changeCity(id)} style={[styles.city, city === id && styles.activeCity]}><T style={[styles.cityText, city === id && { color: '#184C88' }]}>{id === 'new-york' ? 'New York' : 'Brisbane'}</T></Pressable>)}</View><Pressable accessibilityRole="button" accessibilityLabel="Refresh my location" accessibilityState={{ disabled: location.status === 'loading' }} disabled={location.status === 'loading'} onPress={() => { void locate(); }} style={styles.locate}>{location.status === 'loading' ? <ActivityIndicator color="#245994" size="small"/> : <Icon name="navigate-outline" size={20} color="#245994"/>}</Pressable></View>
         <View>
           <DiscoveryMap places={places} selectedId={place.id} coordinates={coordinates} onSelect={preview} height={mapHeight} active={focused}/>
-          <Pressable accessibilityRole="button" accessibilityLabel={place.demoMuseumId ? 'Open ' + place.shortName + ' welcome' : 'Open ' + place.shortName + ' official website'} onPress={choose} style={styles.mapLabel}><Image source={place.image} style={styles.thumbnail}/><View style={{ flex: 1 }}><T style={styles.mapName}>{place.name}</T><T style={styles.mapDistance}>{place.demoMuseumId ? 'Visit demo available' : 'Preview · official website'}</T></View><Icon name="chevron-forward" size={18} color="#40515C"/></Pressable>
+          <Pressable accessibilityRole="button" accessibilityLabel={place.demoMuseumId ? 'Open ' + place.shortName + ' welcome' : 'Open ' + place.shortName + ' official website'} onPress={choose} style={styles.mapLabel}><Image source={place.image} style={styles.thumbnail}/><View style={{ flex: 1 }}><T style={styles.mapName}>{place.name}</T><T style={styles.mapDistance}>{place.demoMuseumId ? 'Museum guide available' : 'Official museum website'}</T></View><Icon name="chevron-forward" size={18} color="#40515C"/></Pressable>
         </View>
       </View>
       <T style={styles.credit}>{place.credit}</T>

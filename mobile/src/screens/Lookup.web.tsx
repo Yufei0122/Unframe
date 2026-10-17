@@ -90,7 +90,7 @@ function LookupContent() {
       if (controller.current !== request || request.signal.aborted) return;
       // A legacy single match is still just a candidate; it never confirms itself.
       const matches = response.candidates ?? (response.matched && response.artwork ? [{ artwork: response.artwork, similarity: response.similarity ?? 0 }] : []);
-      setCandidates(matches.slice(0, 3)); setMessage(matches.length ? '' : response.message || 'No close match in this museum\'s demo collection. Check the selected museum and try a clear photo of the whole artwork.');
+      setCandidates(matches.slice(0, 3)); setMessage(matches.length ? '' : response.message || 'No close match in this museum collection. Try a clear photo of the whole artwork.');
       if (!matches.length && analyseUnknown) { clearTimeout(timeout); await analyse(blob); }
     } catch (failure) {
       if (controller.current === request) {
@@ -127,7 +127,7 @@ function LookupContent() {
       <LinearGradient pointerEvents="none" colors={['#08130CE6', '#08130C00']} style={styles.topShade}/>
       <View style={styles.header}>
         <Pressable accessibilityRole="button" accessibilityLabel="Close scan" onPress={close} style={styles.close}><Icon name="close" size={24} color="white"/></Pressable>
-        <View style={styles.heading}><T accessibilityRole="header" style={styles.title}>Scan artwork</T><T style={styles.museum}>{analysis || analysing ? 'Any artwork · visual analysis' : `${museum.shortName} · demo collection`}</T></View>
+        <View style={styles.heading}><T accessibilityRole="header" style={styles.title}>Scan artwork</T><T style={styles.museum}>{analysis || analysing ? 'Any artwork · visual analysis' : museum.shortName}</T></View>
         <View style={{ width: 42 }}/>
       </View>
       <View style={[styles.dock, (selected || analysis) && styles.selectedDock]}>
@@ -153,7 +153,7 @@ function LookupContent() {
           <Pressable accessibilityRole="button" accessibilityLabel="Upload photo" onPress={() => input.current?.click()} style={styles.controlButton}><Icon name="images-outline" color="white" size={21}/><T style={styles.controlLabel}>Photos</T></Pressable>
           <Pressable accessibilityRole="button" accessibilityLabel={active ? 'Pause scanning' : 'Resume scanning'} onPress={active ? pause : resume} style={styles.scanButton}><Icon name={active ? 'pause' : 'scan-outline'} color="#DBCBAA" size={19}/><T style={styles.controlLabel}>{active ? 'Pause scanning' : 'Resume scanning'}</T></Pressable>
         </View>
-        {!selected && <T style={styles.privacy}>Sampled frames go to OpenCLIP on your local AI server.{'\n'}Photos can also be analysed locally; suggested titles and artists are searched in public catalogues. Your photos are not sent to those sources or saved.</T>}
+        {!selected && <T style={styles.privacy}>Camera frames go to OpenCLIP on your local AI server.{'\n'}Photos can also be analysed locally; suggested titles and artists are searched in public catalogues. Your photos are not sent to those sources or saved.</T>}
       </View>
       <input ref={input} aria-label="Upload artwork image" type="file" accept="image/jpeg,image/png,image/webp" style={{ display: 'none' }} onChange={event => { const file = event.target.files?.[0]; if (file) choose(file); event.target.value = ''; }}/>
     </View>
