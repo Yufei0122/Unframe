@@ -8,6 +8,7 @@ import { useMuseumLocation } from '../location';
 import { requestAI } from '../ai';
 import type { AIRoute, PlanningMessage, PlanningReply, VisitPreferences } from '../../../shared/ai-types';
 import { RoutePlanningTransition } from '../components/AIProcessingAnimations';
+import { FloorPlan, type Floor } from '../components/FloorPlan';
 
 type ActiveRequest = { controller: AbortController; kind: 'chat' | 'route'; message?: string; startedAt: number };
 
@@ -46,6 +47,8 @@ function PlanningChat() {
   const [error, setError] = useState('');
   const [failedMessage, setFailedMessage] = useState<string | null>(null);
   const [lastDuration, setLastDuration] = useState<string | null>(null);
+  const [itinerary, setItinerary] = useState<AIRoute | null>(null);
+  const [previewFloor, setPreviewFloor] = useState<Floor>('1');
   const request = useRef<ActiveRequest | null>(null);
   const scroll = useRef<ScrollView>(null);
 
@@ -61,7 +64,7 @@ function PlanningChat() {
   useFocusEffect(useCallback(() => cancel, [cancel]));
 
   function reset() {
-    cancel(); setMessages([welcome]); setPreferences(defaults()); setDraft(''); setError(''); setFailedMessage(null); setLastDuration(null);
+    cancel(); setMessages([welcome]); setPreferences(defaults()); setDraft(''); setError(''); setFailedMessage(null); setLastDuration(null); setItinerary(null);
   }
 
   async function send(content = draft, retry = false) {
@@ -72,16 +75,26 @@ function PlanningChat() {
     setDraft(''); setError(''); setFailedMessage(null); setBusy('chat');
     const controller = new AbortController(), startedAt = performance.now();
     request.current = { controller, kind: 'chat', message, startedAt }; setLastDuration(null);
+    let chatCompleted = false;
     try {
       const response = await requestAI<PlanningReply>('routes/chat', { museumId, message, history, preferences }, controller.signal);
       if (request.current?.controller !== controller || controller.signal.aborted) return;
+      chatCompleted = true;
       setPreferences(response.preferences);
-      setLastDuration(`Reply received in ${((performance.now() - startedAt) / 1000).toFixed(1)}s.`);
       setMessages(previous => [...previous, { role: 'assistant', content: response.reply }]);
+      setItinerary(null);
+      const chatSeconds = (performance.now() - startedAt) / 1000;
+      setBusy('route');
+      const routeStartedAt = performance.now();
+      request.current = { controller, kind: 'route', startedAt: routeStartedAt };
+      const route = await requestAI<AIRoute>('routes/plan', { museumId, ...response.preferences }, controller.signal);
+      if (request.current?.controller !== controller || controller.signal.aborted) return;
+      setItinerary(route);
+      setLastDuration(`Answer ${chatSeconds.toFixed(1)}s · route ${((performance.now() - routeStartedAt) / 1000).toFixed(1)}s`);
     } catch (failure) {
       if (request.current?.controller !== controller) return;
-      setFailedMessage(message);
-      setError(failure instanceof Error ? failure.message : 'Could not send your message. Please retry.');
+      if (!chatCompleted) setFailedMessage(message);
+      setError(failure instanceof Error ? failure.message : chatCompleted ? 'Your answer is ready, but the route preview could not be built.' : 'Could not send your message. Please retry.');
     } finally {
       if (request.current?.controller === controller) { request.current = null; setBusy(null); }
     }
@@ -96,8 +109,7 @@ function PlanningChat() {
       const itinerary = await requestAI<AIRoute>('routes/plan', { museumId, ...preferences }, controller.signal);
       if (request.current?.controller !== controller || controller.signal.aborted) return;
       setLastDuration(`Route received in ${((performance.now() - startedAt) / 1000).toFixed(1)}s.`);
-      request.current = null; setBusy(null);
-      nav.navigate('AIItinerary', { itinerary, museumId });
+      setItinerary(itinerary);
     } catch (failure) {
       if (request.current?.controller !== controller) return;
       setError(failure instanceof Error ? failure.message : 'Could not plan this visit.');
@@ -123,25 +135,34 @@ function PlanningChat() {
         <T style={styles.caption}>A visit shaped around you</T>
         {messages.map((message, index) => <View key={index} style={[styles.messageRow, message.role === 'user' && styles.userRow]}>
           {message.role === 'assistant' && <View style={styles.avatar}><Icon name="sparkles-outline" size={16} color={c.green}/></View>}
-          <View style={[styles.bubble, message.role === 'user' && styles.userBubble]}><T style={[styles.message, message.role === 'user' && styles.userText]}>{message.content}</T></View>
+          {message.role === 'assistant' && index > 0 && index === messages.length - 1 ? <View style={styles.answerCard} testID="planning-answer-card">
+            <View style={styles.answerHeading}><Icon name="checkmark-circle-outline" size={18} color={c.green}/><T style={styles.answerTitle}>Your visit is taking shape</T></View>
+            <T style={styles.answerIntro}>{message.content}</T>
+            <View style={styles.answerDivider}/>
+            <View style={styles.answerPoint}><Icon name="time-outline" size={15} color={c.green}/><View style={styles.answerPointCopy}><T style={styles.answerLabel}>TIME</T><T style={styles.answerValue}>{preferences.availableMinutes} minutes</T></View></View>
+            <View style={styles.answerPoint}><Icon name="color-palette-outline" size={15} color={c.green}/><View style={styles.answerPointCopy}><T style={styles.answerLabel}>FOCUS</T><T style={styles.answerValue}>{preferences.interests.length ? preferences.interests.join(', ') : 'Museum highlights'}</T></View></View>
+            <View style={styles.answerPoint}><Icon name="walk-outline" size={15} color={c.green}/><View style={styles.answerPointCopy}><T style={styles.answerLabel}>PACE & ACCESS</T><T style={styles.answerValue}>{preferences.walkingPreference === 'less_walking' ? 'Less walking' : 'Balanced walking'}{preferences.accessibilityRequirements.length ? ' · Step-free' : ''}</T></View></View>
+            {!!preferences.mustSeeArtworkIds.length && <View style={styles.answerPoint}><Icon name="star-outline" size={15} color={c.green}/><View style={styles.answerPointCopy}><T style={styles.answerLabel}>MUST SEE</T><T style={styles.answerValue}>{preferences.mustSeeArtworkIds.map(id => museum.artworks.find(art => art.id === id)?.title).filter(Boolean).join(', ')}</T></View></View>}
+          </View> : <View style={[styles.bubble, message.role === 'user' && styles.userBubble]}><T style={[styles.message, message.role === 'user' && styles.userText]}>{message.content}</T></View>}
         </View>)}
         {messages.length === 1 && <View style={styles.prompts}>{prompts.map(prompt => <Pressable key={prompt.label} accessibilityRole="button" accessibilityLabel={prompt.label} disabled={locked} onPress={() => { void send(prompt.message); }} style={styles.prompt}><T style={styles.promptText}>{prompt.label}</T><Icon name="arrow-up-outline" size={15} color={c.green}/></Pressable>)}</View>}
         {busy === 'chat' && <RoutePlanningTransition label="Understanding your preferences…"/>}
         {busy && request.current && <PlanningWait startedAt={request.current.startedAt} onCancel={cancel}/>}
         {!busy && lastDuration && <T style={styles.detail} testID="planning-duration">{lastDuration}</T>}
-        {!!error && <View style={styles.errorBox}><T accessibilityRole="alert" style={styles.errorText}>{error}</T>{failedMessage && <View style={styles.errorActions}>
+        {!!error && <View style={styles.errorBox}><T accessibilityRole="alert" style={styles.errorText}>{error}</T>{failedMessage ? <View style={styles.errorActions}>
           <Button title="Retry message" secondary disabled={!!busy} onPress={() => { void send(failedMessage, true); }}/>
           <Pressable accessibilityRole="button" accessibilityLabel="Discard message" onPress={() => { setMessages(previous => previous.slice(0, -1)); setFailedMessage(null); setError(''); }} style={styles.discard}><T style={styles.detail}>Discard message</T></Pressable>
-        </View>}</View>}
-        <View style={styles.summary} testID="visit-preferences">
-          <View style={styles.summaryHeading}><T style={styles.summaryTitle}>{messages.length === 1 ? 'Starting preferences' : 'The visit so far'}</T><View style={styles.time}><Icon name="time-outline" size={13}/><T style={styles.timeText}>{preferences.availableMinutes} min</T></View></View>
-          <T style={styles.detail}>{preferences.interests.length ? preferences.interests.join(' · ') : 'Open to discovering something new'}</T>
-          <T style={styles.detail}>From {museum.graph.nodes.find(node => node.id === preferences.currentLocation)?.label} · {preferences.walkingPreference === 'less_walking' ? 'Less walking' : 'Balanced walk'}{preferences.accessibilityRequirements.length ? ' · Step-free' : ''}</T>
-          {!!preferences.mustSeeArtworkIds.length && <T style={styles.detail}>Must see: {preferences.mustSeeArtworkIds.map(id => museum.artworks.find(art => art.id === id)?.title).join(', ')}</T>}
-          {busy === 'route' && <RoutePlanningTransition/>}
-          <Button title={busy === 'route' ? 'Planning your visit…' : 'Generate route'} icon="sparkles-outline" disabled={locked || !!draft.trim()} onPress={() => { void plan(); }}/>
-          <T style={styles.summaryNote}>{draft.trim() ? 'Send your message to update these preferences.' : 'Your itinerary opens on a separate page.'}</T>
-        </View>
+        </View> : messages.length > 1 && <Button title="Try route again" secondary disabled={!!busy} onPress={() => { void plan(); }}/>}</View>}
+        {messages.length === 1 && <View style={styles.summary} testID="visit-preferences"><View style={styles.summaryHeading}><T style={styles.summaryTitle}>Starting preferences</T><View style={styles.time}><Icon name="time-outline" size={13}/><T style={styles.timeText}>{preferences.availableMinutes} min</T></View></View><T style={styles.detail}>Choose a prompt or tell me what matters to you.</T></View>}
+        {busy === 'route' && <View style={styles.routeCard}><RoutePlanningTransition label="Designing your route preview…"/></View>}
+        {!busy && itinerary && <View style={styles.routeCard} testID="route-preview-card">
+          <View style={styles.routeCardHeading}><View><T style={styles.routeEyebrow}>YOUR ROUTE</T><T style={styles.routeTitle}>{itinerary.route.length} stops · {itinerary.estimatedMinutes} min</T></View><T style={styles.routeDistance}>{itinerary.estimatedWalkingDistance} m</T></View>
+          <FloorPlan museumId={museumId} floor={previewFloor} setFloor={setPreviewFloor} room={null} onRoom={() => {}} onSearch={() => nav.navigate('Lookup')} height={220} routePaths={itinerary.navigation.map(item => item.nodes)}/>
+          <T numberOfLines={2} style={styles.routeReason}>{itinerary.reasoningSummary}</T>
+          <View style={styles.stopPreview}>{itinerary.route.slice(0, 3).map(stop => <View key={stop.artworkId} style={styles.stopChip}><T style={styles.stopNumber}>{stop.order}</T><T numberOfLines={1} style={styles.stopName}>{stop.title}</T></View>)}</View>
+          <Button title="View full itinerary" icon="arrow-forward" onPress={() => nav.navigate('AIItinerary', { itinerary, museumId, returnToPlanner: true })}/>
+          <Pressable accessibilityRole="button" onPress={() => { void plan(); }} style={styles.replan}><T style={styles.detail}>Refresh this route</T></Pressable>
+        </View>}
         <T style={styles.demoNote}>Messages and preferences are processed by Qwen on your local AI server and are not saved by Unframe. Demo artworks and illustrative indoor routes. GPS cannot locate you inside a gallery.</T>
       </ScrollView>
       <View style={styles.composerArea}>
@@ -152,7 +173,7 @@ function PlanningChat() {
           }}/>
           <Pressable accessibilityRole="button" accessibilityLabel="Send message" accessibilityState={{ disabled: locked || !draft.trim() }} disabled={locked || !draft.trim()} onPress={() => { void send(); }} style={[styles.send, (locked || !draft.trim()) && styles.disabled]}><Icon name="arrow-up" color={c.white} size={21}/></Pressable>
         </View>
-        <T style={styles.composerNote}>Ask, adjust, then make it your route.</T>
+        <T style={styles.composerNote}>Send a change and your route preview updates automatically.</T>
       </View>
     </KeyboardAvoidingView>
   </SafeAreaView>;
@@ -169,10 +190,12 @@ const styles = StyleSheet.create({
   avatar: { width: 28, height: 28, borderRadius: 14, backgroundColor: c.sage, alignItems: 'center', justifyContent: 'center', marginTop: 3 },
   bubble: { backgroundColor: c.white, paddingHorizontal: 15, paddingVertical: 13, borderRadius: 18, borderTopLeftRadius: 4, flexShrink: 1, maxWidth: '90%', borderWidth: 1, borderColor: c.border },
   userBubble: { backgroundColor: c.green, borderColor: c.green, borderTopLeftRadius: 18, borderBottomRightRadius: 4 }, message: { fontSize: 13, lineHeight: 21 }, userText: { color: c.white },
+  answerCard: { flex: 1, maxWidth: '90%', borderWidth: 1, borderColor: '#D8DED4', backgroundColor: c.white, borderRadius: 18, padding: 16, gap: 11 }, answerHeading: { flexDirection: 'row', alignItems: 'center', gap: 7 }, answerTitle: { fontFamily: serif, fontSize: 18, lineHeight: 23, color: c.green }, answerIntro: { fontSize: 12, lineHeight: 19, color: '#3F4943' }, answerDivider: { height: 1, backgroundColor: '#E5E8E2' }, answerPoint: { flexDirection: 'row', alignItems: 'flex-start', gap: 9 }, answerPointCopy: { flex: 1, gap: 1 }, answerLabel: { fontSize: 8, lineHeight: 12, letterSpacing: 1.2, color: c.muted }, answerValue: { fontSize: 12, lineHeight: 18, color: c.ink },
   prompts: { gap: 8, alignItems: 'flex-start', marginLeft: 36 }, prompt: { borderWidth: 1, borderColor: '#D5DDD3', borderRadius: 18, paddingHorizontal: 13, paddingVertical: 10, minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 10, maxWidth: '100%' }, promptText: { fontSize: 11, lineHeight: 18, color: c.green, flexShrink: 1 },
   thinking: { flexDirection: 'row', alignItems: 'center', gap: 9, marginLeft: 36 },
   summary: { padding: 15, gap: 10, borderWidth: 1, borderColor: c.border, backgroundColor: '#F0F2EC', borderRadius: 17 }, summaryHeading: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10 }, summaryTitle: { fontSize: 12, lineHeight: 20, fontWeight: '600', flexShrink: 1 },
   time: { flexDirection: 'row', alignItems: 'center', gap: 4 }, timeText: { fontSize: 11, lineHeight: 18 }, detail: { fontSize: 11, lineHeight: 18, color: c.muted }, summaryNote: { fontSize: 10, lineHeight: 15, textAlign: 'center', color: c.muted }, demoNote: { fontSize: 10, lineHeight: 16, textAlign: 'center', color: c.muted, paddingHorizontal: 8 },
+  routeCard: { borderWidth: 1, borderColor: '#D7DED3', backgroundColor: '#F4F5F0', borderRadius: 19, padding: 14, gap: 12, overflow: 'hidden' }, routeCardHeading: { flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', gap: 10 }, routeEyebrow: { fontSize: 8, lineHeight: 12, letterSpacing: 1.4, color: c.green }, routeTitle: { fontFamily: serif, fontSize: 21, lineHeight: 27, color: c.ink }, routeDistance: { fontSize: 11, lineHeight: 18, color: c.muted }, routeReason: { fontSize: 11, lineHeight: 17, color: c.muted }, stopPreview: { gap: 6 }, stopChip: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: c.white, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 7 }, stopNumber: { width: 20, height: 20, borderRadius: 10, backgroundColor: c.green, color: c.white, textAlign: 'center', fontSize: 10, lineHeight: 20 }, stopName: { flex: 1, fontSize: 11, lineHeight: 16 }, replan: { minHeight: 40, alignItems: 'center', justifyContent: 'center' },
   errorBox: { padding: 13, borderRadius: 13, backgroundColor: '#F5E9E3', gap: 9 }, errorText: { fontSize: 12, lineHeight: 19, color: '#8A3C29' }, errorActions: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 12 }, discard: { minHeight: 44, justifyContent: 'center' },
   composerArea: { paddingHorizontal: 15, paddingTop: 12, paddingBottom: 7, backgroundColor: c.bg, borderTopWidth: 1, borderColor: c.border }, composer: { flexDirection: 'row', alignItems: 'flex-end', padding: 5, gap: 6, backgroundColor: c.white, borderWidth: 1, borderColor: '#D6DCD2', borderRadius: 25 },
   input: { flex: 1, minWidth: 0, minHeight: 42, maxHeight: 104, paddingHorizontal: 12, paddingVertical: 11, color: c.ink, fontSize: 13, lineHeight: 20 }, send: { width: 42, height: 42, borderRadius: 21, backgroundColor: c.green, alignItems: 'center', justifyContent: 'center' }, disabled: { opacity: .4 }, composerNote: { fontSize: 9, lineHeight: 15, textAlign: 'center', color: c.muted, marginTop: 6 },

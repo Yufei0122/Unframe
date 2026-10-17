@@ -59,10 +59,10 @@ test('GOMA route opens its own itinerary with a GOMA map and artwork', async ({ 
   await expect(page.getByRole('button', { name: 'Include Water Lilies' })).toHaveCount(0);
   await page.getByRole('textbox', { name: 'Message your visit planner' }).fill('I want to see Heritage.');
   await page.getByRole('button', { name: 'Send message', exact: true }).click();
-  await expect(page.getByTestId('visit-preferences')).toContainText('Must see: Heritage');
-  await page.getByRole('button', { name: 'Generate route', exact: true }).click();
+  await expect(page.getByTestId('planning-answer-card')).toContainText('Heritage');
+  await expect(page.getByTestId('route-preview-card')).toBeVisible();
+  await page.getByRole('button', { name: 'View full itinerary', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Your itinerary', exact: true })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Generate route', exact: true })).not.toBeVisible();
   await expect(page.getByText('GOMA · DEMO LAYOUT').filter({ visible: true })).toBeVisible();
   await expect(page.getByText('Entrance → Demo foyer → Heritage')).toBeVisible();
   await page.screenshot({ path: 'test-results/goma-itinerary.png', fullPage: true });

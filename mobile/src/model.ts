@@ -22,7 +22,7 @@ export type RootStackParams = {
   Home: NavigatorScreenParams<TabParams> | undefined;
   Artwork: { id: string };
   Planner: undefined;
-  AIItinerary: { itinerary: AIRoute; museumId?: MuseumId };
+  AIItinerary: { itinerary: AIRoute; museumId?: MuseumId; returnToPlanner?: boolean };
   Lookup: undefined;
   Feedback: { artworkId?: string } | undefined;
   About: undefined;

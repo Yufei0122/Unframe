@@ -241,6 +241,7 @@ test('invalid uploads send no request and scanning can still resume', async ({ p
 
 test('route opens a separate itinerary page and preserves preferences when returning', async ({ page }) => {
   let chatTurns = 0;
+  let routeTurns = 0;
   await page.route('**/api/ai/routes/chat', route => {
     const input = route.request().postDataJSON();
     expect(input.museumId).toBe('met');
@@ -252,10 +253,13 @@ test('route opens a separate itinerary page and preserves preferences when retur
   });
   await page.route('**/api/ai/routes/plan', async route => {
     const request = route.request().postDataJSON();
+    routeTurns++;
     expect(request.mustSeeArtworkIds).toContain('water-lilies');
-    expect(request.accessibilityRequirements).toEqual(['step_free']);
     expect(request.interests).toContain('Monet');
-    expect(request.walkingPreference).toBe('less_walking');
+    if (routeTurns > 1) {
+      expect(request.accessibilityRequirements).toEqual(['step_free']);
+      expect(request.walkingPreference).toBe('less_walking');
+    }
     await route.fulfill({ json: { demo: true, mapNotice: 'Illustrative demo map.', estimatedMinutes: 6, estimatedWalkingDistance: 72, route: [{ order: 1, artworkId: 'water-lilies', title: 'Water Lilies', galleryId: 'european-paintings', estimatedVisitMinutes: 4 }], navigation: [{ from: 'entrance', to: 'water-lilies', nodes: ['entrance', 'great-hall', 'european-paintings', 'water-lilies'], distance: 72, estimatedSeconds: 110 }], reasoningSummary: 'A local nature route.', recommendationSource: 'local', warning: 'AI recommendations are unavailable. This itinerary uses local rules.' } });
   });
   await page.goto('/'); await enterWelcome(page);
@@ -266,21 +270,20 @@ test('route opens a separate itinerary page and preserves preferences when retur
   await expect(page.getByText('Monet and Water Lilies are included.', { exact: true })).toBeVisible();
   await page.getByRole('textbox', { name: 'Message your visit planner' }).fill('Make it step-free with less walking.');
   await page.getByRole('textbox', { name: 'Message your visit planner' }).press('Enter');
-  await expect(page.getByTestId('visit-preferences')).toContainText('Step-free');
+  await expect(page.getByTestId('planning-answer-card')).toContainText('Step-free');
   await page.getByRole('tab', { name: /Home/ }).click();
   await page.getByRole('tab', { name: /Plan/ }).click();
   await expect(page.getByText('Your visit is now step-free, with less walking.', { exact: true })).toBeVisible();
   await page.screenshot({ path: 'test-results/plan-chat.png' });
-  await page.getByRole('button', { name: 'Generate route', exact: true }).click();
+  await expect(page.getByTestId('route-preview-card')).toBeVisible();
+  await page.getByRole('button', { name: 'View full itinerary', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Your itinerary', exact: true })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Generate route', exact: true })).not.toBeVisible();
   await expect(page.getByText('6 minutes · 72 m walking (demo)')).toBeVisible();
   await page.getByRole('button', { name: 'Edit visit preferences', exact: true }).click();
-  await expect(page.getByTestId('visit-preferences')).toContainText('Monet');
-  await expect(page.getByTestId('visit-preferences')).toContainText('Step-free');
-  await expect(page.getByText('I love Monet. Include Water Lilies.', { exact: true })).toBeVisible();
+  await expect(page.getByTestId('planning-answer-card')).toContainText('Monet');
+  await expect(page.getByTestId('planning-answer-card')).toContainText('Step-free');
   await expect(page.getByRole('heading', { name: 'Your itinerary', exact: true })).not.toBeVisible();
-  await page.getByRole('button', { name: 'Generate route', exact: true }).click();
+  await page.getByRole('button', { name: 'View full itinerary', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Your itinerary', exact: true })).toBeVisible();
   await expect(page.getByText('AI recommendations are unavailable. This itinerary uses local rules.')).toBeVisible();
   await expect(page.getByText('Local rules recommendation', { exact: false })).toBeVisible();

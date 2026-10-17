@@ -22,7 +22,11 @@ export function AIItineraryScreen({ route, navigation }: NativeStackScreenProps<
     <Title>Your itinerary</Title>
     <T>{itinerary.estimatedMinutes} minutes · {itinerary.estimatedWalkingDistance} m walking (demo)</T>
     {!!itinerary.route.length && <Button title={isSaved ? 'Unsave route' : 'Save route'} icon={isSaved ? 'bookmark' : 'bookmark-outline'} secondary onPress={() => dispatch(isSaved ? { type: 'removeRoute', id: savedRoute.id } : { type: 'saveRoute', route: { ...savedRoute, savedAt: new Date().toISOString() } })}/>}
-    <Button title="Edit visit preferences" secondary icon="options-outline" onPress={() => { selectMuseum(museumId); navigation.navigate('Home', { screen: 'Plan' }); }}/>
+    <Button title="Edit visit preferences" secondary icon="options-outline" onPress={() => {
+      selectMuseum(museumId);
+      if (route.params.returnToPlanner && navigation.canGoBack()) navigation.goBack();
+      else navigation.navigate('Home', { screen: 'Plan' });
+    }}/>
     {!!itinerary.warning && <Notice>{itinerary.warning}</Notice>}
     <T style={s.small}>{itinerary.recommendationSource === 'ollama' ? 'Qwen recommendation' : 'Local rules recommendation'} · {itinerary.reasoningSummary}</T>
     <FloorPlan museumId={museumId} floor={floor} setFloor={setFloor} room={room} onRoom={setRoom} onSearch={() => navigation.navigate('Lookup')} height={300} routePaths={itinerary.navigation.map(n => n.nodes)}/>
