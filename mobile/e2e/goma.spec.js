@@ -56,7 +56,7 @@ test('GOMA route opens its own itinerary with a GOMA map and artwork', async ({ 
   });
   await chooseGoma(page);
   await page.getByRole('tab', { name: /Plan/ }).click();
-  await expect(page.getByText('GOMA', { exact: true }).filter({ visible: true })).toBeVisible();
+  await expect(page.getByTestId('planning-museum')).toContainText('GOMA');
   await expect(page.getByRole('button', { name: 'Include Water Lilies' })).toHaveCount(0);
   await page.getByRole('textbox', { name: 'Message your visit planner' }).fill('I want to see Heritage.');
   await page.getByRole('button', { name: 'Send message', exact: true }).click();

@@ -48,6 +48,17 @@ test('interactive profile migrates legacy slow defaults without overwriting expl
   const tuned = { OLLAMA_PLANNING_NUM_PREDICT: '768', OLLAMA_PLANNING_NUM_CTX: '8192' };
   api.applyInteractivePerformanceProfile(tuned);
   assert.equal(tuned.OLLAMA_PLANNING_NUM_PREDICT, '768'); assert.equal(tuned.OLLAMA_PLANNING_NUM_CTX, '8192');
+  const legacyVision = { OLLAMA_MODEL: 'qwen3:4b', OLLAMA_VISION_MODEL: 'qwen3-vl:4b', OLLAMA_VISION_TIMEOUT_MS: '14000', EXPO_PUBLIC_VISION_TIMEOUT_MS: '14500' };
+  api.applyInteractivePerformanceProfile(legacyVision);
+  assert.equal(legacyVision.OLLAMA_VISION_MODEL, 'qwen3-vl:4b-instruct');
+  assert.equal(legacyVision.OLLAMA_MODEL, 'qwen3:1.7b');
+  assert.equal(legacyVision.OLLAMA_VISION_TIMEOUT_MS, '120000');
+  assert.equal(legacyVision.EXPO_PUBLIC_VISION_TIMEOUT_MS, '130000');
+  const tunedVision = { OLLAMA_VISION_MODEL: 'custom-vision:local', OLLAMA_VISION_TIMEOUT_MS: '90000', EXPO_PUBLIC_VISION_TIMEOUT_MS: '100000' };
+  api.applyInteractivePerformanceProfile(tunedVision);
+  assert.equal(tunedVision.OLLAMA_VISION_MODEL, 'custom-vision:local');
+  assert.equal(tunedVision.OLLAMA_VISION_TIMEOUT_MS, '90000');
+  assert.equal(tunedVision.EXPO_PUBLIC_VISION_TIMEOUT_MS, '100000');
   api.restore();
 });
 
@@ -181,7 +192,7 @@ test('startup rejects stale inference settings for both route-only and full star
     ? { app: 'unframe', status: 'ok', workspace }
     : { configuration: { ...planningConfiguration(readAIConfig()), embeddingModel: clipIdentity.model,
       embeddingPretrained: clipIdentity.pretrained, dimension: clipIdentity.dimensions,
-      visionModel: readAIConfig().visionModel, analysisVersion: 2, ...stale } });
+      visionModel: readAIConfig().visionModel, analysisVersion: 3, visionTimeoutMs: readAIConfig().visionTimeoutMs, visionNumPredict: readAIConfig().visionNumPredict, visionNumCtx: readAIConfig().visionNumCtx, analysisBudgetMs: readAIConfig().analysisBudgetMs, explanationTimeoutMs: readAIConfig().explanationTimeoutMs, ...stale } });
   const api = await runtime({ PORT: new URL(address).port }); t.after(api.restore);
   const dataFile = path.resolve(process.env.UNFRAME_DATA_DIR || path.join(api.root, 'data'), 'unframe.json');
   workspace = createHash('sha256').update(process.platform === 'win32' ? dataFile.toLowerCase() : dataFile).digest('hex');

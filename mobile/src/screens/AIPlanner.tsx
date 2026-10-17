@@ -125,7 +125,7 @@ function PlanningChat() {
       <View style={styles.headerCopy}><T style={styles.eyebrow}>YOUR MUSEUM COMPANION</T><T accessibilityRole="header" style={styles.title}>Plan your visit</T></View>
       <Pressable accessibilityRole="button" accessibilityLabel="New conversation" onPress={reset} style={styles.roundButton}><Icon name="create-outline" size={22}/></Pressable>
     </View>
-    <View style={styles.museum}><Icon name="location-outline" size={14} color={c.green}/><T style={styles.museumText}>{museum.shortName}</T><View style={styles.dot}/><T style={styles.museumText}>Mira · AI curator</T></View>
+    <View testID="planning-museum" style={styles.museum}><Icon name="location-outline" size={14} color={c.green}/><T style={styles.museumText}>{museum.shortName}</T><View style={styles.dot}/><T style={styles.museumText}>Mira · AI curator</T></View>
     <KeyboardAvoidingView style={styles.body} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <ScrollView ref={scroll} style={styles.body} contentContainerStyle={styles.conversation} keyboardShouldPersistTaps="handled" onContentSizeChange={() => { if (messages.length > 1) scroll.current?.scrollToEnd({ animated: true }); }}>
         <T style={styles.caption}>A visit shaped around you</T>

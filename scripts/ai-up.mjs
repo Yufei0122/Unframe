@@ -13,7 +13,7 @@ try {
   await requireOllamaModel();
   await pullOllamaModel(planningModel);
   await warmOllamaModel(planningModel, { planning: true });
-  try { await inspectVisionModel(readAIConfig()); console.log('General artwork visual analysis is available.'); }
+  try { await pullOllamaModel(readAIConfig().visionModel); await inspectVisionModel(readAIConfig()); console.log('General artwork visual analysis is available.'); }
   catch (error) { console.warn(`General visual analysis is unavailable: ${error.message} Existing catalogue scanning can still start.`); }
   await ensureClip();
   const store = createEmbeddingStore(readAIConfig());

@@ -22,7 +22,7 @@ try {
   const services = await inspectLocalServices(config);
   const statuses = [];
   for (const [museumId, { collection }] of catalogues) statuses.push(await getAIStatus({ config, store, collection, museumId, services, verifySources: true }));
-  console.log(JSON.stringify({ check: 'local_services_and_index', liveVerified: false, museums: statuses }, null, 2));
+  console.log(JSON.stringify({ check: 'local_services_and_index', passed: statuses.every(status => status.ready), liveVerified: false, museums: statuses }, null, 2));
   if (visionCheck) {
     if (!services.vision.available) throw new AIError(503, services.vision.code, 'The local vision model is unavailable. Run npm.cmd run ai:setup:vision.');
     const port = Number(process.env.PORT || 3000);
@@ -31,10 +31,10 @@ try {
     const mime = { jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp' }[(await sharp(source).metadata()).format];
     const image = await normalizeImage(source, mime);
     const form = new FormData(); form.append('image', new Blob([image], { type: 'image/jpeg' }), 'artwork.jpg');
-    console.log(`Testing real visual analysis through the running backend (target < ${config.responseBudgetMs} ms).`);
+    console.log(`Testing real visual analysis through the running backend (CPU budget ${config.analysisBudgetMs} ms, including model loading).`);
     let response;
-    try { response = await fetch(`http://127.0.0.1:${port}/api/ai/artworks/analyse`, { method: 'POST', body: form, signal: AbortSignal.timeout(config.responseBudgetMs) }); }
-    catch { throw new AIError(503, 'BACKEND_UNAVAILABLE', 'Cannot reach the updated backend. Restart ai:up and verify its PORT.'); }
+    try { response = await fetch(`http://127.0.0.1:${port}/api/ai/artworks/analyse`, { method: 'POST', body: form, signal: AbortSignal.timeout(config.analysisBudgetMs + 5000) }); }
+    catch (error) { throw new AIError(error.name === 'TimeoutError' ? 504 : 503, error.name === 'TimeoutError' ? 'VISION_TIMEOUT' : 'BACKEND_UNAVAILABLE', error.name === 'TimeoutError' ? 'Visual inference exceeded the CPU budget. Check Ollama logs and OLLAMA_VISION_TIMEOUT_MS.' : 'Cannot reach the updated backend. Restart ai:up and verify its PORT.'); }
     const result = await response.json();
     if (!response.ok) throw new AIError(response.status, result.code || 'VISION_HTTP_ERROR', result.error || 'The backend cannot analyse images. Restart it after updating the code.');
     if (!['uncertain', 'possible_match'].includes(result.identityStatus) || typeof result.description !== 'string') throw new AIError(502, 'INVALID_VISION_RESULT', 'The backend returned an invalid visual analysis.');
@@ -66,13 +66,13 @@ try {
       if (unrelatedResult.matched) throw new AIError(502, 'LIVE_UNRELATED_MATCH', 'An unrelated exterior photograph passed the matching threshold. Calibrate ARTWORK_MATCH_THRESHOLD before using recognition.');
       let explanation;
       if (!live.length) {
-        console.log(`Smoke: ${museumId} real Qwen structured explanation (target < ${config.responseBudgetMs} ms).`);
+        console.log(`Smoke: ${museumId} real Qwen structured explanation (CPU deadline ${config.explanationTimeoutMs} ms including model loading).`);
         explanation = await ollama.generateArtworkExplanation(artwork, [], collection);
       }
       live.push({ museumId, embedding: 'passed', referenceRetrieval: { artworkId: artwork.id, similarity: result.candidates[0].similarity }, transformedReferenceSimilarity: transformedResult.candidates[0].similarity, unrelatedImageRejected: true, maxUnrelatedSimilarity, threshold: config.threshold, ...(explanation ? { explanation } : {}) });
     }
     console.log(JSON.stringify({ check: 'real_local_models', liveVerified: true, museums: live, note: 'Two reference/transformation/exterior image sets and one real structured explanation. Run scripts/validate-local-ai.mjs for broader retrieval and HTTP explanation/route/chat checks. Similarity is not accuracy or probability; validate camera conditions and more negative images before broad use. Visitor photographs are never stored.' }, null, 2));
-  } else console.log('Health checks verify local model presence and index identity, not inference. Run npm.cmd run ai:doctor -- --smoke for real models.');
+  } else console.log('PASS readiness: local services, models and indexes are ready. Inference has not been tested by this command. Run npm.cmd run ai:doctor -- --smoke and npm.cmd run ai:doctor -- --vision for real model checks.');
 } catch (error) {
   console.error(JSON.stringify({ check: 'failed', liveVerified: false, code: error instanceof AIError ? error.code : 'CHECK_FAILED', error: error instanceof AIError ? error.message : 'AI check failed. Review local configuration and reference images.' }));
   process.exitCode = 1;

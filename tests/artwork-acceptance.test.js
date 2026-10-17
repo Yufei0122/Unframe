@@ -37,7 +37,7 @@ async function fixture(t, { failSecond = false, ready = true, publicSearch = fal
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
     if (req.url === '/api/health') return res.end(JSON.stringify({ app: 'unframe' }));
-    if (req.url.startsWith('/api/ai/status')) return res.end(JSON.stringify({ analysisReady: ready, analysisMessage: 'Missing test model', configuration: { visionModel: config.visionModel, analysisVersion: 2 }, services: { vision: { available: ready } } }));
+    if (req.url.startsWith('/api/ai/status')) return res.end(JSON.stringify({ analysisReady: ready, analysisMessage: 'Missing test model', configuration: { visionModel: config.visionModel, analysisVersion: 3 }, services: { vision: { available: ready } } }));
     assert.equal(req.url, '/api/ai/artworks/analyse');
     assert.match(req.headers['content-type'], /^multipart\/form-data/);
     calls++;
@@ -93,6 +93,22 @@ test('public source outage fails full acceptance even when local vision response
   assert.equal(report.passed, false);
   assert.equal(report.summary.checksPassed, 4);
   assert.match(report.failures[0].message, /public source is unavailable/);
+});
+
+test('reference download acceptance retains a failed URL and verifies the next provider image', async t => {
+  const { options } = await fixture(t, { publicSearch: true });
+  const sources = {
+    search: async () => ({ providers: ['The Met', 'Art Institute of Chicago', 'Wikimedia Commons'].map(name => ({ name, status: 'completed', results: 1 })), records: [
+      { id: 'met:1', sourceUrl: 'https://www.metmuseum.org/art/collection/search/1', imageUrl: 'https://images.metmuseum.org/unavailable.jpg' },
+      { id: 'met:2', sourceUrl: 'https://www.metmuseum.org/art/collection/search/2', imageUrl: 'https://images.metmuseum.org/available.jpg' },
+    ] }),
+    image: async url => { if (url.endsWith('/unavailable.jpg')) throw new Error('SOURCE_UNAVAILABLE'); return { bytes: await readFile(new URL('../mobile/assets/water-lilies.jpg', import.meta.url)), mime: 'image/jpeg' }; },
+  };
+  const { report } = await runVisionAcceptance({ ...options, sources });
+  assert.equal(report.passed, true);
+  const downloads = report.checks.at(-1);
+  assert.deepEqual(downloads.referenceDownloads.map(item => item.passed), [false, true]);
+  assert.equal(downloads.downloadedReference.id, 'met:2');
 });
 
 test('connection failure stays a boolean failure in the console summary and explains the backend port', async t => {

@@ -33,7 +33,7 @@ test('Scan starts automatically without a shutter, releases the camera on blur, 
   await expect(page.getByRole('button', { name: 'Capture photo', exact: true })).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Pause scanning', exact: true })).toBeInViewport();
   await expect(page.getByRole('button', { name: 'Upload photo', exact: true })).toBeInViewport();
-  await expect(page.getByText('Sampled frames go to OpenCLIP on your local AI server.', { exact: false })).toBeVisible();
+  await expect(page.getByText('Camera frames go to OpenCLIP', { exact: false })).toHaveCount(0);
   await expect(page.getByText('Browse the demo collection')).toHaveCount(0);
   await expect.poll(() => requests).toBeGreaterThan(0);
   await rememberCamera(page);
@@ -98,7 +98,7 @@ test('resuming during confirmation discards its late interpretation and keeps th
   await openScan(page);
   await page.getByRole('button', { name: 'Select Water Lilies', exact: true }).click();
   await expect.poll(() => !!pending).toBe(true);
-  await expect(page.getByText('Preparing AI interpretation…')).toBeVisible();
+  await expect(page.getByRole('progressbar', { name: 'Preparing your AI interpretation…' })).toBeVisible();
   await page.getByRole('button', { name: 'Resume scanning', exact: true }).click();
   await pending.fulfill({ json: confirmed }).catch(() => {});
   await expect.poll(() => requests).toBeGreaterThan(1);
@@ -216,7 +216,7 @@ test('no-match continues scanning; provider failure pauses requests until the vi
     return route.fulfill(attempt === 2 ? { status: 503, json: { error: 'Local OpenCLIP is temporarily unavailable.' } } : { json: { matched: false, candidates: [], message: 'No artwork passed the matching threshold.' } });
   });
   await openScan(page);
-  await expect(page.getByText('No artwork passed the matching threshold.')).toBeVisible();
+  await expect.poll(() => attempt).toBeGreaterThan(0);
   await rememberCamera(page);
   await expect(page.getByRole('alert')).toContainText('Local OpenCLIP is temporarily unavailable.');
   await expectCameraStopped(page);

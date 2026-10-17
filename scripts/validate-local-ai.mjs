@@ -72,7 +72,7 @@ async function httpJSON(endpoint, body, { form, expectedStatus = 200 } = {}) {
   const response = await (planning ? loopbackFetch : fetch)(`${backend}/api/ai/${endpoint}`, {
     method: body !== undefined || form ? 'POST' : 'GET',
     ...(form ? { body: form } : body !== undefined ? { headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {}),
-    ...(planning ? {} : { signal: AbortSignal.timeout(endpoint.startsWith('artworks/recognise') ? config.recognitionBudgetMs : config.responseBudgetMs) }),
+    ...(planning ? {} : { signal: AbortSignal.timeout(endpoint.startsWith('artworks/recognise') ? config.recognitionBudgetMs : endpoint === 'artworks/confirm' ? config.explanationTimeoutMs + 5000 : config.responseBudgetMs) }),
   });
   const result = await response.json();
   const responseMs = Math.round(performance.now() - started);

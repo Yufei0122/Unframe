@@ -1,0 +1,507 @@
+{
+  "startedAt": "2026-10-17T16:28:01.894Z",
+  "passed": true,
+  "backend": "http://127.0.0.1:3004",
+  "verification": "Real Node HTTP and local Ollama Qwen inference; no mocks; local fallback always fails model acceptance.",
+  "limitation": "Controlled planning cases on illustrative museum graphs, not surveyed navigation or a general model quality benchmark.",
+  "config": {
+    "model": "qwen3:1.7b",
+    "timeoutMs": 0,
+    "numCtx": 4096,
+    "numGpu": -1,
+    "numPredict": 1024,
+    "retryNumPredict": 2048,
+    "keepAlive": "10m"
+  },
+  "sourceHashes": {
+    "server/ai/ollama.js": "78585a6308c45cb39140c9de9e97b189a22a5937bab8d353d46ebb7e301f48f1",
+    "server/ai/chat.js": "e0cf777fa7e081765e14f9a7d8ea73759418a271d6ece0913c69706e58a7aa35",
+    "server/ai/routes.js": "8d87d030be0d46eac5f0de4019cd40d79dc739f03a2ae3398d88fb2f1d089882",
+    "scripts/route-acceptance.mjs": "17f006224092307171fb70ba773992718099bc8ee64688d3c28600527196c75c",
+    "scripts/validate-qwen-routes.mjs": "167e0f781022d1f94396f641c6b6171f8d8ec1743faf6a937432e6e88687f505"
+  },
+  "checks": [
+    {
+      "name": "met/chinese_preferences",
+      "endpoint": "routes/chat",
+      "input": {
+        "museumId": "met",
+        "preferences": {
+          "interests": [
+            "Nature"
+          ],
+          "availableMinutes": 30,
+          "currentLocation": "entrance",
+          "walkingPreference": "balanced",
+          "accessibilityRequirements": [],
+          "mustSeeArtworkIds": [
+            "water-lilies"
+          ]
+        },
+        "history": [],
+        "message": "我想看色彩丰富的作品，只有20分钟，需要无障碍路线，尽量少走路，请保留我已经选好的必看作品。"
+      },
+      "passed": true,
+      "startedAt": "2026-10-17T16:28:01.958Z",
+      "response": {
+        "status": 200,
+        "body": {
+          "reply": "已更新偏好：聚焦色彩丰富作品，20分钟内，无障碍路线，少走路，保留已选作品《水之涟漪》。",
+          "preferences": {
+            "interests": [
+              "Colour"
+            ],
+            "availableMinutes": 20,
+            "currentLocation": "entrance",
+            "walkingPreference": "less_walking",
+            "accessibilityRequirements": [
+              "step_free"
+            ],
+            "mustSeeArtworkIds": [
+              "water-lilies"
+            ]
+          }
+        }
+      },
+      "elapsedMs": 23787
+    },
+    {
+      "name": "met/route_from_chat",
+      "endpoint": "routes/plan",
+      "input": {
+        "museumId": "met",
+        "interests": [
+          "Colour"
+        ],
+        "availableMinutes": 20,
+        "currentLocation": "entrance",
+        "walkingPreference": "less_walking",
+        "accessibilityRequirements": [
+          "step_free"
+        ],
+        "mustSeeArtworkIds": [
+          "water-lilies"
+        ],
+        "requireAI": true
+      },
+      "passed": true,
+      "startedAt": "2026-10-17T16:28:25.758Z",
+      "response": {
+        "status": 200,
+        "body": {
+          "demo": true,
+          "mapNotice": "Illustrative floor 1 only. Positions, distances and accessibility are demo data, not The Met navigation guidance.",
+          "estimatedMinutes": 19,
+          "estimatedWalkingDistance": 96,
+          "route": [
+            {
+              "order": 1,
+              "artworkId": "water-lilies",
+              "title": "Water Lilies",
+              "galleryId": "european-paintings",
+              "estimatedVisitMinutes": 4
+            },
+            {
+              "order": 2,
+              "artworkId": "the-harvesters",
+              "title": "The Harvesters",
+              "galleryId": "european-paintings",
+              "estimatedVisitMinutes": 5
+            },
+            {
+              "order": 3,
+              "artworkId": "the-dancing-class",
+              "title": "The Dancing Class",
+              "galleryId": "european-paintings",
+              "estimatedVisitMinutes": 3
+            },
+            {
+              "order": 4,
+              "artworkId": "self-portrait-with-a-straw-hat",
+              "title": "Self-Portrait with a Straw Hat",
+              "galleryId": "european-paintings",
+              "estimatedVisitMinutes": 4
+            }
+          ],
+          "navigation": [
+            {
+              "from": "entrance",
+              "to": "water-lilies",
+              "nodes": [
+                "entrance",
+                "great-hall",
+                "european-paintings",
+                "water-lilies"
+              ],
+              "distance": 72,
+              "estimatedSeconds": 110
+            },
+            {
+              "from": "water-lilies",
+              "to": "the-harvesters",
+              "nodes": [
+                "water-lilies",
+                "the-harvesters"
+              ],
+              "distance": 8,
+              "estimatedSeconds": 12
+            },
+            {
+              "from": "the-harvesters",
+              "to": "the-dancing-class",
+              "nodes": [
+                "the-harvesters",
+                "the-dancing-class"
+              ],
+              "distance": 9,
+              "estimatedSeconds": 14
+            },
+            {
+              "from": "the-dancing-class",
+              "to": "self-portrait-with-a-straw-hat",
+              "nodes": [
+                "the-dancing-class",
+                "self-portrait-with-a-straw-hat"
+              ],
+              "distance": 7,
+              "estimatedSeconds": 11
+            }
+          ],
+          "reasoningSummary": "The user is interested in colour and has a must-see artwork 'Water Lilies' which is accessible and matches their interest in colour.",
+          "recommendationSource": "ollama"
+        }
+      },
+      "elapsedMs": 6706
+    },
+    {
+      "name": "goma/chinese_preferences",
+      "endpoint": "routes/chat",
+      "input": {
+        "museumId": "goma",
+        "preferences": {
+          "interests": [
+            "Nature"
+          ],
+          "availableMinutes": 30,
+          "currentLocation": "entrance",
+          "walkingPreference": "balanced",
+          "accessibilityRequirements": [],
+          "mustSeeArtworkIds": [
+            "goma-obliteration-room"
+          ]
+        },
+        "history": [],
+        "message": "我想看色彩丰富的作品，只有20分钟，需要无障碍路线，尽量少走路，请保留我已经选好的必看作品。"
+      },
+      "passed": true,
+      "startedAt": "2026-10-17T16:28:32.482Z",
+      "response": {
+        "status": 200,
+        "body": {
+          "reply": "已更新偏好：聚焦色彩，20分钟内，无障碍路线，少走路，保留必看作品。",
+          "preferences": {
+            "interests": [
+              "Colour"
+            ],
+            "availableMinutes": 20,
+            "currentLocation": "entrance",
+            "walkingPreference": "less_walking",
+            "accessibilityRequirements": [
+              "step_free"
+            ],
+            "mustSeeArtworkIds": [
+              "goma-obliteration-room"
+            ]
+          }
+        }
+      },
+      "elapsedMs": 14255
+    },
+    {
+      "name": "goma/route_from_chat",
+      "endpoint": "routes/plan",
+      "input": {
+        "museumId": "goma",
+        "interests": [
+          "Colour"
+        ],
+        "availableMinutes": 20,
+        "currentLocation": "entrance",
+        "walkingPreference": "less_walking",
+        "accessibilityRequirements": [
+          "step_free"
+        ],
+        "mustSeeArtworkIds": [
+          "goma-obliteration-room"
+        ],
+        "requireAI": true
+      },
+      "passed": true,
+      "startedAt": "2026-10-17T16:28:46.743Z",
+      "response": {
+        "status": 200,
+        "body": {
+          "demo": true,
+          "mapNotice": "Illustrative GOMA demo only. Room names, placement, distances and accessibility are invented for this prototype, not an official floor plan or indoor navigation guidance.",
+          "estimatedMinutes": 16,
+          "estimatedWalkingDistance": 81,
+          "route": [
+            {
+              "order": 1,
+              "artworkId": "goma-obliteration-room",
+              "title": "The obliteration room",
+              "galleryId": "colour-studio",
+              "estimatedVisitMinutes": 5
+            },
+            {
+              "order": 2,
+              "artworkId": "goma-in-bed",
+              "title": "In bed",
+              "galleryId": "sculpture-gallery",
+              "estimatedVisitMinutes": 4
+            },
+            {
+              "order": 3,
+              "artworkId": "goma-soul-under-the-moon",
+              "title": "Soul under the moon",
+              "galleryId": "light-room",
+              "estimatedVisitMinutes": 4
+            }
+          ],
+          "navigation": [
+            {
+              "from": "entrance",
+              "to": "goma-obliteration-room",
+              "nodes": [
+                "entrance",
+                "goma-foyer",
+                "goma-obliteration-room"
+              ],
+              "distance": 27,
+              "estimatedSeconds": 40
+            },
+            {
+              "from": "goma-obliteration-room",
+              "to": "goma-in-bed",
+              "nodes": [
+                "goma-obliteration-room",
+                "goma-foyer",
+                "goma-in-bed"
+              ],
+              "distance": 32,
+              "estimatedSeconds": 48
+            },
+            {
+              "from": "goma-in-bed",
+              "to": "goma-soul-under-the-moon",
+              "nodes": [
+                "goma-in-bed",
+                "goma-soul-under-the-moon"
+              ],
+              "distance": 22,
+              "estimatedSeconds": 33
+            }
+          ],
+          "reasoningSummary": "The user is interested in colour and wants to see a must-see artwork. The 'goma-obliteration-room' is a colour-themed artwork with a short duration and is step-free, matching the preferences.",
+          "recommendationSource": "ollama"
+        }
+      },
+      "elapsedMs": 8638
+    },
+    {
+      "name": "goma/english_revision",
+      "endpoint": "routes/chat",
+      "input": {
+        "museumId": "goma",
+        "preferences": {
+          "interests": [
+            "Colour"
+          ],
+          "availableMinutes": 20,
+          "currentLocation": "entrance",
+          "walkingPreference": "less_walking",
+          "accessibilityRequirements": [
+            "step_free"
+          ],
+          "mustSeeArtworkIds": [
+            "goma-obliteration-room"
+          ]
+        },
+        "history": [
+          {
+            "role": "user",
+            "content": "我想看色彩丰富的作品，只有20分钟，需要无障碍路线，尽量少走路，请保留我已经选好的必看作品。"
+          },
+          {
+            "role": "assistant",
+            "content": "已更新偏好：聚焦色彩，20分钟内，无障碍路线，少走路，保留必看作品。"
+          }
+        ],
+        "message": "Change the visit to 35 minutes and remove all must-see artworks. Keep my colour interest, starting point, less walking and step-free access. Please reply in English."
+      },
+      "passed": true,
+      "startedAt": "2026-10-17T16:28:55.382Z",
+      "response": {
+        "status": 200,
+        "body": {
+          "reply": "Preferences updated: 35 minutes, colour interest, starting point, less walking, step-free access, no must-see artworks.",
+          "preferences": {
+            "interests": [
+              "Colour"
+            ],
+            "availableMinutes": 35,
+            "currentLocation": "entrance",
+            "walkingPreference": "less_walking",
+            "accessibilityRequirements": [
+              "step_free"
+            ],
+            "mustSeeArtworkIds": []
+          }
+        }
+      },
+      "elapsedMs": 20444
+    },
+    {
+      "name": "goma/route_from_revision",
+      "endpoint": "routes/plan",
+      "input": {
+        "museumId": "goma",
+        "interests": [
+          "Colour"
+        ],
+        "availableMinutes": 35,
+        "currentLocation": "entrance",
+        "walkingPreference": "less_walking",
+        "accessibilityRequirements": [
+          "step_free"
+        ],
+        "mustSeeArtworkIds": [],
+        "requireAI": true
+      },
+      "passed": true,
+      "startedAt": "2026-10-17T16:29:15.829Z",
+      "response": {
+        "status": 200,
+        "body": {
+          "demo": true,
+          "mapNotice": "Illustrative GOMA demo only. Room names, placement, distances and accessibility are invented for this prototype, not an official floor plan or indoor navigation guidance.",
+          "estimatedMinutes": 23,
+          "estimatedWalkingDistance": 121,
+          "route": [
+            {
+              "order": 1,
+              "artworkId": "goma-obliteration-room",
+              "title": "The obliteration room",
+              "galleryId": "colour-studio",
+              "estimatedVisitMinutes": 5
+            },
+            {
+              "order": 2,
+              "artworkId": "goma-heritage",
+              "title": "Heritage",
+              "galleryId": "nature-gallery",
+              "estimatedVisitMinutes": 6
+            },
+            {
+              "order": 3,
+              "artworkId": "goma-in-bed",
+              "title": "In bed",
+              "galleryId": "sculpture-gallery",
+              "estimatedVisitMinutes": 4
+            },
+            {
+              "order": 4,
+              "artworkId": "goma-soul-under-the-moon",
+              "title": "Soul under the moon",
+              "galleryId": "light-room",
+              "estimatedVisitMinutes": 4
+            }
+          ],
+          "navigation": [
+            {
+              "from": "entrance",
+              "to": "goma-obliteration-room",
+              "nodes": [
+                "entrance",
+                "goma-foyer",
+                "goma-obliteration-room"
+              ],
+              "distance": 27,
+              "estimatedSeconds": 40
+            },
+            {
+              "from": "goma-obliteration-room",
+              "to": "goma-heritage",
+              "nodes": [
+                "goma-obliteration-room",
+                "goma-heritage"
+              ],
+              "distance": 20,
+              "estimatedSeconds": 30
+            },
+            {
+              "from": "goma-heritage",
+              "to": "goma-in-bed",
+              "nodes": [
+                "goma-heritage",
+                "goma-foyer",
+                "goma-in-bed"
+              ],
+              "distance": 52,
+              "estimatedSeconds": 78
+            },
+            {
+              "from": "goma-in-bed",
+              "to": "goma-soul-under-the-moon",
+              "nodes": [
+                "goma-in-bed",
+                "goma-soul-under-the-moon"
+              ],
+              "distance": 22,
+              "estimatedSeconds": 33
+            }
+          ],
+          "reasoningSummary": "The user is interested in colour and wants to see artworks within 35 minutes. The obliteration room and soul under the moon are both colour-focused and accessible, fitting within the time constraint.",
+          "recommendationSource": "ollama"
+        }
+      },
+      "elapsedMs": 10715
+    }
+  ],
+  "ollama": {
+    "version": "0.40.5",
+    "model": {
+      "name": "qwen3:1.7b",
+      "model": "qwen3:1.7b",
+      "modified_at": "2026-10-17T16:02:23.168790232Z",
+      "size": 1359293444,
+      "digest": "8f68893c685c3ddff2aa3fffce2aa60a30bb2da65ca488b61fff134a4d1730e7",
+      "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "qwen3",
+        "families": [
+          "qwen3"
+        ],
+        "parameter_size": "2.0B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 40960,
+        "embedding_length": 2048,
+        "runner": "ggml"
+      },
+      "capabilities": [
+        "completion",
+        "tools",
+        "thinking"
+      ]
+    }
+  },
+  "summary": {
+    "expectedChecks": 6,
+    "executedChecks": 6,
+    "passedChecks": 6,
+    "modelRoutesPassed": 3,
+    "fallbackResponses": 0
+  },
+  "completedAt": "2026-10-17T16:29:26.548Z"
+}

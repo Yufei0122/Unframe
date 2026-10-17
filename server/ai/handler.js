@@ -15,7 +15,7 @@ import { getPlanningStatus } from './planning-status.js';
 export function createAIHandler({ config = readAIConfig(), clip = createLocalClient(config, 'OPENCLIP'), ollamaClient = createLocalClient(config, 'OLLAMA'), store = createEmbeddingStore(config), analysis } = {}) {
   const gate = { active: false };
   const ollama = createOllamaService(config, ollamaClient, gate);
-  const artworkAnalysis = analysis || createArtworkAnalysis(config, { vision: createVisionService(config, { gate }), embeddings: createEmbeddingService(config, clip) });
+  const artworkAnalysis = analysis || createArtworkAnalysis(config, { vision: createVisionService(config, { gate }), embeddings: createEmbeddingService(config, clip), store });
   const services = new Map([...catalogues].map(([id, { collection, graph, museum }]) => [id, {
     recognition: createRecognitionService({ config, embeddings: createEmbeddingService(config, clip), store, ollama, collection }),
     routes: createRouteService({ ollama, collection, graph }),
@@ -71,7 +71,11 @@ export function createAIHandler({ config = readAIConfig(), clip = createLocalCli
       const bytes = await readLimited(req, pathname === '/api/ai/routes/chat' ? 32000 : 16000);
       try { input = JSON.parse(bytes.toString('utf8')); } catch { throw new AIError(400, 'INVALID_JSON', 'Invalid JSON request.'); }
       const service = selectMuseum(input?.museumId);
-      if (pathname === '/api/ai/artworks/confirm') return send(res, 200, await service.recognition.confirm(input));
+      if (pathname === '/api/ai/artworks/confirm') {
+        const result = await service.recognition.confirm(input, cancellation.signal);
+        if (!res.destroyed) return send(res, 200, result);
+        return;
+      }
       const result = await (pathname === '/api/ai/routes/chat' ? service.chat.reply(input, cancellation.signal) : service.routes.plan(input, cancellation.signal));
       if (!res.destroyed) return send(res, 200, result);
     } catch (error) {

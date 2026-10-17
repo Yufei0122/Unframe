@@ -43,6 +43,8 @@ function NativeLookupContent() {
   const [result, setResult] = useState<ConfirmationResult | null>(null);
   const [confirming, setConfirming] = useState(false), [expanded, setExpanded] = useState(false);
   const [analysis, setAnalysis] = useState<ArtworkAnalysis | null>(null), [analysing, setAnalysing] = useState(false);
+  const [slowAnalysis, setSlowAnalysis] = useState(false);
+  useEffect(() => { setSlowAnalysis(false); if (!analysing) return; const timer = setTimeout(() => setSlowAnalysis(true), 15000); return () => clearTimeout(timer); }, [analysing]);
 
   const loop = useMemo(() => createNativeScanLoop<RecognitionResult>({
     timeoutMs: CLIP_TIMEOUT_MS,
@@ -157,8 +159,11 @@ function NativeLookupContent() {
         uri = compressed.uri; temporaryFiles.add(uri);
       } finally { rendered?.release(); context.release(); }
       if (request.signal.aborted || confirmation.current !== request) return;
-      const form = new FormData(); form.append('image', { uri, name: 'artwork.jpg', type: 'image/jpeg' } as unknown as Blob);
-      const response = await requestAI<ArtworkAnalysis>('artworks/analyse', form, request.signal);
+      const upload = () => { const form = new FormData(); form.append('image', { uri, name: 'artwork.jpg', type: 'image/jpeg' } as unknown as Blob); return form; };
+      const recognition = await requestAI<RecognitionResult>('artworks/recognise?museumId=' + museumId, upload(), request.signal);
+      if (request.signal.aborted || confirmation.current !== request) return;
+      if (recognition.candidates?.length) { setCandidates(recognition.candidates.slice(0, 3)); return; }
+      const response = await requestAI<ArtworkAnalysis>('artworks/analyse', upload(), request.signal);
       if (confirmation.current === request && !request.signal.aborted) setAnalysis(response);
     } catch (failure) {
       if (confirmation.current === request) setError(request.signal.aborted ? 'Visual analysis timed out. Try another photo.' : failure instanceof Error ? failure.message : 'Visual analysis is unavailable.');
@@ -214,26 +219,25 @@ function NativeLookupContent() {
     <LinearGradient pointerEvents="none" colors={['#08130CE6', '#08130C00']} style={styles.topShade}/>
     <View style={styles.header}>
       <Pressable accessibilityRole="button" accessibilityLabel="Close scan" onPress={close} style={styles.close}><Icon name="close" size={24} color="white"/></Pressable>
-      <View style={styles.heading}><T accessibilityRole="header" style={styles.title}>Scan artwork</T><T style={styles.museum}>{analysis || analysing ? 'Any artwork · visual analysis' : museum.shortName}</T></View>
+      <View style={styles.heading}><T accessibilityRole="header" style={styles.title}>Scan artwork</T><T style={styles.museum}>{museum.shortName}</T></View>
       <View style={{ width: 42 }}/>
     </View>
     {analysis ? <View style={styles.resultArea}><ScrollView style={styles.resultSheet} contentContainerStyle={styles.resultContent}><ArtworkAnalysisResult result={analysis}/><Button title="Scan another artwork" secondary onPress={scanAgain}/><Button title="Analyse another photo" secondary onPress={analysePhoto}/></ScrollView></View> : !art ? <>
       <View style={styles.finderArea}>
         {cameraReady && !cameraError && !paused ? <>
           <View pointerEvents="none" style={styles.finder}>{[styles.topLeft, styles.topRight, styles.bottomLeft, styles.bottomRight].map((corner, i) => <View key={i} style={[styles.corner, corner]}/>)}</View>
-          <T style={styles.hint}>{error ? 'Scanning paused' : busy ? 'Looking for artworks…' : 'Automatic scanning is on'}</T>
+          <T style={styles.hint}>{error ? 'Scanning paused' : 'Hold steady'}</T>
         </> : <View style={styles.cameraMessage}><Icon name="camera-outline" size={34} color="white"/><T accessibilityRole={cameraError ? 'alert' : undefined} style={styles.light}>{cameraMessage}</T>{!!permission && (!permission.granted || !!cameraError || paused) && <Pressable accessibilityRole="button" accessibilityLabel={paused ? 'Resume scanning' : 'Enable camera'} onPress={() => { void retryCamera(); }} style={styles.retry}><T style={styles.light}>{paused ? 'Resume scanning' : permission.canAskAgain ? 'Enable camera' : 'Camera settings'}</T></Pressable>}</View>}
       </View>
       <View style={styles.sheet}>
-        <View style={styles.statusRow}><Icon name="scan-outline" color={c.green}/><T accessibilityLiveRegion="polite" style={[s.label, { flex: 1 }]}>{candidates.length ? 'Choose the artwork in view' : 'Find the work in front of you'}</T></View>
-        {(busy || analysing) && <View style={styles.scanAnimation}><ArtworkScanTransition compact label={analysing ? 'Reading the artwork and checking sources…' : 'Comparing the artwork with this collection…'}/></View>}
-        {!!error ? <><T accessibilityRole="alert" style={s.small}>{error}</T><Button title="Try scanning again" secondary onPress={scanAgain}/></> : <T style={s.small}>{analysing ? 'Analysing the image and checking public sources… Target: under 15 seconds.' : message}</T>}
+        {!!candidates.length && <T style={s.label}>Choose the artwork in view</T>}
+        {(busy || analysing) && <View style={styles.scanAnimation}><ArtworkScanTransition compact label={analysing ? (slowAnalysis ? 'Taking a closer look…' : 'Looking closer…') : 'Finding a match…'}/></View>}
+        {!!error && <><T accessibilityRole="alert" style={s.small}>{error}</T><Button title="Try scanning again" secondary onPress={scanAgain}/></>}
         {analysing ? <Button title="Cancel analysis" secondary onPress={scanAgain}/> : <View style={{ gap: 8 }}>{cameraVisible && <Button title="Analyse any artwork" secondary disabled={busy || !cameraReady} onPress={analyseCamera}/>}<Button title="Analyse photo" secondary onPress={analysePhoto}/></View>}
         {!!candidates.length && <ScrollView style={styles.candidateList} contentContainerStyle={{ paddingBottom: 4 }}>{candidates.map(candidate => <Pressable key={candidate.artwork.id} accessibilityRole="button" accessibilityLabel={`Confirm ${candidate.artwork.title} by ${candidate.artwork.artist}`} onPress={() => { void choose(candidate); }} style={styles.candidate}>
           <Image source={images[candidate.artwork.id]} style={styles.thumbnail}/><View style={{ flex: 1 }}><T style={styles.artTitle}>{candidate.artwork.title}</T><T style={s.small}>{candidate.artwork.artist} · {candidate.artwork.year}</T><T style={styles.matchLabel}>Possible match · tap to confirm</T></View><Icon name="chevron-forward" size={18}/>
         </Pressable>)}</ScrollView>}
         {cameraVisible && <Pressable accessibilityRole="button" accessibilityLabel="Pause scanning" onPress={() => { loop.stop(); setPaused(true); setCandidates([]); }} style={styles.pause}><T style={s.small}>Pause scanning</T></Pressable>}
-        <T style={styles.privacy}>Photos are analysed locally and not saved by Unframe. Suggested artwork titles and artists may be searched in public catalogues; your photo is not sent to those sources.</T>
       </View>
     </> : <View style={styles.resultArea}><ScrollView style={styles.resultSheet} contentContainerStyle={styles.resultContent}>
       <View style={styles.statusRow}><Image source={images[art.id]} style={styles.thumbnail}/><View style={{ flex: 1 }}><T style={styles.matchLabel}>YOUR SELECTED WORK</T><T accessibilityRole="header" style={styles.artTitle}>{art.title}</T><T style={s.small}>{art.artist} · {art.year}</T></View></View>

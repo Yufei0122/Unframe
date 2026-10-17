@@ -2,11 +2,12 @@ import { existsSync } from 'node:fs';
 import { mkdir } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
-import { ensureOllama, installShutdown, ollamaModel, planningModel, pullOllamaModel, python, root, run, stopOwned } from './ai-runtime.mjs';
+import { applyInteractivePerformanceProfile, ensureOllama, installShutdown, ollamaModel, planningModel, pullOllamaModel, python, root, run, stopOwned } from './ai-runtime.mjs';
 import { readAIConfig } from '../server/ai/config.js';
 import { inspectVisionModel } from '../server/ai/vision.js';
 
 installShutdown();
+applyInteractivePerformanceProfile();
 const errors = [];
 async function stage(label, action) {
   try { console.log(`\n${label}`); await action(); return true; }

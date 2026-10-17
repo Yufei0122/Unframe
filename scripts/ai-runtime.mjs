@@ -25,29 +25,35 @@ export function endpoint(name, fallback) {
 }
 export const clipUrl = endpoint('OPENCLIP_URL', 'http://127.0.0.1:8001');
 export const ollamaUrl = endpoint('OLLAMA_URL', 'http://127.0.0.1:11434');
-export const ollamaModel = process.env.OLLAMA_MODEL || 'qwen3:4b';
+export let ollamaModel = process.env.OLLAMA_MODEL || 'qwen3:1.7b';
 if (!/^[a-zA-Z0-9_.:/-]+$/.test(ollamaModel) || /cloud/i.test(ollamaModel)) throw new Error('OLLAMA_MODEL must name a locally installed model, not a cloud model.');
 export const planningModel = process.env.OLLAMA_PLANNING_MODEL || 'qwen3:1.7b';
 if (!/^[a-zA-Z0-9_.:/-]+$/.test(planningModel) || /cloud/i.test(planningModel)) throw new Error('OLLAMA_PLANNING_MODEL must name a locally installed model, not a cloud model.');
 
 export function applyInteractivePerformanceProfile(env = process.env) {
   const legacy = {
-    OPENCLIP_TIMEOUT_MS: ['120000', '4500'], OLLAMA_VISION_TIMEOUT_MS: ['540000', '14000'],
+    OPENCLIP_TIMEOUT_MS: ['120000', '4500'], OLLAMA_VISION_TIMEOUT_MS: ['540000', '120000'],
     OLLAMA_TIMEOUT_MS: ['300000', '14000'], OLLAMA_NUM_CTX: ['4096', '2048'], OLLAMA_NUM_GPU: ['0', '-1'],
     OLLAMA_NUM_PREDICT: ['768', '256'], OLLAMA_KEEP_ALIVE: ['0', '10m'],
     OLLAMA_PLANNING_NUM_PREDICT: ['192', '1024'],
-    EXPO_PUBLIC_AI_TIMEOUT_MS: ['330000', '14500'], EXPO_PUBLIC_CLIP_TIMEOUT_MS: ['150000', '5000'],
-    EXPO_PUBLIC_VISION_TIMEOUT_MS: ['660000', '14500'],
+    EXPO_PUBLIC_AI_TIMEOUT_MS: ['330000', '50000'], EXPO_PUBLIC_CLIP_TIMEOUT_MS: ['150000', '5000'],
+    EXPO_PUBLIC_VISION_TIMEOUT_MS: ['660000', '130000'],
   };
   const changed = [];
+  if (env.OLLAMA_MODEL === 'qwen3:4b') { env.OLLAMA_MODEL = 'qwen3:1.7b'; changed.push('OLLAMA_MODEL'); }
+  if (['qwen3-vl:4b', 'qwen3-vl:2b'].includes(env.OLLAMA_VISION_MODEL)) {
+    env.OLLAMA_VISION_MODEL += '-instruct'; changed.push('OLLAMA_VISION_MODEL');
+  }
   if (!env.AI_RESPONSE_BUDGET_MS) { env.AI_RESPONSE_BUDGET_MS = '15000'; changed.push('AI_RESPONSE_BUDGET_MS'); }
   if (!env.AI_RECOGNITION_BUDGET_MS) { env.AI_RECOGNITION_BUDGET_MS = '5000'; changed.push('AI_RECOGNITION_BUDGET_MS'); }
+  if (!env.AI_ANALYSIS_BUDGET_MS) { env.AI_ANALYSIS_BUDGET_MS = '125000'; changed.push('AI_ANALYSIS_BUDGET_MS'); }
   for (const [key, [before, after]] of Object.entries(legacy)) {
     if (env[key] === undefined || env[key] === before) { if (env[key] !== after) changed.push(key); env[key] = after; }
   }
-  for (const [key, before, after] of [['OPENCLIP_TIMEOUT_MS', '10000', '4500'], ['EXPO_PUBLIC_CLIP_TIMEOUT_MS', '14500', '5000']]) {
+  for (const [key, before, after] of [['OPENCLIP_TIMEOUT_MS', '10000', '4500'], ['EXPO_PUBLIC_CLIP_TIMEOUT_MS', '14500', '5000'], ['OLLAMA_VISION_TIMEOUT_MS', '14000', '120000'], ['EXPO_PUBLIC_VISION_TIMEOUT_MS', '14500', '130000'], ['EXPO_PUBLIC_AI_TIMEOUT_MS', '14500', '50000']]) {
     if (env[key] === before) { env[key] = after; if (!changed.includes(key)) changed.push(key); }
   }
+  if (env === process.env) ollamaModel = env.OLLAMA_MODEL || 'qwen3:1.7b';
   return changed;
 }
 
@@ -266,7 +272,7 @@ export async function ensureNode({ planningOnly = false } = {}) {
     const status = await getJSON(`${address}/api/ai/${planningOnly ? 'planning/status' : 'status?museumId=met'}`, 15000);
     const planning = planningConfiguration(readAIConfig());
     const expected = planningOnly ? planning
-      : { ...planning, embeddingModel: identity.model, embeddingPretrained: identity.pretrained, dimension: identity.dimensions, visionModel: process.env.OLLAMA_VISION_MODEL || 'qwen3-vl:4b', analysisVersion: 2 };
+      : { ...planning, embeddingModel: identity.model, embeddingPretrained: identity.pretrained, dimension: identity.dimensions, visionModel: readAIConfig().visionModel, analysisVersion: 3, visionTimeoutMs: readAIConfig().visionTimeoutMs, visionNumPredict: readAIConfig().visionNumPredict, visionNumCtx: readAIConfig().visionNumCtx, analysisBudgetMs: readAIConfig().analysisBudgetMs, explanationTimeoutMs: readAIConfig().explanationTimeoutMs };
     const mismatches = Object.entries(expected).filter(([key, value]) => status?.configuration?.[key] !== value).map(([key]) => key);
     if (mismatches.length) {
       throw new Error(`The Unframe process at ${address} is using an older or different AI configuration (${mismatches.join(', ')}). It was left running. Stop it in its original terminal, then rerun npm.cmd run ${planningOnly ? 'ai:routes' : 'ai:up'} (or choose another PORT).`);

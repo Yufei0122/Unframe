@@ -38,7 +38,7 @@ before(async () => { image = await sharp({ create: { width: 20, height: 20, chan
 
 test('configuration is local, model identity is fixed and CPU inference is configurable', () => {
   assert.throws(() => readAIConfig({ ARTWORK_MATCH_THRESHOLD: 'bad' }));
-  assert.equal(config.ollamaModel, 'qwen3:4b'); assert.equal(config.planningModel, 'qwen3:1.7b'); assert.equal(config.dimension, 512);
+  assert.equal(config.ollamaModel, 'qwen3:1.7b'); assert.equal(config.planningModel, 'qwen3:1.7b'); assert.equal(config.dimension, 512);
   assert.equal(config.embeddingModel, 'ViT-B-32'); assert.equal(config.embeddingPretrained, 'laion2b_s34b_b79k');
   assert.equal(config.timeoutMs, 14000); assert.equal(config.responseBudgetMs, 15000); assert.equal(config.recognitionBudgetMs, 5000); assert.equal(config.clipTimeoutMs, 4500); assert.equal(config.ollamaNumGpu, -1);
   assert.equal(readAIConfig({ OLLAMA_TIMEOUT_MS: '600000' }).timeoutMs, 600000);
@@ -119,7 +119,7 @@ test('Qwen uses local metadata, think:false and JSON schema; rejects truncated, 
   let payload;
   const client = createOllamaService(config, { request: async (endpoint, body) => { assert.equal(endpoint, '/api/chat'); payload = body; return jsonCandidate(body.format.properties.recommendedArtworkIds ? recommendation : explanationSelection); } });
   await client.generateArtworkExplanation(collection[0], ['Nature'], collection);
-  assert.equal(payload.model, 'qwen3:4b');
+  assert.equal(payload.model, 'qwen3:1.7b');
   assert.equal(payload.think, false); assert.equal(payload.stream, false); assert.equal(payload.format.type, 'object');
   assert.equal(payload.options.num_gpu, -1); assert.equal(payload.options.num_ctx, 2048);
   assert.equal(payload.options.num_predict, 256); assert.equal(payload.keep_alive, '10m'); assert.match(payload.messages[1].content, /Claude Monet/);
@@ -249,7 +249,7 @@ before(async () => {
     return { ...identity, embedding: vector(mode === 'no-match' ? 1 : 0) };
   } };
   const ollamaClient = { request: async (endpoint, body) => {
-    if (endpoint === '/api/tags') return { models: [{ name: 'qwen3:4b' }] };
+    if (endpoint === '/api/tags') return { models: [{ name: config.ollamaModel }] };
     generationCalls++;
     if (mode === 'down' || mode === 'explanation-down') return unavailable();
     if (body.format.properties.reply) {
@@ -531,7 +531,7 @@ test('planning and artwork budgets follow the operation even when model names ma
   } });
   await service.generateArtworkExplanation(collection[0], [], collection);
   await service.generateRouteRecommendations({ interests: [], mustSeeArtworkIds: [] }, collection);
-  assert.deepEqual(calls.map(({ body, timeout }) => [body.options.num_predict, body.options.num_ctx, timeout]), [[256, 2048, undefined], [1024, 4096, 0]]);
+  assert.deepEqual(calls.map(({ body, timeout }) => [body.options.num_predict, body.options.num_ctx, timeout]), [[256, 2048, 45000], [1024, 4096, 0]]);
 });
 
 test('a truncated planning answer is regenerated once with a larger budget and the original request', async t => {

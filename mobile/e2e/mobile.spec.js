@@ -114,6 +114,16 @@ test('nearby artworks drag horizontally and View all opens a dedicated image gal
   await page.mouse.move(box.x + 40, box.y + box.height / 2, { steps: 8 });
   await page.mouse.up();
   await expect.poll(() => rail.evaluate(element => element.scrollLeft)).toBeGreaterThan(40);
+  // Real touch panning must remain native instead of entering the mouse-drag handler.
+  await rail.evaluate(element => { element.scrollLeft = 0; });
+  const touch = await page.context().newCDPSession(page);
+  await touch.send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 1 });
+  const fromX = box.x + box.width - 30, toX = box.x + 40, y = box.y + box.height / 2;
+  await touch.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: fromX, y }] });
+  for (let step = 1; step <= 8; step++) await touch.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: fromX + (toX - fromX) * step / 8, y }] });
+  await touch.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  await expect.poll(() => rail.evaluate(element => element.scrollLeft)).toBeGreaterThan(40);
+  await touch.detach();
   await page.getByRole('button', { name: 'View all nearby artworks' }).click();
   await expect(page.getByRole('heading', { name: 'Nearby Artworks', exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Explore Self-Portrait with a Straw Hat' })).toBeVisible();

@@ -82,7 +82,7 @@ export function createOllamaService(config, client = createLocalClient(config, '
         const started = performance.now();
         const data = await client.request('/api/chat', { ...payload,
           options: { temperature: 0, seed: 7, num_ctx: numCtx, num_gpu: config.ollamaNumGpu, num_predict: budget },
-        }, planning ? 0 : undefined, signal);
+        }, planning ? 0 : config.explanationTimeoutMs, signal);
         if (signal?.aborted) throw new AIError(499, 'REQUEST_CANCELLED', 'The request was cancelled.');
         const diagnostics = generationDiagnostics(data, index + 1, budget, numCtx, Math.round(performance.now() - started));
         attempts.push(diagnostics);
@@ -121,7 +121,7 @@ export function createOllamaService(config, client = createLocalClient(config, '
       const editContext = { ...previousContext, artworks: context.artworks.map(({ id, title, artist, tags }) => ({ id, title, artist, tags })) };
       return generate(config.planningModel, languageInstruction + ' The JSON context contains preferences BEFORE the latest request. The final user message is the NEW request and overrides old preferences and history. FIRST return ALL updated preference fields, THEN reply with one brief confirmation or clarification. Apply every explicit change; preserve fields not changed, including must-see IDs. mustSeeArtworkIds means works the visitor explicitly selected, never thematic recommendations; changing interests alone must not add IDs. A const constraint on that list requires an exact copy, with no additions or removals. Extract requested time into availableMinutes. Map colour/color/色彩/颜色 to interest Colour; less walking/少走路 to walkingPreference less_walking; step-free/无障碍 to accessibilityRequirements containing step_free; wheelchair/轮椅 to wheelchair. Replace conflicting old interests when the request changes focus. Use only supplied artwork/location IDs. For an ambiguous change preserve that field and ask briefly. Reply must not contain an itinerary, artwork stop list, walking route, total visit-time calculation or claims that a route is feasible. The separate route engine runs only when the visitor presses Generate route.', editContext, schema, message, signal, true);
     },
-    async generateArtworkExplanation(artwork, preferences, collection) {
+    async generateArtworkExplanation(artwork, preferences, collection, signal) {
       const { id, title, artist, year, medium, source, sourceUrl } = artwork;
       const nextArtworks = collection.filter(a => a.id !== id).map(a => ({ id: a.id, title: a.title, tags: a.tags }));
       const choices = catalogueExplanationOptions(artwork);
@@ -131,7 +131,7 @@ export function createOllamaService(config, client = createLocalClient(config, '
         interpretationNoteId: { type: 'string', enum: choices.interpretationNotes.map(note => note.id) },
         suggestedNextArtwork: { anyOf: [{ type: 'null' }, ...(nextArtworks.length ? [{ type: 'string', enum: nextArtworks.map(a => a.id) }] : [])] },
       });
-      const result = await generate(config.ollamaModel, 'Organise a grounded, extractive artwork explanation. Select one supplied summary note ID, one supplied interpretation note ID, and 1-3 supplied fact IDs in a helpful order for the visitor preferences. Return IDs only, never write or rewrite prose or invent facts. suggestedNextArtwork is null or a supplied nextArtworks ID. The application maps your selected IDs to exact catalogue text and labels interpretation separately.', { artwork: { id, title, artist, year, medium, source, sourceUrl }, ...choices, visitorPreferences: preferences, nextArtworks }, schema);
+      const result = await generate(config.ollamaModel, 'Organise a grounded, extractive artwork explanation. Select one supplied summary note ID, one supplied interpretation note ID, and 1-3 supplied fact IDs in a helpful order for the visitor preferences. Return IDs only, never write or rewrite prose or invent facts. suggestedNextArtwork is null or a supplied nextArtworks ID. The application maps your selected IDs to exact catalogue text and labels interpretation separately.', { artwork: { id, title, artist, year, medium, source, sourceUrl }, ...choices, visitorPreferences: preferences, nextArtworks }, schema, undefined, signal);
       return assembleGroundedExplanation(result, artwork, nextArtworks.map(a => a.id));
     },
     async generateRouteRecommendations(preferences, collection, signal) {

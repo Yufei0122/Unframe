@@ -62,7 +62,7 @@ test('changing museums starts a separate planning conversation', async ({ page }
   await page.getByRole('button', { name: 'Choose GOMA', exact: true }).click();
   await page.getByRole('button', { name: 'Start visit', exact: true }).click();
   await page.getByRole('tab', { name: /Plan/ }).click();
-  await expect(page.getByText('GOMA', { exact: true }).filter({ visible: true })).toBeVisible();
+  await expect(page.getByTestId('planning-museum').filter({ visible: true })).toContainText('GOMA');
   await expect(page.getByTestId('visit-preferences').filter({ visible: true })).not.toContainText('Water Lilies');
   await expect(page.getByText('Water Lilies is included in your Met visit.', { exact: true })).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Include The obliteration room', exact: true })).toBeVisible();

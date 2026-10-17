@@ -17,6 +17,7 @@ test('an unknown uploaded photo receives visual analysis with uncertainty and so
   await page.getByLabel('Upload artwork image').setInputFiles(photo);
   await expect(page.getByRole('heading', { name: 'Artwork identity uncertain' })).toBeVisible();
   await expect(page.getByText('A figure against a landscape.')).toBeVisible();
+  await page.getByRole('button', { name: 'More details' }).click();
   await expect(page.getByText('Model suggestions · unverified')).toBeVisible();
   await expect(page.getByText('Some public sources could not be reached.', { exact: false })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Open artwork details' })).toHaveCount(0);
@@ -30,7 +31,9 @@ test('resuming during general analysis discards the late result and restarts lig
   await openScan(page);
   await page.getByLabel('Upload artwork image').setInputFiles(photo);
   await expect(page.getByTestId('artwork-scan-transition')).toBeVisible();
-  await expect(page.getByText('Analysing the image and checking public sources…', { exact: false })).toBeVisible();
+  await expect(page.getByRole('progressbar', { name: 'Looking closer…' })).toBeVisible();
+  await expect(page.getByText('Target: under 15 seconds.', { exact: false })).toHaveCount(0);
+  await expect(page.getByText('Camera frames go to OpenCLIP', { exact: false })).toHaveCount(0);
   await page.getByRole('button', { name: 'Resume scanning', exact: true }).click();
   await pending.fulfill({ json: result }).catch(() => {});
   await expect(page.getByRole('heading', { name: 'Artwork identity uncertain' })).toHaveCount(0);
@@ -44,4 +47,19 @@ test('a missing vision model is an actionable error, not an empty artwork result
   await expect(page.getByRole('alert')).toContainText('ai:setup:vision');
   await expect(page.getByRole('heading', { name: 'Artwork identity uncertain' })).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Analyse any artwork' })).toBeVisible();
+});
+
+test('CPU vision survives the former deadline and returns the completed result', async ({ page }) => {
+  let pending;
+  await page.route('**/api/ai/artworks/recognise*', route => route.fulfill({ json: { matched: false, candidates: [] } }));
+  await page.route('**/api/ai/artworks/analyse', route => { pending = route; });
+  await openScan(page);
+  await page.clock.install();
+  await page.getByLabel('Upload artwork image').setInputFiles(photo);
+  await expect(page.getByRole('progressbar', { name: 'Looking closer…' })).toBeVisible();
+  await page.clock.fastForward(16000);
+  await expect(page.getByRole('progressbar', { name: 'Taking a closer look…' })).toBeVisible();
+  await expect(page.getByRole('alert')).toHaveCount(0);
+  await pending.fulfill({ json: result });
+  await expect(page.getByRole('heading', { name: 'Artwork identity uncertain' })).toBeVisible();
 });

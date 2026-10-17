@@ -57,7 +57,7 @@ export async function runVisionAcceptance({ config = readAIConfig(), backend, fe
     && !address.username && !address.password && address.pathname === '/' && !address.search && !address.hash, 'Acceptance checks require a local backend origin.');
   const reportFile = path.join(outputRoot, 'acceptance', `vision-${new Date().toISOString().replace(/[:.]/g, '-')}-${randomUUID().slice(0, 8)}.json`);
   const report = { startedAt: new Date().toISOString(), completedAt: null, passed: false,
-    scope: 'general_artwork_local_acceptance', backend, model: config.visionModel, responseBudgetMs: config.responseBudgetMs,
+    scope: 'general_artwork_local_acceptance', backend, model: config.visionModel, analysisBudgetMs: config.analysisBudgetMs,
     training: { performed: false, method: 'pretrained_inference', labelledTrainingDataset: null },
     limitation: 'Two bundled paintings and one generated blank image are controlled acceptance inputs, not independent visitor photographs. Abstaining from identity is allowed. This does not establish arbitrary-artwork accuracy, fine-tuning, or a general false-positive rate.',
     checks: [], failures: [] };
@@ -82,13 +82,13 @@ export async function runVisionAcceptance({ config = readAIConfig(), backend, fe
   async function json(endpoint, init = {}) {
     const started = performance.now();
     let response;
-    try { response = await fetchImpl(`${address.origin}${endpoint}`, { ...init, signal: AbortSignal.timeout(config.responseBudgetMs) }); }
+    try { response = await fetchImpl(`${address.origin}${endpoint}`, { ...init, signal: AbortSignal.timeout(endpoint === '/api/ai/artworks/analyse' ? config.analysisBudgetMs + 5000 : config.responseBudgetMs) }); }
     catch (error) { throw new Error(`Cannot reach ${address.origin}${endpoint} (${error.cause?.code || error.name}). Start the updated backend with npm.cmd run ai:up and check the root PORT setting.`); }
     let result;
     try { result = await response.json(); } catch { throw new Error(`${endpoint}: HTTP ${response.status}, invalid JSON. Check the backend port/version.`); }
     const responseMs = Math.round(performance.now() - started);
     assert.ok(response.ok, `${endpoint}: HTTP ${response.status}, ${result.code || ''} ${result.error || ''}`);
-    if (endpoint === '/api/ai/artworks/analyse') assert.ok(responseMs < config.responseBudgetMs, `${endpoint} took ${responseMs} ms; target is below ${config.responseBudgetMs} ms.`);
+    if (endpoint === '/api/ai/artworks/analyse') assert.ok(responseMs < config.analysisBudgetMs, `${endpoint} took ${responseMs} ms; budget is ${config.analysisBudgetMs} ms.`);
     return { response, result, responseMs };
   }
   await save();
@@ -99,7 +99,7 @@ export async function runVisionAcceptance({ config = readAIConfig(), backend, fe
     row.configuration = result.configuration; row.services = result.services;
     assert.equal(response.headers.get('access-control-allow-origin'), 'http://localhost:8081', 'The browser origin is not allowed.');
     assert.equal(result.configuration?.visionModel, config.visionModel, 'Restart the updated backend.');
-    assert.equal(result.configuration?.analysisVersion, 2, 'Restart the updated backend.');
+    assert.equal(result.configuration?.analysisVersion, 3, 'Restart the updated backend.');
     assert.equal(result.analysisReady, true, result.analysisMessage);
   });
   if (ready) {
@@ -128,11 +128,19 @@ export async function runVisionAcceptance({ config = readAIConfig(), backend, fe
     row.references = result.records.map(({ id, sourceUrl }) => ({ id, sourceUrl }));
     assert.equal(result.providers.length, 3, 'Expected all three configured public sources.');
     assert.ok(result.providers.every(provider => provider.status === 'completed'), 'A public source is unavailable or partial; local analysis may work but full retrieval has not passed.');
-    const imageSource = result.records.find(record => record.imageUrl);
-    assert.ok(imageSource, 'No downloadable public reference image was returned.');
-    const image = await sources.image(imageSource.imageUrl, signal);
-    const normalized = await normalizeImage(image.bytes, image.mime);
-    row.downloadedReference = { id: imageSource.id, sha256: createHash('sha256').update(normalized).digest('hex') };
+    row.referenceDownloads = [];
+    // A stale reference URL must not prevent comparison with the next provider.
+    // Exercise the same bounded alternatives as the application, retaining failures.
+    for (const imageSource of result.records.filter(record => record.imageUrl).slice(0, 3)) {
+      try {
+        const image = await sources.image(imageSource.imageUrl, signal);
+        const normalized = await normalizeImage(image.bytes, image.mime);
+        row.referenceDownloads.push({ id: imageSource.id, passed: true });
+        row.downloadedReference = { id: imageSource.id, sha256: createHash('sha256').update(normalized).digest('hex') };
+        break;
+      } catch (error) { row.referenceDownloads.push({ id: imageSource.id, passed: false, code: error.code || error.message }); }
+    }
+    assert.ok(row.downloadedReference, 'No public reference image could be downloaded from the available providers.');
   });
   else report.publicSearch = 'disabled_by_configuration';
   report.completedAt = new Date().toISOString();

@@ -44,8 +44,8 @@ const imageURL = value => { try { return publicURL(value).href; } catch { return
 
 export function createPublicCatalogues({ client = createPublicClient() } = {}) {
   async function met(query, signal) {
-    const url = new URL('https://collectionapi.metmuseum.org/public/collection/v1/search');
-    url.search = new URLSearchParams({ q: query.title, title: 'true', hasImages: 'true' });
+    const url = new URL('https://collectionapi.metmuseum.org/public/collection/v1.1/search');
+    url.search = new URLSearchParams({ q: query.title, title: 'true', hasImages: 'true', offset: '0', limit: '2' });
     const result = await client.get(url, { signal });
     if (!Array.isArray(result.objectIDs) && result.objectIDs !== null) throw new Error('SOURCE_RESPONSE');
     const records = [];

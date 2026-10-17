@@ -17,24 +17,28 @@ export function readAIConfig(env = process.env) {
     if (!['http:', 'https:'].includes(url.protocol) || !['127.0.0.1', 'localhost', '[::1]'].includes(url.hostname) || url.username || url.password || url.pathname !== '/' || url.search || url.hash) throw new Error(`${key} must point to a loopback model service without credentials or a path`);
     return url.origin;
   };
-  const ollamaModel = env.OLLAMA_MODEL || 'qwen3:4b';
+  const ollamaModel = env.OLLAMA_MODEL || 'qwen3:1.7b';
   if (!/^[a-zA-Z0-9_.:/-]+$/.test(ollamaModel) || /cloud/i.test(ollamaModel)) throw new Error('OLLAMA_MODEL must be a locally installed model');
   const planningModel = env.OLLAMA_PLANNING_MODEL || 'qwen3:1.7b';
   if (!/^[a-zA-Z0-9_.:/-]+$/.test(planningModel) || /cloud/i.test(planningModel)) throw new Error('OLLAMA_PLANNING_MODEL must be a locally installed model');
-  const visionModel = env.OLLAMA_VISION_MODEL || 'qwen3-vl:4b';
+  const visionModel = env.OLLAMA_VISION_MODEL || 'qwen3-vl:2b-instruct';
   if (!/^[a-zA-Z0-9_.:/-]+$/.test(visionModel) || /cloud/i.test(visionModel)) throw new Error('OLLAMA_VISION_MODEL must be a locally installed vision model');
   const ollamaNumCtx = integer('OLLAMA_NUM_CTX', 2048, 2048, 32768);
   const planningNumPredict = integer('OLLAMA_PLANNING_NUM_PREDICT', 1024, 128, 4096);
   return {
     clipUrl: localUrl('OPENCLIP_URL', 'http://127.0.0.1:8001'),
     ollamaUrl: localUrl('OLLAMA_URL', 'http://127.0.0.1:11434'), ollamaModel, planningModel,
-    visionModel, visionTimeoutMs: integer('OLLAMA_VISION_TIMEOUT_MS', 14000, 1000, 720000),
+    visionModel, visionTimeoutMs: integer('OLLAMA_VISION_TIMEOUT_MS', 120000, 1000, 720000),
+    visionNumPredict: integer('OLLAMA_VISION_NUM_PREDICT', 768, 256, 2048),
+    visionNumCtx: integer('OLLAMA_VISION_NUM_CTX', 4096, 2048, 32768),
+    analysisBudgetMs: integer('AI_ANALYSIS_BUDGET_MS', 125000, 1000, 900000),
     responseBudgetMs: integer('AI_RESPONSE_BUDGET_MS', 15000, 1000, 60000),
     recognitionBudgetMs: integer('AI_RECOGNITION_BUDGET_MS', 5000, 1000, 15000),
     publicSearch: env.ARTWORK_PUBLIC_SEARCH !== 'false',
     embeddingModel: 'ViT-B-32', embeddingPretrained: 'laion2b_s34b_b79k',
     dimension: 512, threshold,
     timeoutMs: integer('OLLAMA_TIMEOUT_MS', 14000, 1000, 1800000),
+    explanationTimeoutMs: integer('OLLAMA_EXPLANATION_TIMEOUT_MS', 45000, 1000, 180000),
     clipTimeoutMs: integer('OPENCLIP_TIMEOUT_MS', 4500, 1000, 600000),
     ollamaNumCtx,
     planningNumCtx: integer('OLLAMA_PLANNING_NUM_CTX', Math.max(4096, ollamaNumCtx), 2048, 32768),

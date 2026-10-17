@@ -1,0 +1,316 @@
+{
+  "completedAt": "2026-10-17T16:59:12.611293+00:00",
+  "passed": true,
+  "scope": "CPU cloud integration and UI verification; not a device or universal artwork-accuracy certification",
+  "hardware": {
+    "gpuUsed": false,
+    "cpuQuota": "400000 100000",
+    "memoryLimitBytes": 17179869184,
+    "ollamaVersion": "0.40.5"
+  },
+  "finalBackendConfiguration": {
+    "valid": true,
+    "provider": "local",
+    "ollamaModel": "qwen3:1.7b",
+    "planningModel": "qwen3:1.7b",
+    "planningVersion": 6,
+    "ollamaUrl": "http://127.0.0.1:11434",
+    "timeoutMs": 14000,
+    "planningTimeoutMs": 0,
+    "numCtx": 4096,
+    "numGpu": -1,
+    "numPredict": 1024,
+    "retryNumPredict": 2048,
+    "keepAlive": "10m",
+    "embeddingModel": "ViT-B-32",
+    "embeddingPretrained": "laion2b_s34b_b79k",
+    "dimension": 512,
+    "visionModel": "qwen3-vl:2b-instruct",
+    "analysisVersion": 3,
+    "visionTimeoutMs": 120000,
+    "visionNumPredict": 768,
+    "visionNumCtx": 4096,
+    "analysisBudgetMs": 125000,
+    "explanationTimeoutMs": 45000,
+    "recognitionBudgetMs": 5000,
+    "responseBudgetMs": 15000
+  },
+  "officialModelPackages": [
+    {
+      "name": "qwen3-vl:4b-instruct",
+      "digest": "ee4b975b58c17ce268cd19d40db35d5edc64603035d2ffc1fee1968eb0947f7b",
+      "size": 3295636231
+    },
+    {
+      "name": "qwen3-vl:2b-instruct",
+      "digest": "ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+      "size": 1889519783
+    },
+    {
+      "name": "qwen3:1.7b",
+      "digest": "8f68893c685c3ddff2aa3fffce2aa60a30bb2da65ca488b61fff134a4d1730e7",
+      "size": 1359293444
+    }
+  ],
+  "realInference": {
+    "catalogueRecognition": {
+      "referenceAndVariantSamples": 48,
+      "referenceAndVariantChecksPassed": 48,
+      "negativeImages": 6,
+      "negativeImagesRejectedInBothMuseums": 6,
+      "minExpectedArtworkSimilarity": 0.8843139311852349,
+      "maxNegativeSimilarity": 0.4445158895028626,
+      "httpChecks": 8,
+      "httpChecksPassed": 8,
+      "failureCount": 0
+    },
+    "vision": {
+      "summary": {
+        "checks": 5,
+        "checksPassed": 5,
+        "identitySuggestionsCorrect": 2,
+        "identityAbstentions": 0,
+        "independentCameraAccuracy": null
+      },
+      "checks": [
+        {
+          "name": "backend_model_and_browser_origin",
+          "passed": true,
+          "elapsedMs": 30
+        },
+        {
+          "name": "water_lilies",
+          "passed": true,
+          "elapsedMs": 44942
+        },
+        {
+          "name": "harvesters",
+          "passed": true,
+          "elapsedMs": 44440
+        },
+        {
+          "name": "blank_negative",
+          "passed": true,
+          "elapsedMs": 250
+        },
+        {
+          "name": "public_source_search_and_reference_download",
+          "passed": true,
+          "elapsedMs": 2610
+        }
+      ]
+    },
+    "planning": {
+      "summary": {
+        "expectedChecks": 6,
+        "executedChecks": 6,
+        "passedChecks": 6,
+        "modelRoutesPassed": 3,
+        "fallbackResponses": 0
+      },
+      "checks": [
+        {
+          "name": "met/chinese_preferences",
+          "passed": true,
+          "elapsedMs": 23787
+        },
+        {
+          "name": "met/route_from_chat",
+          "passed": true,
+          "elapsedMs": 6706
+        },
+        {
+          "name": "goma/chinese_preferences",
+          "passed": true,
+          "elapsedMs": 14255
+        },
+        {
+          "name": "goma/route_from_chat",
+          "passed": true,
+          "elapsedMs": 8638
+        },
+        {
+          "name": "goma/english_revision",
+          "passed": true,
+          "elapsedMs": 20444
+        },
+        {
+          "name": "goma/route_from_revision",
+          "passed": true,
+          "elapsedMs": 10715
+        }
+      ]
+    },
+    "browserUploads": {
+      "passed": true,
+      "backend": "http://127.0.0.1:3004",
+      "web": "http://127.0.0.1:8081",
+      "verification": "Real browser file uploads, Node endpoints, OpenCLIP and Ollama; no model-response mocks or upload proxy.",
+      "samples": [
+        "water-lilies.jpg",
+        "quiet-geometry.png",
+        "water-lilies.jpg after model switch"
+      ],
+      "requests": [
+        {
+          "endpoint": "/api/ai/artworks/recognise",
+          "status": 200,
+          "elapsedMs": 202
+        },
+        {
+          "endpoint": "/api/ai/artworks/confirm",
+          "status": 200,
+          "elapsedMs": 5906
+        },
+        {
+          "endpoint": "/api/ai/artworks/recognise",
+          "status": 200,
+          "elapsedMs": 119
+        },
+        {
+          "endpoint": "/api/ai/artworks/analyse",
+          "status": 200,
+          "elapsedMs": 61576
+        },
+        {
+          "endpoint": "/api/ai/artworks/recognise",
+          "status": 200,
+          "elapsedMs": 183
+        },
+        {
+          "endpoint": "/api/ai/artworks/confirm",
+          "status": 200,
+          "elapsedMs": 16502
+        }
+      ]
+    },
+    "fourBInstruct": {
+      "passed": true,
+      "elapsedMs": 13584,
+      "warmRepeat": true,
+      "limitation": "Same-image warm control, not a cold-load benchmark"
+    }
+  },
+  "automatedChecks": [
+    {
+      "command": "npm test",
+      "passed": true,
+      "tests": 68,
+      "note": "Backend, API and overlapping AI/runtime tests"
+    },
+    {
+      "command": "npm run test:ai",
+      "passed": true,
+      "tests": 96,
+      "note": "Includes final inference-budget, migration, grounding and abstention fixes"
+    },
+    {
+      "command": "npm --prefix mobile test",
+      "passed": true,
+      "tests": 26
+    },
+    {
+      "command": "npm run mobile:check",
+      "passed": true
+    },
+    {
+      "command": "npm run check",
+      "passed": true
+    },
+    {
+      "command": "npm run mobile:export:web",
+      "passed": true,
+      "environment": "Expo cache redirected to workspace for this restricted cloud filesystem"
+    },
+    {
+      "command": "Mobile Playwright full suite via cloud Chromium runner",
+      "passed": true,
+      "testsPassed": 49,
+      "testsSkipped": 1,
+      "note": "Opt-in live test skipped in this fixture-based run; completed before the last result-photo sizing adjustment"
+    },
+    {
+      "command": "Scan and general-artwork Playwright regression",
+      "passed": true,
+      "testsPassed": 15
+    },
+    {
+      "command": "Home Playwright targeted regression",
+      "passed": true,
+      "testsPassed": 3,
+      "note": "Includes actual mouse drag and Chromium touch gesture, dedicated gallery, small and desktop layouts"
+    },
+    {
+      "command": "Final result-layout Playwright regression",
+      "passed": true,
+      "testsPassed": 5
+    },
+    {
+      "command": "UNFRAME_LIVE_AI_URL=http://127.0.0.1:3004 Playwright live-ai.spec.js",
+      "passed": true,
+      "testsPassed": 1,
+      "note": "Final interface, actual npm-start preview and browser file uploads; no upload interception or model mocks"
+    }
+  ],
+  "fixedFailures": [
+    "Thinking vision weights consumed the budget without completing JSON",
+    "Vision shared a too-small text output limit and client deadline",
+    "Unrecognised painter identity hallucination for a known catalogue image",
+    "Uniform image hallucination",
+    "Retired Met v1 search returned HTTP 410",
+    "Text interpretation timed out while reloading after vision",
+    "Long result content displaced Scan controls"
+  ],
+  "limitations": [
+    "Bundled catalogue reference transformations and negatives are integration controls; no independent camera accuracy or false-positive rate was established.",
+    "No model training or fine-tuning was performed.",
+    "General image analysis on this CPU took 44–62 seconds, so a fifteen-second response target is not met for this path. Recognition, warm text and cold model-switch timings are reported separately.",
+    "The Art Institute reference-image HTTP 403 is retained in vision.json; an alternate public Met image downloaded and decoded successfully. Provider-search and image-match coverage are distinct.",
+    "The recognition-only and early vision reports retain their then-current guide metadata; the final live browser test exercises the new shared 1.7B guide after vision.",
+    "Windows GPU drivers, physical camera and native device interaction remain unverified by this cloud run."
+  ],
+  "sourceSha256": {
+    "mobile/e2e/ai.spec.js": "b9a2b6bc7466950b3992f865b405c4d71ab97a11889bebdbdda3a5cc5c634aa5",
+    "mobile/e2e/general-artwork.spec.js": "3551ed8cd256eeaca436d2ff4012998eff41eda942c302a8b3ac03ff105891f5",
+    "mobile/e2e/goma.spec.js": "3556fcfd815891ec06b28415b12ff6c27399003c6772f28d98cc71fef43c8da9",
+    "mobile/e2e/live-ai.spec.js": "c531cd2f643da9e455b6a3b6ce085ff8b9eefb677f8939eb5caf84d3eba1215a",
+    "mobile/e2e/mobile.spec.js": "52def692d4973803bd653f5e3ed839fd592f12b1a0d681dbd80dc85e7cdc760f",
+    "mobile/e2e/planning.spec.js": "b6100423ebef364bae6407460739ee33d53767a8812e37a4d76e4a6646443271",
+    "mobile/src/ai.ts": "6f5e378b2f494795bad013a51514bb7e3e26a68213b55039e14b7ab452fe6bc2",
+    "mobile/src/components/ArtworkAnalysisResult.tsx": "956dbc675f77af8e4403299ce611e9e67b8cfb181f38dcfd7e0ac75aa686b7d3",
+    "mobile/src/components/ArtworkRail.tsx": "fb723b655a7f10bce08399ce506bc5ee5ebb0e1fcf8178276fc8c311c38e7431",
+    "mobile/src/components/ArtworkRail.web.tsx": "28c9017791d287fef5512f4d39436c5e9bf1642109b1bde495b6b1fec5c4f6ce",
+    "mobile/src/screens/AIPlanner.tsx": "2af2ef0770779fd4863a41b11d7286a0095e2d89cb4367e885ffb25d8385ca86",
+    "mobile/src/screens/Lookup.tsx": "ef0b963a7cb6e8a818c606d15f27e9db26367aea5d479c5d273cf24961aadf6e",
+    "mobile/src/screens/Lookup.web.tsx": "285ac8376f65bf520c7735a0a96c7a7f0e40cb61c3130ff11be56ea5cef938e9",
+    "mobile/src/screens/Museum.tsx": "8cd604876a97a57cb94f27cce93bf0418077a8178d89d7563820d0bb9113e938",
+    "scripts/ai-runtime.mjs": "1313088f900251feed7cf23017fbc5540e9b0357eb0eef5e435b30102a98c4d2",
+    "scripts/ai-setup-vision.mjs": "49381b0c0f75301dd0a27edaa12a6208ede3c853002a327d60ff18cd64418320",
+    "scripts/ai-setup.mjs": "d110fb110bdb65cacdc6e02ce0aca5d6b14174ebfd09b87cad556a300f80df8f",
+    "scripts/ai-up.mjs": "9df834aedbd9a30cba8eb6ad553fd8f44539981ab437592ddca2f24b95909c0f",
+    "scripts/check-ai.mjs": "fd55577295dff278f92d6a40e0fe00da8b1c55eb04d78620bd2e8bb9cce162ef",
+    "scripts/validate-artwork-vision.mjs": "49295a2976037cfb7f63429f833474aa806326e415796a4d2ccb23fc4af3d31b",
+    "scripts/validate-local-ai.mjs": "78db32e785b1147bf9bb7fd9b1403a4e3fea638e87aec15d0670064572e4a889",
+    "server/ai/artwork-analysis.js": "67003a53cd1a07a93d0f7e8dc85732884f0ed710fb3ea2558fb5201cc287803d",
+    "server/ai/config.js": "073fe44ff70cfc5c579647446754003b2b85ccf37b59744cba3ddc8fa73d4940",
+    "server/ai/handler.js": "a446aa40b07d070f5112a9bfca78d86e677da5e33655bfb90ce835dd1c46e41a",
+    "server/ai/ollama.js": "a7f8f9bd782c939db53c146d421bbe6d4efc3f9fb193af781a6092ea499ba61b",
+    "server/ai/public-catalogues.js": "28916819a03866968f67197e1bb94c5d5cc2189054c485a64c3d11ddd54a31f8",
+    "server/ai/recognition.js": "387f1d38e925a8b4fcab24f55317cae2ba68f437a940987fb4d9d4a5f5b5eff5",
+    "server/ai/status.js": "a6261c5897bb91dbd555eadc8d9a7149fd1bd2c444789cad575e9d59ebdb5198",
+    "server/ai/vision.js": "9a6434365f1adb93853f32f8235883e53548ce5e9a8cbbceb1e85345a73ba416",
+    "tests/ai-runtime.test.js": "c33336742ccca9ea9677dcf9ba73c1f98a50098976dec0bbefc3bb07bfb0741f",
+    "tests/ai.test.js": "254dd8c12631e1f0cf490259cf67612bc968e4a1a0047446d1b546e3e7a3f2a0",
+    "tests/artwork-acceptance.test.js": "ded74070fa2977ba7c675f0644126421ad0f19903e9a8d4bc5f834cd051f6a49",
+    "tests/artwork-analysis.test.js": "9ae588e350c31f23146f4716aa484c845dd55a1706ed3fc99f7ef7ab668e0270"
+  },
+  "artifactSha256": {
+    "recognition.json": "7f28451b10c4372aa13fb58d75e4db71b8e50f8907265afe2ce7aa55ca2da65b",
+    "vision.json": "a99a8de76eb7f26300427da9918867e3919d5e7c5c22ed9cc5c08a3d1c07a37a",
+    "routes.json": "a392173ae35280700664788598805ed70739b9ea3b779ba432db758d91bda361",
+    "browser-scan.json": "4ac1a61489a203b0804e336841234b5b22c5a1ba138d99783a7d383f10c8ec34",
+    "vision-4b-instruct.json": "25e84b8eaae05f2a2bc15fd0896ff54ef2be20ac5b3754b7633fb419b0646019",
+    "home.png": "507c926ffe7e5fd726a981904f87e8045748c95bad619f2d508d11c35e512ce3",
+    "scan.png": "69bc2ecc0d9532727918eb56dfbffc805bb4adbf3e1ee93a606ce8f23c0b7a0a"
+  }
+}
