@@ -474,6 +474,17 @@ test('explicitly preserving must-see works constrains exact IDs for both museums
   }
 });
 
+test('unrelated planning requests cannot turn recommendations into must-see selections', async () => {
+  const preferences = { interests: ['Nature'], availableMinutes: 30, currentLocation: 'entrance', walkingPreference: 'balanced', accessibilityRequirements: [], mustSeeArtworkIds: [] };
+  const service = createPlanningChatService({ collection, graph, museum: { name: 'The Met' },
+    ollama: createOllamaService(config, { request: async (_endpoint, body) => {
+      assert.deepEqual(body.format.properties.preferences.properties.mustSeeArtworkIds.const, []);
+      return jsonCandidate({ reply: 'I will focus on highlights.', preferences: { ...preferences, mustSeeArtworkIds: [] } });
+    } }) });
+  const result = await service.reply({ message: 'I have 30 minutes. Help me explore the highlights.', history: [], preferences });
+  assert.deepEqual(result.preferences.mustSeeArtworkIds, []);
+});
+
 test('GOMA chat rejects an extra valid artwork when the visitor explicitly keeps the selected must-see list', async () => {
   const preferences = { interests: ['Colour'], availableMinutes: 20, currentLocation: 'entrance', walkingPreference: 'less_walking', accessibilityRequirements: ['step_free'], mustSeeArtworkIds: ['goma-obliteration-room'] };
   for (const ids of [['goma-obliteration-room', 'goma-soul-under-the-moon'], []]) {
