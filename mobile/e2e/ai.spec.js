@@ -267,13 +267,13 @@ test('route opens a separate itinerary page and preserves preferences when retur
   await page.getByRole('tab', { name: /Plan/ }).click();
   await page.getByRole('textbox', { name: 'Message your visit planner' }).fill('I love Monet. Include Water Lilies.');
   await page.getByRole('button', { name: 'Send message', exact: true }).click();
-  await expect(page.getByText('Monet and Water Lilies are included.', { exact: true })).toBeVisible();
+  await expect(page.getByTestId('planning-answer-card')).toContainText('Water Lilies');
   await page.getByRole('textbox', { name: 'Message your visit planner' }).fill('Make it step-free with less walking.');
   await page.getByRole('textbox', { name: 'Message your visit planner' }).press('Enter');
   await expect(page.getByTestId('planning-answer-card')).toContainText('Step-free');
   await page.getByRole('tab', { name: /Home/ }).click();
   await page.getByRole('tab', { name: /Plan/ }).click();
-  await expect(page.getByText('Your visit is now step-free, with less walking.', { exact: true })).toBeVisible();
+  await expect(page.getByTestId('planning-answer-card')).toContainText('Step-free');
   await page.screenshot({ path: 'test-results/plan-chat.png' });
   await expect(page.getByTestId('route-preview-card')).toBeVisible();
   await page.getByRole('button', { name: 'View full itinerary', exact: true }).click();

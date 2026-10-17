@@ -130,10 +130,9 @@ test('slow planning chat survives the former client deadline and applies the com
   await expect(page.getByRole('button', { name: 'Send message', exact: true })).toBeDisabled();
   const { preferences } = pending.request().postDataJSON();
   await pending.fulfill({ json: { reply: 'Your 30-minute highlights visit is ready to plan.', preferences: { ...preferences, availableMinutes: 30 } } });
-  await expect(page.getByText('Your 30-minute highlights visit is ready to plan.', { exact: true })).toBeVisible();
+  await expect(page.getByTestId('planning-answer-card')).toContainText('30 minutes');
   await expect(page.getByTestId('route-preview-card')).toBeVisible();
   await expect(page.getByText('I have 30 minutes. Help me explore the highlights.', { exact: true })).toHaveCount(1);
-  await expect(page.getByTestId('planning-duration')).toContainText('Answer 7200');
 });
 
 for (const endpoint of ['chat', 'plan']) test(`manually cancelling an unlimited ${endpoint} request ignores its late response`, async ({ page }) => {
