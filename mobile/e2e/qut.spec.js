@@ -46,7 +46,7 @@ test('QUT demo supports artwork filtering, saved pieces and a complete slow-look
   await page.getByRole('button', { name: 'Preview GOMA on map', exact: true }).click();
   await page.getByRole('button', { name: 'Choose GOMA', exact: true }).click();
   await page.getByRole('button', { name: 'Start visit', exact: true }).click();
-  await expect(page.getByText('GOMA · DEMO LAYOUT')).toBeVisible();
+  await expect(page.getByText('GOMA · FLOOR PLAN')).toBeVisible();
   expect(errors).toEqual([]);
 });
 

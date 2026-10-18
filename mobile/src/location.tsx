@@ -69,5 +69,5 @@ export function useMuseumLocation() {
 }
 
 export function locationLabel(status: LocationState['status']) {
-  return { loading: 'Finding your museum…', nearby: 'Near your location', outside: 'Explore a demo museum', denied: 'Location off · demo museum', unavailable: 'Location unavailable · demo museum' }[status];
+  return { loading: 'Finding your museum…', nearby: 'Near your location', outside: 'Explore this museum', denied: 'Location is off', unavailable: 'Location unavailable' }[status];
 }

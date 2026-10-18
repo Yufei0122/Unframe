@@ -8,6 +8,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import sharp from 'sharp';
 import { catalogues } from '../server/ai/catalogues.js';
 import { readAIConfig } from '../server/ai/config.js';
+import { loopbackFetch } from '../server/ai/loopback-fetch.js';
 import { createEmbeddingService, createEmbeddingStore, cosineSimilarity, referenceImageUrl } from '../server/ai/embeddings.js';
 import { normalizeImage } from '../server/ai/images.js';
 import { parseExplanation } from '../server/ai/ollama.js';
@@ -27,8 +28,8 @@ const report = {
   startedAt: new Date().toISOString(), completedAt: null, passed: false,
   scope: chatOnly ? 'chinese_chat_retest_only' : recognitionOnly ? 'catalogue_recognition_acceptance' : 'full_local_ai_acceptance',
   verification: chatOnly ? 'One real Node HTTP/Ollama Chinese chat request; no embedding, explanation or route requests repeated; no mocks' : recognitionOnly ? 'Real OpenCLIP embeddings and Node HTTP catalogue recognition; no mocks; no guide/chat inference' : 'real OpenCLIP embeddings and real Node HTTP/Ollama inference; no mocks',
-  model: { embedding: config.embeddingModel, pretrained: config.embeddingPretrained, dimensions: config.dimension, ollama: config.ollamaModel },
-  backend, threshold: config.threshold,
+  model: { embedding: config.embeddingModel, pretrained: config.embeddingPretrained, dimensions: config.dimension, guide: config.ollamaModel, planning: config.planningModel },
+  backend, threshold: config.threshold, recognitionBudgetMs: config.recognitionBudgetMs, responseBudgetMs: config.responseBudgetMs,
   limitation: chatOnly ? 'Isolated Chinese chat retest. Initial embedding, recognition, explanation and route results remain in the unchanged initial report, including its first failed chat check. This retest does not repeat or replace those checks.' : 'Small, controlled sample of bundled references, mild transformations and six negative controls. Cosine similarity is neither probability nor accuracy. These results do not establish real visitor-camera accuracy or a general false-positive rate.',
   references: [], negatives: [], http: [], failures: [],
 };
@@ -50,7 +51,7 @@ function fail(stage, error) {
 async function checkHttp(name, action) {
   console.log(`HTTP ${name} (real inference can take several minutes on CPU).`);
   const started = performance.now();
-  const heartbeat = setInterval(() => console.log(`Waiting ${name}: ${Math.round((performance.now() - started) / 1000)} seconds; request timeout ${Math.round(config.timeoutMs / 1000)} seconds.`), 15000);
+  const heartbeat = setInterval(() => console.log(`Waiting ${name}: ${Math.round((performance.now() - started) / 1000)} seconds; planning requests have no automatic timeout.`), 15000);
   heartbeat.unref();
   const actualResponses = [];
   captureHttpResponse = response => actualResponses.push(response);
@@ -66,16 +67,20 @@ async function checkHttp(name, action) {
 }
 
 async function httpJSON(endpoint, body, { form, expectedStatus = 200 } = {}) {
-  const response = await fetch(`${backend}/api/ai/${endpoint}`, {
+  const started = performance.now();
+  const planning = endpoint.startsWith('routes/');
+  const response = await (planning ? loopbackFetch : fetch)(`${backend}/api/ai/${endpoint}`, {
     method: body !== undefined || form ? 'POST' : 'GET',
     ...(form ? { body: form } : body !== undefined ? { headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {}),
-    signal: AbortSignal.timeout(Math.max(config.timeoutMs, config.clipTimeoutMs) + 30000),
+    ...(planning ? {} : { signal: AbortSignal.timeout(endpoint.startsWith('artworks/recognise') ? config.recognitionBudgetMs : endpoint === 'artworks/confirm' ? config.explanationTimeoutMs + 5000 : config.responseBudgetMs) }),
   });
   const result = await response.json();
+  const responseMs = Math.round(performance.now() - started);
   // Capture before assertions so a language/semantic failure retains the actual
   // public-catalogue answer instead of only the assertion error.
-  captureHttpResponse?.({ endpoint, status: response.status, response: result });
+  captureHttpResponse?.({ endpoint, status: response.status, responseMs, response: result });
   assert.equal(response.status, expectedStatus, `${endpoint}: HTTP ${response.status} ${result.code || ''} ${result.error || ''}`);
+  if (endpoint.startsWith('artworks/recognise')) assert.ok(responseMs < config.recognitionBudgetMs, `${endpoint} took ${responseMs} ms; target is below ${config.recognitionBudgetMs} ms.`);
   return result;
 }
 
@@ -227,7 +232,7 @@ try {
       assert.equal(status.configuration.embeddingModel, config.embeddingModel);
       assert.equal(status.configuration.embeddingPretrained, config.embeddingPretrained);
       assert.equal(status.configuration.ollamaModel, config.ollamaModel);
-      assert.equal(status.ready, true, status.message);
+      assert.equal(recognitionOnly ? status.recognitionReady : status.ready, true, status.message);
       const catalogue = await httpJSON(`catalogue?museumId=${museumId}`);
       assert.deepEqual(catalogue.artworks.map(item => item.id), collection.map(item => item.id));
       return { museumId, configuration: status.configuration, catalogueArtworkIds: catalogue.artworks.map(item => item.id) };
@@ -286,7 +291,7 @@ try {
     assert.ok(result.preferences.mustSeeArtworkIds.includes(artwork.id));
     assert.ok(result.preferences.mustSeeArtworkIds.every(id => catalogues.get(museumId).collection.some(item => item.id === id)));
     assert.ok(result.preferences.interests.some(value => /colour|color|色彩|颜色/i.test(value)), 'Colour interest was not captured.');
-    return { museumId, provider: 'ollama', model: config.ollamaModel, message, result };
+    return { museumId, provider: 'ollama', model: config.planningModel, message, result };
   });
   }
 } catch (error) { fail('validation_setup_or_execution', error); }

@@ -1,8 +1,9 @@
-import { ensureOllama, installShutdown, pullOllamaModel, stopOwned } from './ai-runtime.mjs';
+import { applyInteractivePerformanceProfile, ensureOllama, installShutdown, pullOllamaModel, stopOwned } from './ai-runtime.mjs';
 import { readAIConfig } from '../server/ai/config.js';
 import { inspectVisionModel } from '../server/ai/vision.js';
 
 installShutdown();
+applyInteractivePerformanceProfile();
 try {
   const config = readAIConfig();
   await ensureOllama();

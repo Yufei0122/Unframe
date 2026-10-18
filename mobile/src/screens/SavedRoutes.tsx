@@ -39,7 +39,7 @@ export function SavedRoutesScreen() {
         <Pressable accessibilityRole="button" accessibilityLabel={`Remove saved route: ${route.title}`} onPress={() => { setRemoved(route); dispatch({ type: 'removeRoute', id: route.id }); }} style={styles.bookmark}><Icon name="bookmark" size={20} color={c.gold}/></Pressable>
       </View>;
     })}
-    {!!matching.length && <T style={styles.footnote}>Saved museum itineraries use the existing demo floor plans. Check current displays and access with the museum.</T>}
+    {!!matching.length && <T style={styles.footnote}>Check current displays and access with the museum before your visit.</T>}
   </ProfilePage>;
 }
 
@@ -53,7 +53,7 @@ export function SavedRouteDetailsScreen({ route }: NativeStackScreenProps<Profil
     <T style={styles.place}>{info.ids.length} artworks · {Math.ceil(info.minutes)} minutes</T>
     {saved.kind === 'museum' && <Button title="Open itinerary and map" icon="map-outline" onPress={() => nav.navigate('AIItinerary', { itinerary: saved.itinerary, museumId: saved.museumId })}/>}
     {info.ids.map((id, index) => { const a = artwork(id); return a && <Pressable accessibilityRole="button" accessibilityLabel={`Explore ${a.title}`} key={id} onPress={() => nav.navigate('Artwork', { id })} style={[pageStyles.card, styles.stop]}><Image source={images[id]} style={styles.stopImage}/><View style={{ flex: 1, gap: 4 }}><T style={styles.routeTitle}>{index + 1}. {a.title}</T><T style={styles.place}>{a.artist}</T><T style={styles.meta}>{a.minutes} min with the work</T></View><Icon name="chevron-forward-outline" color={c.gold}/></Pressable>; })}
-    <Notice>{saved.kind === 'museum' ? saved.itinerary.mapNotice : `Northbank is a sample gallery. ${saved.plan.stepFree ? 'This saved route uses step-free stops.' : 'This saved route may include stairs.'}`}</Notice>
+    <Notice>{saved.kind === 'museum' ? saved.itinerary.mapNotice : (saved.plan.stepFree ? 'This route uses step-free stops.' : 'This route may include stairs.')}</Notice>
     <Button title="Back to saved routes" secondary onPress={() => navigation.navigate('SavedRoutes')}/>
   </ProfilePage>;
 }

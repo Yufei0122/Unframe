@@ -35,7 +35,7 @@ async function screenshot(page, file) {
 
 test('saved artworks has working filters, search and bookmarks with Profile navigation retained', async ({ page }) => {
   await openProfile(page);
-  await page.getByRole('button', { name: 'View saved artworks', exact: true }).click();
+  await page.getByRole('button', { name: /Saved Artworks/ }).click();
   await expect(page.getByRole('heading', { name: 'Saved Artworks', exact: true })).toBeVisible();
   await expect(page.getByRole('tab', { name: /Profile/ })).toHaveAttribute('aria-selected', 'true');
   await screenshot(page, 'profile-saved-artworks');
@@ -51,7 +51,7 @@ test('saved artworks has working filters, search and bookmarks with Profile navi
   await page.getByRole('button', { name: 'Back to Profile', exact: true }).click();
   await expect(page.getByRole('button', { name: '5 Saved Artworks', exact: true })).toBeVisible();
   await page.reload(); await enterWelcome(page); await page.getByRole('button', { name: 'Start visit', exact: true }).click(); await page.getByRole('tab', { name: /Profile/ }).click();
-  await page.getByRole('button', { name: 'View saved artworks', exact: true }).click();
+  await page.getByRole('button', { name: /Saved Artworks/ }).click();
   await expect(page.getByRole('button', { name: 'Explore In bed', exact: true })).toHaveCount(0);
 });
 
@@ -78,8 +78,7 @@ test('saved routes support museum filters, details, removal and undo without cha
   await page.getByRole('button', { name: 'Open route: GOMA · Colour & Wonder', exact: true }).click();
   await page.getByRole('button', { name: 'Open itinerary and map', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Your itinerary', exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'Edit visit preferences', exact: true }).click();
-  await expect(page.getByText(/Let's make GOMA your own/)).toBeVisible();
+  await expect(page.getByRole('button', { name: /Save route|Unsave route/ })).toBeVisible();
 });
 
 test('recent activity groups known dates and filters actual visits, saves and AI routes', async ({ page }) => {
@@ -125,8 +124,8 @@ test('all three Profile pages fit a 320px viewport with larger text', async ({ p
   await page.setViewportSize({ width: 320, height: 640 });
   await page.addInitScript(value => localStorage.setItem('unframe.mobile.v1', JSON.stringify({ ...value, preferences: { ...value.preferences, largeText: true } })), seed);
   await openProfile(page, false);
-  for (const [button, name] of [['View saved artworks', 'artworks'], ['View saved routes', 'routes'], ['View recent activity', 'activity']]) {
-    await page.getByRole('button', { name: button, exact: true }).click();
+  for (const [button, name] of [['Saved Artworks', 'artworks'], ['View saved routes', 'routes'], ['View recent activity', 'activity']]) {
+    await page.getByRole('button', { name: button === 'Saved Artworks' ? /Saved Artworks/ : button, exact: button !== 'Saved Artworks' }).click();
     const scroll = page.getByTestId('profile-subpage-scroll').filter({ visible: true });
     const width = await scroll.evaluate(e => ({ client: e.clientWidth, scroll: e.scrollWidth }));
     expect(width.scroll).toBe(width.client);

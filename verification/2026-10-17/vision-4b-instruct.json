@@ -1,0 +1,29 @@
+{
+  "model": "qwen3-vl:4b-instruct",
+  "hardware": "CPU only",
+  "passed": true,
+  "startedAt": "2026-10-17T16:32:51.057Z",
+  "modelCheck": {
+    "available": true,
+    "model": "qwen3-vl:4b-instruct",
+    "imageInput": true
+  },
+  "actual": {
+    "artworkPresence": "likely",
+    "description": "Abstract pond with lily pads and reeds in blues, greens, and reds; textured brushstrokes dominate composition.",
+    "visualFeatures": [
+      "Impressionistic brushwork",
+      "Dominant cool tones",
+      "Textural depth"
+    ],
+    "visibleText": [],
+    "hypotheses": [
+      {
+        "title": "Water Lilies",
+        "artist": "Claude Monet",
+        "basis": "Style and subject match catalogue reference"
+      }
+    ]
+  },
+  "elapsedMs": 13584
+}

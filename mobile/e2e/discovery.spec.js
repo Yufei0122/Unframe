@@ -47,7 +47,7 @@ test('OpenLayers city markers select the corresponding previews and demo entranc
   await page.getByRole('button', { name: 'Choose GOMA', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Start visit', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Start visit', exact: true }).click();
-  await expect(page.getByText('GOMA · DEMO LAYOUT')).toBeVisible();
+  await expect(page.getByText('GOMA · FLOOR PLAN')).toBeVisible();
   expect(errors).toEqual([]);
 });
 

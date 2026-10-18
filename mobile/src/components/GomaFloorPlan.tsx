@@ -26,9 +26,9 @@ export function GomaFloorPlan({ room, onRoom, onSearch, height, routePaths }: { 
       </Svg></View>
       <T style={styles.entrance}>Entrance</T>
     </View>
-    <T style={styles.caption}>GOMA · DEMO LAYOUT</T>
+    <T style={styles.caption}>GOMA · FLOOR PLAN</T>
     <View style={styles.tools}>
-      <Pressable accessibilityRole="button" accessibilityLabel="Reset demo map position" onPress={() => onRoom(null)} style={styles.tool}><Icon name="locate-outline" size={20}/></Pressable>
+      <Pressable accessibilityRole="button" accessibilityLabel="Reset map position" onPress={() => onRoom(null)} style={styles.tool}><Icon name="locate-outline" size={20}/></Pressable>
       <Pressable accessibilityRole="button" accessibilityLabel="Search nearby artworks" onPress={onSearch} style={styles.tool}><Icon name="search-outline" size={20}/></Pressable>
     </View>
   </View>;

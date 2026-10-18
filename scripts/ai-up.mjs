@@ -1,4 +1,4 @@
-import { ensureClip, ensureOllama, ensureNode, startMobileWeb, installShutdown, keepRunning, requireOllamaModel, root, run, stopOwned } from './ai-runtime.mjs';
+import { applyInteractivePerformanceProfile, ensureClip, ensureOllama, ensureNode, startMobileWeb, installShutdown, keepRunning, requireOllamaModel, pullOllamaModel, planningModel, root, run, stopOwned, warmOllamaModel } from './ai-runtime.mjs';
 import { readAIConfig } from '../server/ai/config.js';
 import { createEmbeddingStore } from '../server/ai/embeddings.js';
 import path from 'node:path';
@@ -6,10 +6,14 @@ import { inspectVisionModel } from '../server/ai/vision.js';
 
 installShutdown();
 try {
-  if (process.argv.slice(2).some(arg => !['--web', '--verify'].includes(arg))) throw new Error('Usage: npm.cmd run ai:up -- [--web] [--verify]');
+  if (process.argv.slice(2).some(arg => !['--web', '--verify', '--features'].includes(arg))) throw new Error('Usage: npm.cmd run ai:up -- [--web] [--verify] [--features]');
+  const migrated = applyInteractivePerformanceProfile();
+  if (migrated.length) console.log(`Using updated inference settings for this run (${migrated.join(', ')}). Planning has no generation deadline.`);
   await ensureOllama();
   await requireOllamaModel();
-  try { await inspectVisionModel(readAIConfig()); console.log('General artwork visual analysis is available.'); }
+  await pullOllamaModel(planningModel);
+  await warmOllamaModel(planningModel, { planning: true });
+  try { await pullOllamaModel(readAIConfig().visionModel); await inspectVisionModel(readAIConfig()); console.log('General artwork visual analysis is available.'); }
   catch (error) { console.warn(`General visual analysis is unavailable: ${error.message} Existing catalogue scanning can still start.`); }
   await ensureClip();
   const store = createEmbeddingStore(readAIConfig());
@@ -20,6 +24,12 @@ try {
     await store.load({ verifySources: true });
   }
   await ensureNode();
+  if (process.argv.includes('--features')) {
+    console.log('Verifying recognition latency and complete AI routes; planning has no time limit.');
+    await run(process.execPath, [path.join(root, 'scripts', 'validate-local-ai.mjs'), '--recognition-only']);
+    await run(process.execPath, [path.join(root, 'scripts', 'validate-qwen-routes.mjs')]);
+    console.log('Both feature performance gates passed with real local models.');
+  }
   if (process.argv.includes('--verify')) {
     console.log('Running real-model acceptance before opening Expo. Reports are saved under .local-ai.');
     const failures = [];
@@ -31,6 +41,6 @@ try {
     console.log('Controlled real-model acceptance passed. Independent artwork/camera accuracy has not been established.');
   }
   if (process.argv.includes('--web')) await startMobileWeb();
-  await keepRunning();
+  if (!process.argv.includes('--features') || process.argv.includes('--web')) await keepRunning();
 } catch (error) { console.error(`Local AI startup failed: ${error.message}`); process.exitCode = 1; }
 finally { await stopOwned(); }

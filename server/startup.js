@@ -12,14 +12,14 @@ export async function startLocalServer(server, { port, workspace, dataFile }) {
             return;
           }
         } catch { /* Another application may be using this port. */ }
-        console.error(`Cannot start Unframe: port ${port} is already in use by another server.\nStop that server, or choose another port in PowerShell:\n  $env:PORT = '3001'\n  npm.cmd start\nThen open the address printed by the server.`);
+        console.error(`Cannot start Unframe: port ${port} is already in use by another server.\nStop that server, or choose another port in PowerShell:\n  $env:PORT = '3001'\n  npm.cmd run server\nThen open the address printed by the server.`);
       } else {
         console.error(`Cannot start Unframe: ${error.message}`);
       }
       resolve(false);
     });
     server.listen(port, '127.0.0.1', () => {
-      console.log(`Unframe API is ready at ${address}\nStart the mobile UI with npm.cmd run mobile:web -- --port 8081. Keep this terminal open while using the app. Press Ctrl+C to stop.\nLocal demo workspace · data saved to ${dataFile}`);
+      console.log(`Unframe API is ready at ${address}\nStart the mobile UI with npm.cmd run mobile:web -- --port 8081. Keep this terminal open while using the app. Press Ctrl+C to stop.\nLocal workspace · data saved to ${dataFile}`);
       resolve(true);
     });
   });

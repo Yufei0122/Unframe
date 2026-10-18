@@ -1,0 +1,56 @@
+{
+  "identityStatus": "possible_match",
+  "checkpointSha256": "634c1ae6e273307adc1b8e58d9bb03d8b29a8ca85c08547d32cf551fbebf630b",
+  "similarityThreshold": 0.3702355490455627,
+  "protocol": "fit384",
+  "candidates": [
+    {
+      "metObjectId": 436532,
+      "cosineSimilarity": 0.5238662958145142,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/436532",
+      "title": "Self-Portrait with a Straw Hat (obverse: The Potato Peeler)",
+      "artist": "Vincent van Gogh",
+      "date": "1887",
+      "metadataSource": "https://collectionapi.metmuseum.org/public/collection/v1/objects/436532"
+    },
+    {
+      "metObjectId": 256570,
+      "cosineSimilarity": 0.23160752654075623,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/256570",
+      "title": "Bronze plaque of Mithras slaying the bull",
+      "artist": null,
+      "date": "mid-2nd–early 3rd century CE",
+      "metadataSource": "https://collectionapi.metmuseum.org/public/collection/v1/objects/256570"
+    },
+    {
+      "metObjectId": 344210,
+      "cosineSimilarity": 0.22663408517837524,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/344210",
+      "title": "Dancer",
+      "artist": "Edgar Degas",
+      "date": "ca. 1880",
+      "metadataSource": "https://collectionapi.metmuseum.org/public/collection/v1/objects/344210"
+    },
+    {
+      "metObjectId": 437865,
+      "cosineSimilarity": 0.22124412655830383,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/437865",
+      "title": "Halt of the Hunt",
+      "artist": "Carle (Charles André) Vanloo",
+      "date": "ca. 1737",
+      "metadataSource": "https://collectionapi.metmuseum.org/public/collection/v1/objects/437865"
+    },
+    {
+      "metObjectId": 251403,
+      "cosineSimilarity": 0.21762263774871826,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/251403",
+      "title": "Ivory pyxis (box with lid)",
+      "artist": null,
+      "date": "1st century CE",
+      "metadataSource": "https://collectionapi.metmuseum.org/public/collection/v1/objects/251403"
+    }
+  ],
+  "retrievalMs": 70.34,
+  "startupAndRetrievalMs": 424.87,
+  "note": "Cosine similarity is not an identity probability. Candidates belong only to the selected pilot gallery."
+}

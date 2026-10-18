@@ -15,7 +15,7 @@ import { getPlanningStatus } from './planning-status.js';
 export function createAIHandler({ config = readAIConfig(), clip = createLocalClient(config, 'OPENCLIP'), ollamaClient = createLocalClient(config, 'OLLAMA'), store = createEmbeddingStore(config), analysis } = {}) {
   const gate = { active: false };
   const ollama = createOllamaService(config, ollamaClient, gate);
-  const artworkAnalysis = analysis || createArtworkAnalysis(config, { vision: createVisionService(config, { gate }), embeddings: createEmbeddingService(config, clip) });
+  const artworkAnalysis = analysis || createArtworkAnalysis(config, { vision: createVisionService(config, { gate }), embeddings: createEmbeddingService(config, clip), store });
   const services = new Map([...catalogues].map(([id, { collection, graph, museum }]) => [id, {
     recognition: createRecognitionService({ config, embeddings: createEmbeddingService(config, clip), store, ollama, collection }),
     routes: createRouteService({ ollama, collection, graph }),
@@ -62,19 +62,26 @@ export function createAIHandler({ config = readAIConfig(), clip = createLocalCli
       if (pathname === '/api/ai/artworks/recognise') {
         const { recognition } = selectMuseum(url.searchParams.get('museumId') ?? undefined);
         const { image } = await readImageUpload(req);
-        return send(res, 200, await recognition.recognise(image));
+        const result = await recognition.recognise(image, cancellation.signal);
+        if (!res.destroyed) return send(res, 200, result);
+        return;
       }
       if (!req.headers['content-type']?.includes('application/json')) throw new AIError(415, 'JSON_REQUIRED', 'Send application/json.');
       let input;
       const bytes = await readLimited(req, pathname === '/api/ai/routes/chat' ? 32000 : 16000);
       try { input = JSON.parse(bytes.toString('utf8')); } catch { throw new AIError(400, 'INVALID_JSON', 'Invalid JSON request.'); }
       const service = selectMuseum(input?.museumId);
-      if (pathname === '/api/ai/artworks/confirm') return send(res, 200, await service.recognition.confirm(input));
+      if (pathname === '/api/ai/artworks/confirm') {
+        const result = await service.recognition.confirm(input, cancellation.signal);
+        if (!res.destroyed) return send(res, 200, result);
+        return;
+      }
       const result = await (pathname === '/api/ai/routes/chat' ? service.chat.reply(input, cancellation.signal) : service.routes.plan(input, cancellation.signal));
       if (!res.destroyed) return send(res, 200, result);
     } catch (error) {
       logFailure('request', error);
-      if (!res.destroyed) return send(res, error instanceof AIError ? error.status : 500, { error: error instanceof AIError ? error.message : 'AI request could not be completed. Please try again.', code: error instanceof AIError ? error.code : 'INTERNAL_ERROR' });
+      if (!res.destroyed) return send(res, error instanceof AIError ? error.status : 500, { error: error instanceof AIError ? error.message : 'AI request could not be completed. Please try again.', code: error instanceof AIError ? error.code : 'INTERNAL_ERROR',
+        ...(error instanceof AIError && error.code === 'OLLAMA_INCOMPLETE' && error.details ? { details: error.details } : {}) });
     } finally { res.removeListener('close', disconnect); active--; }
   };
 }

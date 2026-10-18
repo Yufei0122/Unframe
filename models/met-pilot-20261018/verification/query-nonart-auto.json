@@ -1,0 +1,36 @@
+{
+  "identityStatus": "unidentified",
+  "checkpointSha256": "634c1ae6e273307adc1b8e58d9bb03d8b29a8ca85c08547d32cf551fbebf630b",
+  "similarityThreshold": 0.3702355490455627,
+  "protocol": "fit384",
+  "candidates": [
+    {
+      "metObjectId": 504397,
+      "cosineSimilarity": 0.24101173877716064,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/504397"
+    },
+    {
+      "metObjectId": 3411,
+      "cosineSimilarity": 0.23838746547698975,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/3411"
+    },
+    {
+      "metObjectId": 226348,
+      "cosineSimilarity": 0.23554912209510803,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/226348"
+    },
+    {
+      "metObjectId": 2040,
+      "cosineSimilarity": 0.21776515245437622,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/2040"
+    },
+    {
+      "metObjectId": 40393,
+      "cosineSimilarity": 0.2100212126970291,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/40393"
+    }
+  ],
+  "retrievalMs": 68.87,
+  "startupAndRetrievalMs": 428.73,
+  "note": "Cosine similarity is not an identity probability. Candidates belong only to the selected pilot gallery."
+}

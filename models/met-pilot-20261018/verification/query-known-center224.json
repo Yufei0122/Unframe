@@ -1,0 +1,56 @@
+{
+  "identityStatus": "possible_match",
+  "checkpointSha256": "634c1ae6e273307adc1b8e58d9bb03d8b29a8ca85c08547d32cf551fbebf630b",
+  "similarityThreshold": 0.42273588640785215,
+  "protocol": "center224",
+  "candidates": [
+    {
+      "metObjectId": 436532,
+      "cosineSimilarity": 0.5662882328033447,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/436532",
+      "title": "Self-Portrait with a Straw Hat (obverse: The Potato Peeler)",
+      "artist": "Vincent van Gogh",
+      "date": "1887",
+      "metadataSource": "https://collectionapi.metmuseum.org/public/collection/v1/objects/436532"
+    },
+    {
+      "metObjectId": 466336,
+      "cosineSimilarity": 0.2688736319541931,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/466336",
+      "title": "Capital with a Centaur Battling a Man with Bow and Arrow",
+      "artist": null,
+      "date": "ca. 1175–1200",
+      "metadataSource": "https://collectionapi.metmuseum.org/public/collection/v1/objects/466336"
+    },
+    {
+      "metObjectId": 438724,
+      "cosineSimilarity": 0.26590561866760254,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/438724",
+      "title": "The Annunciation",
+      "artist": "Philippe de Champaigne",
+      "date": "ca. 1644",
+      "metadataSource": "https://collectionapi.metmuseum.org/public/collection/v1/objects/438724"
+    },
+    {
+      "metObjectId": 226696,
+      "cosineSimilarity": 0.26455456018447876,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/226696",
+      "title": "Aglauros’s Vision of the Bridal Chamber of Herse, from the Story of Mercury and Herse",
+      "artist": "Giovanni Battista Lodi da Cremona",
+      "date": "designed ca. 1540, woven ca. 1570",
+      "metadataSource": "https://collectionapi.metmuseum.org/public/collection/v1/objects/226696"
+    },
+    {
+      "metObjectId": 435754,
+      "cosineSimilarity": 0.2422126829624176,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/435754",
+      "title": "Breton Brother and Sister",
+      "artist": "William Bouguereau",
+      "date": "1871",
+      "metadataSource": "https://collectionapi.metmuseum.org/public/collection/v1/objects/435754"
+    }
+  ],
+  "retrievalMs": 1404.47,
+  "startupAndRetrievalMs": 3201.68,
+  "note": "Cosine similarity is not an identity probability. Candidates belong only to the selected pilot gallery."
+}

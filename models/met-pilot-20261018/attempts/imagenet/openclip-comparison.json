@@ -1,0 +1,69 @@
+{
+  "model": {
+    "model": "ViT-B-32",
+    "pretrained": "laion2b_s34b_b79k",
+    "dimensions": 512,
+    "normalized": true,
+    "device": "cpu",
+    "threads": 4
+  },
+  "trainingPerformed": false,
+  "verification": "Existing production encoder weights on the identical selected gallery and official query splits",
+  "manifestSha256": "44987bf5561c1e018758b6560b4d0f7a8801d276dd463e196675d78befe82ef4",
+  "calibration": {
+    "similarityThreshold": 0.7383091316947937,
+    "calibratedOn": "validation_unknown_queries_only",
+    "targetUnknownFalsePositiveRate": 0.05
+  },
+  "validation": {
+    "queries": 321,
+    "knownQueries": 129,
+    "unknownQueries": 192,
+    "knownTop1Accuracy": 0.5891472868217055,
+    "knownTop5Accuracy": 0.7829457364341085,
+    "knownCorrectAndAcceptedRate": 0.34108527131782945,
+    "unknownFalsePositiveRate": 0.046875,
+    "unknownRejected": 183,
+    "acceptedIdentityPrecision": 0.5866666666666667,
+    "similarityThreshold": 0.7383091316947937,
+    "unknownGroups": {
+      "test_other": {
+        "queries": 96,
+        "falsePositives": 9
+      },
+      "test_noart": {
+        "queries": 96,
+        "falsePositives": 0
+      }
+    }
+  },
+  "test": {
+    "queries": 1195,
+    "knownQueries": 1003,
+    "unknownQueries": 192,
+    "knownTop1Accuracy": 0.5333998005982054,
+    "knownTop5Accuracy": 0.7258225324027916,
+    "knownCorrectAndAcceptedRate": 0.3439680957128614,
+    "unknownFalsePositiveRate": 0.06770833333333333,
+    "unknownRejected": 179,
+    "acceptedIdentityPrecision": 0.7247899159663865,
+    "similarityThreshold": 0.7383091316947937,
+    "unknownGroups": {
+      "test_other": {
+        "queries": 96,
+        "falsePositives": 11
+      },
+      "test_noart": {
+        "queries": 96,
+        "falsePositives": 2
+      }
+    }
+  },
+  "timingsSeconds": {
+    "gallery": 187.537,
+    "validation": 19.533,
+    "test": 74.071
+  },
+  "elapsedSeconds": 281.26,
+  "limitation": "Controlled comparison on a selected Met gallery. Does not establish all-artwork identification or that the current scanner has this larger gallery installed."
+}

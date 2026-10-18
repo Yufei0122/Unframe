@@ -13,7 +13,7 @@ export function resolveAPIBase(configured: string | undefined, location?: { host
   return ['localhost', '127.0.0.1'].includes(location.hostname) ? `${location.protocol}//${location.hostname}:3000` : '';
 }
 
-/** Leave CPU inference time to finish; invalid settings must not cause immediate aborts. */
+/** Keep every interactive request bounded; invalid settings fall back to the feature deadline. */
 export function resolveAITimeoutMs(configured: string | undefined, fallback: number) {
   const value = Number(configured);
   return Number.isInteger(value) && value >= 1000 && value <= 900000 ? value : fallback;

@@ -1,0 +1,21 @@
+
+> unframe@0.1.0 test:met
+> node scripts/ai-met.mjs test
+
+test_contrastive_objective_favours_the_correct_pairs_and_has_finite_gradients (test_met_training.MetTrainingTests.test_contrastive_objective_favours_the_correct_pairs_and_has_finite_gradients) ... ok
+test_fullframe_preprocessing_retains_both_edges_and_aspect_ratio (test_met_training.MetTrainingTests.test_fullframe_preprocessing_retains_both_edges_and_aspect_ratio) ... ok
+test_gem_pooling_is_finite_normalised_and_differentiable (test_met_training.MetTrainingTests.test_gem_pooling_is_finite_normalised_and_differentiable) ... ok
+test_invalid_vectors_cannot_return_apparently_valid_identities (test_met_training.MetTrainingTests.test_invalid_vectors_cannot_return_apparently_valid_identities) ... ok
+test_multi_image_retrieval_ranks_distinct_artwork_ids (test_met_training.MetTrainingTests.test_multi_image_retrieval_ranks_distinct_artwork_ids) ... ok
+test_publisher_layout_conversion_handles_legacy_projection_bias (test_met_training.MetTrainingTests.test_publisher_layout_conversion_handles_legacy_projection_bias) ... ok
+test_query_pixels_and_identity_leakage_are_rejected (test_met_training.MetTrainingTests.test_query_pixels_and_identity_leakage_are_rejected) ... ok
+test_selection_preserves_query_splits_and_excludes_their_artworks_from_training (test_met_training.MetTrainingTests.test_selection_preserves_query_splits_and_excludes_their_artworks_from_training) ... ok
+test_unknown_threshold_is_calibrated_from_validation_unknowns (test_met_training.MetTrainingTests.test_unknown_threshold_is_calibrated_from_validation_unknowns) ... ok
+test_unsafe_image_paths_are_rejected (test_met_training.MetTrainingTests.test_unsafe_image_paths_are_rejected) ... ok
+test_verified_archives_can_be_reused_offline (test_met_training.MetTrainingTests.test_verified_archives_can_be_reused_offline) ... CACHED ground_truth.tar.gz: ba7816bf8f01
+ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.195s
+
+OK

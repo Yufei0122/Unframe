@@ -22,3 +22,12 @@ Editable sources are the four `mobile/assets/qut-*.svg` files. Their bundled PNG
 ## Verification
 
 Run `npm run mobile:check`, `npm run mobile:test`, and `npm run mobile:export:web`. Browser coverage in `mobile/e2e/qut.spec.js` exercises discovery entry, filtering, details, session saves, a complete tour, visitor information, return navigation, image loading and small/desktop layouts. The discovery suite includes the new Brisbane pin.
+
+Verified on 18 October 2026 after integrating the existing remote `work` changes:
+
+- `npm run mobile:check`: passed.
+- Mobile unit tests, run from `mobile` with `node --import tsx --test tests/*.test.ts`: four test files passed.
+- Expo web export with two workers: passed.
+- `node /workspace/unframe-cloud/run-e2e.mjs mobile qut.spec.js discovery.spec.js`: eight browser tests passed in 26 seconds using system Chromium. The external runner is specific to the cloud workspace; standard installations can use the repository Playwright configuration.
+
+This validates the browser demo. Physical iOS/Android devices and live QUT services were not tested.

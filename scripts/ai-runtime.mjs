@@ -6,7 +6,8 @@ import { loadEnvFile } from 'node:process';
 import { createHash } from 'node:crypto';
 import { setTimeout as delay } from 'node:timers/promises';
 import net from 'node:net';
-import { planningVersion } from '../server/ai/planning-status.js';
+import { planningConfiguration } from '../server/ai/planning-status.js';
+import { readAIConfig } from '../server/ai/config.js';
 
 export const root = fileURLToPath(new URL('../', import.meta.url));
 try { loadEnvFile(path.join(root, '.env')); } catch (error) { if (error.code !== 'ENOENT') throw error; }
@@ -24,8 +25,37 @@ export function endpoint(name, fallback) {
 }
 export const clipUrl = endpoint('OPENCLIP_URL', 'http://127.0.0.1:8001');
 export const ollamaUrl = endpoint('OLLAMA_URL', 'http://127.0.0.1:11434');
-export const ollamaModel = process.env.OLLAMA_MODEL || 'qwen3:4b';
+export let ollamaModel = process.env.OLLAMA_MODEL || 'qwen3:1.7b';
 if (!/^[a-zA-Z0-9_.:/-]+$/.test(ollamaModel) || /cloud/i.test(ollamaModel)) throw new Error('OLLAMA_MODEL must name a locally installed model, not a cloud model.');
+export const planningModel = process.env.OLLAMA_PLANNING_MODEL || 'qwen3:1.7b';
+if (!/^[a-zA-Z0-9_.:/-]+$/.test(planningModel) || /cloud/i.test(planningModel)) throw new Error('OLLAMA_PLANNING_MODEL must name a locally installed model, not a cloud model.');
+
+export function applyInteractivePerformanceProfile(env = process.env) {
+  const legacy = {
+    OPENCLIP_TIMEOUT_MS: ['120000', '4500'], OLLAMA_VISION_TIMEOUT_MS: ['540000', '120000'],
+    OLLAMA_TIMEOUT_MS: ['300000', '14000'], OLLAMA_NUM_CTX: ['4096', '2048'], OLLAMA_NUM_GPU: ['0', '-1'],
+    OLLAMA_NUM_PREDICT: ['768', '256'], OLLAMA_KEEP_ALIVE: ['0', '10m'],
+    OLLAMA_PLANNING_NUM_PREDICT: ['192', '1024'],
+    EXPO_PUBLIC_AI_TIMEOUT_MS: ['330000', '50000'], EXPO_PUBLIC_CLIP_TIMEOUT_MS: ['150000', '5000'],
+    EXPO_PUBLIC_VISION_TIMEOUT_MS: ['660000', '130000'],
+  };
+  const changed = [];
+  if (env.OLLAMA_MODEL === 'qwen3:4b') { env.OLLAMA_MODEL = 'qwen3:1.7b'; changed.push('OLLAMA_MODEL'); }
+  if (['qwen3-vl:4b', 'qwen3-vl:2b'].includes(env.OLLAMA_VISION_MODEL)) {
+    env.OLLAMA_VISION_MODEL += '-instruct'; changed.push('OLLAMA_VISION_MODEL');
+  }
+  if (!env.AI_RESPONSE_BUDGET_MS) { env.AI_RESPONSE_BUDGET_MS = '15000'; changed.push('AI_RESPONSE_BUDGET_MS'); }
+  if (!env.AI_RECOGNITION_BUDGET_MS) { env.AI_RECOGNITION_BUDGET_MS = '5000'; changed.push('AI_RECOGNITION_BUDGET_MS'); }
+  if (!env.AI_ANALYSIS_BUDGET_MS) { env.AI_ANALYSIS_BUDGET_MS = '125000'; changed.push('AI_ANALYSIS_BUDGET_MS'); }
+  for (const [key, [before, after]] of Object.entries(legacy)) {
+    if (env[key] === undefined || env[key] === before) { if (env[key] !== after) changed.push(key); env[key] = after; }
+  }
+  for (const [key, before, after] of [['OPENCLIP_TIMEOUT_MS', '10000', '4500'], ['EXPO_PUBLIC_CLIP_TIMEOUT_MS', '14500', '5000'], ['OLLAMA_VISION_TIMEOUT_MS', '14000', '120000'], ['EXPO_PUBLIC_VISION_TIMEOUT_MS', '14500', '130000'], ['EXPO_PUBLIC_AI_TIMEOUT_MS', '14500', '50000']]) {
+    if (env[key] === before) { env[key] = after; if (!changed.includes(key)) changed.push(key); }
+  }
+  if (env === process.env) ollamaModel = env.OLLAMA_MODEL || 'qwen3:1.7b';
+  return changed;
+}
 
 export function spawnOwned(command, args, options = {}) {
   const { managedStdin = false, ...spawnOptions } = options;
@@ -162,6 +192,46 @@ export async function requireOllamaModel(modelName = ollamaModel) {
   console.log(`Ollama model ${modelName} is installed.`);
 }
 
+export async function warmOllamaModel(modelName = ollamaModel, { planning = false } = {}) {
+  const timeout = Number(process.env.AI_STARTUP_TIMEOUT_MS || 600000);
+  const started = performance.now();
+  console.log(`Warming ${modelName}; startup time is measured separately from planning responses.`);
+  const configuredGpu = Number(process.env.OLLAMA_NUM_GPU ?? -1);
+  const config = readAIConfig();
+  const options = numGpu => ({ num_ctx: planning ? config.planningNumCtx : config.ollamaNumCtx, num_gpu: numGpu });
+  async function attempt(numGpu) {
+    let response;
+    try {
+      response = await fetch(`${ollamaUrl}/api/generate`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: modelName, prompt: '', stream: false, keep_alive: process.env.OLLAMA_KEEP_ALIVE || '10m', options: options(numGpu) }),
+        signal: AbortSignal.timeout(timeout),
+      });
+    } catch (error) { throw new Error(error.cause?.code || error.name); }
+    let data;
+    try { data = await response.json(); }
+    catch { throw new Error(`HTTP ${response.status}: invalid JSON response`); }
+    if (!response.ok) {
+      const detail = typeof data?.error === 'string' ? data.error.replace(/[\u0000-\u001f]+/gu, ' ').trim().slice(0, 500) : 'no error detail';
+      throw new Error(`HTTP ${response.status}: ${detail}`);
+    }
+    return data;
+  }
+  try { await attempt(configuredGpu); }
+  catch (firstError) {
+    if (configuredGpu === 0) throw new Error(`Cannot warm ${modelName}: ${firstError.message}. Run "ollama run ${modelName}" to inspect or repair the local model.`);
+    console.warn(`Ollama could not load ${modelName} with GPU acceleration (${firstError.message}). Retrying on CPU for this run.`);
+    try {
+      await attempt(0);
+      process.env.OLLAMA_NUM_GPU = '0';
+      console.log(`${modelName} loaded on CPU. Unframe will use OLLAMA_NUM_GPU=0 for this run.`);
+    } catch (cpuError) {
+      throw new Error(`Cannot warm ${modelName}. GPU attempt: ${firstError.message}. CPU attempt: ${cpuError.message}. Run "ollama run ${modelName}" to inspect or repair the local model, then retry npm.cmd start.`);
+    }
+  }
+  console.log(`${modelName} is warm (${Math.round(performance.now() - started)} ms).`);
+}
+
 export async function pullOllamaModel(modelName = ollamaModel) {
   if (!/^[a-zA-Z0-9_.:/-]+$/.test(modelName) || /cloud/i.test(modelName)) throw new Error('Only a local model may be downloaded.');
   const tags = await getJSON(`${ollamaUrl}/api/tags`);
@@ -200,10 +270,12 @@ export async function ensureNode({ planningOnly = false } = {}) {
   const validate = health => { if (health.app !== 'unframe' || health.workspace !== workspace) throw new Error(`Port ${port} belongs to another app or Unframe workspace; it was left untouched. Choose another PORT.`); };
   const validateAI = async () => {
     const status = await getJSON(`${address}/api/ai/${planningOnly ? 'planning/status' : 'status?museumId=met'}`, 15000);
-    const expected = planningOnly ? { provider: 'local', ollamaModel, planningVersion }
-      : { provider: 'local', embeddingModel: identity.model, embeddingPretrained: identity.pretrained, dimension: identity.dimensions, ollamaModel, visionModel: process.env.OLLAMA_VISION_MODEL || 'qwen3-vl:4b', analysisVersion: 1, planningVersion };
-    if (!status?.configuration || Object.entries(expected).some(([key, value]) => status.configuration[key] !== value)) {
-      throw new Error(`The Unframe process at ${address} is using an older or different AI configuration. It was left running. Stop it in its original terminal, then rerun npm.cmd run ai:up (or choose another PORT).`);
+    const planning = planningConfiguration(readAIConfig());
+    const expected = planningOnly ? planning
+      : { ...planning, embeddingModel: identity.model, embeddingPretrained: identity.pretrained, dimension: identity.dimensions, visionModel: readAIConfig().visionModel, analysisVersion: 3, visionTimeoutMs: readAIConfig().visionTimeoutMs, visionNumPredict: readAIConfig().visionNumPredict, visionNumCtx: readAIConfig().visionNumCtx, analysisBudgetMs: readAIConfig().analysisBudgetMs, explanationTimeoutMs: readAIConfig().explanationTimeoutMs };
+    const mismatches = Object.entries(expected).filter(([key, value]) => status?.configuration?.[key] !== value).map(([key]) => key);
+    if (mismatches.length) {
+      throw new Error(`The Unframe process at ${address} is using an older or different AI configuration (${mismatches.join(', ')}). It was left running. Stop it in its original terminal, then rerun npm.cmd run ${planningOnly ? 'ai:routes' : 'ai:up'} (or choose another PORT).`);
     }
   };
   const existing = await getJSON(`${address}/api/health`);
@@ -214,6 +286,10 @@ export async function ensureNode({ planningOnly = false } = {}) {
   return { reused: false, child };
 }
 
+export function isUnframeMobileHTML(value) {
+  return typeof value === 'string' && /<title>\s*Unframe\s*<\/title>/i.test(value) && /<div\s+id=["']root["']><\/div>/i.test(value);
+}
+
 export async function startMobileWeb() {
   const occupied = await new Promise((resolve, reject) => {
     const socket = net.connect({ host: '127.0.0.1', port: 8081 });
@@ -222,11 +298,22 @@ export async function startMobileWeb() {
     socket.once('timeout', () => { socket.destroy(); reject(new Error('Cannot check Expo port 8081.')); });
     socket.once('error', error => error.code === 'ECONNREFUSED' ? resolve(false) : reject(error));
   });
-  if (occupied) throw new Error('Port 8081 is already in use. Stop Expo in its original terminal, then rerun npm.cmd run ai:web. The existing process was left untouched.');
+  if (occupied) {
+    try {
+      const response = await fetch('http://127.0.0.1:8081/', { redirect: 'error', signal: AbortSignal.timeout(5000) });
+      const html = await response.text();
+      if (response.ok && isUnframeMobileHTML(html)) {
+        console.log('Reusing the existing Unframe mobile web preview at http://localhost:8081.');
+        return { reused: true };
+      }
+    } catch { /* A listener that is not a readable Unframe preview must not be reused. */ }
+    throw new Error('Port 8081 is already in use by another application. Stop that application or its terminal, then rerun npm.cmd start. The existing process was left untouched.');
+  }
   const cli = path.join(root, 'mobile', 'node_modules', 'expo', 'bin', 'cli');
   if (!existsSync(cli)) throw new Error('Mobile dependencies are missing. Run npm.cmd --prefix mobile ci.');
   const api = `http://127.0.0.1:${process.env.PORT || 3000}`;
   console.log(`Starting mobile web on http://localhost:8081 with backend ${api}.`);
+  console.log(`Planning chat/routes: no automatic timeout; cancel in the app. Other AI features retain their configured deadlines. Restart backend and Expo after changing .env.`);
   return spawnOwned(process.execPath, [cli, 'start', '--web', '--port', '8081', '--offline'], {
     cwd: path.join(root, 'mobile'), env: { ...process.env, EXPO_PUBLIC_API_URL: api, EXPO_NO_TELEMETRY: '1' },
   });

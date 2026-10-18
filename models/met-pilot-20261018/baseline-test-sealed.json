@@ -1,0 +1,28 @@
+{
+  "metrics": {
+    "queries": 1195,
+    "knownQueries": 1003,
+    "unknownQueries": 192,
+    "knownTop1Accuracy": 0.4945164506480558,
+    "knownTop5Accuracy": 0.6041874376869392,
+    "knownCorrectAndAcceptedRate": 0.34097706879361916,
+    "unknownFalsePositiveRate": 0.036458333333333336,
+    "unknownRejected": 185,
+    "acceptedIdentityPrecision": 0.8976377952755905,
+    "similarityThreshold": 0.4230064914951324,
+    "unknownGroups": {
+      "test_other": {
+        "queries": 96,
+        "falsePositives": 2
+      },
+      "test_noart": {
+        "queries": 96,
+        "falsePositives": 5
+      }
+    }
+  },
+  "timings": {
+    "gallerySeconds": 0,
+    "querySeconds": 19.776
+  }
+}

@@ -36,7 +36,7 @@ export function WelcomeScreen({ navigation }: NativeStackScreenProps<RootStackPa
         </View>
         <View style={styles.footer}>
           <View style={styles.footerLine}><Icon name="sparkles" color="#DDD2B7" size={25}/><T style={styles.footerText}>A little wonder,{`\n`}at your own pace.</T></View>
-          <T style={styles.demo}>{museum.shortName.toUpperCase()} · DEMO EXPERIENCE</T>
+          <T style={styles.demo}>{museum.shortName.toUpperCase()} · PERSONAL MUSEUM GUIDE</T>
           {museumId === 'goma' && <T style={{ color: '#C9D0CA', fontSize: 8 }}>GOMA exterior · Photograph: M Sherwood © QAGOMA</T>}
         </View>
       </ScrollView>

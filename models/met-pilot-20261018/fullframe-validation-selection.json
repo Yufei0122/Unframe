@@ -1,0 +1,26 @@
+{
+  "selectedTrainedProtocol": "fit384",
+  "criterion": "validation known Top1 only, before evaluating full-frame tests",
+  "center224Validation": {
+    "queries": 321,
+    "knownQueries": 129,
+    "unknownQueries": 192,
+    "knownTop1Accuracy": 0.5271317829457365,
+    "knownTop5Accuracy": 0.6434108527131783,
+    "knownCorrectAndAcceptedRate": 0.3488372093023256,
+    "unknownFalsePositiveRate": 0.046875,
+    "unknownRejected": 183,
+    "acceptedIdentityPrecision": 0.7377049180327869,
+    "similarityThreshold": 0.42273588640785215,
+    "unknownGroups": {
+      "test_other": {
+        "queries": 96,
+        "falsePositives": 4
+      },
+      "test_noart": {
+        "queries": 96,
+        "falsePositives": 5
+      }
+    }
+  }
+}

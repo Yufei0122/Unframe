@@ -13,13 +13,13 @@ async function chooseGoma(page) {
 test('GOMA selection, rooms, artwork details and switch back to Met', async ({ page }) => {
   const errors = []; page.on('pageerror', error => errors.push(error.message));
   await chooseGoma(page);
-  await expect(page.getByText('GOMA · DEMO LAYOUT')).toBeVisible();
+  await expect(page.getByText('GOMA · FLOOR PLAN')).toBeVisible();
   await expect(page.getByRole('button', { name: 'Explore Water Lilies' })).toHaveCount(0);
   await page.getByRole('button', { name: 'Select Nature Gallery' }).click();
   await expect(page.getByRole('button', { name: 'Explore Heritage', exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Explore In bed', exact: true })).toHaveCount(0);
-  await page.getByRole('button', { name: 'Reset demo map position' }).click();
-  await page.getByRole('button', { name: 'View all artworks' }).click();
+  await page.getByRole('button', { name: 'Reset map position' }).click();
+  await page.getByRole('button', { name: 'View all nearby artworks' }).click();
   for (const title of ['The obliteration room', 'In bed', 'Heritage', 'Soul under the moon']) {
     await page.getByRole('button', { name: `Explore ${title}`, exact: true }).click();
     await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible();
@@ -30,6 +30,7 @@ test('GOMA selection, rooms, artwork details and switch back to Met', async ({ p
     await expect(page.getByRole('link', { name: 'View artwork source at QAGOMA' })).toHaveCount(1);
     await page.getByRole('button', { name: 'Back to museum' }).click();
   }
+  await page.getByRole('link', { name: /back/i }).click();
   await page.screenshot({ path: 'test-results/goma-museum.png', fullPage: true });
   await page.getByRole('button', { name: 'Choose museum', exact: true }).click();
   await page.getByRole('button', { name: 'Show New York' }).click();
@@ -55,15 +56,15 @@ test('GOMA route opens its own itinerary with a GOMA map and artwork', async ({ 
   });
   await chooseGoma(page);
   await page.getByRole('tab', { name: /Plan/ }).click();
-  await expect(page.getByText('GOMA · demo collection')).toBeVisible();
+  await expect(page.getByTestId('planning-museum')).toContainText('GOMA');
   await expect(page.getByRole('button', { name: 'Include Water Lilies' })).toHaveCount(0);
   await page.getByRole('textbox', { name: 'Message your visit planner' }).fill('I want to see Heritage.');
   await page.getByRole('button', { name: 'Send message', exact: true }).click();
-  await expect(page.getByTestId('visit-preferences')).toContainText('Must see: Heritage');
-  await page.getByRole('button', { name: 'Generate route', exact: true }).click();
+  await expect(page.getByTestId('planning-answer-card')).toContainText('Heritage');
+  await expect(page.getByTestId('route-preview-card')).toBeVisible();
+  await page.getByRole('button', { name: 'View full itinerary', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Your itinerary', exact: true })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Generate route', exact: true })).not.toBeVisible();
-  await expect(page.getByText('GOMA · DEMO LAYOUT').filter({ visible: true })).toBeVisible();
+  await expect(page.getByText('GOMA · FLOOR PLAN').filter({ visible: true })).toBeVisible();
   await expect(page.getByText('Entrance → Demo foyer → Heritage')).toBeVisible();
   await page.screenshot({ path: 'test-results/goma-itinerary.png', fullPage: true });
   await page.getByRole('button', { name: 'Visit Heritage', exact: true }).click();
@@ -82,7 +83,7 @@ test('GOMA scan scopes image matching to the selected collection', async ({ page
   });
   await chooseGoma(page);
   await page.getByRole('button', { name: 'Scan an artwork', exact: true }).click();
-  await expect(page.getByText('GOMA · demo collection')).toBeVisible();
+  await expect(page.getByText('GOMA', { exact: true }).filter({ visible: true })).toBeVisible();
   await page.getByLabel('Upload artwork image').setInputFiles(path.resolve(__dirname, '../assets/goma-heritage.jpg'));
   await page.getByRole('button', { name: 'Select Heritage', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Heritage', exact: true })).toBeVisible();
@@ -97,5 +98,5 @@ test('precise Brisbane device location selects GOMA automatically', async ({ pag
   await expect(page.getByText('GOMA', { exact: true })).toBeVisible();
   await page.screenshot({ path: 'test-results/goma-welcome.png' });
   await page.getByRole('button', { name: 'Start visit', exact: true }).click();
-  await expect(page.getByText('GOMA · DEMO LAYOUT')).toBeVisible();
+  await expect(page.getByText('GOMA · FLOOR PLAN')).toBeVisible();
 });

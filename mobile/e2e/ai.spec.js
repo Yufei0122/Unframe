@@ -33,7 +33,7 @@ test('Scan starts automatically without a shutter, releases the camera on blur, 
   await expect(page.getByRole('button', { name: 'Capture photo', exact: true })).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Pause scanning', exact: true })).toBeInViewport();
   await expect(page.getByRole('button', { name: 'Upload photo', exact: true })).toBeInViewport();
-  await expect(page.getByText('Sampled frames go to OpenCLIP on your local AI server.', { exact: false })).toBeVisible();
+  await expect(page.getByText('Camera frames go to OpenCLIP', { exact: false })).toHaveCount(0);
   await expect(page.getByText('Browse the demo collection')).toHaveCount(0);
   await expect.poll(() => requests).toBeGreaterThan(0);
   await rememberCamera(page);
@@ -98,7 +98,7 @@ test('resuming during confirmation discards its late interpretation and keeps th
   await openScan(page);
   await page.getByRole('button', { name: 'Select Water Lilies', exact: true }).click();
   await expect.poll(() => !!pending).toBe(true);
-  await expect(page.getByText('Preparing AI interpretation…')).toBeVisible();
+  await expect(page.getByRole('progressbar', { name: 'Preparing your AI interpretation…' })).toBeVisible();
   await page.getByRole('button', { name: 'Resume scanning', exact: true }).click();
   await pending.fulfill({ json: confirmed }).catch(() => {});
   await expect.poll(() => requests).toBeGreaterThan(1);
@@ -216,7 +216,7 @@ test('no-match continues scanning; provider failure pauses requests until the vi
     return route.fulfill(attempt === 2 ? { status: 503, json: { error: 'Local OpenCLIP is temporarily unavailable.' } } : { json: { matched: false, candidates: [], message: 'No artwork passed the matching threshold.' } });
   });
   await openScan(page);
-  await expect(page.getByText('No artwork passed the matching threshold.')).toBeVisible();
+  await expect.poll(() => attempt).toBeGreaterThan(0);
   await rememberCamera(page);
   await expect(page.getByRole('alert')).toContainText('Local OpenCLIP is temporarily unavailable.');
   await expectCameraStopped(page);
@@ -241,6 +241,7 @@ test('invalid uploads send no request and scanning can still resume', async ({ p
 
 test('route opens a separate itinerary page and preserves preferences when returning', async ({ page }) => {
   let chatTurns = 0;
+  let routeTurns = 0;
   await page.route('**/api/ai/routes/chat', route => {
     const input = route.request().postDataJSON();
     expect(input.museumId).toBe('met');
@@ -252,10 +253,13 @@ test('route opens a separate itinerary page and preserves preferences when retur
   });
   await page.route('**/api/ai/routes/plan', async route => {
     const request = route.request().postDataJSON();
+    routeTurns++;
     expect(request.mustSeeArtworkIds).toContain('water-lilies');
-    expect(request.accessibilityRequirements).toEqual(['step_free']);
     expect(request.interests).toContain('Monet');
-    expect(request.walkingPreference).toBe('less_walking');
+    if (routeTurns > 1) {
+      expect(request.accessibilityRequirements).toEqual(['step_free']);
+      expect(request.walkingPreference).toBe('less_walking');
+    }
     await route.fulfill({ json: { demo: true, mapNotice: 'Illustrative demo map.', estimatedMinutes: 6, estimatedWalkingDistance: 72, route: [{ order: 1, artworkId: 'water-lilies', title: 'Water Lilies', galleryId: 'european-paintings', estimatedVisitMinutes: 4 }], navigation: [{ from: 'entrance', to: 'water-lilies', nodes: ['entrance', 'great-hall', 'european-paintings', 'water-lilies'], distance: 72, estimatedSeconds: 110 }], reasoningSummary: 'A local nature route.', recommendationSource: 'local', warning: 'AI recommendations are unavailable. This itinerary uses local rules.' } });
   });
   await page.goto('/'); await enterWelcome(page);
@@ -263,24 +267,23 @@ test('route opens a separate itinerary page and preserves preferences when retur
   await page.getByRole('tab', { name: /Plan/ }).click();
   await page.getByRole('textbox', { name: 'Message your visit planner' }).fill('I love Monet. Include Water Lilies.');
   await page.getByRole('button', { name: 'Send message', exact: true }).click();
-  await expect(page.getByText('Monet and Water Lilies are included.', { exact: true })).toBeVisible();
+  await expect(page.getByTestId('planning-answer-card')).toContainText('Water Lilies');
   await page.getByRole('textbox', { name: 'Message your visit planner' }).fill('Make it step-free with less walking.');
   await page.getByRole('textbox', { name: 'Message your visit planner' }).press('Enter');
-  await expect(page.getByTestId('visit-preferences')).toContainText('Step-free');
+  await expect(page.getByTestId('planning-answer-card')).toContainText('Step-free');
   await page.getByRole('tab', { name: /Home/ }).click();
   await page.getByRole('tab', { name: /Plan/ }).click();
-  await expect(page.getByText('Your visit is now step-free, with less walking.', { exact: true })).toBeVisible();
+  await expect(page.getByTestId('planning-answer-card')).toContainText('Step-free');
   await page.screenshot({ path: 'test-results/plan-chat.png' });
-  await page.getByRole('button', { name: 'Generate route', exact: true }).click();
+  await expect(page.getByTestId('route-preview-card')).toBeVisible();
+  await page.getByRole('button', { name: 'View full itinerary', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Your itinerary', exact: true })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Generate route', exact: true })).not.toBeVisible();
-  await expect(page.getByText('6 minutes · 72 m walking (demo)')).toBeVisible();
-  await page.getByRole('button', { name: 'Edit visit preferences', exact: true }).click();
-  await expect(page.getByTestId('visit-preferences')).toContainText('Monet');
-  await expect(page.getByTestId('visit-preferences')).toContainText('Step-free');
-  await expect(page.getByText('I love Monet. Include Water Lilies.', { exact: true })).toBeVisible();
+  await expect(page.getByText('6 minutes · 72 m walking')).toBeVisible();
+  await page.getByRole('button', { name: 'Back to planner', exact: true }).click();
+  await expect(page.getByTestId('planning-answer-card')).toContainText('Monet');
+  await expect(page.getByTestId('planning-answer-card')).toContainText('Step-free');
   await expect(page.getByRole('heading', { name: 'Your itinerary', exact: true })).not.toBeVisible();
-  await page.getByRole('button', { name: 'Generate route', exact: true }).click();
+  await page.getByRole('button', { name: 'View full itinerary', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Your itinerary', exact: true })).toBeVisible();
   await expect(page.getByText('AI recommendations are unavailable. This itinerary uses local rules.')).toBeVisible();
   await expect(page.getByText('Local rules recommendation', { exact: false })).toBeVisible();

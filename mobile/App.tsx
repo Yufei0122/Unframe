@@ -25,6 +25,7 @@ import { AboutScreen, FeedbackScreen, PlannerScreen } from './src/screens/Modals
 import { LookupScreen } from './src/screens/Lookup';
 import { AIPlannerScreen } from './src/screens/AIPlanner';
 import { AIItineraryScreen } from './src/screens/AIItinerary';
+import { NearbyArtworksScreen } from './src/screens/NearbyArtworks';
 
 const Stack = createNativeStackNavigator<RootStackParams>();
 const Tabs = createBottomTabNavigator<TabParams>();
@@ -69,8 +70,9 @@ function AppNavigation() {
       <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }}/>
       <Stack.Screen name="Home" component={MainTabs} options={{ headerShown: false }}/>
       <Stack.Screen name="Artwork" component={ArtworkScreen} options={{ headerShown: false }}/>
-      <Stack.Screen name="Tour" component={ExploreScreen} options={{ title: 'Sample gallery tour' }}/>
-      <Stack.Screen name="AIItinerary" component={AIItineraryScreen} options={{ title: 'Visit route' }}/>
+      <Stack.Screen name="Tour" component={ExploreScreen} options={{ title: 'Gallery tour' }}/>
+      <Stack.Screen name="AIItinerary" component={AIItineraryScreen} options={({ navigation }) => ({ title: 'Visit route', headerLeft: () => <Pressable accessibilityRole="button" accessibilityLabel="Back to planner" onPress={() => navigation.goBack()} style={{ width: 44, height: 44, alignItems: 'flex-start', justifyContent: 'center' }}><Icon name="arrow-back" size={22}/></Pressable> })}/>
+      <Stack.Screen name="NearbyArtworks" component={NearbyArtworksScreen} options={{ title: '' }}/>
       <Stack.Group screenOptions={({ navigation }) => ({ presentation: 'modal', headerRight: () => <Pressable accessibilityRole="button" accessibilityLabel="Close" onPress={() => navigation.goBack()} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }}><Icon name="close-circle-outline"/></Pressable> })}>
         <Stack.Screen name="AppSettings" component={AppSettingsScreen} options={{ title: 'App Settings' }}/>
         <Stack.Screen name="Planner" component={PlannerScreen} options={{ title: 'Plan your visit' }}/>

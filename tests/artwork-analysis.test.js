@@ -10,10 +10,11 @@ import { createArtworkAnalysis } from '../server/ai/artwork-analysis.js';
 import { createAIHandler } from '../server/ai/handler.js';
 import { createOllamaService } from '../server/ai/ollama.js';
 import { createLocalClient } from '../server/ai/local-http.js';
+import { referenceArtworks } from '../server/ai/embeddings.js';
 
 const config = readAIConfig({});
 const observation = { artworkPresence: 'likely', description: 'A seated figure with a landscape behind it.', visualFeatures: ['Folded hands'], visibleText: [], hypotheses: [{ title: 'Mona Lisa', artist: 'Leonardo da Vinci', basis: 'Figure, pose and landscape resemble this work.' }] };
-const jpeg = await sharp({ create: { width: 1000, height: 800, channels: 3, background: '#667C86' } }).jpeg().toBuffer();
+const jpeg = await sharp({ create: { width: 1000, height: 800, channels: 3, noise: { type: 'gaussian', mean: 128, sigma: 30 } } }).jpeg().toBuffer();
 const source = { id: 'commons:1', provider: 'Wikimedia Commons', title: 'Mona Lisa.jpg', artist: null, date: null, sourceUrl: 'https://commons.wikimedia.org/wiki/File:Mona_Lisa.jpg', imageUrl: 'https://upload.wikimedia.org/mona.jpg' };
 const providers = [{ name: 'Wikimedia Commons', status: 'completed', results: 1 }];
 const records = { records: [source], providers };
@@ -21,8 +22,15 @@ const records = { records: [source], providers };
 test('visual output rejects ungrounded extra fields and cannot attach identity guesses to uncertain presence', () => {
   assert.deepEqual(parseVision(observation), observation);
   assert.deepEqual(parseVision({ ...observation, artworkPresence: 'uncertain' }).hypotheses, []);
+  assert.deepEqual(parseVision({ ...observation, hypotheses: [{ title: 'Abstract Geometric Form', artist: 'Unknown', basis: 'Geometric shapes' }] }).hypotheses, []);
   for (const value of [{ ...observation, verified: true }, { ...observation, description: '' }, { ...observation, hypotheses: [{ ...observation.hypotheses[0], sourceUrl: 'https://invented.example' }] }, { ...observation, visualFeatures: ['x'.repeat(201)] }]) assert.throws(() => parseVision(value), { code: 'INVALID_VISION_RESULT' });
   assert.throws(() => readAIConfig({ OLLAMA_VISION_MODEL: 'qwen3-vl:cloud' }));
+});
+
+test('uniform photos abstain before model inference instead of inventing a painting', async () => {
+  const blank = await sharp({ create: { width: 512, height: 512, channels: 3, background: 'white' } }).jpeg().toBuffer();
+  const result = await createVisionService(config, { client: { request: () => assert.fail('Blank photos must not invoke a model') } }).analyse(blank);
+  assert.equal(result.artworkPresence, 'unlikely'); assert.deepEqual(result.hypotheses, []);
 });
 
 test('vision requires a local image-capable model and sends bounded images to that model', async () => {
@@ -34,13 +42,33 @@ test('vision requires a local image-capable model and sends bounded images to th
     return { done: true, done_reason: 'stop', message: { content: JSON.stringify(observation) } };
   } };
   assert.deepEqual(await createVisionService(config, { client }).analyse(jpeg), observation);
-  assert.equal(sent.model, 'qwen3-vl:4b'); assert.equal(sent.keep_alive, 0); assert.equal(sent.think, false);
+  assert.equal(sent.model, 'qwen3-vl:2b-instruct'); assert.equal(sent.keep_alive, '10m'); assert.equal(sent.think, false);
+  assert.equal(sent.options.num_predict, 768, 'Vision output must not use the short text budget.');
+  assert.equal(sent.options.num_ctx, 4096, 'Vision context must have space for image tokens.');
   const image = Buffer.from(sent.messages[1].images[0], 'base64');
   const metadata = await sharp(image).metadata();
-  assert.ok(metadata.width <= 768 && metadata.height <= 768); assert.equal(metadata.exif, undefined);
+  assert.ok(metadata.width <= 512 && metadata.height <= 512); assert.equal(metadata.exif, undefined);
+  await createVisionService(config, { client }).analyse(jpeg, undefined, { title: 'Water Lilies', artist: 'Claude Monet' });
+  assert.equal(sent.format.properties.visibleText.maxItems, 0, 'Supplied catalogue names must not be emitted as image text.');
+  assert.equal(sent.format.properties.hypotheses.items.properties.artist.const, 'Claude Monet');
   await assert.rejects(inspectVisionModel(config, { request: async () => ({ models: [{ name: config.visionModel, remote_host: 'remote.invalid' }] }) }), { code: 'VISION_REMOTE_MODEL' });
   await assert.rejects(inspectVisionModel(config, { request: async () => ({ models: [] }) }), { code: 'VISION_MODEL_MISSING' });
   await assert.rejects(inspectVisionModel(config, { request: async endpoint => endpoint === '/api/tags' ? { models: [{ name: config.visionModel }] } : { capabilities: ['completion'] } }), { code: 'VISION_NOT_SUPPORTED' });
+});
+
+test('a vision GPU load failure retries on CPU once and remembers that placement', async () => {
+  const placements = [];
+  const client = { request: async (endpoint, payload) => {
+    if (endpoint === '/api/tags') return { models: [{ name: config.visionModel }] };
+    if (endpoint === '/api/show') return { capabilities: ['vision'] };
+    placements.push(payload.options.num_gpu);
+    if (payload.options.num_gpu !== 0) throw new AIError(503, 'OLLAMA_HTTP_500', 'Runner failed');
+    return { done: true, done_reason: 'stop', message: { content: JSON.stringify(observation) } };
+  } };
+  const vision = createVisionService(config, { client });
+  await vision.analyse(jpeg); await vision.analyse(jpeg);
+  assert.deepEqual(placements, [-1, 0, 0]);
+  assert.equal(config.ollamaNumGpu, -1);
 });
 
 test('vision and guide share one generation slot and release it after a failed answer', async () => {
@@ -73,7 +101,11 @@ test('catalogue adapters return linked records, constrain image addresses and pr
   const requests = [];
   const catalogues = createPublicCatalogues({ client: { get: async value => {
     const url = new URL(value); requests.push(url);
-    if (url.hostname === 'collectionapi.metmuseum.org') throw new Error('offline');
+    if (url.hostname === 'collectionapi.metmuseum.org') {
+      assert.equal(url.pathname, '/public/collection/v1.1/search');
+      assert.equal(url.searchParams.get('limit'), '2'); assert.equal(url.searchParams.get('offset'), '0');
+      throw new Error('offline');
+    }
     if (url.hostname === 'api.artic.edu') return { config: { iiif_url: 'https://www.artic.edu/iiif/2' }, data: [{ id: 10, title: 'Test artwork', artist_title: 'Artist', image_id: 'abc-123', is_public_domain: true }] };
     return { query: { pages: [{ pageid: 12, title: 'File:Mona Lisa.jpg', imageinfo: [{ thumburl: 'http://127.0.0.1/private' }] }] } };
   } } });
@@ -105,6 +137,23 @@ test('unknown images and disabled search do not send queries; source failures pr
   }
   const response = await createArtworkAnalysis(config, { vision: { analyse: async () => observation }, catalogues: { search: async () => ({ records: [], providers: [{ name: 'The Met', status: 'unavailable', results: 0 }] }) }, embeddings: unavailable }).analyse(jpeg);
   assert.equal(response.search.status, 'unavailable'); assert.equal(response.description, observation.description);
+});
+
+test('a distinct local image match grounds identity in catalogue metadata rather than model memory', async () => {
+  const reference = referenceArtworks()[0];
+  let embeddingCalls = 0;
+  const result = await createArtworkAnalysis(config, {
+    store: { load: async () => [{ museumId: reference.museumId, artworkId: reference.artwork.id, vector: [1, 0] }] },
+    embeddings: { generate: async () => { embeddingCalls++; return [1, 0]; } },
+    vision: { analyse: async (_image, _signal, known) => { assert.equal(known.id, reference.artwork.id); return observation; } },
+    catalogues: { search: () => assert.fail('A known visual reference does not need external title lookup') },
+  }).analyse(jpeg);
+  assert.equal(result.hypotheses[0].title, reference.artwork.title);
+  assert.equal(result.hypotheses[0].artist, reference.artwork.artist);
+  assert.equal(result.sources[0].visualCheck, 'similar');
+  assert.equal(result.sources[0].similarity, 1);
+  assert.equal(result.identityStatus, 'possible_match');
+  assert.equal(embeddingCalls, 1);
 });
 
 test('cancelled visual requests abort the local transport instead of reporting model unavailability', async () => {

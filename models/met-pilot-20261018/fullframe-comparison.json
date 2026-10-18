@@ -1,0 +1,150 @@
+{
+  "protocol": "Preserve full image and aspect ratio, longest side <=384; ImageNet normalisation; single-scale inference",
+  "manifestSha256": "44987bf5561c1e018758b6560b4d0f7a8801d276dd463e196675d78befe82ef4",
+  "checkpointSha256": "634c1ae6e273307adc1b8e58d9bb03d8b29a8ca85c08547d32cf551fbebf630b",
+  "selectedTrainedProtocol": "fit384",
+  "criterion": "validation known Top1 only, before evaluating full-frame tests",
+  "center224Validation": {
+    "queries": 321,
+    "knownQueries": 129,
+    "unknownQueries": 192,
+    "knownTop1Accuracy": 0.5271317829457365,
+    "knownTop5Accuracy": 0.6434108527131783,
+    "knownCorrectAndAcceptedRate": 0.3488372093023256,
+    "unknownFalsePositiveRate": 0.046875,
+    "unknownRejected": 183,
+    "acceptedIdentityPrecision": 0.7377049180327869,
+    "similarityThreshold": 0.42273588640785215,
+    "unknownGroups": {
+      "test_other": {
+        "queries": 96,
+        "falsePositives": 4
+      },
+      "test_noart": {
+        "queries": 96,
+        "falsePositives": 5
+      }
+    }
+  },
+  "variants": {
+    "published_met": {
+      "validation": {
+        "queries": 321,
+        "knownQueries": 129,
+        "unknownQueries": 192,
+        "knownTop1Accuracy": 0.5968992248062015,
+        "knownTop5Accuracy": 0.7209302325581395,
+        "knownCorrectAndAcceptedRate": 0.4806201550387597,
+        "unknownFalsePositiveRate": 0.046875,
+        "unknownRejected": 183,
+        "acceptedIdentityPrecision": 0.8266666666666667,
+        "similarityThreshold": 0.3697759078273773,
+        "unknownGroups": {
+          "test_other": {
+            "queries": 96,
+            "falsePositives": 5
+          },
+          "test_noart": {
+            "queries": 96,
+            "falsePositives": 4
+          }
+        }
+      },
+      "calibration": {
+        "similarityThreshold": 0.3697759078273773,
+        "calibratedOn": "validation_unknown_queries_only",
+        "targetUnknownFalsePositiveRate": 0.05
+      },
+      "timingsSeconds": {
+        "gallery": 126.232,
+        "validation": 11.709,
+        "test": 44.903
+      },
+      "test": {
+        "queries": 1195,
+        "knownQueries": 1003,
+        "unknownQueries": 192,
+        "knownTop1Accuracy": 0.5672981056829511,
+        "knownTop5Accuracy": 0.6859421734795613,
+        "knownCorrectAndAcceptedRate": 0.4386839481555334,
+        "unknownFalsePositiveRate": 0.052083333333333336,
+        "unknownRejected": 182,
+        "acceptedIdentityPrecision": 0.9147609147609148,
+        "similarityThreshold": 0.3697759078273773,
+        "unknownGroups": {
+          "test_other": {
+            "queries": 96,
+            "falsePositives": 2
+          },
+          "test_noart": {
+            "queries": 96,
+            "falsePositives": 8
+          }
+        }
+      }
+    },
+    "continued_training": {
+      "validation": {
+        "queries": 321,
+        "knownQueries": 129,
+        "unknownQueries": 192,
+        "knownTop1Accuracy": 0.5968992248062015,
+        "knownTop5Accuracy": 0.7209302325581395,
+        "knownCorrectAndAcceptedRate": 0.4806201550387597,
+        "unknownFalsePositiveRate": 0.046875,
+        "unknownRejected": 183,
+        "acceptedIdentityPrecision": 0.8266666666666667,
+        "similarityThreshold": 0.3702355490455627,
+        "unknownGroups": {
+          "test_other": {
+            "queries": 96,
+            "falsePositives": 5
+          },
+          "test_noart": {
+            "queries": 96,
+            "falsePositives": 4
+          }
+        }
+      },
+      "calibration": {
+        "similarityThreshold": 0.3702355490455627,
+        "calibratedOn": "validation_unknown_queries_only",
+        "targetUnknownFalsePositiveRate": 0.05
+      },
+      "timingsSeconds": {
+        "gallery": 121.575,
+        "validation": 11.951,
+        "test": 45.359
+      },
+      "test": {
+        "queries": 1195,
+        "knownQueries": 1003,
+        "unknownQueries": 192,
+        "knownTop1Accuracy": 0.5663010967098704,
+        "knownTop5Accuracy": 0.6849451645064806,
+        "knownCorrectAndAcceptedRate": 0.43968095712861416,
+        "unknownFalsePositiveRate": 0.046875,
+        "unknownRejected": 183,
+        "acceptedIdentityPrecision": 0.9168399168399168,
+        "similarityThreshold": 0.3702355490455627,
+        "unknownGroups": {
+          "test_other": {
+            "queries": 96,
+            "falsePositives": 1
+          },
+          "test_noart": {
+            "queries": 96,
+            "falsePositives": 8
+          }
+        }
+      }
+    }
+  },
+  "sourceSha256": {
+    "evaluate_met_fullframe.py": "decea3204c54a99bbae3d3c3b9acc4dbd5f5ad960abc808bdc126ed8583741e9",
+    "train_met.py": "9d3c7a3c0d5762270e53dbabedbc9fa1e020bc02875cb7d17ce52d4264a57385",
+    "met_pretrained.py": "d1878f8c7a81ad9e45ff885717675515df8f3d2869f1b48c4a072daa5eb16b61"
+  },
+  "trainingPerformed": false,
+  "limitation": "Inference/preprocessing comparison using already trained weights. Same selected gallery and official query splits, not a new independent benchmark or a reproduction of the publisher's 500-pixel/multiscale protocol."
+}

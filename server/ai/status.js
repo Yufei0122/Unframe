@@ -1,7 +1,7 @@
 import { createLocalClient } from './local-http.js';
 import { validateEmbeddingIdentity } from './embeddings.js';
 import { inspectVisionModel } from './vision.js';
-import { planningVersion } from './planning-status.js';
+import { planningConfiguration } from './planning-status.js';
 
 export async function inspectLocalServices(config, { clip = createLocalClient(config, 'OPENCLIP'), ollamaClient = createLocalClient(config, 'OLLAMA') } = {}) {
   const [openclip, ollama, vision] = await Promise.all([
@@ -12,8 +12,9 @@ export async function inspectLocalServices(config, { clip = createLocalClient(co
     (async () => {
       try {
         const tags = await ollamaClient.request('/api/tags', undefined, 5000);
-        const modelAvailable = Array.isArray(tags.models) && tags.models.some(model => (model.name === config.ollamaModel || model.model === config.ollamaModel) && !model.remote_model && !model.remote_host);
-        return { available: true, modelAvailable, ...(!modelAvailable ? { code: 'OLLAMA_MODEL_MISSING' } : {}) };
+        const local = name => Array.isArray(tags.models) && tags.models.some(model => (model.name === name || model.model === name) && !model.remote_model && !model.remote_host);
+        const modelAvailable = local(config.ollamaModel), planningModelAvailable = local(config.planningModel);
+        return { available: true, modelAvailable, planningModelAvailable, ...(!modelAvailable || !planningModelAvailable ? { code: 'OLLAMA_MODEL_MISSING' } : {}) };
       } catch (error) { return { available: false, modelAvailable: false, code: error.code || 'OLLAMA_UNAVAILABLE' }; }
     })(),
     (async () => {
@@ -33,17 +34,19 @@ export async function getAIStatus({ config, store, collection, museumId, clip, o
     index.available = index.indexedArtworks === collection.length && collection.length > 0;
     if (!index.available) index.code = index.indexedArtworks ? 'INDEX_INCOMPLETE' : 'EMPTY_INDEX';
   } catch (error) { index.code = ['INDEX_UNAVAILABLE', 'INDEX_INCOMPATIBLE', 'INDEX_SOURCE_UNAVAILABLE'].includes(error.code) ? error.code : 'INDEX_UNAVAILABLE'; }
-  const ready = index.available && serviceStatus.openclip.available && serviceStatus.ollama.available && serviceStatus.ollama.modelAvailable;
+  const recognitionReady = index.available && serviceStatus.openclip.available;
+  const ready = recognitionReady && serviceStatus.ollama.available && serviceStatus.ollama.modelAvailable && serviceStatus.ollama.planningModelAvailable;
   const problems = [];
   if (!serviceStatus.openclip.available) problems.push('OpenCLIP is unavailable or has the wrong model. Run npm.cmd run ai:up.');
   if (!serviceStatus.ollama.available) problems.push('Ollama is unavailable. Run npm.cmd run ai:up.');
   else if (!serviceStatus.ollama.modelAvailable) problems.push('Install the local Qwen model with npm.cmd run ai:setup.');
+  else if (!serviceStatus.ollama.planningModelAvailable) problems.push('Install the lightweight route model with npm.cmd run ai:routes.');
   if (!index.available) problems.push('Build the complete museum index with npm.cmd run ai:index.');
   return {
-    museumId, ready, planningReady: serviceStatus.ollama.available && serviceStatus.ollama.modelAvailable,
+    museumId, ready, recognitionReady, planningReady: serviceStatus.ollama.available && serviceStatus.ollama.planningModelAvailable,
     analysisReady: serviceStatus.vision?.available === true, liveVerified: false,
     analysisMessage: serviceStatus.vision?.available ? 'General visual analysis is available. Public reference search needs internet access; identities remain unconfirmed.' : 'General visual analysis needs a local vision model. Run npm.cmd run ai:setup:vision, then ai:doctor -- --vision.',
-    configuration: { valid: true, provider: 'local', embeddingModel: config.embeddingModel, embeddingPretrained: config.embeddingPretrained, dimension: config.dimension, ollamaModel: config.ollamaModel, visionModel: config.visionModel, analysisVersion: 1, planningVersion },
+    configuration: { valid: true, ...planningConfiguration(config), embeddingModel: config.embeddingModel, embeddingPretrained: config.embeddingPretrained, dimension: config.dimension, visionModel: config.visionModel, analysisVersion: 3, visionTimeoutMs: config.visionTimeoutMs, visionNumPredict: config.visionNumPredict, visionNumCtx: config.visionNumCtx, analysisBudgetMs: config.analysisBudgetMs, explanationTimeoutMs: config.explanationTimeoutMs, recognitionBudgetMs: config.recognitionBudgetMs, responseBudgetMs: config.responseBudgetMs },
     services: serviceStatus, index,
     message: problems.length ? problems.join(' ') : 'Local services, model and index are ready. Run npm.cmd run ai:doctor -- --smoke for real inference checks.',
   };
