@@ -11,7 +11,6 @@ import type { RootStackParams, TabParams, ProfileStackParams } from './src/model
 import { Icon, T, c, type IconName } from './src/ui';
 import { WelcomeScreen } from './src/screens/Welcome';
 import { MuseumSelectScreen } from './src/screens/MuseumSelect';
-import { QutMuseumScreen } from './src/screens/QutMuseum';
 import { MuseumScreen } from './src/screens/Museum';
 import { ExploreScreen } from './src/screens/Explore';
 import { GuideScreen } from './src/screens/Guide';
@@ -66,7 +65,6 @@ function AppNavigation() {
   return <NavigationContainer documentTitle={{ formatter: () => 'Unframe' }} theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, primary: c.green, background: c.bg, card: c.bg, text: c.ink, border: c.border } }}>
     <Stack.Navigator initialRouteName="MuseumSelect" screenOptions={{ headerTintColor: c.green, headerShadowVisible: false, contentStyle: { backgroundColor: c.bg }, headerTitleStyle: { fontSize: 15 }, headerBackButtonDisplayMode: 'minimal' }}>
       <Stack.Screen name="MuseumSelect" component={MuseumSelectScreen} options={{ headerShown: false }}/>
-      <Stack.Screen name="QutMuseum" component={QutMuseumScreen} options={{ headerShown: false }}/>
       <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }}/>
       <Stack.Screen name="Home" component={MainTabs} options={{ headerShown: false }}/>
       <Stack.Screen name="Artwork" component={ArtworkScreen} options={{ headerShown: false }}/>

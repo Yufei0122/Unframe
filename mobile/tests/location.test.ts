@@ -34,4 +34,13 @@ test('museum artwork IDs remain unique and resolve to their own museum for saved
   assert.equal(new Set(allMuseumArtworks.map(a => a.id)).size, allMuseumArtworks.length);
   assert.equal(museumForArtwork('goma-heritage')?.id, 'goma');
   assert.equal(museumForArtwork('water-lilies')?.id, 'met');
+  assert.equal(museumForArtwork('qut-river-rhythm')?.id, 'qut');
+});
+
+test('QUT selects its own catalogue near Gardens Point, independently of GOMA', () => {
+  const coords = { ...museums.qut, accuracy: 20 };
+  assert.equal(nearestMuseum(coords), 'qut');
+  assert.equal(matchMuseum(coords, 'qut').nearby, true);
+  assert.equal(matchMuseum(coords, 'goma').nearby, false);
+  assert.equal(nearestMuseum({ ...coords, accuracy: 2000 }), undefined);
 });

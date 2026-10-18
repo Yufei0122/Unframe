@@ -1,9 +1,13 @@
 export const museumImages = {
   met: require('../assets/met-exterior.jpg'),
   goma: require('../assets/goma-exterior.jpg'),
+  qut: require('../assets/qut-gallery.png'),
 };
 
 export const images: Record<string, number> = {
+  'qut-river-rhythm': require('../assets/qut-river-rhythm.png'),
+  'qut-soft-architecture': require('../assets/qut-soft-architecture.png'),
+  'qut-between-places': require('../assets/qut-between-places.png'),
   'goma-obliteration-room': require('../assets/goma-obliteration-room.jpg'),
   'goma-in-bed': require('../assets/goma-in-bed.jpg'),
   'goma-heritage': require('../assets/goma-heritage.jpg'),

@@ -1,18 +1,14 @@
 import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import Svg, { Circle, G, Path } from 'react-native-svg';
-import graph from '../../../shared/goma-graph.json';
+import { museums, type MuseumId } from '../museum';
 import { Icon, T, c } from '../ui';
 
-// An intentionally schematic layout; these gallery names and positions are demo data.
-const rooms = [
-  { name: 'Nature Gallery', x: 5, y: 8, w: 38, h: 32 },
-  { name: 'Light Room', x: 57, y: 8, w: 38, h: 32 },
-  { name: 'Colour Studio', x: 5, y: 56, w: 38, h: 29 },
-  { name: 'Sculpture Gallery', x: 57, y: 56, w: 38, h: 29 },
-];
-
-export function GomaFloorPlan({ room, onRoom, onSearch, height, routePaths }: { room: string | null; onRoom: (room: string | null) => void; onSearch: () => void; height: number; routePaths: string[][] }) {
+// Shared schematic map for museums with a single illustrated gallery level.
+export function GalleryFloorPlan({ museumId, room, onRoom, onSearch, height, routePaths }: { museumId: Exclude<MuseumId, 'met'>; room: string | null; onRoom: (room: string | null) => void; onSearch: () => void; height: number; routePaths: string[][] }) {
+  const museum = museums[museumId];
+  const { graph } = museum;
+  const rooms = graph.rooms;
   return <View style={{ height, backgroundColor: c.bg }}>
     <View style={styles.plan}>
       <View style={styles.corridor}/>
@@ -26,7 +22,7 @@ export function GomaFloorPlan({ room, onRoom, onSearch, height, routePaths }: { 
       </Svg></View>
       <T style={styles.entrance}>Entrance</T>
     </View>
-    <T style={styles.caption}>GOMA · FLOOR PLAN</T>
+    <T style={styles.caption}>{museum.shortName.toUpperCase()} · FLOOR PLAN</T>
     <View style={styles.tools}>
       <Pressable accessibilityRole="button" accessibilityLabel="Reset map position" onPress={() => onRoom(null)} style={styles.tool}><Icon name="locate-outline" size={20}/></Pressable>
       <Pressable accessibilityRole="button" accessibilityLabel="Search nearby artworks" onPress={onSearch} style={styles.tool}><Icon name="search-outline" size={20}/></Pressable>

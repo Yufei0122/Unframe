@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FloorPlan, type Floor } from '../components/FloorPlan';
@@ -25,13 +25,13 @@ function MuseumContent() {
   const [floor, setFloor] = useState<Floor>('1');
   const [room, setRoom] = useState<string | null>(null);
   const [search, setSearch] = useState(false), [query, setQuery] = useState('');
-  const available = museumId === 'goma' || (floor === '1' || floor === '2') && (!room || room === 'European Paintings' || room === 'The Great Hall');
-  const works = available ? museumArtworks.filter(a => (museumId !== 'goma' || !room || a.room === room) && `${a.title} ${a.artist}`.toLowerCase().includes(query.trim().toLowerCase())) : [];
+  const available = museumId !== 'met' || (floor === '1' || floor === '2') && (!room || room === 'European Paintings' || room === 'The Great Hall');
+  const works = available ? museumArtworks.filter(a => (museumId === 'met' || !room || a.room === room) && `${a.title} ${a.artist}`.toLowerCase().includes(query.trim().toLowerCase())) : [];
   const changeFloor = (value: Floor) => { setFloor(value); setRoom(null); };
   const showSearch = () => { setSearch(true); };
   return <SafeAreaView edges={['top']} style={styles.screen} onLayout={event => setScreenHeight(event.nativeEvent.layout.height)}>
     <View style={styles.header}>
-      <Pressable accessibilityRole="button" accessibilityLabel="Choose museum" onPress={() => nav.navigate('MuseumSelect')} style={styles.museumButton}><View><T style={styles.eyebrow}>EXPLORE</T><T numberOfLines={1} style={styles.museumName}>{museum.shortName}</T></View><Icon name="chevron-down" size={16}/></Pressable>
+      <Pressable accessibilityRole="button" accessibilityLabel="Choose museum" onPress={() => nav.popTo('MuseumSelect')} style={styles.museumButton}><View><T style={styles.eyebrow}>EXPLORE</T><T numberOfLines={1} style={styles.museumName}>{museum.shortName}</T></View><Icon name="chevron-down" size={16}/></Pressable>
       <Pressable accessibilityRole="button" accessibilityLabel="Scan an artwork" onPress={() => nav.navigate('Lookup')} style={styles.scan}><Icon name="scan-outline" size={19}/></Pressable>
     </View>
     <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">

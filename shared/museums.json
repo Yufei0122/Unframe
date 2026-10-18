@@ -11,6 +11,18 @@
     "website": "https://www.metmuseum.org/",
     "catalogueNotice": "A selection from The Met catalogue, not a live list of works on display."
   },
+  "qut": {
+    "id": "qut",
+    "name": "QUT Art Museum",
+    "shortName": "QUT Art Museum",
+    "collectionName": "Unframe studio",
+    "address": "2 George Street, Gardens Point, Brisbane QLD 4000",
+    "latitude": -27.4773,
+    "longitude": 153.0281,
+    "radius": 150,
+    "website": "https://www.artmuseum.qut.edu.au/",
+    "catalogueNotice": "Original Unframe artworks for a simulated QUT visit; not QUT collection records."
+  },
   "goma": {
     "id": "goma",
     "name": "Gallery of Modern Art, Brisbane",

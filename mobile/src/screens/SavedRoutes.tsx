@@ -9,8 +9,8 @@ import { useStore } from '../store';
 import { Button, Icon, Notice, T, serif, useRootNavigation } from '../ui';
 import { CollectionEmpty, ProfileFilters, ProfilePage, ProfileSearch, pageStyles, profileColors as c, useProfileNavigation } from '../components/ProfilePage';
 
-type Filter = 'All' | 'Nearby' | 'Quick Visit' | 'The Met' | 'GOMA';
-const filters = [{ label: 'All' }, { label: 'Nearby', icon: 'location-outline' }, { label: 'Quick Visit', icon: 'time-outline' }, { label: 'The Met', icon: 'library-outline' }, { label: 'GOMA', icon: 'business-outline' }] as const;
+type Filter = 'All' | 'Nearby' | 'Quick Visit' | 'The Met' | 'GOMA' | 'QUT Art Museum';
+const filters = [{ label: 'All' }, { label: 'Nearby', icon: 'location-outline' }, { label: 'Quick Visit', icon: 'time-outline' }, { label: 'The Met', icon: 'library-outline' }, { label: 'GOMA', icon: 'business-outline' }, { label: 'QUT Art Museum', icon: 'business-outline' }] as const;
 export function SavedRoutesScreen() {
   const { state, dispatch } = useStore(), navigation = useProfileNavigation(), nav = useRootNavigation();
   const { location, museumId } = useMuseumLocation();
@@ -22,9 +22,10 @@ export function SavedRoutesScreen() {
     if (filter === 'Quick Visit' && info.minutes > 30) return false;
     if (filter === 'The Met' && info.museumId !== 'met') return false;
     if (filter === 'GOMA' && info.museumId !== 'goma') return false;
+    if (filter === 'QUT Art Museum' && info.museumId !== 'qut') return false;
     return `${route.title} ${info.place} ${info.museum} ${info.description}`.toLowerCase().includes(query.trim().toLowerCase());
   });
-  return <ProfilePage title="Saved Routes" subtitle="Curated paths through art and place." action={{ icon: 'map-outline', label: 'Explore museums on the map', run: () => nav.navigate('MuseumSelect') }}>
+  return <ProfilePage title="Saved Routes" subtitle="Curated paths through art and place." action={{ icon: 'map-outline', label: 'Explore museums on the map', run: () => nav.popTo('MuseumSelect') }}>
     <ProfileSearch value={query} onChange={setQuery} label="Search your saved routes…"/>
     <ProfileFilters<Filter> items={[...filters]} value={filter} onChange={setFilter}/>
     {removed && <View style={styles.undo}><T style={styles.meta}>Route removed from your saved collection.</T><Pressable accessibilityRole="button" accessibilityLabel="Undo remove route" onPress={() => { dispatch({ type: 'saveRoute', route: removed }); setRemoved(null); }}><T style={styles.undoText}>Undo</T></Pressable></View>}

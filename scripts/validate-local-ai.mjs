@@ -86,7 +86,7 @@ async function httpJSON(endpoint, body, { form, expectedStatus = 200 } = {}) {
 
 async function recognise(museumId, bytes) {
   const form = new FormData();
-  form.set('image', new Blob([bytes], { type: 'image/jpeg' }), 'bundled-validation.jpg');
+  form.set('image', new Blob([await normalizeImage(bytes)], { type: 'image/jpeg' }), 'bundled-validation.jpg');
   return httpJSON(`artworks/recognise?museumId=${museumId}`, undefined, { form });
 }
 
@@ -96,7 +96,7 @@ function rank(vector, records) {
 }
 
 async function variants(source) {
-  const reference = await normalizeImage(source, 'image/jpeg');
+  const reference = await normalizeImage(source);
   const { width, height } = await sharp(reference).metadata();
   const left = Math.floor(width * 0.05), top = Math.floor(height * 0.05);
   return [
@@ -253,7 +253,7 @@ try {
       return { museumId, foreignArtworkId: foreignArtwork.id, matched: false, invalidConfirmationCode: rejected.code };
     });
     await checkHttp(`${museumId}/unrelated_image_rejected`, async () => {
-      const image = controls.find(control => control.name === `${museumId}-exterior.jpg`);
+      const image = controls.find(control => control.name === (museumId === 'qut' ? 'met-exterior.jpg' : `${museumId}-exterior.jpg`));
       const result = await recognise(museumId, image.bytes);
       assert.equal(result.matched, false, 'A museum exterior was unconditionally matched.');
       assert.deepEqual(result.candidates, []);
@@ -302,7 +302,7 @@ finally {
     referenceAndVariantSamples: report.references.length,
     referenceAndVariantChecksPassed: report.references.filter(row => row.passed).length,
     negativeImages: report.negatives.length,
-    negativeImagesRejectedInBothMuseums: report.negatives.filter(row => row.passed).length,
+    negativeImagesRejectedInAllMuseums: report.negatives.filter(row => row.passed).length,
     minExpectedArtworkSimilarity: positives.length ? Math.min(...positives) : null,
     maxNegativeSimilarity: negatives.length ? Math.max(...negatives) : null,
     httpChecks: report.http.length, httpChecksPassed: report.http.filter(row => row.passed).length,
@@ -311,7 +311,7 @@ finally {
   report.passed = report.failures.length === 0 && (chatOnly
     ? report.http.length === 1
     : report.references.length === [...catalogues.values()].reduce((count, { collection }) => count + collection.length * 4, 0)
-      && report.negatives.length === 6 && report.http.length === (recognitionOnly ? catalogues.size * 4 : 13));
+      && report.negatives.length === 6 && report.http.length === (recognitionOnly ? catalogues.size * 4 : catalogues.size * 6 + 1));
   report.completedAt = new Date().toISOString();
   await save();
   console.log(JSON.stringify({ passed: report.passed, ...report.summary, report: output, note: report.limitation }, null, 2));

@@ -1,0 +1,23 @@
+{
+  "demo": true,
+  "description": "Simulated QUT visit. Gallery names, positions, distances and accessibility are illustrative, not an official floor plan or navigation guidance.",
+  "rooms": [
+    { "name": "Nature Gallery", "x": 5, "y": 8, "w": 38, "h": 32 },
+    { "name": "Form Gallery", "x": 57, "y": 8, "w": 38, "h": 32 },
+    { "name": "Colour Gallery", "x": 5, "y": 56, "w": 38, "h": 29 }
+  ],
+  "nodes": [
+    { "id": "entrance", "label": "Entrance", "x": 50, "y": 92, "floor": "1" },
+    { "id": "qut-foyer", "label": "Foyer", "x": 50, "y": 52, "floor": "1" },
+    { "id": "qut-river-rhythm", "label": "River rhythm", "x": 25, "y": 70, "floor": "1", "galleryId": "colour-gallery" },
+    { "id": "qut-soft-architecture", "label": "Soft architecture", "x": 75, "y": 25, "floor": "1", "galleryId": "form-gallery" },
+    { "id": "qut-between-places", "label": "Between places", "x": 25, "y": 25, "floor": "1", "galleryId": "nature-gallery" }
+  ],
+  "edges": [
+    { "from": "entrance", "to": "qut-foyer", "distance": 8, "estimatedSeconds": 12, "accessible": true },
+    { "from": "qut-foyer", "to": "qut-river-rhythm", "distance": 4, "estimatedSeconds": 6, "accessible": true },
+    { "from": "qut-foyer", "to": "qut-soft-architecture", "distance": 12, "estimatedSeconds": 18, "accessible": true },
+    { "from": "qut-foyer", "to": "qut-between-places", "distance": 22, "estimatedSeconds": 33, "accessible": true },
+    { "from": "qut-river-rhythm", "to": "qut-between-places", "distance": 18, "estimatedSeconds": 27, "accessible": true }
+  ]
+}

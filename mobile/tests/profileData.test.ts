@@ -46,6 +46,18 @@ test('malformed and cross-museum route snapshots are ignored without losing vali
   assert.deepEqual(restored.savedAt, {});
 });
 
+test('QUT artwork and route saves survive reload with QUT identity and graph paths', () => {
+  const art = museums.qut.artworks[0];
+  const qutItinerary: AIRoute = { ...itinerary, route: [{ order: 1, artworkId: art.id, title: art.title, galleryId: 'colour-gallery', estimatedVisitMinutes: art.minutes }], navigation: [{ from: 'entrance', to: art.id, nodes: ['entrance', 'qut-foyer', art.id], distance: 12, estimatedSeconds: 18 }] };
+  const route = saveMuseumRoute(qutItinerary, 'qut', visitDate);
+  const state = reducer(reducer(initialState, { type: 'save', id: art.id }), { type: 'saveRoute', route });
+  const restored = restoreState(JSON.stringify(state), initialState, ids);
+  assert.deepEqual(restored.saved, [art.id]);
+  assert.deepEqual(restored.savedRoutes, [route]);
+  assert.equal(validSavedRoute({ ...route, museumId: 'goma' }, ids), false);
+  assert.ok(profileActivity(restored).some(entry => entry.museumId === 'qut'));
+});
+
 test('activity buckets respect actual local dates and do not fabricate dates for older items', () => {
   assert.equal(activityDateGroup(visitDate.toISOString(), visitDate), 'TODAY');
   assert.equal(activityDateGroup(new Date(2026, 9, 2).toISOString(), visitDate), 'THIS MONTH');

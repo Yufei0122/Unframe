@@ -185,6 +185,10 @@ test('image validation checks MIME, signature, actual decoding, bytes and WebP c
   await assert.rejects(normalizeImage(Buffer.alloc(MAX_IMAGE_BYTES + 1), 'image/jpeg'), { status: 413 });
   const webp = await sharp(image).webp().toBuffer();
   assert.equal((await sharp(await normalizeImage(webp, 'image/webp')).metadata()).format, 'jpeg');
+  const png = await sharp(image).png().toBuffer();
+  assert.equal((await sharp(await normalizeImage(png)).metadata()).format, 'jpeg');
+  await assert.rejects(normalizeImage(png, 'image/jpeg'), { status: 415 });
+  await assert.rejects(normalizeImage(Buffer.from('not an image')), { status: 415 });
   const tagged = await sharp(image).withMetadata({ orientation: 6 }).jpeg().toBuffer();
   assert.ok((await sharp(tagged).metadata()).exif);
   const stripped = await sharp(await normalizeImage(tagged, 'image/jpeg')).metadata();

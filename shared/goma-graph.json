@@ -1,6 +1,12 @@
 {
   "demo": true,
   "description": "Illustrative GOMA demo only. Room names, placement, distances and accessibility are invented for this prototype, not an official floor plan or indoor navigation guidance.",
+  "rooms": [
+    { "name": "Nature Gallery", "x": 5, "y": 8, "w": 38, "h": 32 },
+    { "name": "Light Room", "x": 57, "y": 8, "w": 38, "h": 32 },
+    { "name": "Colour Studio", "x": 5, "y": 56, "w": 38, "h": 29 },
+    { "name": "Sculpture Gallery", "x": 57, "y": 56, "w": 38, "h": 29 }
+  ],
   "nodes": [
     { "id": "entrance", "label": "Entrance", "x": 50, "y": 92, "floor": "1" },
     { "id": "goma-foyer", "label": "Demo foyer", "x": 50, "y": 52, "floor": "1" },

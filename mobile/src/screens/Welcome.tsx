@@ -7,12 +7,13 @@ import { useIsFocused } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParams } from '../model';
 import { locationLabel, useMuseumLocation } from '../location';
+import { museumImages } from '../assets';
 import { Icon, T, serif } from '../ui';
 
 export function WelcomeScreen({ navigation }: NativeStackScreenProps<RootStackParams, 'Welcome'>) {
   const { location, museum, museumId } = useMuseumLocation();
   const focused = useIsFocused();
-  return <ImageBackground source={museumId === 'goma' ? require('../../assets/goma-exterior.jpg') : require('../../assets/met-exterior.jpg')} style={styles.background} resizeMode="cover">
+  return <ImageBackground source={museumImages[museumId]} style={styles.background} resizeMode="cover">
     {focused && <StatusBar style="light"/>}
     <LinearGradient colors={['#132A3F69', '#172E3733', '#11272CEE']} locations={[0, .42, 1]} style={StyleSheet.absoluteFill}/>
     <SafeAreaView style={styles.safe}>

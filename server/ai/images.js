@@ -8,6 +8,8 @@ export async function normalizeImage(bytes, mime) {
     'image/png': bytes.subarray(0, 8).equals(Buffer.from([137,80,78,71,13,10,26,10])),
     'image/webp': bytes.toString('ascii', 0, 4) === 'RIFF' && bytes.toString('ascii', 8, 12) === 'WEBP',
   };
+  // Bundled reference files may mix formats; uploads still validate their declared MIME.
+  if (mime === undefined) mime = Object.keys(signatures).find(type => signatures[type]);
   if (!signatures[mime]) throw new AIError(415, 'INVALID_IMAGE_TYPE', 'Upload a valid JPEG, PNG or WebP image.');
   try {
     // Fully decode, limit decompression and strip EXIF/GPS before local OpenCLIP inference.

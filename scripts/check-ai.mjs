@@ -50,7 +50,7 @@ try {
     for (const [museumId, { collection }] of catalogues) {
       const artwork = collection[0];
       console.log(`Smoke: ${museumId} real OpenCLIP reference, transformed reference and unrelated image.`);
-      const image = await normalizeImage(await readFile(referenceImageUrl(artwork)), 'image/jpeg');
+      const image = await normalizeImage(await readFile(referenceImageUrl(artwork)));
       const referenceVector = await embeddings.generate(image);
       const recognition = createRecognitionService({ config, embeddings: { generate: async () => referenceVector }, store, ollama, collection });
       const result = await recognition.recognise(image);
@@ -59,7 +59,7 @@ try {
       const transformedVector = await embeddings.generate(await normalizeImage(transformed, 'image/jpeg'));
       const transformedResult = await createRecognitionService({ config, embeddings: { generate: async () => transformedVector }, store, ollama, collection }).recognise(transformed);
       if (transformedResult.candidates[0]?.artwork.id !== artwork.id) throw new AIError(502, 'LIVE_TRANSFORMED_REFERENCE_MISMATCH', 'A resized reference image was not retrieved. Review the threshold using more camera samples.');
-      const unrelated = await normalizeImage(await readFile(new URL(`../mobile/assets/${museumId}-exterior.jpg`, import.meta.url)), 'image/jpeg');
+      const unrelated = await normalizeImage(await readFile(new URL(`../mobile/assets/${museumId === 'qut' ? 'met' : museumId}-exterior.jpg`, import.meta.url)), 'image/jpeg');
       const unrelatedVector = await embeddings.generate(unrelated);
       const unrelatedResult = await createRecognitionService({ config, embeddings: { generate: async () => unrelatedVector }, store, ollama, collection }).recognise(unrelated);
       const maxUnrelatedSimilarity = Math.max(...records.filter(r => r.museumId === museumId).map(r => cosineSimilarity(unrelatedVector, r.vector)));
@@ -71,7 +71,7 @@ try {
       }
       live.push({ museumId, embedding: 'passed', referenceRetrieval: { artworkId: artwork.id, similarity: result.candidates[0].similarity }, transformedReferenceSimilarity: transformedResult.candidates[0].similarity, unrelatedImageRejected: true, maxUnrelatedSimilarity, threshold: config.threshold, ...(explanation ? { explanation } : {}) });
     }
-    console.log(JSON.stringify({ check: 'real_local_models', liveVerified: true, museums: live, note: 'Two reference/transformation/exterior image sets and one real structured explanation. Run scripts/validate-local-ai.mjs for broader retrieval and HTTP explanation/route/chat checks. Similarity is not accuracy or probability; validate camera conditions and more negative images before broad use. Visitor photographs are never stored.' }, null, 2));
+    console.log(JSON.stringify({ check: 'real_local_models', liveVerified: true, museums: live, note: 'Reference/transformation/exterior image sets for every supported museum and one real structured explanation. Run scripts/validate-local-ai.mjs for broader retrieval and HTTP explanation/route/chat checks. Similarity is not accuracy or probability; validate camera conditions and more negative images before broad use. Visitor photographs are never stored.' }, null, 2));
   } else console.log('PASS readiness: local services, models and indexes are ready. Inference has not been tested by this command. Run npm.cmd run ai:doctor -- --smoke and npm.cmd run ai:doctor -- --vision for real model checks.');
 } catch (error) {
   console.error(JSON.stringify({ check: 'failed', liveVerified: false, code: error instanceof AIError ? error.code : 'CHECK_FAILED', error: error instanceof AIError ? error.message : 'AI check failed. Review local configuration and reference images.' }));

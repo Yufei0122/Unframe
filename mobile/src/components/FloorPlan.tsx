@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import Svg, { Circle, Defs, G, LinearGradient, Path, Rect, Stop } from 'react-native-svg';
 import { Icon, T, c } from '../ui';
 import graph from '../../../shared/met-graph.json';
-import { GomaFloorPlan } from './GomaFloorPlan';
+import { GalleryFloorPlan } from './GalleryFloorPlan';
 import type { MuseumId } from '../museum';
 
 export const floors = ['3', '2', '1', 'B1'] as const;
@@ -45,7 +45,7 @@ const layouts: Record<Floor, Room[]> = {
 };
 
 export function FloorPlan({ museumId = 'met', floor, setFloor, room, onRoom, onSearch, height = 376, routePaths = [] }: { museumId?: MuseumId; floor: Floor; setFloor: (floor: Floor) => void; room: string | null; onRoom: (room: string | null) => void; onSearch: () => void; height?: number; routePaths?: string[][] }) {
-  if (museumId === 'goma') return <GomaFloorPlan room={room} onRoom={onRoom} onSearch={onSearch} height={height} routePaths={routePaths}/>;
+  if (museumId !== 'met') return <GalleryFloorPlan museumId={museumId} room={room} onRoom={onRoom} onSearch={onSearch} height={height} routePaths={routePaths}/>;
   return <View style={[styles.container, { height }]}>
     <View style={styles.plan}>
       <Svg width="100%" height="100%" viewBox="0 0 330 390" preserveAspectRatio="none" accessible={false}>

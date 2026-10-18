@@ -114,12 +114,12 @@ try {
   console.error(error.message);
 } finally {
   report.summary = {
-    expectedChecks: 6, executedChecks: report.checks.filter(row => !row.skipped).length,
+    expectedChecks: catalogues.size * 2 + 2, executedChecks: report.checks.filter(row => !row.skipped).length,
     passedChecks: report.checks.filter(row => row.passed).length,
     modelRoutesPassed: report.checks.filter(row => row.endpoint === 'routes/plan' && row.passed).length,
     fallbackResponses: report.checks.filter(row => row.response?.body?.recommendationSource === 'local').length,
   };
-  report.passed = !report.setupError && report.checks.length === 6 && report.checks.every(row => row.passed);
+  report.passed = !report.setupError && report.checks.length === report.summary.expectedChecks && report.checks.every(row => row.passed);
   report.completedAt = new Date().toISOString();
   await save();
   console.log(JSON.stringify({ passed: report.passed, ...report.summary, report: output }, null, 2));

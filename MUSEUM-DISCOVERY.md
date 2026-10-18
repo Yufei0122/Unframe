@@ -1,10 +1,10 @@
 # Museum discovery (web)
 
-The entrance now opens a full-width museum scene above an OpenLayers 10.10 map. Choosing The Met or GOMA opens the existing welcome and Start Visit flow. QUT Art Museum opens a separate illustrated UI demo. Other museums have photo previews and official website links, without borrowing either demo's artwork catalogue.
+The entrance now opens a full-width museum scene above an OpenLayers 10.10 map. Choosing The Met, GOMA or QUT Art Museum opens the shared welcome and Start Visit flow, with the same Home, Plan, Scan and Profile screens. QUT uses original illustrations for its simulated visit; see [QUT integration](QUT-DEMO.md). Other museums have photo previews and official website links, without borrowing another museum’s artwork catalogue.
 
 - New York: The Met, Solomon R. Guggenheim Museum, MoMA.
 - Brisbane: GOMA, QUT Art Museum, Queensland Art Gallery, Queensland Museum Kurilpa, Museum of Brisbane (City Hall).
-- QUT Art Museum opens a separate [UI demo](QUT-DEMO.md) with original sample artworks, filtering, session saves, a short slow-looking tour and visitor information. Its gallery image is an original illustration. Opening this demo does not change the selected Met/GOMA catalogue.
+- QUT Art Museum uses the [shared museum experience](QUT-DEMO.md) with original illustrated artworks, its own catalogue and graph, AI planning, scanning and persistent profile saves. Choosing QUT switches the active museum just like choosing GOMA or The Met.
 - Each city cycles independently every 10 seconds. Photos slide and crossfade while the text eases into place. Swipe horizontally with a finger or press and drag with a mouse to reveal the next photo before release. Vertical touch scrolling remains available. The timer pauses while held, focused inside the scene, offscreen, or in a hidden tab; it stops when leaving the entrance. Reduced-motion preferences disable automatic rotation and transitions.
 - City buttons reset to the demo museum. Map pins select a preview. Only pressing Choose commits the collection used by the existing visit and AI features.
 - Actual device coordinates display a blue dot and straight-line distances. Denied/unavailable location keeps both city demos usable; no invented user position. Coordinates here represent buildings, not entrances or indoor navigation.

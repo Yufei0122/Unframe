@@ -5,7 +5,7 @@ Unframe is a React Native / Expo museum companion. **The mobile app is the only 
 ## Run on Windows
 
 Requires Node.js 22 or later. For a fresh checkout:
-The **Scan** screen samples the camera view and suggests artworks using local **OpenCLIP ViT-B-32 / laion2b_s34b_b79k**. Choose a candidate to confirm the artwork and request a **Qwen3 1.7B** explanation grounded in catalogue notes. The guide shares the lightweight text model with planning to avoid loading another large model after every scan. Scanning supports pause/resume and photo upload. Choose **The Met** (eight artworks) or **Brisbane GOMA** (four QAGOMA works). **Mira**, the assistant in Plan, updates visit preferences and automatically designs a route. The graph planner enforces time and accessibility constraints.
+The **Scan** screen samples the camera view and suggests artworks using local **OpenCLIP ViT-B-32 / laion2b_s34b_b79k**. Choose a candidate to confirm the artwork and request a **Qwen3 1.7B** explanation grounded in catalogue notes. The guide shares the lightweight text model with planning to avoid loading another large model after every scan. Scanning supports pause/resume and photo upload. Choose **The Met** (eight artworks), **Brisbane GOMA** (four QAGOMA works), or **QUT Art Museum** (three original illustrations for a simulated visit). **Mira**, the assistant in Plan, updates visit preferences and automatically designs a route. The graph planner enforces time and accessibility constraints.
 
 **Beyond the museum collection:** uploaded photos without a local match, or **Analyse any artwork**, use local **Qwen3-VL 2B Instruct** for visual observations and tentative identity suggestions. The backend searches The Met, the Art Institute of Chicago and Wikimedia Commons using suggested titles/artists, then compares up to three public reference images with OpenCLIP when available. Uncertain identities remain explicitly unconfirmed. No photograph is sent to these public search services.
 
@@ -21,7 +21,7 @@ From the project root, run `npm.cmd install`, then `npm.cmd run ai:setup` to ins
 
 Run `npm.cmd run ai:doctor` for service/model/index readiness, or `npm.cmd run ai:doctor -- --smoke` for real embedding and structured Qwen checks. Opening Scan with camera access sends sampled frames to local services; Unframe does not persist them. Similarity is not probability or accuracy. CPU timeouts, service reuse, privacy and deployment evidence are documented in [AI-INTEGRATION.md](AI-INTEGRATION.md).
 
-For **AI route planning only**, use `npm.cmd run ai:routes:verify`: it starts/reuses local Qwen, checks actual Chinese chat and constrained routes for both museums, then starts Expo. It does not require image models or an artwork embedding index. `npm.cmd run ai:routes` starts without repeating acceptance. [Route acceptance](AI-INTEGRATION.md#route-planning-independent-startup-and-strict-model-acceptance) requires Qwen results rather than counting a local-rule fallback as model success; reports are saved under `.local-ai/acceptance/routes-*.json`.
+For **AI route planning only**, use `npm.cmd run ai:routes:verify`: it starts/reuses local Qwen, checks actual Chinese chat and constrained routes for every supported museum, then starts Expo. It does not require image models or an artwork embedding index. `npm.cmd run ai:routes` starts without repeating acceptance. [Route acceptance](AI-INTEGRATION.md#route-planning-independent-startup-and-strict-model-acceptance) requires Qwen results rather than counting a local-rule fallback as model success; reports are saved under `.local-ai/acceptance/routes-*.json`.
 
 **Verified on this Windows checkout (2026-10-11):** mobile web is at http://localhost:8081 and its new backend at http://127.0.0.1:3001, because the preexisting port-3000 server was preserved. The local `.env` and mobile API URL are configured accordingly. Both models, the twelve-artwork index, real explanations/routes and the corrected Chinese planning chat were exercised. See the [deployment evidence and limits](AI-INTEGRATION.md#verified-windows-deployment--2026-10-11-australiabrisbane) for test results and retained first-failure/retest records.
 
@@ -51,8 +51,8 @@ Museum-catalogue recognition uses OpenCLIP with a 5-second budget. General photo
 
 ## Features
 
-- QUT Art Museum UI demo: choose Brisbane → QUT Art Museum in discovery for exhibition browsing, original demo artworks, session bookmarks, a short tour and visitor information. See [QUT demo details](QUT-DEMO.md).
-- Museum selection and isolated The Met / GOMA catalogues, artwork details and maps.
+- QUT Art Museum: choose Brisbane → QUT Art Museum for the shared Home, Plan, Scan and Profile experience, with original illustrated artworks, AI routes and persistent saves. See [QUT integration and content sources](QUT-DEMO.md).
+- Museum selection and isolated The Met / GOMA / QUT catalogues, artwork details and maps.
 - Local OpenCLIP image matching and Ollama Qwen explanations grounded in verified catalogue notes.
 - Qwen-assisted artwork selection with deterministic time and accessibility constraints for routes.
 - Profile, local avatar editing, saved artworks, saved routes and recent activity.

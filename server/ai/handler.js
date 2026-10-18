@@ -22,7 +22,7 @@ export function createAIHandler({ config = readAIConfig(), clip = createLocalCli
     chat: createPlanningChatService({ ollama, collection, graph, museum }),
   }]));
   const selectMuseum = (id = 'met') => {
-    if (typeof id !== 'string' || !services.has(id)) throw new AIError(400, 'INVALID_MUSEUM', 'Choose a supported museum: met or goma.');
+    if (typeof id !== 'string' || !services.has(id)) throw new AIError(400, 'INVALID_MUSEUM', `Choose a supported museum: ${[...catalogues.keys()].join(', ')}.`);
     return services.get(id);
   };
   let active = 0;
@@ -38,12 +38,12 @@ export function createAIHandler({ config = readAIConfig(), clip = createLocalCli
     if (req.method === 'GET' && pathname === '/api/ai/planning/status') return send(res, 200, await getPlanningStatus({ config, client: ollamaClient }));
     if (req.method === 'GET' && pathname === '/api/ai/catalogue') {
       const catalogue = catalogues.get(url.searchParams.get('museumId') ?? 'met');
-      return catalogue ? send(res, 200, { museum: catalogue.museum, artworks: catalogue.collection, graph: catalogue.graph }) : send(res, 400, { error: 'Choose a supported museum: met or goma.', code: 'INVALID_MUSEUM' });
+      return catalogue ? send(res, 200, { museum: catalogue.museum, artworks: catalogue.collection, graph: catalogue.graph }) : send(res, 400, { error: `Choose a supported museum: ${[...catalogues.keys()].join(', ')}.`, code: 'INVALID_MUSEUM' });
     }
     if (req.method === 'GET' && pathname === '/api/ai/status') {
       const museumId = url.searchParams.get('museumId') ?? 'met';
       const catalogue = catalogues.get(museumId);
-      if (!catalogue) return send(res, 400, { error: 'Choose a supported museum: met or goma.', code: 'INVALID_MUSEUM' });
+      if (!catalogue) return send(res, 400, { error: `Choose a supported museum: ${[...catalogues.keys()].join(', ')}.`, code: 'INVALID_MUSEUM' });
       return send(res, 200, await getAIStatus({ config, store, collection: catalogue.collection, museumId, clip, ollamaClient }));
     }
     if (req.method !== 'POST' || !['/api/ai/artworks/recognise', '/api/ai/artworks/analyse', '/api/ai/artworks/confirm', '/api/ai/routes/plan', '/api/ai/routes/chat'].includes(pathname)) return send(res, 404, { error: 'AI endpoint not found.' });

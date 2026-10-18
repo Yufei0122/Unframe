@@ -1,8 +1,8 @@
 # The Met demo assets
 
-## QUT UI demo assets
+## QUT illustrated visit assets
 
-`qut-gallery`, `qut-river-rhythm`, `qut-soft-architecture` and `qut-between-places` (SVG sources and bundled PNG renders) are original Unframe prototype illustrations. The gallery is illustrative; the three abstract studies are not QUT collection artworks. See [QUT demo content and behavior](../../QUT-DEMO.md).
+`qut-gallery`, `qut-river-rhythm`, `qut-soft-architecture` and `qut-between-places` (SVG sources and bundled PNG renders) are original Unframe prototype illustrations. The gallery is illustrative; the three abstract studies are not QUT collection artworks. See [QUT integration and content sources](../../QUT-DEMO.md).
 
 For the five nearby-museum preview photographs, see [museum discovery image sources](../../MUSEUM-DISCOVERY.md#new-photo-assets).
 

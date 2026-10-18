@@ -17,7 +17,6 @@ export interface MobileState { version: 1; preferences: Preferences; avatarUri?:
 export const initialState: MobileState = { version: 1, preferences: { name: 'Alex', interests: ['Nature', 'Colour'], duration: 30, stepFree: false, saveHistory: true, largeText: false }, saved: [], visits: [], feedback: [], tour: null };
 export type RootStackParams = {
   MuseumSelect: undefined;
-  QutMuseum: undefined;
   Welcome: undefined;
   Tour: undefined;
   Home: NavigatorScreenParams<TabParams> | undefined;

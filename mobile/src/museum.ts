@@ -1,7 +1,9 @@
 import metCollection from '../../shared/met-collection.json';
 import gomaCollection from '../../shared/goma-collection.json';
+import qutCollection from '../../shared/qut-collection.json';
 import metGraph from '../../shared/met-graph.json';
 import gomaGraph from '../../shared/goma-graph.json';
+import qutGraph from '../../shared/qut-graph.json';
 import metadata from '../../shared/museums.json';
 import type { Artwork } from '../../shared/domain.js';
 
@@ -20,6 +22,7 @@ export const museumArtworks: MuseumArtwork[] = metCollection;
 export const museums = {
   met: { ...metadata.met, artworks: metCollection as MuseumArtwork[], graph: metGraph },
   goma: { ...metadata.goma, artworks: gomaCollection as MuseumArtwork[], graph: gomaGraph },
+  qut: { ...metadata.qut, artworks: qutCollection as MuseumArtwork[], graph: qutGraph },
 };
 export const allMuseumArtworks = Object.values(museums).flatMap(m => m.artworks);
 export const museumForArtwork = (id: string) => Object.values(museums).find(m => m.artworks.some(a => a.id === id));

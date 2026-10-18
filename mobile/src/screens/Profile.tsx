@@ -92,7 +92,7 @@ export function ProfileScreen() {
           <View style={p.identityText}>
             <T accessibilityRole="header" numberOfLines={2} style={[p.name, compact && { fontSize: 25 }]}>{state.preferences.name}</T>
             <T style={p.bio}>Curious minds visit{`\n`}more often.</T>
-            <Pressable accessibilityRole="button" accessibilityLabel="Explore museums" onPress={() => nav.navigate('MuseumSelect')} style={p.location}><Icon name="location-outline" size={13} color="#8A796B"/><T style={p.locationText}>{museum.shortName}</T></Pressable>
+            <Pressable accessibilityRole="button" accessibilityLabel="Explore museums" onPress={() => nav.popTo('MuseumSelect')} style={p.location}><Icon name="location-outline" size={13} color="#8A796B"/><T style={p.locationText}>{museum.shortName}</T></Pressable>
           </View>
         </View>
       </View>

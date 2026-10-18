@@ -1,0 +1,211 @@
+{
+  "passed": true,
+  "verification": "Real browser -> Node -> local OpenCLIP/Qwen. Browser directly connected to the real backend; no AI response mocks. OSM tiles disabled.",
+  "requests": [
+    {
+      "endpoint": "/api/ai/routes/chat",
+      "museumId": "qut",
+      "status": 200,
+      "elapsedMs": 11397,
+      "body": {
+        "reply": "Updated preferences: 20 minutes, include River rhythm, step-free route.",
+        "preferences": {
+          "interests": [
+            "Nature",
+            "Colour"
+          ],
+          "availableMinutes": 20,
+          "currentLocation": "entrance",
+          "walkingPreference": "balanced",
+          "accessibilityRequirements": [
+            "step_free"
+          ],
+          "mustSeeArtworkIds": [
+            "qut-river-rhythm"
+          ]
+        }
+      }
+    },
+    {
+      "endpoint": "/api/ai/routes/plan",
+      "museumId": "qut",
+      "status": 200,
+      "elapsedMs": 4426,
+      "body": {
+        "demo": true,
+        "mapNotice": "Simulated QUT visit. Gallery names, positions, distances and accessibility are illustrative, not an official floor plan or navigation guidance.",
+        "estimatedMinutes": 12,
+        "estimatedWalkingDistance": 54,
+        "route": [
+          {
+            "order": 1,
+            "artworkId": "qut-soft-architecture",
+            "title": "Soft architecture",
+            "galleryId": "form-gallery",
+            "estimatedVisitMinutes": 4
+          },
+          {
+            "order": 2,
+            "artworkId": "qut-river-rhythm",
+            "title": "River rhythm",
+            "galleryId": "colour-gallery",
+            "estimatedVisitMinutes": 3
+          },
+          {
+            "order": 3,
+            "artworkId": "qut-between-places",
+            "title": "Between places",
+            "galleryId": "nature-gallery",
+            "estimatedVisitMinutes": 3
+          }
+        ],
+        "navigation": [
+          {
+            "from": "entrance",
+            "to": "qut-soft-architecture",
+            "nodes": [
+              "entrance",
+              "qut-foyer",
+              "qut-soft-architecture"
+            ],
+            "distance": 20,
+            "estimatedSeconds": 30
+          },
+          {
+            "from": "qut-soft-architecture",
+            "to": "qut-river-rhythm",
+            "nodes": [
+              "qut-soft-architecture",
+              "qut-foyer",
+              "qut-river-rhythm"
+            ],
+            "distance": 16,
+            "estimatedSeconds": 24
+          },
+          {
+            "from": "qut-river-rhythm",
+            "to": "qut-between-places",
+            "nodes": [
+              "qut-river-rhythm",
+              "qut-between-places"
+            ],
+            "distance": 18,
+            "estimatedSeconds": 27
+          }
+        ],
+        "reasoningSummary": "The user is interested in nature and colour, and the river rhythm artwork meets these criteria with its reflection tags. The between places artwork also aligns with nature and colour interests.",
+        "recommendationSource": "ollama"
+      }
+    },
+    {
+      "endpoint": "/api/ai/artworks/recognise",
+      "museumId": "qut",
+      "status": 200,
+      "elapsedMs": 130,
+      "body": {
+        "matched": true,
+        "candidates": [
+          {
+            "artwork": {
+              "id": "qut-river-rhythm",
+              "title": "River rhythm",
+              "artist": "Unframe studio",
+              "year": "2026",
+              "category": "Digital art",
+              "medium": "Digital colour study",
+              "room": "Colour Gallery",
+              "minutes": 3,
+              "tags": [
+                "Colour",
+                "Reflection"
+              ],
+              "color": "#7CA5BE",
+              "image": "qut-river-rhythm.png",
+              "accessible": true,
+              "demoDistance": 12,
+              "description": "Blue curves move across a warm, quiet ground. A single orange circle interrupts their rhythm, inviting your eye to slow down and find its own path.",
+              "detail": "Follow one blue curve with your eyes. Where does it lead you? This original Unframe illustration is part of the simulated QUT visit, not a QUT collection work.",
+              "source": "Unframe studio · Original illustration for a simulated QUT visit",
+              "sourceUrl": "https://github.com/Yufei0122/Unframe/blob/work/mobile/assets/qut-river-rhythm.svg",
+              "imageCredit": "Original illustration © Unframe studio",
+              "chineseIntroduction": "《河流的韵律》，Unframe studio，2026年。蓝色曲线在温暖、宁静的底色上流动，一枚橙色圆形打破了节奏。沿着一条曲线慢慢看，它把你的目光带向哪里？这是用于模拟参观的原创插画，并非QUT真实馆藏。"
+            },
+            "similarity": 0.9999999999999989
+          }
+        ],
+        "requiresConfirmation": true,
+        "artwork": {
+          "id": "qut-river-rhythm",
+          "title": "River rhythm",
+          "artist": "Unframe studio",
+          "year": "2026",
+          "category": "Digital art",
+          "medium": "Digital colour study",
+          "room": "Colour Gallery",
+          "minutes": 3,
+          "tags": [
+            "Colour",
+            "Reflection"
+          ],
+          "color": "#7CA5BE",
+          "image": "qut-river-rhythm.png",
+          "accessible": true,
+          "demoDistance": 12,
+          "description": "Blue curves move across a warm, quiet ground. A single orange circle interrupts their rhythm, inviting your eye to slow down and find its own path.",
+          "detail": "Follow one blue curve with your eyes. Where does it lead you? This original Unframe illustration is part of the simulated QUT visit, not a QUT collection work.",
+          "source": "Unframe studio · Original illustration for a simulated QUT visit",
+          "sourceUrl": "https://github.com/Yufei0122/Unframe/blob/work/mobile/assets/qut-river-rhythm.svg",
+          "imageCredit": "Original illustration © Unframe studio",
+          "chineseIntroduction": "《河流的韵律》，Unframe studio，2026年。蓝色曲线在温暖、宁静的底色上流动，一枚橙色圆形打破了节奏。沿着一条曲线慢慢看，它把你的目光带向哪里？这是用于模拟参观的原创插画，并非QUT真实馆藏。"
+        },
+        "similarity": 0.9999999999999989,
+        "aiExplanation": null
+      }
+    },
+    {
+      "endpoint": "/api/ai/artworks/confirm",
+      "museumId": "qut",
+      "status": 200,
+      "elapsedMs": 7182,
+      "body": {
+        "artwork": {
+          "id": "qut-river-rhythm",
+          "title": "River rhythm",
+          "artist": "Unframe studio",
+          "year": "2026",
+          "category": "Digital art",
+          "medium": "Digital colour study",
+          "room": "Colour Gallery",
+          "minutes": 3,
+          "tags": [
+            "Colour",
+            "Reflection"
+          ],
+          "color": "#7CA5BE",
+          "image": "qut-river-rhythm.png",
+          "accessible": true,
+          "demoDistance": 12,
+          "description": "Blue curves move across a warm, quiet ground. A single orange circle interrupts their rhythm, inviting your eye to slow down and find its own path.",
+          "detail": "Follow one blue curve with your eyes. Where does it lead you? This original Unframe illustration is part of the simulated QUT visit, not a QUT collection work.",
+          "source": "Unframe studio · Original illustration for a simulated QUT visit",
+          "sourceUrl": "https://github.com/Yufei0122/Unframe/blob/work/mobile/assets/qut-river-rhythm.svg",
+          "imageCredit": "Original illustration © Unframe studio",
+          "chineseIntroduction": "《河流的韵律》，Unframe studio，2026年。蓝色曲线在温暖、宁静的底色上流动，一枚橙色圆形打破了节奏。沿着一条曲线慢慢看，它把你的目光带向哪里？这是用于模拟参观的原创插画，并非QUT真实馆藏。"
+        },
+        "aiExplanation": {
+          "summary": "Catalogue note: Blue curves move across a warm, quiet ground.",
+          "historicalContext": "Additional historical context is not available in the supplied catalogue metadata. Collection notes below may contain interpretation.",
+          "interestingFacts": [
+            "Title: River rhythm",
+            "Artist: Unframe studio",
+            "Catalogue date: 2026"
+          ],
+          "whyItMatters": "Interpretation from collection notes: Follow one blue curve with your eyes.",
+          "suggestedNextArtwork": "qut-soft-architecture"
+        },
+        "interpretationLabel": "AI interpretation based on collection notes; not museum-approved."
+      }
+    }
+  ],
+  "errors": []
+}

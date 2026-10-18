@@ -214,14 +214,14 @@ test('route cancellation is never converted into a local fallback', async () => 
   await assert.rejects(createRouteService({ ollama, collection, graph }).plan(preferences, signal.signal), { code: 'REQUEST_CANCELLED' });
 });
 
-test('route-only acceptance exercises both museums, Chinese chat and graph constraints without image services', async t => {
+test('route-only acceptance exercises every museum, Chinese chat and graph constraints without image services', async t => {
   const fixture = await setup(t);
   const outputRoot = await mkdtemp(path.join(os.tmpdir(), 'route-acceptance-test-')); t.after(() => rm(outputRoot, { recursive: true, force: true }));
   const { report, reportFile } = await runRouteAcceptance({ ...fixture, outputRoot, log: () => {} });
   assert.equal(report.passed, true, JSON.stringify(report.failures));
-  assert.equal(report.checks.length, 11);
-  assert.equal(report.summary.qwenRoutesPassed, 4); assert.equal(report.summary.chineseChatsPassed, 2);
-  assert.equal(fixture.state.generationCalls, 6, 'Invalid time/foreign artworks must not invoke Qwen.');
+  assert.equal(report.checks.length, 1 + catalogues.size * 5);
+  assert.equal(report.summary.qwenRoutesPassed, catalogues.size * 2); assert.equal(report.summary.chineseChatsPassed, catalogues.size);
+  assert.equal(fixture.state.generationCalls, catalogues.size * 3, 'Invalid time/foreign artworks must not invoke Qwen.');
   assert.deepEqual(JSON.parse(await readFile(reportFile, 'utf8')), report);
 });
 
@@ -245,7 +245,7 @@ test('route acceptance records duration without rejecting successful responses b
   assert.ok(report.checks.some(row => row.responseMs >= 25));
 });
 
-test('the six-case CLI used by ai:routes:verify accepts correct slow planning responses', { timeout: 20000 }, async t => {
+test('the CLI used by ai:routes:verify accepts correct slow planning responses for every museum', { timeout: 20000 }, async t => {
   const fixture = await setup(t, { timeoutMs: 20 });
   fixture.state.delayMs = 1100;
   const script = fileURLToPath(new URL('../scripts/validate-qwen-routes.mjs', import.meta.url));
@@ -257,7 +257,7 @@ test('the six-case CLI used by ai:routes:verify accepts correct slow planning re
   t.after(() => rm(reportFile, { force: true }));
   const report = JSON.parse(await readFile(reportFile, 'utf8'));
   assert.equal(report.passed, true);
-  assert.equal(report.checks.length, 6);
+  assert.equal(report.checks.length, catalogues.size * 2 + 2);
   assert.ok(report.checks.every(row => row.passed && row.elapsedMs >= 1100));
   assert.equal(report.config.timeoutMs, 0);
 });

@@ -9,7 +9,7 @@ try {
   const records = [];
   for (const { museumId, artwork } of referenceArtworks()) {
     const source = await readFile(referenceImageUrl(artwork));
-    const image = await normalizeImage(source, 'image/jpeg');
+    const image = await normalizeImage(source);
     records.push({ museumId, artworkId: artwork.id, sourceHash: sha256(source), imageHash: sha256(image), vector: await service.generate(image) });
     console.log(`Indexed ${museumId}/${artwork.id}`);
   }

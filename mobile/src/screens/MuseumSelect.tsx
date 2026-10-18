@@ -19,7 +19,7 @@ export function MuseumSelectScreen({ navigation }: NativeStackScreenProps<RootSt
   const { museumId, location, coordinates, selectMuseum, locate } = useMuseumLocation();
   const { state } = useStore();
   const focused = useIsFocused();
-  const [city, setCity] = useState<CityId>(museumId === 'goma' ? 'brisbane' : 'new-york');
+  const [city, setCity] = useState<CityId>(museumId === 'met' ? 'new-york' : 'brisbane');
   const [previewId, setPreviewId] = useState<string>(museumId);
   const [held, setHeld] = useState(false), [visible, setVisible] = useState(true);
   const [drag, setDrag] = useState(0);
@@ -30,14 +30,14 @@ export function MuseumSelectScreen({ navigation }: NativeStackScreenProps<RootSt
   const places = useMemo(() => cityPlaces(city), [city]);
   const cityImages = useMemo(() => places.map(item => item.image), [places]);
   const place = places.find(item => item.id === previewId) || places[0];
-  const hasDemo = !!(place.demoMuseumId || place.demoScreen);
+  const hasDemo = !!place.demoMuseumId;
   const fade = useRef(new Animated.Value(1)).current;
   const direction = useRef(1);
   const adjacent = drag === 0 ? null : places[(places.findIndex(item => item.id === place.id) + (drag < 0 ? 1 : -1) + places.length) % places.length];
   const heroHeight = Math.max(510, Math.min(590, height * .64)) + (state.preferences.largeText ? 90 : 0);
   const mapHeight = Math.max(360, height - heroHeight - 65 + 28);
   useEffect(() => {
-    if (!manual.current) { setCity(museumId === 'goma' ? 'brisbane' : 'new-york'); setPreviewId(museumId); }
+    if (!manual.current) { setCity(museumId === 'met' ? 'new-york' : 'brisbane'); setPreviewId(museumId); }
   }, [museumId]);
   useEffect(() => {
     let active = true;
@@ -62,8 +62,7 @@ export function MuseumSelectScreen({ navigation }: NativeStackScreenProps<RootSt
   const changeCity = (next: CityId) => { manual.current = true; direction.current = 1; setCity(next); setPreviewId(cityPlaces(next)[0].id); setInteraction(value => value + 1); };
   const cycle = (step: number) => preview(places[(places.findIndex(item => item.id === place.id) + step + places.length) % places.length].id, step);
   const choose = () => {
-    if (place.demoScreen) { navigation.navigate(place.demoScreen); }
-    else if (place.demoMuseumId) { selectMuseum(place.demoMuseumId); navigation.navigate('Welcome'); }
+    if (place.demoMuseumId) { selectMuseum(place.demoMuseumId); navigation.navigate('Welcome'); }
     else { void Linking.openURL(place.website).catch(() => setLinkError(true)); }
   };
   const meters = coordinates ? distanceMeters(coordinates, place) : null;
@@ -82,7 +81,7 @@ export function MuseumSelectScreen({ navigation }: NativeStackScreenProps<RootSt
           <Icon name="location" size={24} color="#29434C"/><View style={{ flex: 1 }}><T style={styles.eyebrow}>{meters != null && meters < 800 && coordinates?.accuracy != null && coordinates.accuracy <= 300 ? 'LOCATED NEAR' : 'EXPLORE MUSEUMS'}</T><T style={styles.area}>{place.area}</T></View>
         </View>
         <Animated.View pointerEvents="none" style={[styles.copy, { opacity: fade, transform: [{ translateY: fade.interpolate({ inputRange: [0, 1], outputRange: [13, 0] }) }] }]}>
-          <T style={styles.featured}>{place.demoScreen ? 'FEATURED UI DEMO' : place.demoMuseumId ? 'FEATURED MUSEUM' : 'AROUND YOU'}</T>
+          <T style={styles.featured}>{place.demoMuseumId ? 'FEATURED MUSEUM' : 'AROUND YOU'}</T>
           <T testID="preview-title" accessibilityRole="header" style={[styles.museumTitle, height < 700 && { fontSize: 36, lineHeight: 39 }]}>{place.title}</T>
           <T style={styles.subtitle}>{place.description}</T>
         </Animated.View>
@@ -102,7 +101,7 @@ export function MuseumSelectScreen({ navigation }: NativeStackScreenProps<RootSt
         <View style={styles.mapHeader}><View style={styles.cities}>{(['new-york', 'brisbane'] as CityId[]).map(id => <Pressable key={id} accessibilityRole="button" accessibilityLabel={'Show ' + (id === 'new-york' ? 'New York' : 'Brisbane')} accessibilityState={{ selected: city === id }} aria-pressed={city === id} onPress={() => changeCity(id)} style={[styles.city, city === id && styles.activeCity]}><T style={[styles.cityText, city === id && { color: '#184C88' }]}>{id === 'new-york' ? 'New York' : 'Brisbane'}</T></Pressable>)}</View><Pressable accessibilityRole="button" accessibilityLabel="Refresh my location" accessibilityState={{ disabled: location.status === 'loading' }} disabled={location.status === 'loading'} onPress={() => { void locate(); }} style={styles.locate}>{location.status === 'loading' ? <ActivityIndicator color="#245994" size="small"/> : <Icon name="navigate-outline" size={20} color="#245994"/>}</Pressable></View>
         <View>
           <DiscoveryMap places={places} selectedId={place.id} coordinates={coordinates} onSelect={preview} height={mapHeight} active={focused}/>
-          <Pressable accessibilityRole="button" accessibilityLabel={hasDemo ? 'Open ' + place.shortName + ' welcome' : 'Open ' + place.shortName + ' official website'} onPress={choose} style={styles.mapLabel}><Image source={place.image} style={styles.thumbnail}/><View style={{ flex: 1 }}><T style={styles.mapName}>{place.name}</T><T style={styles.mapDistance}>{place.demoScreen ? 'UI demo available' : place.demoMuseumId ? 'Museum guide available' : 'Official museum website'}</T></View><Icon name="chevron-forward" size={18} color="#40515C"/></Pressable>
+          <Pressable accessibilityRole="button" accessibilityLabel={hasDemo ? 'Open ' + place.shortName + ' welcome' : 'Open ' + place.shortName + ' official website'} onPress={choose} style={styles.mapLabel}><Image source={place.image} style={styles.thumbnail}/><View style={{ flex: 1 }}><T style={styles.mapName}>{place.name}</T><T style={styles.mapDistance}>{place.demoMuseumId ? 'Museum guide available' : 'Official museum website'}</T></View><Icon name="chevron-forward" size={18} color="#40515C"/></Pressable>
         </View>
       </View>
       <T style={styles.credit}>{place.credit}</T>
