@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "verification": "Actual browser directly connected to the updated local Node/Qwen backend; no AI mocks; OSM tiles disabled.",
+  "answerMs": 16220,
+  "routeMs": 16225,
+  "partial": "已为您规划▏",
+  "complete": "已为您规划20分钟，重点推荐色彩丰富的画作，包含Water Lilies，少走路且无障碍。",
+  "readingPosition": {
+    "routeYAtFirstDisplay": 408,
+    "routeYAfterTyping": 408
+  },
+  "requests": [
+    {
+      "endpoint": "/api/ai/routes/visit",
+      "body": {
+        "museumId": "met",
+        "message": "我有20分钟，想看色彩丰富的画作，希望包含 Water Lilies 作为必看作品，少走路并且无障碍。",
+        "history": [
+          {
+            "role": "assistant",
+            "content": "Let's make The Met your own. Tell me how much time you have, what you love, or an artwork you don't want to miss. We can shape your visit together."
+          }
+        ],
+        "preferences": {
+          "interests": [
+            "Nature",
+            "Colour"
+          ],
+          "availableMinutes": 30,
+          "currentLocation": "entrance",
+          "walkingPreference": "balanced",
+          "accessibilityRequirements": [],
+          "mustSeeArtworkIds": []
+        }
+      }
+    }
+  ],
+  "errors": []
+}

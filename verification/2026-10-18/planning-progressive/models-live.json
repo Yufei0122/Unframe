@@ -1,0 +1,675 @@
+{
+  "passed": true,
+  "startedAt": "2026-10-18T10:46:32.311Z",
+  "mode": "combined_visit_acceptance",
+  "verification": "Real Node/Qwen single-inference visits; no mocks.",
+  "checks": [
+    {
+      "name": "met/chinese_visit",
+      "passed": true,
+      "answer": {
+        "type": "answer",
+        "reply": "已更新偏好，将优先欣赏色彩丰富的作品，保持无障碍并少走路，保留水景系列作品。",
+        "preferences": {
+          "interests": [
+            "Colour"
+          ],
+          "availableMinutes": 20,
+          "currentLocation": "entrance",
+          "walkingPreference": "less_walking",
+          "accessibilityRequirements": [
+            "step_free",
+            "wheelchair"
+          ],
+          "mustSeeArtworkIds": [
+            "water-lilies"
+          ]
+        },
+        "elapsedMs": 16630
+      },
+      "route": {
+        "demo": true,
+        "mapNotice": "Illustrative floor 1 only. Positions, distances and accessibility are demo data, not The Met navigation guidance.",
+        "estimatedMinutes": 19,
+        "estimatedWalkingDistance": 96,
+        "route": [
+          {
+            "order": 1,
+            "artworkId": "water-lilies",
+            "title": "Water Lilies",
+            "galleryId": "european-paintings",
+            "estimatedVisitMinutes": 4
+          },
+          {
+            "order": 2,
+            "artworkId": "the-harvesters",
+            "title": "The Harvesters",
+            "galleryId": "european-paintings",
+            "estimatedVisitMinutes": 5
+          },
+          {
+            "order": 3,
+            "artworkId": "the-dancing-class",
+            "title": "The Dancing Class",
+            "galleryId": "european-paintings",
+            "estimatedVisitMinutes": 3
+          },
+          {
+            "order": 4,
+            "artworkId": "self-portrait-with-a-straw-hat",
+            "title": "Self-Portrait with a Straw Hat",
+            "galleryId": "european-paintings",
+            "estimatedVisitMinutes": 4
+          }
+        ],
+        "navigation": [
+          {
+            "from": "entrance",
+            "to": "water-lilies",
+            "nodes": [
+              "entrance",
+              "great-hall",
+              "european-paintings",
+              "water-lilies"
+            ],
+            "distance": 72,
+            "estimatedSeconds": 110
+          },
+          {
+            "from": "water-lilies",
+            "to": "the-harvesters",
+            "nodes": [
+              "water-lilies",
+              "the-harvesters"
+            ],
+            "distance": 8,
+            "estimatedSeconds": 12
+          },
+          {
+            "from": "the-harvesters",
+            "to": "the-dancing-class",
+            "nodes": [
+              "the-harvesters",
+              "the-dancing-class"
+            ],
+            "distance": 9,
+            "estimatedSeconds": 14
+          },
+          {
+            "from": "the-dancing-class",
+            "to": "self-portrait-with-a-straw-hat",
+            "nodes": [
+              "the-dancing-class",
+              "self-portrait-with-a-straw-hat"
+            ],
+            "distance": 7,
+            "estimatedSeconds": 11
+          }
+        ],
+        "reasoningSummary": "根据最新偏好，推荐欣赏色彩丰富的作品，如《水景系列》并保持无障碍及少走路，符合20分钟游览时间。",
+        "recommendationSource": "ollama"
+      },
+      "answerMs": 16630,
+      "routeMs": 16646,
+      "graphAfterAnswerMs": 16
+    },
+    {
+      "name": "met/english_revision",
+      "passed": true,
+      "answer": {
+        "type": "answer",
+        "reply": "Updated preferences: 35 minutes, colour focus, less walking, step-free access, no must-see artworks.",
+        "preferences": {
+          "interests": [
+            "Colour"
+          ],
+          "availableMinutes": 35,
+          "currentLocation": "entrance",
+          "walkingPreference": "less_walking",
+          "accessibilityRequirements": [
+            "step_free",
+            "wheelchair"
+          ],
+          "mustSeeArtworkIds": []
+        },
+        "elapsedMs": 19606
+      },
+      "route": {
+        "demo": true,
+        "mapNotice": "Illustrative floor 1 only. Positions, distances and accessibility are demo data, not The Met navigation guidance.",
+        "estimatedMinutes": 34,
+        "estimatedWalkingDistance": 134,
+        "route": [
+          {
+            "order": 1,
+            "artworkId": "the-harvesters",
+            "title": "The Harvesters",
+            "galleryId": "european-paintings",
+            "estimatedVisitMinutes": 5
+          },
+          {
+            "order": 2,
+            "artworkId": "madame-charpentier-and-her-children",
+            "title": "Madame Georges Charpentier and Her Children",
+            "galleryId": "european-paintings",
+            "estimatedVisitMinutes": 5
+          },
+          {
+            "order": 3,
+            "artworkId": "water-lilies",
+            "title": "Water Lilies",
+            "galleryId": "european-paintings",
+            "estimatedVisitMinutes": 4
+          },
+          {
+            "order": 4,
+            "artworkId": "wheat-field-with-cypresses",
+            "title": "Wheat Field with Cypresses",
+            "galleryId": "european-paintings",
+            "estimatedVisitMinutes": 5
+          },
+          {
+            "order": 5,
+            "artworkId": "young-woman-with-a-water-pitcher",
+            "title": "Young Woman with a Water Pitcher",
+            "galleryId": "european-paintings",
+            "estimatedVisitMinutes": 4
+          },
+          {
+            "order": 6,
+            "artworkId": "the-dancing-class",
+            "title": "The Dancing Class",
+            "galleryId": "european-paintings",
+            "estimatedVisitMinutes": 3
+          },
+          {
+            "order": 7,
+            "artworkId": "self-portrait-with-a-straw-hat",
+            "title": "Self-Portrait with a Straw Hat",
+            "galleryId": "european-paintings",
+            "estimatedVisitMinutes": 4
+          }
+        ],
+        "navigation": [
+          {
+            "from": "entrance",
+            "to": "the-harvesters",
+            "nodes": [
+              "entrance",
+              "great-hall",
+              "european-paintings",
+              "the-harvesters"
+            ],
+            "distance": 70,
+            "estimatedSeconds": 105
+          },
+          {
+            "from": "the-harvesters",
+            "to": "madame-charpentier-and-her-children",
+            "nodes": [
+              "the-harvesters",
+              "water-lilies",
+              "madame-charpentier-and-her-children"
+            ],
+            "distance": 15,
+            "estimatedSeconds": 23
+          },
+          {
+            "from": "madame-charpentier-and-her-children",
+            "to": "water-lilies",
+            "nodes": [
+              "madame-charpentier-and-her-children",
+              "water-lilies"
+            ],
+            "distance": 7,
+            "estimatedSeconds": 11
+          },
+          {
+            "from": "water-lilies",
+            "to": "wheat-field-with-cypresses",
+            "nodes": [
+              "water-lilies",
+              "wheat-field-with-cypresses"
+            ],
+            "distance": 8,
+            "estimatedSeconds": 12
+          },
+          {
+            "from": "wheat-field-with-cypresses",
+            "to": "young-woman-with-a-water-pitcher",
+            "nodes": [
+              "wheat-field-with-cypresses",
+              "young-woman-with-a-water-pitcher"
+            ],
+            "distance": 10,
+            "estimatedSeconds": 15
+          },
+          {
+            "from": "young-woman-with-a-water-pitcher",
+            "to": "the-dancing-class",
+            "nodes": [
+              "young-woman-with-a-water-pitcher",
+              "the-card-players",
+              "the-dancing-class"
+            ],
+            "distance": 17,
+            "estimatedSeconds": 26
+          },
+          {
+            "from": "the-dancing-class",
+            "to": "self-portrait-with-a-straw-hat",
+            "nodes": [
+              "the-dancing-class",
+              "self-portrait-with-a-straw-hat"
+            ],
+            "distance": 7,
+            "estimatedSeconds": 11
+          }
+        ],
+        "reasoningSummary": "Selected colour-rich works with accessible paths, no must-see artworks, and adjusted time for less walking.",
+        "recommendationSource": "ollama"
+      },
+      "answerMs": 19606,
+      "routeMs": 19691,
+      "graphAfterAnswerMs": 85
+    },
+    {
+      "name": "goma/chinese_visit",
+      "passed": true,
+      "answer": {
+        "type": "answer",
+        "reply": "已为您优化路线，聚焦色彩丰富作品，无障碍游览，保留必看作品。",
+        "preferences": {
+          "interests": [
+            "Colour"
+          ],
+          "availableMinutes": 20,
+          "currentLocation": "entrance",
+          "walkingPreference": "less_walking",
+          "accessibilityRequirements": [
+            "step_free",
+            "wheelchair"
+          ],
+          "mustSeeArtworkIds": [
+            "goma-obliteration-room"
+          ]
+        },
+        "elapsedMs": 9448
+      },
+      "route": {
+        "demo": true,
+        "mapNotice": "Illustrative GOMA demo only. Room names, placement, distances and accessibility are invented for this prototype, not an official floor plan or indoor navigation guidance.",
+        "estimatedMinutes": 16,
+        "estimatedWalkingDistance": 81,
+        "route": [
+          {
+            "order": 1,
+            "artworkId": "goma-obliteration-room",
+            "title": "The obliteration room",
+            "galleryId": "colour-studio",
+            "estimatedVisitMinutes": 5
+          },
+          {
+            "order": 2,
+            "artworkId": "goma-in-bed",
+            "title": "In bed",
+            "galleryId": "sculpture-gallery",
+            "estimatedVisitMinutes": 4
+          },
+          {
+            "order": 3,
+            "artworkId": "goma-soul-under-the-moon",
+            "title": "Soul under the moon",
+            "galleryId": "light-room",
+            "estimatedVisitMinutes": 4
+          }
+        ],
+        "navigation": [
+          {
+            "from": "entrance",
+            "to": "goma-obliteration-room",
+            "nodes": [
+              "entrance",
+              "goma-foyer",
+              "goma-obliteration-room"
+            ],
+            "distance": 27,
+            "estimatedSeconds": 40
+          },
+          {
+            "from": "goma-obliteration-room",
+            "to": "goma-in-bed",
+            "nodes": [
+              "goma-obliteration-room",
+              "goma-foyer",
+              "goma-in-bed"
+            ],
+            "distance": 32,
+            "estimatedSeconds": 48
+          },
+          {
+            "from": "goma-in-bed",
+            "to": "goma-soul-under-the-moon",
+            "nodes": [
+              "goma-in-bed",
+              "goma-soul-under-the-moon"
+            ],
+            "distance": 22,
+            "estimatedSeconds": 33
+          }
+        ],
+        "reasoningSummary": "优先选择色彩丰富的作品，确保无障碍访问，减少步行距离，保留必看作品。",
+        "recommendationSource": "ollama"
+      },
+      "answerMs": 9448,
+      "routeMs": 9449,
+      "graphAfterAnswerMs": 1
+    },
+    {
+      "name": "goma/english_revision",
+      "passed": true,
+      "answer": {
+        "type": "answer",
+        "reply": "Updated preferences: 35 minutes, focus on colour, starting at entrance, less walking, step-free, no must-see artworks.",
+        "preferences": {
+          "interests": [
+            "Colour"
+          ],
+          "availableMinutes": 35,
+          "currentLocation": "entrance",
+          "walkingPreference": "less_walking",
+          "accessibilityRequirements": [
+            "step_free",
+            "wheelchair"
+          ],
+          "mustSeeArtworkIds": []
+        },
+        "elapsedMs": 10829
+      },
+      "route": {
+        "demo": true,
+        "mapNotice": "Illustrative GOMA demo only. Room names, placement, distances and accessibility are invented for this prototype, not an official floor plan or indoor navigation guidance.",
+        "estimatedMinutes": 23,
+        "estimatedWalkingDistance": 121,
+        "route": [
+          {
+            "order": 1,
+            "artworkId": "goma-obliteration-room",
+            "title": "The obliteration room",
+            "galleryId": "colour-studio",
+            "estimatedVisitMinutes": 5
+          },
+          {
+            "order": 2,
+            "artworkId": "goma-heritage",
+            "title": "Heritage",
+            "galleryId": "nature-gallery",
+            "estimatedVisitMinutes": 6
+          },
+          {
+            "order": 3,
+            "artworkId": "goma-in-bed",
+            "title": "In bed",
+            "galleryId": "sculpture-gallery",
+            "estimatedVisitMinutes": 4
+          },
+          {
+            "order": 4,
+            "artworkId": "goma-soul-under-the-moon",
+            "title": "Soul under the moon",
+            "galleryId": "light-room",
+            "estimatedVisitMinutes": 4
+          }
+        ],
+        "navigation": [
+          {
+            "from": "entrance",
+            "to": "goma-obliteration-room",
+            "nodes": [
+              "entrance",
+              "goma-foyer",
+              "goma-obliteration-room"
+            ],
+            "distance": 27,
+            "estimatedSeconds": 40
+          },
+          {
+            "from": "goma-obliteration-room",
+            "to": "goma-heritage",
+            "nodes": [
+              "goma-obliteration-room",
+              "goma-heritage"
+            ],
+            "distance": 20,
+            "estimatedSeconds": 30
+          },
+          {
+            "from": "goma-heritage",
+            "to": "goma-in-bed",
+            "nodes": [
+              "goma-heritage",
+              "goma-foyer",
+              "goma-in-bed"
+            ],
+            "distance": 52,
+            "estimatedSeconds": 78
+          },
+          {
+            "from": "goma-in-bed",
+            "to": "goma-soul-under-the-moon",
+            "nodes": [
+              "goma-in-bed",
+              "goma-soul-under-the-moon"
+            ],
+            "distance": 22,
+            "estimatedSeconds": 33
+          }
+        ],
+        "reasoningSummary": "Optimized for colour, accessibility, and less walking, with recommended artworks matching the updated preferences.",
+        "recommendationSource": "ollama"
+      },
+      "answerMs": 10829,
+      "routeMs": 10829,
+      "graphAfterAnswerMs": 0
+    },
+    {
+      "name": "qut/chinese_visit",
+      "passed": true,
+      "answer": {
+        "type": "answer",
+        "reply": "已为您调整偏好，将重点推荐色彩丰富的作品并确保无障碍，20分钟内完成参观。",
+        "preferences": {
+          "interests": [
+            "Colour"
+          ],
+          "availableMinutes": 20,
+          "currentLocation": "entrance",
+          "walkingPreference": "less_walking",
+          "accessibilityRequirements": [
+            "step_free",
+            "wheelchair"
+          ],
+          "mustSeeArtworkIds": [
+            "qut-river-rhythm"
+          ]
+        },
+        "elapsedMs": 11464
+      },
+      "route": {
+        "demo": true,
+        "mapNotice": "Simulated QUT visit. Gallery names, positions, distances and accessibility are illustrative, not an official floor plan or navigation guidance.",
+        "estimatedMinutes": 12,
+        "estimatedWalkingDistance": 54,
+        "route": [
+          {
+            "order": 1,
+            "artworkId": "qut-soft-architecture",
+            "title": "Soft architecture",
+            "galleryId": "form-gallery",
+            "estimatedVisitMinutes": 4
+          },
+          {
+            "order": 2,
+            "artworkId": "qut-river-rhythm",
+            "title": "River rhythm",
+            "galleryId": "colour-gallery",
+            "estimatedVisitMinutes": 3
+          },
+          {
+            "order": 3,
+            "artworkId": "qut-between-places",
+            "title": "Between places",
+            "galleryId": "nature-gallery",
+            "estimatedVisitMinutes": 3
+          }
+        ],
+        "navigation": [
+          {
+            "from": "entrance",
+            "to": "qut-soft-architecture",
+            "nodes": [
+              "entrance",
+              "qut-foyer",
+              "qut-soft-architecture"
+            ],
+            "distance": 20,
+            "estimatedSeconds": 30
+          },
+          {
+            "from": "qut-soft-architecture",
+            "to": "qut-river-rhythm",
+            "nodes": [
+              "qut-soft-architecture",
+              "qut-foyer",
+              "qut-river-rhythm"
+            ],
+            "distance": 16,
+            "estimatedSeconds": 24
+          },
+          {
+            "from": "qut-river-rhythm",
+            "to": "qut-between-places",
+            "nodes": [
+              "qut-river-rhythm",
+              "qut-between-places"
+            ],
+            "distance": 18,
+            "estimatedSeconds": 27
+          }
+        ],
+        "reasoningSummary": "根据您的需求，推荐色彩丰富的作品并确保无障碍，20分钟内完成参观。",
+        "recommendationSource": "ollama"
+      },
+      "answerMs": 11464,
+      "routeMs": 11464,
+      "graphAfterAnswerMs": 0
+    },
+    {
+      "name": "qut/english_revision",
+      "passed": true,
+      "answer": {
+        "type": "answer",
+        "reply": "Preferences updated: 35 minutes, colour focus, less walking, step-free access, no must-see artworks.",
+        "preferences": {
+          "interests": [
+            "Colour"
+          ],
+          "availableMinutes": 35,
+          "currentLocation": "entrance",
+          "walkingPreference": "less_walking",
+          "accessibilityRequirements": [
+            "step_free",
+            "wheelchair"
+          ],
+          "mustSeeArtworkIds": []
+        },
+        "elapsedMs": 32925
+      },
+      "route": {
+        "demo": true,
+        "mapNotice": "Simulated QUT visit. Gallery names, positions, distances and accessibility are illustrative, not an official floor plan or navigation guidance.",
+        "estimatedMinutes": 12,
+        "estimatedWalkingDistance": 54,
+        "route": [
+          {
+            "order": 1,
+            "artworkId": "qut-soft-architecture",
+            "title": "Soft architecture",
+            "galleryId": "form-gallery",
+            "estimatedVisitMinutes": 4
+          },
+          {
+            "order": 2,
+            "artworkId": "qut-river-rhythm",
+            "title": "River rhythm",
+            "galleryId": "colour-gallery",
+            "estimatedVisitMinutes": 3
+          },
+          {
+            "order": 3,
+            "artworkId": "qut-between-places",
+            "title": "Between places",
+            "galleryId": "nature-gallery",
+            "estimatedVisitMinutes": 3
+          }
+        ],
+        "navigation": [
+          {
+            "from": "entrance",
+            "to": "qut-soft-architecture",
+            "nodes": [
+              "entrance",
+              "qut-foyer",
+              "qut-soft-architecture"
+            ],
+            "distance": 20,
+            "estimatedSeconds": 30
+          },
+          {
+            "from": "qut-soft-architecture",
+            "to": "qut-river-rhythm",
+            "nodes": [
+              "qut-soft-architecture",
+              "qut-foyer",
+              "qut-river-rhythm"
+            ],
+            "distance": 16,
+            "estimatedSeconds": 24
+          },
+          {
+            "from": "qut-river-rhythm",
+            "to": "qut-between-places",
+            "nodes": [
+              "qut-river-rhythm",
+              "qut-between-places"
+            ],
+            "distance": 18,
+            "estimatedSeconds": 27
+          }
+        ],
+        "reasoningSummary": "Adjusted to 35 minutes, maintained colour interest, less walking, and step-free access, with recommended artworks based ",
+        "recommendationSource": "ollama"
+      },
+      "answerMs": 32925,
+      "routeMs": 32925,
+      "graphAfterAnswerMs": 0
+    }
+  ],
+  "failures": [],
+  "limitation": "Individual end-to-end CPU/GPU samples including any output-limit retry. No model is forcibly unloaded. This does not establish general latency guarantees or real museum navigation accuracy.",
+  "configuration": {
+    "provider": "local",
+    "ollamaModel": "qwen3:1.7b",
+    "planningModel": "qwen3:1.7b",
+    "planningVersion": 7,
+    "ollamaUrl": "http://127.0.0.1:11434",
+    "timeoutMs": 14000,
+    "planningTimeoutMs": 0,
+    "numCtx": 4096,
+    "numGpu": 0,
+    "numPredict": 1024,
+    "retryNumPredict": 2048,
+    "keepAlive": "10m"
+  },
+  "completedAt": "2026-10-18T10:48:13.348Z"
+}

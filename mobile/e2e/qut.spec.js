@@ -1,4 +1,4 @@
-import { test, expect } from './fixtures';
+import { test, expect, visitResponse } from './fixtures';
 import collection from '../../shared/qut-collection.json';
 import path from 'node:path';
 
@@ -55,13 +55,9 @@ test('QUT uses the common museum map, artwork details and persistent profile col
 
 test('QUT planning automatically shows its route and saves it in the shared profile', async ({ page }) => {
   const preferences = { interests: ['Colour'], availableMinutes: 20, currentLocation: 'entrance', walkingPreference: 'balanced', accessibilityRequirements: ['step_free'], mustSeeArtworkIds: [] };
-  await page.route('**/api/ai/routes/chat', route => {
+  await page.route('**/api/ai/routes/visit', route => {
     expect(route.request().postDataJSON().museumId).toBe('qut');
-    return route.fulfill({ json: { reply: 'A quiet walk through colour, form and nature.', preferences } });
-  });
-  await page.route('**/api/ai/routes/plan', route => {
-    expect(route.request().postDataJSON()).toMatchObject({ museumId: 'qut', ...preferences });
-    return route.fulfill({ json: itinerary });
+    return route.fulfill(visitResponse({ reply: 'A quiet walk through colour, form and nature.', preferences }, itinerary));
   });
   await page.getByRole('tab', { name: /Plan/ }).click();
   await expect(page.getByTestId('planning-museum')).toContainText('QUT Art Museum');

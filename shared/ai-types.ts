@@ -9,6 +9,9 @@ export interface VisitPreferences {
 }
 export interface PlanningMessage { role: 'user' | 'assistant'; content: string }
 export interface PlanningReply { reply: string; preferences: VisitPreferences }
+export type PlanningVisitEvent = ({ type: 'answer' } & PlanningReply)
+  | { type: 'route'; itinerary: AIRoute }
+  | { type: 'route_error'; error: string; code: string };
 export interface Explanation { summary: string; historicalContext: string; interestingFacts: string[]; whyItMatters: string; suggestedNextArtwork: string | null }
 export type RecognisedArtwork = Artwork & { medium: string; sourceUrl: string };
 export interface RecognitionCandidate { artwork: RecognisedArtwork; similarity: number }

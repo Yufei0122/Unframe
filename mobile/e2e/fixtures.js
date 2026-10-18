@@ -8,6 +8,12 @@ export const test = base.extend({
   },
 });
 export { expect };
+export function visitResponse(answer, itinerary, error) {
+  return { contentType: 'application/x-ndjson', body: [
+    { type: 'answer', ...answer },
+    error ? { type: 'route_error', error, code: 'NO_ROUTE' } : { type: 'route', itinerary },
+  ].map(event => JSON.stringify(event)).join('\n') + '\n' };
+}
 export async function enterWelcome(page) {
   await page.getByRole('button', { name: /^Choose (The Met|GOMA)$/ }).click({ timeout: 60000 });
   await expect(page.getByRole('button', { name: 'Start visit', exact: true })).toBeVisible();

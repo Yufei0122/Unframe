@@ -1,28 +1,32 @@
-﻿# Local AI integration — Windows setup and verification
+# Local AI integration — Windows setup and verification
 
 Unframe uses **OpenCLIP ViT-B-32 / laion2b_s34b_b79k** for image matching, **Qwen3 1.7B** for grounded catalogue interpretation and planning, and **Qwen3-VL 2B Instruct** for general visual analysis. Inference runs locally. Initial downloads and optional public-source searches need internet access.
 
-## Route planning: independent startup and strict model acceptance
+## Route planning: one inference and progressive replies
 
-Route planning uses local **`qwen3:1.7b`** to prioritise artworks and update conversational preferences. A deterministic graph search then enforces time, must-see works, starting location and accessibility. It does not require OpenCLIP, vision, an image index, or public museum search APIs. Catalogue interpretation selects supplied note/fact IDs using the same warm lightweight text model; the old default `OLLAMA_MODEL=qwen3:4b` migrates to 1.7B at interactive startup.
+Plan sends one `POST /api/ai/routes/visit` request. One local Qwen call jointly updates the visitor preferences, writes a short reply and selects recommended artwork IDs. The server validates the complete result, including museum-local IDs and preserved must-see selections, before publishing anything. It then emits an NDJSON `answer` event, calculates the constrained graph route from those same updated preferences and recommendations, and emits a `route` event. There is no second automatic model request.
 
-After applying the update, stop the old backend/Expo in their own terminals, then run from the root or `mobile`:
+The app reveals the validated answer at a natural pace while route computation finishes. Punctuation gets brief pauses, and total display time is bounded to 1.6–4.5 seconds. The route appears as soon as it is ready, even while the answer is still revealing. The skip icon shows the full answer immediately; reduced-motion preferences also bypass the effect. This is a display animation of a completed, validated answer, not model-token streaming or a display of private reasoning. Answer space is reserved and the view scrolls to a new answer once, so typing and the map do not repeatedly move the reading position.
+
+The old `routes/chat` and `routes/plan` APIs remain available for compatibility and an explicit route retry. A route failure after a valid answer emits `route_error`; it preserves the answer and updated preferences. Automatic combined visits require real Qwen recommendations and never count a local-rule fallback as model success. A deliberate route retry retains the existing labelled fallback behavior. Cancel, new conversation, leaving Plan and museum changes abort outstanding work; stale responses cannot update the active conversation.
+
+The model still uses local **qwen3:1.7b**. Running two simultaneous generations on the same local model would compete for memory/CPU and could use stale preferences; the joint call avoids both. The graph enforces walking plus viewing time, accessibility and must-see constraints. The new reply grammar explicitly bounds its regular-expression length, since some Ollama grammar converters ignore `maxLength` when a `pattern` is also present.
+
+After updating, stop old backend/Expo terminals with Ctrl+C and run `npm.cmd start`. For planning without image services, run `npm.cmd run ai:routes`. `planningVersion: 7` and effective configuration checks reject reuse of a stale backend. `GET /api/ai/planning/status` checks local model presence/capability, not successful inference.
+
+Real verification commands:
 
 ```powershell
 npm.cmd run ai:routes:verify
+# Or, against a running backend:
+npm.cmd run ai:validate:routes
+# First/repeat samples for the actual combined UI pipeline:
+npm.cmd run ai:routes:timing
 ```
 
-The route update bundle's `INSTALL.cmd` runs the equivalent source-update and `ai-routes.mjs --web --verify` workflow. It reuses the installed Qwen model (downloads it only if missing), starts the correct workspace backend, runs strict real-model acceptance, then starts Expo with the root backend `PORT`. Existing image services and models are preserved but are not started or required. Ordinary subsequent route-only startup is `npm.cmd run ai:routes`. To verify an already running backend separately, use `npm.cmd run ai:validate:routes`.
+Acceptance covers Chinese preference changes and English follow-ups for The Met, GOMA and QUT: six combined visits. It verifies event ordering, correct updated preferences and route graph constraints with no image-service dependency or AI mocks. Timing mode runs two Met visits. Reports live in `.local-ai/acceptance/visit-*.json`, with answer-ready, complete-route and intervening graph times. Planning has no automatic generation deadline; Ctrl+C or the app's Cancel action stops it. Individual timings are not general hardware performance guarantees. The prior separate chat/route validators remain in the repository for compatibility regression tests.
 
-The 2026-10-14 installer preserves existing `.env.example` and `mobile/.env.example` byte-for-byte; differences in these unused templates no longer block an update. Missing templates are installed, and updated copies remain in the bundle's `payload` folder for reference. Actual `.env` files remain untouched. Other local source changes are still checked before any writes, with all conflicting paths reported together.
-
-`GET /api/ai/planning/status` checks the local text model and completion capability independently of image services. `ready: true` there means model presence/capability, **not a successful inference**. The general status also has `planningReady`, separate from combined scanner readiness. Backend `planningVersion: 6` and the effective Ollama URL, artwork timeout, unlimited planning setting, context, GPU, output-token and keep-alive settings prevent startup from silently reusing an older/differently configured process; stop an old process in its original terminal instead of killing it by port.
-
-Route-only acceptance creates a new `.local-ai/qwen-routes-<timestamp>-<id>.json` containing model identity, source hashes, timings, actual responses and failures. Its six checks cover Chinese preference changes and routes in both museums, plus an English GOMA revision and route. Returned routes are checked against graph edges, walking plus visit time, unique museum-local stops and required works. Planning has no automatic generation deadline; timings are recorded, not treated as a general performance guarantee. The complete `ai:acceptance` workflow also runs the broader route/CORS/invalid-input suite before recognition and vision acceptance.
-
-The acceptance calls `POST /api/ai/routes/plan` with **`requireAI: true`**. This requires a real successful model call and propagates failures instead of accepting a deterministic fallback. It additionally requires `recommendationSource: "ollama"`, no warning/error, and a nonempty valid itinerary. Ordinary app requests retain the explicitly labelled local-rule fallback. **HTTP 200 or a visible itinerary alone does not prove Qwen worked.**
-
-Planning/chat disconnects now propagate cancellation to the upstream Ollama HTTP request and release the backend inference slot, preventing an abandoned request from blocking the next attempt. Obvious impossible visits are rejected before model inference. Tests cover these paths with a real HTTP transport and a simulated Ollama responder; those software tests do not constitute Windows model validation. Current Windows route validation remains pending until its real report is received. No model retraining was performed or needed for these runtime fixes.
+Software tests cover one generation per visit, invalid recommendations, impossible routes, cancellation, UTF-8/chunk boundaries, partial-stream errors, progressive display, reduced motion, retries and navigation. Actual cloud-model evidence is recorded separately from fixtures and does not establish Windows/device performance.
 
 ## General artwork analysis
 

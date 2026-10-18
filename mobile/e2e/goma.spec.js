@@ -1,4 +1,4 @@
-import { test, expect, enterWelcome } from '../e2e/fixtures';
+import { test, expect, enterWelcome, visitResponse } from '../e2e/fixtures';
 import path from 'node:path';
 
 test.use({ viewport: { width: 390, height: 844 } });
@@ -42,18 +42,14 @@ test('GOMA selection, rooms, artwork details and switch back to Met', async ({ p
 });
 
 test('GOMA route opens its own itinerary with a GOMA map and artwork', async ({ page }) => {
-  await page.route('**/api/ai/routes/chat', route => {
+  const sampleItinerary = { demo: true, mapNotice: 'GOMA illustrative layout.', estimatedMinutes: 7, estimatedWalkingDistance: 47, route: [{ order: 1, artworkId: 'goma-heritage', title: 'Heritage', galleryId: 'nature-gallery', estimatedVisitMinutes: 6 }], navigation: [{ from: 'entrance', to: 'goma-heritage', nodes: ['entrance', 'goma-foyer', 'goma-heritage'], distance: 47, estimatedSeconds: 70 }], reasoningSummary: 'A nature visit.', recommendationSource: 'local' };
+  await page.route('**/api/ai/routes/visit', route => {
     const input = route.request().postDataJSON();
     expect(input.museumId).toBe('goma');
     expect(input.preferences.mustSeeArtworkIds).toEqual([]);
-    return route.fulfill({ json: { reply: 'Heritage is on your must-see list.', preferences: { ...input.preferences, mustSeeArtworkIds: ['goma-heritage'] } } });
+    return route.fulfill(visitResponse({ reply: 'Heritage is on your must-see list.', preferences: { ...input.preferences, mustSeeArtworkIds: ['goma-heritage'] } }, sampleItinerary));
   });
-  await page.route('**/api/ai/routes/plan', async route => {
-    const body = route.request().postDataJSON();
-    expect(body.museumId).toBe('goma');
-    expect(body.mustSeeArtworkIds).toEqual(['goma-heritage']);
-    await route.fulfill({ json: { demo: true, mapNotice: 'GOMA illustrative layout.', estimatedMinutes: 7, estimatedWalkingDistance: 47, route: [{ order: 1, artworkId: 'goma-heritage', title: 'Heritage', galleryId: 'nature-gallery', estimatedVisitMinutes: 6 }], navigation: [{ from: 'entrance', to: 'goma-heritage', nodes: ['entrance', 'goma-foyer', 'goma-heritage'], distance: 47, estimatedSeconds: 70 }], reasoningSummary: 'A nature visit.', recommendationSource: 'local' } });
-  });
+
   await chooseGoma(page);
   await page.getByRole('tab', { name: /Plan/ }).click();
   await expect(page.getByTestId('planning-museum')).toContainText('GOMA');

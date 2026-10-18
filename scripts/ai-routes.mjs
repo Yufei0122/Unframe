@@ -15,8 +15,8 @@ try {
   const retry = config.planningRetryNumPredict > config.planningNumPredict ? `one retry up to ${config.planningRetryNumPredict} tokens only after truncation` : 'retry disabled at the maximum output budget';
   console.log(`Planning output: up to ${config.planningNumPredict} tokens; ${retry}; context ${config.planningNumCtx}.`);
   await ensureNode({ planningOnly: true });
-  if (process.argv.includes('--timing')) await run(process.execPath, [path.join(root, 'scripts', 'benchmark-planning.mjs')]);
-  if (process.argv.includes('--verify')) await run(process.execPath, [path.join(root, 'scripts', 'validate-qwen-routes.mjs')]);
+  if (process.argv.includes('--timing')) await run(process.execPath, [path.join(root, 'scripts', 'validate-ai-visit.mjs'), '--timing']);
+  if (process.argv.includes('--verify')) await run(process.execPath, [path.join(root, 'scripts', 'validate-ai-visit.mjs')]);
   if (process.argv.includes('--web')) await startMobileWeb();
   if (!process.argv.includes('--timing') || process.argv.includes('--web')) {
     console.log('Local route services are ready. Real inference is verified only by a passing route acceptance report.');

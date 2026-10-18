@@ -27,13 +27,13 @@ try {
   if (process.argv.includes('--features')) {
     console.log('Verifying recognition latency and complete AI routes; planning has no time limit.');
     await run(process.execPath, [path.join(root, 'scripts', 'validate-local-ai.mjs'), '--recognition-only']);
-    await run(process.execPath, [path.join(root, 'scripts', 'validate-qwen-routes.mjs')]);
+    await run(process.execPath, [path.join(root, 'scripts', 'validate-ai-visit.mjs')]);
     console.log('Both feature performance gates passed with real local models.');
   }
   if (process.argv.includes('--verify')) {
     console.log('Running real-model acceptance before opening Expo. Reports are saved under .local-ai.');
     const failures = [];
-    for (const [script, args] of [['validate-ai-routes.mjs', []], ['validate-local-ai.mjs', ['--recognition-only']], ['validate-artwork-vision.mjs', []]]) {
+    for (const [script, args] of [['validate-ai-visit.mjs', []], ['validate-local-ai.mjs', ['--recognition-only']], ['validate-artwork-vision.mjs', []]]) {
       try { await run(process.execPath, [path.join(root, 'scripts', script), ...args]); }
       catch (error) { failures.push(`${script}: ${error.message}`); }
     }

@@ -1,4 +1,4 @@
-import { test, expect, enterWelcome } from '../e2e/fixtures';
+import { test, expect, enterWelcome, visitResponse } from '../e2e/fixtures';
 import path from 'node:path';
 
 test.use({ viewport: { width: 390, height: 844 }, launchOptions: { args: ['--use-fake-device-for-media-stream', '--use-fake-ui-for-media-stream'] } });
@@ -241,27 +241,17 @@ test('invalid uploads send no request and scanning can still resume', async ({ p
 
 test('route opens a separate itinerary page and preserves preferences when returning', async ({ page }) => {
   let chatTurns = 0;
-  let routeTurns = 0;
-  await page.route('**/api/ai/routes/chat', route => {
+  const sampleItinerary = { demo: true, mapNotice: 'Illustrative demo map.', estimatedMinutes: 6, estimatedWalkingDistance: 72, route: [{ order: 1, artworkId: 'water-lilies', title: 'Water Lilies', galleryId: 'european-paintings', estimatedVisitMinutes: 4 }], navigation: [{ from: 'entrance', to: 'water-lilies', nodes: ['entrance', 'great-hall', 'european-paintings', 'water-lilies'], distance: 72, estimatedSeconds: 110 }], reasoningSummary: 'A local nature route.', recommendationSource: 'local', warning: 'AI recommendations are unavailable. This itinerary uses local rules.' };
+  await page.route('**/api/ai/routes/visit', route => {
     const input = route.request().postDataJSON();
     expect(input.museumId).toBe('met');
     if (++chatTurns === 2) {
       expect(input.history.some(message => message.content.includes('Monet'))).toBe(true);
       expect(input.preferences.interests).toContain('Monet');
     }
-    return route.fulfill({ json: { reply: chatTurns === 1 ? 'Monet and Water Lilies are included.' : 'Your visit is now step-free, with less walking.', preferences: { ...input.preferences, interests: ['Monet'], mustSeeArtworkIds: ['water-lilies'], ...(chatTurns === 2 ? { accessibilityRequirements: ['step_free'], walkingPreference: 'less_walking' } : {}) } } });
+    return route.fulfill(visitResponse({ reply: chatTurns === 1 ? 'Monet and Water Lilies are included.' : 'Your visit is now step-free, with less walking.', preferences: { ...input.preferences, interests: ['Monet'], mustSeeArtworkIds: ['water-lilies'], ...(chatTurns === 2 ? { accessibilityRequirements: ['step_free'], walkingPreference: 'less_walking' } : {}) } }, sampleItinerary));
   });
-  await page.route('**/api/ai/routes/plan', async route => {
-    const request = route.request().postDataJSON();
-    routeTurns++;
-    expect(request.mustSeeArtworkIds).toContain('water-lilies');
-    expect(request.interests).toContain('Monet');
-    if (routeTurns > 1) {
-      expect(request.accessibilityRequirements).toEqual(['step_free']);
-      expect(request.walkingPreference).toBe('less_walking');
-    }
-    await route.fulfill({ json: { demo: true, mapNotice: 'Illustrative demo map.', estimatedMinutes: 6, estimatedWalkingDistance: 72, route: [{ order: 1, artworkId: 'water-lilies', title: 'Water Lilies', galleryId: 'european-paintings', estimatedVisitMinutes: 4 }], navigation: [{ from: 'entrance', to: 'water-lilies', nodes: ['entrance', 'great-hall', 'european-paintings', 'water-lilies'], distance: 72, estimatedSeconds: 110 }], reasoningSummary: 'A local nature route.', recommendationSource: 'local', warning: 'AI recommendations are unavailable. This itinerary uses local rules.' } });
-  });
+
   await page.goto('/'); await enterWelcome(page);
   await page.getByRole('button', { name: 'Start visit', exact: true }).click();
   await page.getByRole('tab', { name: /Plan/ }).click();

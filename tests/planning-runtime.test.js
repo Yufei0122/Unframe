@@ -13,6 +13,8 @@ import { AIError, readAIConfig } from '../server/ai/config.js';
 import { createLocalClient } from '../server/ai/local-http.js';
 import { loopbackFetch } from '../server/ai/loopback-fetch.js';
 import { createAIHandler } from '../server/ai/handler.js';
+import { createOllamaService } from '../server/ai/ollama.js';
+import { createPlanningChatService } from '../server/ai/chat.js';
 import { createRouteService } from '../server/ai/routes.js';
 import { getPlanningStatus } from '../server/ai/planning-status.js';
 import { catalogues } from '../server/ai/catalogues.js';
@@ -56,6 +58,11 @@ async function setup(t, overrides = {}) {
     if (value.preferences && /35 minutes/u.test(body.messages.at(-1).content)) {
       value.preferences = { ...context.preferences, availableMinutes: 35, mustSeeArtworkIds: [] };
       value.reply = 'Updated to 35 minutes and removed the must-see works.';
+    }
+    if (body.format.properties.reply && body.format.properties.recommendedArtworkIds) {
+      value.recommendedArtworkIds = state.visitIds ?? context.artworks.map(artwork => artwork.id);
+      value.reasoningSummary = 'A route matching your updated interests.';
+      if (state.visitMinutes !== undefined) value.preferences.availableMinutes = state.visitMinutes;
     }
     res.end(JSON.stringify({ done: true, done_reason: 'stop', message: { content: JSON.stringify(value) } }));
   });
@@ -245,7 +252,7 @@ test('route acceptance records duration without rejecting successful responses b
   assert.ok(report.checks.some(row => row.responseMs >= 25));
 });
 
-test('the CLI used by ai:routes:verify accepts correct slow planning responses for every museum', { timeout: 20000 }, async t => {
+test('the legacy route CLI accepts correct slow planning responses for every museum', { timeout: 20000 }, async t => {
   const fixture = await setup(t, { timeoutMs: 20 });
   fixture.state.delayMs = 1100;
   const script = fileURLToPath(new URL('../scripts/validate-qwen-routes.mjs', import.meta.url));
@@ -303,4 +310,81 @@ test('cancelling during the expanded-budget retry aborts upstream work and relea
   const next = await post('plan', { ...preferences, requireAI: true });
   assert.equal(next.status, 200); assert.equal((await next.json()).recommendationSource, 'ollama');
   assert.equal(state.generationCalls, 3);
+});
+
+
+test('combined visits use one model call and route with the UPDATED preferences in every museum', async t => {
+  const fixture = await setup(t);
+  for (const [museumId, { collection, graph }] of catalogues) {
+    const before = fixture.state.generationCalls;
+    const input = { museumId, preferences: { ...preferences, mustSeeArtworkIds: [collection[0].id] }, history: [], message: '只有20分钟，需要无障碍路线，尽量少走路，保留必看作品。' };
+    const response = await fixture.post('visit', input);
+    assert.equal(response.status, 200);
+    assert.match(response.headers.get('content-type'), /application\/x-ndjson/);
+    const [answer, route] = (await response.text()).trim().split('\n').map(line => JSON.parse(line));
+    assert.equal(answer.type, 'answer'); assert.equal(answer.preferences.availableMinutes, 20);
+    assert.equal(route.type, 'route'); assertAIRoute(route.itinerary, answer.preferences, collection, graph);
+    assert.equal(fixture.state.generationCalls - before, 1, 'No second Qwen recommendation call or busy fallback.');
+  }
+});
+
+test('invalid combined recommendations never publish a partial preference update', async t => {
+  const fixture = await setup(t);
+  for (const ids of [[], ['invented'], ['water-lilies', 'water-lilies']]) {
+    fixture.state.visitIds = ids;
+    const response = await fixture.post('visit', { museumId: 'met', preferences, message: 'A relaxed visit.' });
+    assert.equal(response.status, 502);
+    assert.equal((await response.json()).code, 'INVALID_RECOMMENDATIONS');
+  }
+});
+
+test('an infeasible combined visit retains the answer and emits a route error without another model call', async t => {
+  const fixture = await setup(t); fixture.state.visitMinutes = 1;
+  const response = await fixture.post('visit', { museumId: 'met', preferences, message: 'I have one minute.' });
+  const events = (await response.text()).trim().split('\n').map(line => JSON.parse(line));
+  assert.deepEqual(events.map(event => event.type), ['answer', 'route_error']);
+  assert.equal(events[0].preferences.availableMinutes, 1); assert.equal(events[1].code, 'NO_ROUTE');
+  assert.equal(fixture.state.generationCalls, 1);
+});
+
+test('cancelling a combined visit aborts upstream and releases the single-generation gate', async t => {
+  const fixture = await setup(t); fixture.state.hold = true;
+  let started, cancelled;
+  const ready = new Promise(resolve => { started = resolve; });
+  const stopped = new Promise(resolve => { cancelled = resolve; });
+  fixture.state.onStart = started; fixture.state.onCancel = cancelled;
+  const controller = new AbortController();
+  const pending = fixture.post('visit', { museumId: 'met', preferences, message: 'A relaxed visit.' }, controller.signal).catch(error => error);
+  await ready; controller.abort(); await pending; await stopped;
+  fixture.state.hold = false;
+  const next = await fixture.post('visit', { museumId: 'met', preferences, message: 'Try again.' });
+  assert.equal(next.status, 200); assert.match(await next.text(), /"type":"route"/);
+});
+
+test('the combined acceptance CLI checks every museum with exactly one generation per turn', async t => {
+  const fixture = await setup(t);
+  const script = fileURLToPath(new URL('../scripts/validate-ai-visit.mjs', import.meta.url));
+  const { stdout } = await promisify(execFile)(process.execPath, [script], { env: { ...process.env,
+    PORT: new URL(fixture.backend).port, OLLAMA_URL: fixture.config.ollamaUrl, OLLAMA_PLANNING_MODEL: fixture.config.planningModel,
+  } });
+  const result = JSON.parse(stdout.match(/\{\n  "passed"[\s\S]*\}\s*$/u)[0]);
+  t.after(() => rm(result.report, { force: true }));
+  assert.equal(result.passed, true); assert.equal(result.checks, catalogues.size * 2);
+  assert.equal(fixture.state.generationCalls, catalogues.size * 2);
+});
+
+
+test('combined reply grammars bound English and Chinese strings even when maxLength is ignored', async () => {
+  for (const message of ['Keep my must-see works.', '保留我的必看作品。']) {
+    const chinese = /[\u3400-\u9fff]/u.test(message);
+    const ollama = createOllamaService(config, { request: async (_endpoint, body) => {
+      const pattern = new RegExp(body.format.properties.reply.pattern, 'u');
+      const reply = chinese ? '我会保留你的选择，挑选适合慢慢欣赏的作品。' : 'I’ll keep your choices and look for a relaxed path through colour.';
+      assert.ok(pattern.test(reply));
+      assert.equal(pattern.test(chinese ? '画'.repeat(121) : 'a'.repeat(121)), false);
+      assert.equal(pattern.test(reply + '\ncontinued'), false);
+      return { done: true, done_reason: 'stop', message: { content: JSON.stringify({ preferences, reply, recommendedArtworkIds: ['water-lilies'], reasoningSummary: 'Colour and nature.' }) } };
+    } });
+    await createPlanningChatService({ ollama, ...catalogues.get('met') }).visit({ preferences, message });
+  }
 });

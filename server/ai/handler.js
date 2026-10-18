@@ -46,7 +46,7 @@ export function createAIHandler({ config = readAIConfig(), clip = createLocalCli
       if (!catalogue) return send(res, 400, { error: `Choose a supported museum: ${[...catalogues.keys()].join(', ')}.`, code: 'INVALID_MUSEUM' });
       return send(res, 200, await getAIStatus({ config, store, collection: catalogue.collection, museumId, clip, ollamaClient }));
     }
-    if (req.method !== 'POST' || !['/api/ai/artworks/recognise', '/api/ai/artworks/analyse', '/api/ai/artworks/confirm', '/api/ai/routes/plan', '/api/ai/routes/chat'].includes(pathname)) return send(res, 404, { error: 'AI endpoint not found.' });
+    if (req.method !== 'POST' || !['/api/ai/artworks/recognise', '/api/ai/artworks/analyse', '/api/ai/artworks/confirm', '/api/ai/routes/plan', '/api/ai/routes/chat', '/api/ai/routes/visit'].includes(pathname)) return send(res, 404, { error: 'AI endpoint not found.' });
     if (active >= 2) return send(res, 429, { error: 'AI is busy. Please try again shortly.' });
     active++;
     const cancellation = new AbortController();
@@ -68,12 +68,30 @@ export function createAIHandler({ config = readAIConfig(), clip = createLocalCli
       }
       if (!req.headers['content-type']?.includes('application/json')) throw new AIError(415, 'JSON_REQUIRED', 'Send application/json.');
       let input;
-      const bytes = await readLimited(req, pathname === '/api/ai/routes/chat' ? 32000 : 16000);
+      const bytes = await readLimited(req, ['/api/ai/routes/chat', '/api/ai/routes/visit'].includes(pathname) ? 32000 : 16000);
       try { input = JSON.parse(bytes.toString('utf8')); } catch { throw new AIError(400, 'INVALID_JSON', 'Invalid JSON request.'); }
       const service = selectMuseum(input?.museumId);
       if (pathname === '/api/ai/artworks/confirm') {
         const result = await service.recognition.confirm(input, cancellation.signal);
         if (!res.destroyed) return send(res, 200, result);
+        return;
+      }
+      if (pathname === '/api/ai/routes/visit') {
+        // One validated model result supplies BOTH the latest preferences and recommendations.
+        // Send the answer before graph work so the client can reveal it while routing completes.
+        const { recommendations, ...answer } = await service.chat.visit(input, cancellation.signal);
+        if (res.destroyed) return;
+        res.writeHead(200, { 'Content-Type': 'application/x-ndjson; charset=utf-8', 'Cache-Control': 'no-store, no-transform', 'X-Accel-Buffering': 'no' });
+        res.write(JSON.stringify({ type: 'answer', ...answer }) + '\n');
+        await new Promise(resolve => setImmediate(resolve));
+        try {
+          const itinerary = await service.routes.plan({ ...answer.preferences, requireAI: true }, cancellation.signal, recommendations);
+          if (!res.destroyed) res.write(JSON.stringify({ type: 'route', itinerary }) + '\n');
+        } catch (error) {
+          logFailure('visit_route', error);
+          if (!res.destroyed) res.write(JSON.stringify({ type: 'route_error', error: error instanceof AIError ? error.message : 'Your route could not be calculated. Please retry.', code: error instanceof AIError ? error.code : 'ROUTE_FAILED' }) + '\n');
+        }
+        if (!res.destroyed) res.end();
         return;
       }
       const result = await (pathname === '/api/ai/routes/chat' ? service.chat.reply(input, cancellation.signal) : service.routes.plan(input, cancellation.signal));

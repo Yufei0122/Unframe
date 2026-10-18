@@ -107,20 +107,31 @@ export function createOllamaService(config, client = createLocalClient(config, '
       }
     } finally { gate.active = false; }
   }
+  async function generatePlanningReply(context, signal, combined = false) {
+    const schema = structuredClone(chatSchema);
+    if (combined) {
+      schema.properties.recommendedArtworkIds = { ...structuredClone(routeSchema.properties.recommendedArtworkIds), maxItems: Math.min(8, context.artworks.length), items: { type: 'string', enum: context.artworks.map(a => a.id) } };
+      schema.properties.reasoningSummary = { type: 'string', minLength: 1, maxLength: 120 };
+      schema.required.push('recommendedArtworkIds', 'reasoningSummary');
+    }
+    const chinese = /[\u3400-\u9fff]/u.test(context.message);
+    if (chinese) schema.properties.reply.pattern = '^.*[㐀-鿿].*$';
+    if (combined) {
+      // A pattern overrides maxLength in some Ollama grammar converters. Bound it explicitly.
+      schema.properties.reply = { type: 'string', minLength: 1, maxLength: 120, pattern: chinese ? '^[㐀-鿿].{0,119}$' : '^.{1,120}$' };
+    }
+    schema.properties.preferences.properties.currentLocation.enum = context.startingPoints.map(n => n.id);
+    schema.properties.preferences.properties.mustSeeArtworkIds.items.enum = context.artworks.map(a => a.id);
+    const preserved = preservedMustSeeIds(context.message, context.preferences);
+    if (preserved !== undefined) schema.properties.preferences.properties.mustSeeArtworkIds.const = preserved;
+    const languageInstruction = chinese ? '最新访客消息使用中文。reply 字段必须用自然中文回答，并包含汉字；不要因目录资料或历史消息是英文而改用英文。作品 ID、地点 ID、JSON 字段名和枚举值保持原样，不要翻译。' : 'Reply in the language of the latest visitor message, regardless of the catalogue or history language.';
+    const { message, ...previousContext } = context;
+    const editContext = { ...previousContext, artworks: context.artworks.map(({ id, title, artist, tags, minutes, accessible }) => ({ id, title, artist, tags, ...(combined ? { minutes, accessible } : {}) })) };
+    return generate(config.planningModel, languageInstruction + ' The JSON context contains preferences BEFORE the latest request. The final user message is the NEW request and overrides old preferences and history. FIRST return ALL updated preference fields, THEN reply with one brief confirmation or clarification. Apply every explicit change; preserve fields not changed, including must-see IDs. mustSeeArtworkIds means works the visitor explicitly selected, never thematic recommendations; changing interests alone must not add IDs. A const constraint on that list requires an exact copy, with no additions or removals. Extract requested time into availableMinutes. Map colour/color/色彩/颜色 to interest Colour; less walking/少走路 to walkingPreference less_walking; step-free/无障碍 to accessibilityRequirements containing step_free; wheelchair/轮椅 to wheelchair. Replace conflicting old interests when the request changes focus. Use only supplied artwork/location IDs. For an ambiguous change preserve that field and ask briefly. Reply must not contain an itinerary, artwork stop list, walking route, total visit-time calculation or claims that a route is feasible. A graph engine automatically calculates the route. ' + (combined ? 'Reply warmly in one natural sentence, at most 120 characters, without artwork IDs, a list, or a robotic preference recap; the interface shows the structured preferences separately. Also return recommendedArtworkIds: a prioritised shortlist of supplied artwork IDs matching the UPDATED preferences, including must-see works. These recommendations must not be added to mustSeeArtworkIds unless the visitor selected them. Return one short thematic reasoningSummary. Never calculate walking distances or feasibility: the graph engine checks time, access and must-see constraints.' : ''), editContext, schema, message, signal, true);
+  }
   return {
-    async generatePlanningReply(context, signal) {
-      const schema = structuredClone(chatSchema);
-      const chinese = /[\u3400-\u9fff]/u.test(context.message);
-      if (chinese) schema.properties.reply.pattern = '^.*[㐀-鿿].*$';
-      schema.properties.preferences.properties.currentLocation.enum = context.startingPoints.map(n => n.id);
-      schema.properties.preferences.properties.mustSeeArtworkIds.items.enum = context.artworks.map(a => a.id);
-      const preserved = preservedMustSeeIds(context.message, context.preferences);
-      if (preserved !== undefined) schema.properties.preferences.properties.mustSeeArtworkIds.const = preserved;
-      const languageInstruction = chinese ? '最新访客消息使用中文。reply 字段必须用自然中文回答，并包含汉字；不要因目录资料或历史消息是英文而改用英文。作品 ID、地点 ID、JSON 字段名和枚举值保持原样，不要翻译。' : 'Reply in the language of the latest visitor message, regardless of the catalogue or history language.';
-      const { message, ...previousContext } = context;
-      const editContext = { ...previousContext, artworks: context.artworks.map(({ id, title, artist, tags }) => ({ id, title, artist, tags })) };
-      return generate(config.planningModel, languageInstruction + ' The JSON context contains preferences BEFORE the latest request. The final user message is the NEW request and overrides old preferences and history. FIRST return ALL updated preference fields, THEN reply with one brief confirmation or clarification. Apply every explicit change; preserve fields not changed, including must-see IDs. mustSeeArtworkIds means works the visitor explicitly selected, never thematic recommendations; changing interests alone must not add IDs. A const constraint on that list requires an exact copy, with no additions or removals. Extract requested time into availableMinutes. Map colour/color/色彩/颜色 to interest Colour; less walking/少走路 to walkingPreference less_walking; step-free/无障碍 to accessibilityRequirements containing step_free; wheelchair/轮椅 to wheelchair. Replace conflicting old interests when the request changes focus. Use only supplied artwork/location IDs. For an ambiguous change preserve that field and ask briefly. Reply must not contain an itinerary, artwork stop list, walking route, total visit-time calculation or claims that a route is feasible. The separate route engine runs only when the visitor presses Generate route.', editContext, schema, message, signal, true);
-    },
+    generatePlanningReply,
+    generatePlanningVisit: (context, signal) => generatePlanningReply(context, signal, true),
     async generateArtworkExplanation(artwork, preferences, collection, signal) {
       const { id, title, artist, year, medium, source, sourceUrl } = artwork;
       const nextArtworks = collection.filter(a => a.id !== id).map(a => ({ id: a.id, title: a.title, tags: a.tags }));

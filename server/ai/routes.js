@@ -15,7 +15,7 @@ export function validateRouteInput(input, collection, graph) {
 }
 
 export function createRouteService({ ollama, collection, graph }) {
-  return { async plan(input, signal) {
+  return { async plan(input, signal, preparedRecommendations) {
     const prefs = validateRouteInput(input, collection, graph);
     requireInput(input.requireAI === undefined || typeof input.requireAI === 'boolean', 'requireAI must be a boolean.');
     if (signal?.aborted) throw new AIError(499, 'REQUEST_CANCELLED', 'The request was cancelled.');
@@ -32,7 +32,7 @@ export function createRouteService({ ollama, collection, graph }) {
       throw new AIError(422, 'NO_ROUTE', 'No feasible route fits this time and these must-see/accessibility requirements. Increase the time or change the starting point or selections.');
     }
     let recommendations, warning, errorCode, recommendationSource = 'ollama';
-    try { recommendations = await ollama.generateRouteRecommendations(prefs, eligible, signal); }
+    try { recommendations = preparedRecommendations ?? await ollama.generateRouteRecommendations(prefs, eligible, signal); }
     catch (error) {
       if (signal?.aborted || error?.code === 'REQUEST_CANCELLED') throw new AIError(499, 'REQUEST_CANCELLED', 'The request was cancelled.');
       if (input.requireAI) throw error instanceof AIError ? error : new AIError(503, 'RECOMMENDATION_UNAVAILABLE', 'Local AI recommendations are unavailable. Check Ollama and retry.');

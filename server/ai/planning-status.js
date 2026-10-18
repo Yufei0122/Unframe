@@ -1,7 +1,7 @@
 import { AIError } from './config.js';
 import { createLocalClient } from './local-http.js';
 
-export const planningVersion = 6;
+export const planningVersion = 7;
 
 export function planningConfiguration(config) {
   return { provider: 'local', ollamaModel: config.ollamaModel, planningModel: config.planningModel, planningVersion,
