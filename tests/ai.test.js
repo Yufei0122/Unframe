@@ -14,6 +14,8 @@ import os from 'node:os';
 import { createEmbeddingService, createEmbeddingStore, cosineSimilarity, referenceArtworks, referenceImageUrl, sha256 } from '../server/ai/embeddings.js';
 import { parseExplanation, parseRecommendations, assembleGroundedExplanation, createOllamaService } from '../server/ai/ollama.js';
 import { createRecognitionService } from '../server/ai/recognition.js';
+import { detectArtwork } from '../server/ai/artwork-detection.js';
+import detector from '../server/ai/artwork-detector.json' with { type: 'json' };
 import { createRouteService } from '../server/ai/routes.js';
 import { createPlanningChatService } from '../server/ai/chat.js';
 import { shortestPath } from '../server/ai/graph.js';
@@ -70,6 +72,23 @@ test('recognition returns catalogue candidates without confirming or generating 
   assert.equal(result.matched, true); assert.equal(result.artwork.artist, 'Claude Monet'); assert.equal(result.aiExplanation, null);
   assert.equal(result.requiresConfirmation, true);
   assert.deepEqual(result.candidates, [{ artwork: collection[0], similarity: 1 }]);
+});
+
+test('fast scene detection uses the existing CLIP space and does not invent artwork identity', async () => {
+  assert.equal(detectArtwork(detector.vectors.artwork, config), true);
+  assert.equal(detectArtwork(detector.vectors.background, config), false);
+  assert.equal(detectArtwork(detector.vectors.artwork, { ...config, embeddingPretrained: 'another-model' }), false);
+  assert.equal(detectArtwork([1, 0], config), false);
+  const ambiguous = detector.vectors.artwork.map((x, i) => x + detector.vectors.background[i]);
+  const length = Math.hypot(...ambiguous);
+  assert.equal(detectArtwork(ambiguous.map(x => x / length), config), false);
+  let calls = 0;
+  const result = await createRecognitionService({ config, collection, store,
+    embeddings: { generate: async () => { calls++; return detector.vectors.artwork; } },
+    ollama: { generateArtworkExplanation: () => assert.fail('Scene detection must not run Qwen') },
+  }).recognise(image);
+  assert.equal(calls, 1); assert.equal(result.artworkDetected, true);
+  assert.equal(result.matched, false); assert.deepEqual(result.candidates, []);
 });
 
 test('recognition filters weak and other-museum matches, ranks unique candidates, and caps the shortlist', async () => {

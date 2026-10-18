@@ -29,7 +29,7 @@ test('an unknown uploaded photo receives visual analysis with uncertainty and so
   expect(analyses).toBe(1);
   await page.screenshot({ path: 'test-results/general-artwork-uncertain.png' });
 });
-test('resuming during general analysis discards the late result and restarts lightweight scanning', async ({ page }) => {
+test('cancelling analysis keeps the captured photo until an explicit new scan', async ({ page }) => {
   let pending;
   await page.route('**/api/ai/artworks/recognise*', route => route.fulfill({ json: { matched: false, candidates: [] } }));
   await page.route('**/api/ai/artworks/analyse', route => { pending = route; });
@@ -42,6 +42,9 @@ test('resuming during general analysis discards the late result and restarts lig
   await page.getByRole('button', { name: 'Cancel analysis', exact: true }).click();
   await pending.fulfill({ json: result }).catch(() => {});
   await expect(page.getByTestId('artwork-analysis-result')).toHaveCount(0);
+  await expect(page.getByLabel('Selected artwork photo')).toBeVisible();
+  await expect(page.locator('video')).toHaveCount(0);
+  await page.getByRole('button', { name: 'Scan again', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Pause scanning', exact: true })).toBeVisible();
 });
 test('a missing vision model is an actionable error, not an empty artwork result', async ({ page }) => {

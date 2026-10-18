@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createNativeScanLoop } from '../src/nativeScanLoop';
 import { resolveAPIBase, resolveAITimeoutMs } from '../src/apiConfig';
+import { shouldCaptureArtwork } from '../src/scanCapture';
 
 function deferred<T>() {
   let resolve!: (value: T) => void;
@@ -11,6 +12,30 @@ function deferred<T>() {
 }
 async function settle() { await Promise.resolve(); await Promise.resolve(); await Promise.resolve(); }
 const unexpectedError = (error: unknown) => assert.fail(error instanceof Error ? error : String(error));
+
+test('a captured frame ends sampling until the visitor explicitly starts another scan', async t => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  let captures = 0;
+  const frames: string[] = [];
+  const loop = createNativeScanLoop({
+    sample: async () => `frame-${++captures}`,
+    onResult: value => { frames.push(value); return false; }, onError: unexpectedError, onBusy: () => {},
+  });
+  t.after(() => loop.stop());
+  loop.start(); t.mock.timers.tick(400); await settle();
+  t.mock.timers.tick(120000); await settle();
+  assert.equal(captures, 1); assert.deepEqual(frames, ['frame-1']);
+  loop.start(); t.mock.timers.tick(400); await settle();
+  assert.deepEqual(frames, ['frame-1', 'frame-2']);
+});
+
+test('scene detection can freeze an unfamiliar artwork without claiming its identity', () => {
+  const unknown = { matched: false, candidates: [], requiresConfirmation: true as const };
+  assert.equal(shouldCaptureArtwork({ ...unknown, artworkDetected: true }), true);
+  assert.equal(shouldCaptureArtwork(unknown), false);
+  assert.equal(shouldCaptureArtwork({ ...unknown, artworkDetected: false }), false);
+  assert.equal(shouldCaptureArtwork({ ...unknown, matched: true }), true, 'Older matching backends still freeze known works.');
+});
 
 test('camera sampling stays serial and waits between completed requests', async t => {
   t.mock.timers.enable({ apis: ['setTimeout'] });

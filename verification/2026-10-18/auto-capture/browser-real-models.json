@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "capturedMs": 669,
+  "completedMs": 58685,
+  "requests": [
+    "/api/ai/artworks/recognise",
+    "/api/ai/artworks/analyse"
+  ],
+  "method": "vision",
+  "timings": {
+    "matchingMs": 146,
+    "visionMs": 54668,
+    "searchMs": 3002,
+    "totalMs": 57816
+  },
+  "cameraStoppedBeforeAnalysis": true,
+  "sceneChangedAfterCapture": true,
+  "frameStayedUnchanged": true,
+  "limitation": "Synthetic camera showing an app artwork, real browser uploads, OpenCLIP and vision. This is not physical device or general detector-accuracy testing."
+}

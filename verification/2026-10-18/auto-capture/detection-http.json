@@ -1,0 +1,162 @@
+{
+  "passed": true,
+  "backend": "http://127.0.0.1:3004",
+  "checks": [
+    {
+      "name": "water-lilies",
+      "passed": true,
+      "elapsedMs": 186,
+      "artworkDetected": true,
+      "matched": true
+    },
+    {
+      "name": "the-harvesters",
+      "passed": true,
+      "elapsedMs": 108,
+      "artworkDetected": true,
+      "matched": true
+    },
+    {
+      "name": "the-dancing-class",
+      "passed": true,
+      "elapsedMs": 99,
+      "artworkDetected": true,
+      "matched": true
+    },
+    {
+      "name": "wheat-field-with-cypresses",
+      "passed": true,
+      "elapsedMs": 96,
+      "artworkDetected": true,
+      "matched": true
+    },
+    {
+      "name": "young-woman-with-a-water-pitcher",
+      "passed": true,
+      "elapsedMs": 102,
+      "artworkDetected": true,
+      "matched": true
+    },
+    {
+      "name": "the-card-players",
+      "passed": true,
+      "elapsedMs": 86,
+      "artworkDetected": true,
+      "matched": true
+    },
+    {
+      "name": "madame-charpentier-and-her-children",
+      "passed": true,
+      "elapsedMs": 90,
+      "artworkDetected": true,
+      "matched": true
+    },
+    {
+      "name": "self-portrait-with-a-straw-hat",
+      "passed": true,
+      "elapsedMs": 92,
+      "artworkDetected": true,
+      "matched": true
+    },
+    {
+      "name": "goma-obliteration-room",
+      "passed": true,
+      "elapsedMs": 102,
+      "artworkDetected": true,
+      "matched": true
+    },
+    {
+      "name": "goma-in-bed",
+      "passed": true,
+      "elapsedMs": 123,
+      "artworkDetected": true,
+      "matched": true
+    },
+    {
+      "name": "goma-heritage",
+      "passed": true,
+      "elapsedMs": 123,
+      "artworkDetected": true,
+      "matched": true
+    },
+    {
+      "name": "goma-soul-under-the-moon",
+      "passed": true,
+      "elapsedMs": 114,
+      "artworkDetected": true,
+      "matched": true
+    },
+    {
+      "name": "qut-river-rhythm",
+      "passed": true,
+      "elapsedMs": 122,
+      "artworkDetected": true,
+      "matched": true
+    },
+    {
+      "name": "qut-soft-architecture",
+      "passed": true,
+      "elapsedMs": 132,
+      "artworkDetected": true,
+      "matched": true
+    },
+    {
+      "name": "qut-between-places",
+      "passed": true,
+      "elapsedMs": 139,
+      "artworkDetected": true,
+      "matched": true
+    },
+    {
+      "name": "unfamiliar_art",
+      "passed": true,
+      "elapsedMs": 128,
+      "artworkDetected": true,
+      "matched": false
+    },
+    {
+      "name": "framed_water-lilies.jpg",
+      "passed": true,
+      "elapsedMs": 137,
+      "artworkDetected": true,
+      "matched": true
+    },
+    {
+      "name": "framed_quiet-geometry.png",
+      "passed": true,
+      "elapsedMs": 108,
+      "artworkDetected": true,
+      "matched": false
+    },
+    {
+      "name": "met-exterior.jpg",
+      "passed": true,
+      "elapsedMs": 278,
+      "artworkDetected": false,
+      "matched": false
+    },
+    {
+      "name": "goma-exterior.jpg",
+      "passed": true,
+      "elapsedMs": 201,
+      "artworkDetected": false,
+      "matched": false
+    },
+    {
+      "name": "blank_white",
+      "passed": true,
+      "elapsedMs": 111,
+      "artworkDetected": false,
+      "matched": false
+    },
+    {
+      "name": "blank_black",
+      "passed": true,
+      "elapsedMs": 97,
+      "artworkDetected": false,
+      "matched": false
+    }
+  ],
+  "scope": "Fast scene detection and collection matching only; no vision generation.",
+  "limitation": "Bundled images and synthetic framed variants are controlled checks, not independent visitor-camera accuracy. Artwork detection is a scene cue, never identity or probability."
+}

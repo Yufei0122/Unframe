@@ -19,7 +19,8 @@ test('camera reports a completed no-match rather than silently repeating an empt
   await page.route('**/api/ai/artworks/analyse', route => { analyses++; return route.abort(); });
   await openScan(page);
   await expect(page.getByText('No match in this collection (8 works). Move closer or try visual analysis.', { exact: true })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Analyse any artwork', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Capture frame', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Analyse any artwork', exact: true })).toHaveCount(0);
   expect(analyses).toBe(0, 'Repeated camera frames must not queue expensive vision requests.');
 });
 
@@ -82,13 +83,16 @@ test('live recognition submits one frame at a time and requires choosing a candi
   // Longer than the normal three-second interval: no second request while this one is pending.
   await page.waitForTimeout(3500);
   expect(requests).toBe(1);
+  await rememberCamera(page);
   await pending.fulfill({ json: candidates });
   await expect(page.getByRole('button', { name: 'Select Water Lilies', exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Select The Harvesters', exact: true })).toBeVisible();
   expect(confirmations).toBe(0);
   await expect(page.getByRole('button', { name: 'Open artwork details', exact: true })).toHaveCount(0);
   await expect(page.getByText('A quiet study of reflections.')).toHaveCount(0);
-  await rememberCamera(page);
+  await expectCameraStopped(page);
+  await expect(page.getByLabel('Selected artwork photo')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Scan again', exact: true })).toBeVisible();
   await page.screenshot({ path: 'test-results/scan-candidates.png' });
   await page.getByRole('button', { name: 'Select The Harvesters', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Open artwork details', exact: true })).toBeVisible();
@@ -109,7 +113,7 @@ test('resuming during confirmation discards its late interpretation and keeps th
   await page.getByRole('button', { name: 'Select Water Lilies', exact: true }).click();
   await expect.poll(() => !!pending).toBe(true);
   await expect(page.getByRole('progressbar', { name: 'Preparing your AI interpretation…' })).toBeVisible();
-  await page.getByRole('button', { name: 'Resume scanning', exact: true }).click();
+  await page.getByRole('button', { name: 'Scan again', exact: true }).click();
   await pending.fulfill({ json: confirmed }).catch(() => {});
   await expect.poll(() => requests).toBeGreaterThan(1);
   await expect(page.getByRole('button', { name: 'Pause scanning', exact: true })).toBeVisible();

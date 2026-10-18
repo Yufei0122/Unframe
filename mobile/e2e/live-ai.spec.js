@@ -31,7 +31,7 @@ test('real local Scan recognises an uploaded artwork and returns analysis for an
   await page.getByRole('button', { name: 'Scan an artwork', exact: true }).click();
   expect((await cameraResponse).status()).toBe(200);
   await expect(page.getByText('No match in this collection', { exact: false })).toBeVisible();
-  expect(requests.some(row => row.endpoint.endsWith('/analyse'))).toBe(false, 'Camera sampling must not invoke slow vision automatically.');
+  expect(requests.some(row => row.endpoint.endsWith('/analyse'))).toBe(false, 'An empty camera scene must not invoke vision.');
   await page.getByLabel('Upload artwork image').setInputFiles(path.resolve(__dirname, '../assets/water-lilies.jpg'));
   console.log('LIVE uploaded Water Lilies');
   await page.getByRole('button', { name: 'Select Water Lilies', exact: true }).click();
@@ -40,7 +40,7 @@ test('real local Scan recognises an uploaded artwork and returns analysis for an
   await expect(page.getByText('Claude Monet', { exact: false }).filter({ visible: true }).first()).toBeVisible();
   await page.screenshot({ path: 'test-results/live-scan-catalogue.png' });
   console.log('LIVE catalogue recognition and interpretation passed');
-  await page.getByRole('button', { name: 'Resume scanning' }).click();
+  await page.getByRole('button', { name: 'Scan again' }).click();
   const generalResponse = page.waitForResponse(response => new URL(response.url()).pathname.endsWith('/artworks/analyse') && response.request().method() === 'POST', { timeout: 135000 });
   await page.getByLabel('Upload artwork image').setInputFiles(path.resolve(__dirname, '../assets/quiet-geometry.png'));
   console.log('LIVE uploaded an unfamiliar image');
@@ -51,7 +51,7 @@ test('real local Scan recognises an uploaded artwork and returns analysis for an
   await page.screenshot({ path: 'test-results/live-scan-general.png' });
   // General vision unloads the text model on memory-constrained Ollama servers.
   // Confirm another known artwork to exercise that real cold model switch.
-  await page.getByRole('button', { name: 'Resume scanning' }).click();
+  await page.getByRole('button', { name: 'Scan again' }).click();
   await page.getByLabel('Upload artwork image').setInputFiles(path.resolve(__dirname, '../assets/water-lilies.jpg'));
   await page.getByRole('button', { name: 'Select Water Lilies', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Read AI interpretation' })).toBeVisible({ timeout: 55000 });

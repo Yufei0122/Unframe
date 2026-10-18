@@ -1,7 +1,8 @@
 /** Serial sampling with cancellation across focus/background changes. */
 export function createNativeScanLoop<T>(options: {
   sample: (signal: AbortSignal) => Promise<T>;
-  onResult: (value: T) => void;
+  /** Returning false ends sampling after this frame has been delivered. */
+  onResult: (value: T) => unknown;
   onError: (error: unknown) => void;
   onBusy: (busy: boolean) => void;
   intervalMs?: number;
@@ -36,7 +37,7 @@ export function createNativeScanLoop<T>(options: {
       const value = await options.sample(request.signal);
       if (enabled && generation === token) {
         if (timedOut) throw new Error('Artwork scanning timed out. Please try again.');
-        if (!request.signal.aborted) options.onResult(value);
+        if (!request.signal.aborted && options.onResult(value) === false) enabled = false;
       }
     } catch (error) {
       if (enabled && generation === token) {

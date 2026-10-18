@@ -1,4 +1,5 @@
 import { ARTWORK_ANALYSIS_VERSION } from '../server/ai/vision.js';
+import { RECOGNITION_VERSION } from '../server/ai/artwork-detection.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import http from 'node:http';
@@ -208,7 +209,7 @@ test('startup rejects stale inference settings for both route-only and full star
     ? { app: 'unframe', status: 'ok', workspace }
     : { configuration: { ...planningConfiguration(readAIConfig()), embeddingModel: clipIdentity.model,
       embeddingPretrained: clipIdentity.pretrained, dimension: clipIdentity.dimensions,
-      visionModel: readAIConfig().visionModel, analysisVersion: ARTWORK_ANALYSIS_VERSION, visionTimeoutMs: readAIConfig().visionTimeoutMs, visionNumPredict: readAIConfig().visionNumPredict, visionNumCtx: readAIConfig().visionNumCtx, analysisBudgetMs: readAIConfig().analysisBudgetMs, explanationTimeoutMs: readAIConfig().explanationTimeoutMs, ...stale } });
+      visionModel: readAIConfig().visionModel, analysisVersion: ARTWORK_ANALYSIS_VERSION, recognitionVersion: RECOGNITION_VERSION, visionTimeoutMs: readAIConfig().visionTimeoutMs, visionNumPredict: readAIConfig().visionNumPredict, visionNumCtx: readAIConfig().visionNumCtx, analysisBudgetMs: readAIConfig().analysisBudgetMs, explanationTimeoutMs: readAIConfig().explanationTimeoutMs, ...stale } });
   const api = await runtime({ PORT: new URL(address).port }); t.after(api.restore);
   const dataFile = path.resolve(process.env.UNFRAME_DATA_DIR || path.join(api.root, 'data'), 'unframe.json');
   workspace = createHash('sha256').update(process.platform === 'win32' ? dataFile.toLowerCase() : dataFile).digest('hex');
@@ -239,7 +240,7 @@ test('full startup rejects a stale catalogue or broken Scan index even when mode
   const address = await mockServer(t, url => url === '/api/health' ? { app: 'unframe', workspace } : {
     configuration: { ...planningConfiguration(readAIConfig()), embeddingModel: clipIdentity.model,
       embeddingPretrained: clipIdentity.pretrained, dimension: clipIdentity.dimensions,
-      visionModel: readAIConfig().visionModel, analysisVersion: ARTWORK_ANALYSIS_VERSION,
+      visionModel: readAIConfig().visionModel, analysisVersion: ARTWORK_ANALYSIS_VERSION, recognitionVersion: RECOGNITION_VERSION,
       visionTimeoutMs: readAIConfig().visionTimeoutMs, visionNumPredict: readAIConfig().visionNumPredict,
       visionNumCtx: readAIConfig().visionNumCtx, analysisBudgetMs: readAIConfig().analysisBudgetMs,
       explanationTimeoutMs: readAIConfig().explanationTimeoutMs },

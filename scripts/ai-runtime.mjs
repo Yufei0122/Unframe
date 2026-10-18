@@ -11,6 +11,7 @@ import { planningConfiguration } from '../server/ai/planning-status.js';
 import { readAIConfig } from '../server/ai/config.js';
 import { ARTWORK_ANALYSIS_VERSION } from '../server/ai/vision.js';
 import { referenceCatalogueHash } from '../server/ai/embeddings.js';
+import { RECOGNITION_VERSION } from '../server/ai/artwork-detection.js';
 
 export const root = fileURLToPath(new URL('../', import.meta.url));
 try { loadEnvFile(path.join(root, '.env')); } catch (error) { if (error.code !== 'ENOENT') throw error; }
@@ -275,7 +276,7 @@ export async function ensureNode({ planningOnly = false } = {}) {
     const status = await getJSON(`${address}/api/ai/${planningOnly ? 'planning/status' : 'status?museumId=met'}`, 15000);
     const planning = planningConfiguration(readAIConfig());
     const expected = planningOnly ? planning
-      : { ...planning, embeddingModel: identity.model, embeddingPretrained: identity.pretrained, dimension: identity.dimensions, visionModel: readAIConfig().visionModel, analysisVersion: ARTWORK_ANALYSIS_VERSION, visionTimeoutMs: readAIConfig().visionTimeoutMs, visionNumPredict: readAIConfig().visionNumPredict, visionNumCtx: readAIConfig().visionNumCtx, analysisBudgetMs: readAIConfig().analysisBudgetMs, explanationTimeoutMs: readAIConfig().explanationTimeoutMs };
+      : { ...planning, embeddingModel: identity.model, embeddingPretrained: identity.pretrained, dimension: identity.dimensions, visionModel: readAIConfig().visionModel, analysisVersion: ARTWORK_ANALYSIS_VERSION, recognitionVersion: RECOGNITION_VERSION, visionTimeoutMs: readAIConfig().visionTimeoutMs, visionNumPredict: readAIConfig().visionNumPredict, visionNumCtx: readAIConfig().visionNumCtx, analysisBudgetMs: readAIConfig().analysisBudgetMs, explanationTimeoutMs: readAIConfig().explanationTimeoutMs };
     const mismatches = Object.entries(expected).filter(([key, value]) => status?.configuration?.[key] !== value).map(([key]) => key);
     if (mismatches.length) {
       throw new Error(`The Unframe process at ${address} is using an older or different AI configuration (${mismatches.join(', ')}). It was left running. Stop it in its original terminal, then rerun npm.cmd run ${planningOnly ? 'ai:routes' : 'ai:up'} (or choose another PORT).`);

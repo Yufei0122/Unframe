@@ -1,5 +1,6 @@
 import { AIError, logFailure, requireInput } from './config.js';
 import { cosineSimilarity } from './embeddings.js';
+import { detectArtwork } from './artwork-detection.js';
 export const MAX_RECOGNITION_CANDIDATES = 3;
 export function createRecognitionService({ config, embeddings, store, ollama, collection }) {
   return { async recognise(image, signal) {
@@ -16,9 +17,10 @@ export function createRecognitionService({ config, embeddings, store, ollama, co
     const candidates = [...scores].filter(([, score]) => score >= config.threshold)
       .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, MAX_RECOGNITION_CANDIDATES)
       .map(([id, similarity]) => ({ artwork: collection.find(a => a.id === id), similarity }));
-    if (!candidates.length) return { matched: false, candidates: [], requiresConfirmation: true, message: `No match in this collection (${collection.length} works). Move closer or try visual analysis.` };
+    const artworkDetected = candidates.length > 0 || detectArtwork(query, config);
+    if (!candidates.length) return { matched: false, candidates: [], artworkDetected, requiresConfirmation: true, message: `No match in this collection (${collection.length} works). Move closer or try visual analysis.` };
     // Legacy fields describe the leading suggestion only. No explanation is generated while scanning.
-    return { matched: true, candidates, requiresConfirmation: true, ...candidates[0], aiExplanation: null };
+    return { matched: true, candidates, artworkDetected, requiresConfirmation: true, ...candidates[0], aiExplanation: null };
   }, async confirm(input, signal) {
     requireInput(input && typeof input === 'object' && !Array.isArray(input), 'Choose an artwork from this museum.');
     const artwork = collection.find(a => a.id === input.artworkId);

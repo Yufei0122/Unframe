@@ -1,0 +1,31 @@
+{
+  "checks": {
+    "ai": {
+      "tests": 107,
+      "pass": 107,
+      "fail": 0
+    },
+    "core": {
+      "tests": 71,
+      "pass": 71,
+      "fail": 0
+    },
+    "mobile": {
+      "tests": 5,
+      "pass": 5,
+      "fail": 0
+    }
+  },
+  "browser": {
+    "passed": 21,
+    "optInSkipped": 2,
+    "separateRealAutoCapturePassed": 1
+  },
+  "typeScript": "passed",
+  "platformExports": [
+    "web",
+    "ios",
+    "android"
+  ],
+  "note": "Test suites overlap. Native physical devices were not available in this cloud environment."
+}

@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 // Sample only after the previous recognition request finishes. Unmounting releases the camera.
 export function CameraCapture({ onFrame, onUnavailable, children }: {
-  onFrame: (blob: Blob) => Promise<void>;
+  onFrame: (blob: Blob, freeze: () => void) => Promise<void>;
   onUnavailable: () => void;
   children: (camera: { ready: boolean; error: string }) => React.ReactNode;
 }) {
@@ -11,17 +11,22 @@ export function CameraCapture({ onFrame, onUnavailable, children }: {
   onFrameRef.current = onFrame; unavailableRef.current = onUnavailable;
   const [ready, setReady] = useState(false), [error, setError] = useState('');
   useEffect(() => {
-    let disposed = false, failed = false, stream: MediaStream | undefined, timer: ReturnType<typeof setTimeout> | undefined;
+    let disposed = false, failed = false, frozen = false, stream: MediaStream | undefined, timer: ReturnType<typeof setTimeout> | undefined;
     const source = video.current;
     function fail(message: string) {
-      if (disposed || failed) return;
+      if (disposed || failed || frozen) return;
       failed = true;
       setReady(false); setError(message); clearTimeout(timer);
       stream?.getTracks().forEach(track => track.stop());
       unavailableRef.current();
     }
+    function freeze() {
+      frozen = true; clearTimeout(timer);
+      stream?.getTracks().forEach(track => track.stop());
+      if (source) source.srcObject = null;
+    }
     async function sample() {
-      if (disposed || failed || !source || document.visibilityState === 'hidden') return;
+      if (disposed || failed || frozen || !source || document.visibilityState === 'hidden') return;
       if (!source.videoWidth || source.readyState < 2) { timer = setTimeout(() => { void sample(); }, 350); return; }
       try {
         const canvas = document.createElement('canvas');
@@ -36,8 +41,8 @@ export function CameraCapture({ onFrame, onUnavailable, children }: {
         const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, 'image/jpeg', .78));
         if (disposed || failed) return;
         if (!blob) throw new Error('Frame unavailable');
-        await onFrameRef.current(blob);
-        if (!disposed && !failed) timer = setTimeout(() => { void sample(); }, 3000);
+        await onFrameRef.current(blob, freeze);
+        if (!disposed && !failed && !frozen) timer = setTimeout(() => { void sample(); }, 3000);
       } catch { fail('Could not read the camera preview. Try the camera again or upload a photo.'); }
     }
     async function open() {

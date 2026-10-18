@@ -11,6 +11,7 @@ import { useStore } from '../store';
 import { AI_TIMEOUT_MS, CLIP_TIMEOUT_MS, VISION_TIMEOUT_MS, requestAI } from '../ai';
 import { ArtworkAnalysisResult } from '../components/ArtworkAnalysisResult';
 import { ArtworkScanTransition } from '../components/AIProcessingAnimations';
+import { shouldCaptureArtwork } from '../scanCapture';
 import type { RecognitionResult, RecognitionCandidate, ConfirmationResult, ArtworkAnalysis } from '../../../shared/ai-types';
 
 export function LookupScreen() {
@@ -24,9 +25,12 @@ function LookupContent() {
   const { state } = useStore();
   const input = useRef<HTMLInputElement>(null), controller = useRef<AbortController | null>(null);
   const lastFrame = useRef<Blob | null>(null);
+  const stopCamera = useRef<(() => void) | null>(null);
+  const [captured, setCaptured] = useState(false);
   const [visible, setVisible] = useState(() => document.visibilityState !== 'hidden');
   const [paused, setPaused] = useState(false), [cameraKey, setCameraKey] = useState(0);
   const [photo, setPhoto] = useState<Blob | null>(null), [preview, setPreview] = useState('');
+  const hasPhoto = useRef(false); hasPhoto.current = !!photo;
   const [busy, setBusy] = useState(false), [error, setError] = useState(''), [uploadError, setUploadError] = useState('');
   const [candidates, setCandidates] = useState<RecognitionCandidate[]>([]), [message, setMessage] = useState('');
   const [selected, setSelected] = useState<RecognitionCandidate | null>(null), [result, setResult] = useState<ConfirmationResult | null>(null);
@@ -39,23 +43,25 @@ function LookupContent() {
   useEffect(() => {
     const update = () => {
       const next = document.visibilityState !== 'hidden';
-      if (!next) { cancel(); lastFrame.current = null; setBusy(false); setAnalysing(false); setCandidates([]); }
+      if (!next) { cancel(); lastFrame.current = null; setBusy(false); setAnalysing(false); if (!hasPhoto.current) setCandidates([]); }
       setVisible(next);
     };
     document.addEventListener('visibilitychange', update);
     return () => document.removeEventListener('visibilitychange', update);
   }, []);
   useEffect(() => {
-    if (!focused) { cancel(); lastFrame.current = null; setBusy(false); setAnalysing(false); setCandidates([]); }
+    if (!focused) { cancel(); lastFrame.current = null; setBusy(false); setAnalysing(false); if (!hasPhoto.current) setCandidates([]); }
     return () => { cancel(); lastFrame.current = null; };
   }, [focused]);
   useEffect(() => { if (!photo) { setPreview(''); return; } const url = URL.createObjectURL(photo); setPreview(url); return () => URL.revokeObjectURL(url); }, [photo]);
   function resume() {
+    setCaptured(false); stopCamera.current = null;
     lastFrame.current = null; setAnalysis(null); setAnalysing(false);
     cancel(); setPhoto(null); setSelected(null); setResult(null); setCandidates([]); setMessage('');
     setError(''); setUploadError(''); setBusy(false); setExpanded(false); setPaused(false); setCameraKey(k => k + 1);
   }
   function pause() { cancel(); setBusy(false); setPaused(true); setCandidates([]); setMessage(''); }
+  function cancelAnalysis() { cancel(); setBusy(false); setAnalysing(false); setPaused(true); setError(''); setMessage('Analysis cancelled.'); }
   function close() {
     lastFrame.current = null;
     cancel(); setPaused(true);
@@ -65,10 +71,12 @@ function LookupContent() {
   function choose(blob: Blob) {
     if (!['image/jpeg', 'image/png', 'image/webp'].includes(blob.type)) { setUploadError('Choose a JPEG, PNG or WebP image.'); return; }
     if (blob.size > 5 * 1024 * 1024) { setUploadError('Choose an image smaller than 5 MB.'); return; }
+    stopCamera.current?.(); setCaptured(false);
     cancel(); setAnalysis(null); setAnalysing(false); setPaused(true); setPhoto(blob); setSelected(null); setResult(null); setCandidates([]); setExpanded(false); setUploadError('');
     void recognise(blob, true);
   }
   async function analyse(blob: Blob) {
+    stopCamera.current?.();
     cancel(); setPaused(true); setPhoto(blob); setCandidates([]); setSelected(null); setResult(null); setAnalysis(null); setError(''); setBusy(true); setAnalysing(true);
     const request = new AbortController(); controller.current = request;
     const timeout = setTimeout(() => request.abort(), VISION_TIMEOUT_MS);
@@ -80,7 +88,13 @@ function LookupContent() {
       if (controller.current === request) setError(request.signal.aborted ? 'Visual analysis timed out. Try again with a clearer photo.' : failure instanceof Error ? failure.message : 'Visual analysis is unavailable.');
     } finally { clearTimeout(timeout); if (controller.current === request) { controller.current = null; setBusy(false); setAnalysing(false); } }
   }
-  async function recognise(blob: Blob, analyseUnknown = false) {
+  function captureNow() {
+    const frame = lastFrame.current;
+    if (!frame) return;
+    stopCamera.current?.(); cancel(); setCaptured(true); setPaused(true); setPhoto(frame);
+    void recognise(frame, true);
+  }
+  async function recognise(blob: Blob, analyseUnknown = false, freeze?: () => void) {
     lastFrame.current = blob;
     if (controller.current || !focused || document.visibilityState === 'hidden') return;
     const request = new AbortController(); controller.current = request;
@@ -93,7 +107,9 @@ function LookupContent() {
       // A legacy single match is still just a candidate; it never confirms itself.
       const matches = response.candidates ?? (response.matched && response.artwork ? [{ artwork: response.artwork, similarity: response.similarity ?? 0 }] : []);
       setCandidates(matches.slice(0, 3)); setMessage(matches.length ? '' : response.message || 'No close match in this museum collection. Try a clear photo of the whole artwork.');
-      if (!matches.length && analyseUnknown) { clearTimeout(timeout); await analyse(blob); }
+      const capture = !analyseUnknown && shouldCaptureArtwork(response);
+      if (capture) { freeze?.(); setCaptured(true); setPhoto(blob); setPaused(true); }
+      if (!matches.length && (analyseUnknown || capture)) { clearTimeout(timeout); await analyse(blob); }
     } catch (failure) {
       if (controller.current === request) {
         setError(request.signal.aborted ? 'Recognition timed out. Resume scanning to try again.' : failure instanceof Error ? failure.message : 'Recognition failed. Resume scanning to try again.');
@@ -123,7 +139,7 @@ function LookupContent() {
   }
   return <SafeAreaView edges={['top', 'bottom']} style={styles.screen}>
     <View style={styles.stage}>
-      {active && <CameraCapture key={cameraKey} onFrame={recognise} onUnavailable={() => { cancel(); setBusy(false); setCandidates([]); setMessage('Camera unavailable'); }}>{({ ready, error: cameraError }) => cameraOverlay(ready, cameraError)}</CameraCapture>}
+      {active && <CameraCapture key={cameraKey} onFrame={(blob, freeze) => { stopCamera.current = freeze; return recognise(blob, false, freeze); }} onUnavailable={() => { cancel(); setBusy(false); setCandidates([]); setMessage('Camera unavailable'); }}>{({ ready, error: cameraError }) => cameraOverlay(ready, cameraError)}</CameraCapture>}
       {!!preview && <Image source={{ uri: preview }} style={[StyleSheet.absoluteFill, (selected || analysis) && styles.resultPhoto]} resizeMode="contain" accessibilityLabel="Selected artwork photo"/>}
       {!active && !preview && <View pointerEvents="none" style={styles.pausedBackdrop}><Icon name={selected ? 'checkmark-circle-outline' : 'scan-outline'} size={52} color="#84968B"/></View>}
       <LinearGradient pointerEvents="none" colors={['#08130CE6', '#08130C00']} style={styles.topShade}/>
@@ -133,6 +149,7 @@ function LookupContent() {
         <View style={{ width: 42 }}/>
       </View>
       <View style={[styles.dock, (selected || analysis) && styles.selectedDock]}>
+        {captured && !selected && !analysis && <T accessibilityLiveRegion="polite" style={styles.statusText}>Photo captured. You can lower your phone.</T>}
         {analysis ? <ScrollView style={styles.sheet} contentContainerStyle={styles.sheetContent}><ArtworkAnalysisResult result={analysis}/></ScrollView> : selected && art ? <ScrollView style={styles.sheet} contentContainerStyle={styles.sheetContent}>
           <View style={styles.match}><Image source={images[art.id]} accessibilityLabel={art.title} style={styles.thumbnail}/><View style={{ flex: 1 }}><T style={styles.eyebrow}>SELECTED BY YOU</T><T accessibilityRole="header" style={styles.artTitle}>{art.title}</T><T style={s.small}>{art.artist} · {art.year}</T></View></View>
           <Button title="Open artwork details" icon="arrow-forward" onPress={() => nav.navigate('Artwork', { id: art.id })}/>
@@ -149,10 +166,11 @@ function LookupContent() {
           {!!error && <T accessibilityRole="alert" style={styles.error}>{error}</T>}
         </>}
         {!!uploadError && <T accessibilityRole="alert" style={styles.error}>{uploadError}</T>}
-        {!selected && !analysis && !analysing && !!(photo || lastFrame.current) && <Pressable accessibilityRole="button" accessibilityLabel="Analyse any artwork" onPress={() => { const frame = photo || lastFrame.current; if (frame) void analyse(frame); }} style={styles.scanButton}><T style={styles.controlLabel}>Analyse any artwork</T></Pressable>}
+        {!active && !selected && !analysis && !analysing && !candidates.length && !!(photo || lastFrame.current) && <Pressable accessibilityRole="button" accessibilityLabel="Analyse any artwork" onPress={() => { const frame = photo || lastFrame.current; if (frame) void analyse(frame); }} style={styles.scanButton}><T style={styles.controlLabel}>Analyse any artwork</T></Pressable>}
         <View style={styles.controls}>
           <Pressable accessibilityRole="button" accessibilityLabel="Upload photo" onPress={() => input.current?.click()} style={styles.controlButton}><Icon name="images-outline" color="white" size={21}/><T style={styles.controlLabel}>Photos</T></Pressable>
-          <Pressable accessibilityRole="button" accessibilityLabel={analysing ? 'Cancel analysis' : active ? 'Pause scanning' : 'Resume scanning'} onPress={active ? pause : resume} style={styles.scanButton}><Icon name={active ? 'pause' : analysing ? 'close' : 'scan-outline'} color="#DBCBAA" size={19}/><T style={styles.controlLabel}>{analysing ? 'Cancel analysis' : active ? 'Pause scanning' : 'Resume scanning'}</T></Pressable>
+          {active && <Pressable accessibilityRole="button" accessibilityLabel="Capture frame" accessibilityState={{ disabled: !lastFrame.current }} disabled={!lastFrame.current} onPress={captureNow} style={styles.controlButton}><Icon name="radio-button-on-outline" color="white" size={36}/></Pressable>}
+          <Pressable accessibilityRole="button" accessibilityLabel={analysing ? 'Cancel analysis' : active ? 'Pause scanning' : photo ? 'Scan again' : 'Resume scanning'} onPress={analysing ? cancelAnalysis : active ? pause : resume} style={styles.scanButton}><Icon name={active ? 'pause' : analysing ? 'close' : 'scan-outline'} color="#DBCBAA" size={19}/><T style={styles.controlLabel}>{analysing ? 'Cancel analysis' : active ? 'Pause' : photo ? 'Scan again' : 'Resume scanning'}</T></Pressable>
         </View>
       </View>
       <input ref={input} aria-label="Upload artwork image" type="file" accept="image/jpeg,image/png,image/webp" style={{ display: 'none' }} onChange={event => { const file = event.target.files?.[0]; if (file) choose(file); event.target.value = ''; }}/>

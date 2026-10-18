@@ -13,9 +13,11 @@ import { images } from '../assets';
 import { useStore } from '../store';
 import { AI_TIMEOUT_MS, CLIP_TIMEOUT_MS, VISION_TIMEOUT_MS, requestAI } from '../ai';
 import { createNativeScanLoop } from '../nativeScanLoop';
+import { shouldCaptureArtwork } from '../scanCapture';
 import { ArtworkAnalysisResult } from '../components/ArtworkAnalysisResult';
 import { ArtworkScanTransition } from '../components/AIProcessingAnimations';
 import type { ArtworkAnalysis, ConfirmationResult, RecognitionCandidate, RecognitionResult } from '../../../shared/ai-types';
+type ScanFrame = { response: RecognitionResult; photo?: { uri: string; width: number; height: number } };
 
 export function LookupScreen() {
   const { museumId } = useMuseumLocation();
@@ -27,6 +29,13 @@ function NativeLookupContent() {
   const nav = useRootNavigation(), focused = useIsFocused();
   const { state } = useStore();
   const camera = useRef<CameraView>(null);
+  const capturedFile = useRef<string | null>(null);
+  const [capturedPhoto, setCapturedPhoto] = useState<string | null>(null);
+  function releasePhoto() {
+    const uri = capturedFile.current; capturedFile.current = null;
+    if (uri) { try { const file = new File(uri); if (file.exists) file.delete(); } catch { /* Cache may have been cleared by the OS. */ } }
+  }
+  useEffect(() => () => releasePhoto(), []);
   const screenFocused = useRef(focused), pickingPhoto = useRef(false);
   screenFocused.current = focused;
   useEffect(() => () => { screenFocused.current = false; }, []);
@@ -46,7 +55,7 @@ function NativeLookupContent() {
   const [slowAnalysis, setSlowAnalysis] = useState(false);
   useEffect(() => { setSlowAnalysis(false); if (!analysing) return; const timer = setTimeout(() => setSlowAnalysis(true), 15000); return () => clearTimeout(timer); }, [analysing]);
 
-  const loop = useMemo(() => createNativeScanLoop<RecognitionResult>({
+  const loop = useMemo(() => createNativeScanLoop<ScanFrame>({
     timeoutMs: CLIP_TIMEOUT_MS,
     async sample(signal) {
       const currentCamera = camera.current;
@@ -63,21 +72,29 @@ function NativeLookupContent() {
         try {
           if (Math.max(frame.width, frame.height) > 960) context.resize(frame.width >= frame.height ? { width: 960 } : { height: 960 });
           rendered = await context.renderAsync();
-          const compressed = await rendered.saveAsync({ compress: .65, format: SaveFormat.JPEG });
+          const compressed = await rendered.saveAsync({ compress: .8, format: SaveFormat.JPEG });
           uri = compressed.uri; temporaryFiles.add(uri);
         } finally { rendered?.release(); context.release(); }
         if (signal.aborted) throw new Error('Scan cancelled.');
         const form = new FormData();
         // React Native FormData accepts local file descriptors instead of browser Blobs.
         form.append('image', { uri, name: 'artwork-frame.jpg', type: 'image/jpeg' } as unknown as Blob);
-        return await requestAI<RecognitionResult>('artworks/recognise?museumId=' + museumId, form, signal);
+        const response = await requestAI<RecognitionResult>('artworks/recognise?museumId=' + museumId, form, signal);
+        if (!signal.aborted && screenFocused.current && shouldCaptureArtwork(response)) {
+          // Transfer this exact sampled frame to the screen before temporary
+          // capture cleanup. Never take a second photo after the phone moves.
+          releasePhoto(); capturedFile.current = uri; temporaryFiles.delete(uri);
+          const scale = Math.min(1, 960 / Math.max(frame.width, frame.height));
+          return { response, photo: { uri, width: Math.round(frame.width * scale), height: Math.round(frame.height * scale) } };
+        }
+        return { response };
       } finally {
         for (const uri of temporaryFiles) {
           try { const file = new File(uri); if (file.exists) file.delete(); } catch { /* The OS may already have cleared a cache file. */ }
         }
       }
     },
-    onResult(response) {
+    onResult({ response, photo }) {
       const next = response.candidates || [];
       // Preserve row order while fresh suggestions arrive so tap targets do not jump.
       setCandidates(previous => [
@@ -85,6 +102,11 @@ function NativeLookupContent() {
         ...next.filter(item => !previous.some(candidate => candidate.artwork.id === item.artwork.id)),
       ]);
       setMessage(next.length ? 'Possible matches — tap the work you see to confirm.' : response.message || 'No close match in this museum collection. Try a clear photo of the whole artwork.');
+      if (photo) {
+        setCapturedPhoto(photo.uri); setPaused(true);
+        if (!next.length) void analyseImage(async () => photo, false, true);
+        return false;
+      }
     },
     onError(value) { setCandidates([]); setError(value instanceof Error ? value.message : 'Scanning is unavailable. Please try again.'); },
     onBusy: setBusy,
@@ -118,10 +140,11 @@ function NativeLookupContent() {
   }, [loop, scanning]);
   useEffect(() => {
     if (!cameraVisible) setCameraReady(false);
-    if (!focused || !active) { cancelConfirmation(); setCandidates([]); }
+    if (!focused || !active) { cancelConfirmation(); if (!capturedFile.current) setCandidates([]); }
   }, [cameraVisible, focused, active]);
 
   async function retryCamera() {
+    releasePhoto(); setCapturedPhoto(null);
     loop.stop(); setCameraReady(false); setCameraError(''); setError(''); setPaused(false);
     setCandidates([]); setCameraKey(key => key + 1);
     try {
@@ -133,13 +156,14 @@ function NativeLookupContent() {
     } catch { setCameraError('Camera access is unavailable. Check your device settings, then try again.'); }
   }
   function scanAgain() {
+    releasePhoto(); setCapturedPhoto(null);
     setAnalysis(null);
     loop.stop(); cancelConfirmation(); setSelected(null); setResult(null); setExpanded(false);
     setCandidates([]); setError(''); setCameraError(''); setPaused(false); setCameraReady(false);
     setMessage('');
     setCameraKey(key => key + 1);
   }
-  async function analyseImage(capture: () => Promise<{ uri: string; width: number; height: number } | null>, ownedOriginal: boolean) {
+  async function analyseImage(capture: () => Promise<{ uri: string; width: number; height: number } | null>, ownedOriginal: boolean, captured = false) {
     loop.stop(); cancelConfirmation(); setAnalysis(null); setCandidates([]); setSelected(null); setError(''); setAnalysing(true);
     const request = new AbortController(); confirmation.current = request;
     const timer = setTimeout(() => request.abort(), VISION_TIMEOUT_MS);
@@ -149,20 +173,27 @@ function NativeLookupContent() {
       if (frame && ownedOriginal) temporaryFiles.add(frame.uri);
       if (!frame || request.signal.aborted || confirmation.current !== request) return;
       setPaused(true);
-      const context = ImageManipulator.manipulate(frame.uri);
-      let rendered: Awaited<ReturnType<typeof context.renderAsync>> | undefined;
-      let uri: string;
+      const context = captured ? null : ImageManipulator.manipulate(frame.uri);
+      let rendered: Awaited<ReturnType<NonNullable<typeof context>['renderAsync']>> | undefined;
+      let uri = frame.uri;
       try {
-        if (Math.max(frame.width, frame.height) > 1536) context.resize(frame.width >= frame.height ? { width: 1536 } : { height: 1536 });
-        rendered = await context.renderAsync();
-        const compressed = await rendered.saveAsync({ compress: .85, format: SaveFormat.JPEG });
-        uri = compressed.uri; temporaryFiles.add(uri);
-      } finally { rendered?.release(); context.release(); }
+        if (context) {
+          if (Math.max(frame.width, frame.height) > 1536) context.resize(frame.width >= frame.height ? { width: 1536 } : { height: 1536 });
+          rendered = await context.renderAsync();
+          const compressed = await rendered.saveAsync({ compress: .85, format: SaveFormat.JPEG });
+          uri = compressed.uri; temporaryFiles.add(uri);
+        }
+      } finally { rendered?.release(); context?.release(); }
       if (request.signal.aborted || confirmation.current !== request) return;
+      if (!captured) {
+        releasePhoto(); capturedFile.current = uri; temporaryFiles.delete(uri); setCapturedPhoto(uri);
+      }
       const upload = () => { const form = new FormData(); form.append('image', { uri, name: 'artwork.jpg', type: 'image/jpeg' } as unknown as Blob); return form; };
-      const recognition = await requestAI<RecognitionResult>('artworks/recognise?museumId=' + museumId, upload(), request.signal);
-      if (request.signal.aborted || confirmation.current !== request) return;
-      if (recognition.candidates?.length) { setCandidates(recognition.candidates.slice(0, 3)); return; }
+      if (!captured) {
+        const recognition = await requestAI<RecognitionResult>('artworks/recognise?museumId=' + museumId, upload(), request.signal);
+        if (request.signal.aborted || confirmation.current !== request) return;
+        if (recognition.candidates?.length) { setCandidates(recognition.candidates.slice(0, 3)); return; }
+      }
       const response = await requestAI<ArtworkAnalysis>('artworks/analyse', upload(), request.signal);
       if (confirmation.current === request && !request.signal.aborted) setAnalysis(response);
     } catch (failure) {
@@ -215,7 +246,8 @@ function NativeLookupContent() {
   const art = selected?.artwork, explanation = result?.aiExplanation;
   return <SafeAreaView edges={['top', 'bottom']} style={styles.screen}><View style={styles.stage}>
     {cameraVisible && <CameraView key={cameraKey} ref={camera} style={StyleSheet.absoluteFill} facing="back" mode="picture" flash="off" animateShutter={false} onCameraReady={() => setCameraReady(true)} onMountError={event => { loop.stop(); setCandidates([]); setCameraReady(false); setCameraError(event.message || 'The camera could not start.'); }}/>}
-    {!!art && <Image source={images[art.id]} style={StyleSheet.absoluteFill} resizeMode="contain" accessibilityLabel={art.title}/>}
+    {!!capturedPhoto && <Image source={{ uri: capturedPhoto }} style={StyleSheet.absoluteFill} resizeMode="contain" accessibilityLabel="Captured artwork photo"/>}
+    {!!art && !capturedPhoto && <Image source={images[art.id]} style={StyleSheet.absoluteFill} resizeMode="contain" accessibilityLabel={art.title}/>}
     <LinearGradient pointerEvents="none" colors={['#08130CE6', '#08130C00']} style={styles.topShade}/>
     <View style={styles.header}>
       <Pressable accessibilityRole="button" accessibilityLabel="Close scan" onPress={close} style={styles.close}><Icon name="close" size={24} color="white"/></Pressable>
@@ -223,8 +255,8 @@ function NativeLookupContent() {
       <View style={{ width: 42 }}/>
     </View>
     {analysis ? <View style={styles.resultArea}><ScrollView style={styles.resultSheet} contentContainerStyle={styles.resultContent}><ArtworkAnalysisResult result={analysis}/><Button title="Scan another artwork" secondary onPress={scanAgain}/><Button title="Analyse another photo" secondary onPress={analysePhoto}/></ScrollView></View> : !art ? <>
-      <View style={styles.finderArea}>
-        {cameraReady && !cameraError && !paused ? <>
+      <View style={[styles.finderArea, !!capturedPhoto && { justifyContent: 'flex-start' }]}>
+        {capturedPhoto ? <T accessibilityLiveRegion="polite" style={styles.hint}>Photo captured. You can lower your phone.</T> : cameraReady && !cameraError && !paused ? <>
           <View pointerEvents="none" style={styles.finder}>{[styles.topLeft, styles.topRight, styles.bottomLeft, styles.bottomRight].map((corner, i) => <View key={i} style={[styles.corner, corner]}/>)}</View>
           <T style={styles.hint}>{error ? 'Scanning paused' : 'Hold steady'}</T>
         </> : <View style={styles.cameraMessage}><Icon name="camera-outline" size={34} color="white"/><T accessibilityRole={cameraError ? 'alert' : undefined} style={styles.light}>{cameraMessage}</T>{!!permission && (!permission.granted || !!cameraError || paused) && <Pressable accessibilityRole="button" accessibilityLabel={paused ? 'Resume scanning' : 'Enable camera'} onPress={() => { void retryCamera(); }} style={styles.retry}><T style={styles.light}>{paused ? 'Resume scanning' : permission.canAskAgain ? 'Enable camera' : 'Camera settings'}</T></Pressable>}</View>}
@@ -233,8 +265,13 @@ function NativeLookupContent() {
         {!!candidates.length && <T style={s.label}>Choose the artwork in view</T>}
         {(busy || analysing) && <View style={styles.scanAnimation}><ArtworkScanTransition compact label={analysing ? (slowAnalysis ? 'Taking a closer look…' : 'Looking closer…') : 'Finding a match…'}/></View>}
         {!analysing && !candidates.length && !error && !!message && <T accessibilityLiveRegion="polite" style={s.small}>{message}</T>}
-        {!!error && <><T accessibilityRole="alert" style={s.small}>{error}</T><Button title="Try scanning again" secondary onPress={scanAgain}/></>}
-        {analysing ? <Button title="Cancel analysis" secondary onPress={scanAgain}/> : <View style={{ gap: 8 }}>{cameraVisible && <Button title="Analyse any artwork" secondary disabled={busy || !cameraReady} onPress={analyseCamera}/>}<Button title="Analyse photo" secondary onPress={analysePhoto}/></View>}
+        {!!error && <><T accessibilityRole="alert" style={s.small}>{error}</T>{!capturedPhoto && <Button title="Try scanning again" secondary onPress={scanAgain}/>}</>}
+        {analysing ? <Button title="Cancel analysis" secondary onPress={() => { cancelConfirmation(); setPaused(true); setError(''); setMessage('Analysis cancelled.'); }}/> : <View style={{ gap: 8 }}>{cameraVisible && <Button title="Capture frame" icon="radio-button-on-outline" secondary disabled={busy || !cameraReady} onPress={analyseCamera}/>}<Button title="Analyse photo" secondary onPress={analysePhoto}/></View>}
+        {!!capturedPhoto && !analysing && !candidates.length && <Button title="Retry analysis" secondary onPress={() => {
+          const uri = capturedFile.current;
+          if (uri) void analyseImage(async () => ({ uri, ...await Image.getSize(uri) }), false, true);
+        }}/>}
+        {!!capturedPhoto && !analysing && <Button title="Scan again" secondary icon="scan-outline" onPress={scanAgain}/>}
         {!!candidates.length && <ScrollView style={styles.candidateList} contentContainerStyle={{ paddingBottom: 4 }}>{candidates.map(candidate => <Pressable key={candidate.artwork.id} accessibilityRole="button" accessibilityLabel={`Confirm ${candidate.artwork.title} by ${candidate.artwork.artist}`} onPress={() => { void choose(candidate); }} style={styles.candidate}>
           <Image source={images[candidate.artwork.id]} style={styles.thumbnail}/><View style={{ flex: 1 }}><T style={styles.artTitle}>{candidate.artwork.title}</T><T style={s.small}>{candidate.artwork.artist} · {candidate.artwork.year}</T><T style={styles.matchLabel}>Possible match · tap to confirm</T></View><Icon name="chevron-forward" size={18}/>
         </Pressable>)}</ScrollView>}

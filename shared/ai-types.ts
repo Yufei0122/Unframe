@@ -16,6 +16,8 @@ export interface Explanation { summary: string; historicalContext: string; inter
 export type RecognisedArtwork = Artwork & { medium: string; sourceUrl: string };
 export interface RecognitionCandidate { artwork: RecognisedArtwork; similarity: number }
 export interface RecognitionResult {
+  /** Fast scene cue for freezing the camera; not an artwork identity. */
+  artworkDetected?: boolean;
   matched: boolean;
   candidates: RecognitionCandidate[];
   requiresConfirmation: true;
