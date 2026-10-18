@@ -43,6 +43,7 @@
     "mobile:test": "npm --prefix mobile test",
     "mobile:export": "npm --prefix mobile run export",
     "mobile:export:web": "npm --prefix mobile run export:web",
+    "brand:assets": "node scripts/build-brand-assets.mjs",
     "test:mobile:e2e": "playwright test --config playwright.mobile.config.js",
     "test:mobile:web-dev": "playwright test --config playwright.mobile-dev.config.js",
     "test": "node --test tests/domain.test.js tests/api.test.js tests/ai.test.js tests/ai-runtime.test.js",

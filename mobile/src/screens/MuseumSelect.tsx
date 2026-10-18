@@ -13,6 +13,7 @@ import { useStore } from '../store';
 import { DiscoveryMap } from '../components/DiscoveryMap';
 import { SwipeScene } from '../components/SwipeScene';
 import { PreviewBackdrop } from '../components/PreviewBackdrop';
+import { BrandLogo } from '../components/BrandLogo';
 import { Icon, T, serif } from '../ui';
 
 export function MuseumSelectScreen({ navigation }: NativeStackScreenProps<RootStackParams, 'MuseumSelect'>) {
@@ -76,7 +77,7 @@ export function MuseumSelectScreen({ navigation }: NativeStackScreenProps<RootSt
           <PreviewBackdrop id={place.id} image={place.image} cityImages={cityImages} adjacentImage={adjacent?.image ?? null} drag={drag} direction={direction.current} reducedMotion={reduceMotion} fade={fade}/>
           <LinearGradient colors={['#E9F2F5F5', '#E6EFF6CF', '#EFF2E68A', '#172D3F20', '#F5F5EDDE']} locations={[0, .18, .53, .86, 1]} style={StyleSheet.absoluteFill}/>
         </View>
-        <View style={styles.header}><View style={{ width: 42 }}/><T accessibilityRole="header" style={styles.brand}>Unframe</T><Pressable accessibilityRole="button" accessibilityLabel="Open profile" onPress={() => navigation.navigate('Home', { screen: 'You' })} style={styles.profile}><Icon name="person-circle-outline" size={32} color="#213F49"/></Pressable></View>
+        <View style={styles.header}><View style={{ width: 42 }}/><BrandLogo/><Pressable accessibilityRole="button" accessibilityLabel="Open profile" onPress={() => navigation.navigate('Home', { screen: 'You' })} style={styles.profile}><Icon name="person-circle-outline" size={32} color="#213F49"/></Pressable></View>
         <View style={styles.location}>
           <Icon name="location" size={24} color="#29434C"/><View style={{ flex: 1 }}><T style={styles.eyebrow}>{meters != null && meters < 800 && coordinates?.accuracy != null && coordinates.accuracy <= 300 ? 'LOCATED NEAR' : 'EXPLORE MUSEUMS'}</T><T style={styles.area}>{place.area}</T></View>
         </View>
@@ -111,7 +112,7 @@ export function MuseumSelectScreen({ navigation }: NativeStackScreenProps<RootSt
 
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: '#E5EDF0' }, hero: { overflow: 'hidden', backgroundColor: '#BACCD7' },
-  header: { marginHorizontal: 22, marginTop: 12, height: 45, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }, brand: { fontFamily: serif, fontSize: 31, lineHeight: 40, color: '#123943', letterSpacing: -1 }, profile: { width: 42, height: 44, alignItems: 'center', justifyContent: 'center' },
+  header: { marginHorizontal: 22, marginTop: 12, height: 45, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }, profile: { width: 42, height: 44, alignItems: 'center', justifyContent: 'center' },
   location: { marginHorizontal: 26, marginTop: 12, flexDirection: 'row', alignItems: 'center', gap: 10, minHeight: 44 }, eyebrow: { fontSize: 8, lineHeight: 14, letterSpacing: 1.8, color: '#324A54' }, area: { fontSize: 13, lineHeight: 21, color: '#2C4350' },
   copy: { position: 'absolute', top: 137, left: 28, right: 23 }, featured: { fontSize: 9, lineHeight: 16, letterSpacing: 2.5, color: '#2F536C' }, museumTitle: { fontFamily: serif, fontSize: 40, lineHeight: 43, letterSpacing: -1.8, color: '#153541', marginTop: 8 }, subtitle: { fontSize: 14, lineHeight: 21, marginTop: 13, color: '#304550' },
   choice: { position: 'absolute', bottom: 77, left: 28, right: 24, gap: 9 }, distanceRow: { flexDirection: 'row', alignItems: 'center', gap: 5 }, distance: { fontSize: 10, lineHeight: 16, color: '#233C44', backgroundColor: '#FAFCF2C7', borderRadius: 8, paddingHorizontal: 6, paddingVertical: 2 },

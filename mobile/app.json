@@ -8,10 +8,10 @@
     "scheme": "unframe",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
-    "splash": { "image": "./assets/icon.png", "resizeMode": "contain", "backgroundColor": "#F7F8F2" },
+    "splash": { "image": "./assets/splash-icon.png", "resizeMode": "contain", "backgroundColor": "#F8F6F2" },
     "ios": { "supportsTablet": true, "bundleIdentifier": "com.unframe.museum", "infoPlist": { "ITSAppUsesNonExemptEncryption": false } },
-    "android": { "package": "com.unframe.museum", "blockedPermissions": ["android.permission.RECORD_AUDIO"], "adaptiveIcon": { "foregroundImage": "./assets/icon.png", "backgroundColor": "#F7F8F2" } },
-    "web": { "favicon": "./assets/icon.png", "bundler": "metro" },
+    "android": { "package": "com.unframe.museum", "blockedPermissions": ["android.permission.RECORD_AUDIO"], "adaptiveIcon": { "foregroundImage": "./assets/adaptive-icon.png", "monochromeImage": "./assets/adaptive-icon.png", "backgroundColor": "#F8F6F2" } },
+    "web": { "favicon": "./assets/favicon.png", "bundler": "metro", "themeColor": "#F8F6F2" },
     "plugins": [["expo-image-picker", { "photosPermission": "Allow Unframe to choose a photo for your avatar. Your avatar stays on this device.", "cameraPermission": "Allow Unframe to automatically scan artworks in view. Sampled camera frames are sent to the AI service for matching.", "microphonePermission": false }], ["expo-camera", { "cameraPermission": "Allow Unframe to automatically scan artworks in view. Sampled camera frames are sent to the AI service for matching.", "microphonePermission": false, "recordAudioAndroid": false }], ["expo-location", { "locationWhenInUsePermission": "Allow Unframe to find a museum near you. Your location is not stored.", "isIosBackgroundLocationEnabled": false, "isAndroidBackgroundLocationEnabled": false }]]
   }
 }

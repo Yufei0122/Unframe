@@ -6,6 +6,7 @@ import Svg, { Path } from 'react-native-svg';
 import { images, museumImages } from '../assets';
 import { GalleryIllustration, PortraitPlaceholder, ReflectionIllustration } from '../components/ProfileIllustrations';
 import { AvatarEditor } from '../components/AvatarEditor';
+import { BrandLogo } from '../components/BrandLogo';
 import { useProfileNavigation } from '../components/ProfilePage';
 import { profileActivity, savedRouteInfo } from '../profileData';
 import { useMuseumLocation } from '../location';
@@ -78,7 +79,7 @@ export function ProfileScreen() {
       <View style={p.hero}>
         <View pointerEvents="none" style={StyleSheet.absoluteFill}><GalleryIllustration/></View>
         <View style={p.topBar}>
-          <View accessibilityLabel="Unframe. Art lives wider." accessible><T style={p.wordmark}>Unframe</T><T style={p.tagline}>ART LIVES WIDER</T></View>
+          <View accessibilityLabel="Unframe. Art lives wider." accessible><BrandLogo width={164}/><T style={p.tagline}>ART LIVES WIDER</T></View>
           <View style={p.headerActions}>
             <Pressable accessibilityRole="button" accessibilityLabel="Open notifications" onPress={notifications} style={p.iconButton}><Icon name="notifications-outline" size={24} color={ink}/></Pressable>
             <Pressable accessibilityRole="button" accessibilityLabel="Open app settings" onPress={() => settings()} style={p.iconButton}><Icon name="settings-outline" size={23} color={ink}/></Pressable>
@@ -143,8 +144,7 @@ const p = StyleSheet.create({
   safe: { flex: 1, backgroundColor: '#F2EEE8' }, content: { paddingBottom: 14 },
   hero: { minHeight: 184, paddingHorizontal: 20, paddingTop: 12, paddingBottom: 10, overflow: 'hidden' },
   topBar: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
-  wordmark: { fontFamily: serif, color: '#161714', fontSize: 36, lineHeight: 40, letterSpacing: -1.9 },
-  tagline: { fontSize: 6.5, lineHeight: 10, letterSpacing: 3.4, color: '#34342F', marginLeft: 12 },
+  tagline: { fontSize: 6.5, lineHeight: 10, letterSpacing: 3.4, color: '#34342F', marginLeft: 38, marginTop: 5 },
   headerActions: { flexDirection: 'row', marginRight: -8, marginTop: 2, gap: 1 },
   iconButton: { width: 40, height: 40, alignItems: 'center', justifyContent: 'center' },
   quote: { position: 'absolute', top: 79, right: 22, fontFamily: serif, fontSize: 14, lineHeight: 17, color: '#8D7760', textAlign: 'center' },

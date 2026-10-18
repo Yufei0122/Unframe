@@ -8,6 +8,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParams } from '../model';
 import { locationLabel, useMuseumLocation } from '../location';
 import { museumImages } from '../assets';
+import { BrandMark } from '../components/BrandLogo';
 import { Icon, T, serif } from '../ui';
 
 export function WelcomeScreen({ navigation }: NativeStackScreenProps<RootStackParams, 'Welcome'>) {
@@ -36,7 +37,7 @@ export function WelcomeScreen({ navigation }: NativeStackScreenProps<RootStackPa
           </View>
         </View>
         <View style={styles.footer}>
-          <View style={styles.footerLine}><Icon name="sparkles" color="#DDD2B7" size={25}/><T style={styles.footerText}>A little wonder,{`\n`}at your own pace.</T></View>
+          <View style={styles.footerLine}><BrandMark tone="inverse"/><T style={styles.footerText}>A little wonder,{`\n`}at your own pace.</T></View>
           <T style={styles.demo}>{museum.shortName.toUpperCase()} · PERSONAL MUSEUM GUIDE</T>
           {museumId === 'goma' && <T style={{ color: '#C9D0CA', fontSize: 8 }}>GOMA exterior · Photograph: M Sherwood © QAGOMA</T>}
         </View>

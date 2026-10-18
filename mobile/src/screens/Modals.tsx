@@ -5,6 +5,7 @@ import { artwork, sampleArtworks, interests, type RootStackParams } from '../mod
 import { useStore } from '../store';
 import { planRoute } from '../../../shared/domain.js';
 import { Button, Chip, Eyebrow, Notice, Section, T, Title, c, s } from '../ui';
+import { BrandLogo } from '../components/BrandLogo';
 
 function ModalPage({ children }: { children: React.ReactNode }) { return <KeyboardAvoidingView style={{ flex: 1, backgroundColor: c.bg }} behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={70}><ScrollView contentContainerStyle={s.page} keyboardShouldPersistTaps="handled">{children}</ScrollView></KeyboardAvoidingView>; }
 export function PlannerScreen({ navigation }: NativeStackScreenProps<RootStackParams, 'Planner'>) {
@@ -23,7 +24,7 @@ export function FeedbackScreen({ route, navigation }: NativeStackScreenProps<Roo
 
 export function AboutScreen() {
   return <ModalPage>
-    <Eyebrow>Unframe for iPhone</Eyebrow><Title>A little more{`\n`}wonder.</Title>
+    <BrandLogo width={180}/><Title>A little more{`\n`}wonder.</Title>
     <T>A personal museum companion, made for your pace and your perspective.</T>
     <View style={s.card}><Section title="Museum collections"/><T style={s.muted}>Unframe brings together selected works from The Met and QAGOMA, with museum information and visit planning in one place.</T></View>
     <View style={s.card}><Section title="AI guidance"/><T style={s.muted}>Artwork scanning uses OpenCLIP and visit planning uses Qwen on your local AI server. You confirm every suggested artwork before an interpretation is generated from collection information.</T></View>
