@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "expectedMetId": 35970,
+  "queryPath": "MET/35970/4.jpg",
+  "inLegacyGallery": false,
+  "actualMetId": 35970,
+  "title": "\u660e\u3000\u4e01\u96f2\u9d6c\u3000\u6f6f\u967d\u9001\u5ba2\u5716\u3000\u8ef8|Song of the Lute",
+  "artist": "Ding Yunpeng",
+  "metadataSource": "local_met_openaccess_catalogue",
+  "wholeCliWallMs": 4008.08,
+  "isAccuracyEstimate": false,
+  "note": "Self-match smoke check on a newly indexed reference image. Confirms index/metadata coverage, not visitor-photo recognition. Ran while OpenCLIP benchmark occupied the CPU."
+}

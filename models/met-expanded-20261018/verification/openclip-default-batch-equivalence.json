@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "defaultInterfaceDimension": 512,
+  "batchShape": [
+    2,
+    512
+  ],
+  "maximumDifference": 0.0,
+  "model": {
+    "model": "ViT-B-32",
+    "pretrained": "laion2b_s34b_b79k",
+    "dimensions": 512,
+    "normalized": true,
+    "device": "cpu",
+    "threads": 4
+  }
+}

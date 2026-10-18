@@ -1,0 +1,164 @@
+{
+  "status": "passed",
+  "verifiedAt": "2026-10-18T06:07:22.042695+00:00",
+  "manifestSha256": "40d59f7b568c3e26d5426ad6db469e9438a2da7bad68ac82d242c2da700a438f",
+  "models": {
+    "starting_checkpoint": {
+      "metricsIndependentlyRecounted": true,
+      "test": {
+        "queries": 2027,
+        "knownQueries": 1003,
+        "unknownQueries": 1024,
+        "knownTop1Accuracy": 0.522432701894317,
+        "knownTop5Accuracy": 0.6181455633100698,
+        "knownCorrectAndAcceptedRate": 0.36490528414755735,
+        "unknownFalsePositiveRate": 0.072265625,
+        "unknownRejected": 950,
+        "acceptedIdentityPrecision": 0.7754237288135594,
+        "similarityThreshold": 0.43254362208938596,
+        "unknownGroups": {
+          "test_other": {
+            "queries": 512,
+            "falsePositives": 42
+          },
+          "test_noart": {
+            "queries": 512,
+            "falsePositives": 32
+          }
+        }
+      },
+      "paintingDiagnostics": {
+        "definition": "Official catalogue classification contains 'painting' (case-insensitive)",
+        "positivePaintingQueries": 173,
+        "paintingArtworks": 138,
+        "paintingArtworkTop1Accuracy": 0.6242774566473989,
+        "paintingArtworkTop5Accuracy": 0.7052023121387283,
+        "paintingCorrectAndAcceptedRate": 0.44508670520231214,
+        "paintingAcceptedQueries": 82,
+        "paintingPositiveAcceptedPrecision": 0.9390243902439024,
+        "paintingQueriesWithKnownArtist": 152,
+        "paintingArtistTop1Accuracy": 0.6118421052631579,
+        "limitation": "Positive painting queries only. Artist agreement does not establish the correct artwork. This is not unknown-query rejection accuracy, and no subgroup test metric selects weights."
+      }
+    },
+    "continued_training": {
+      "metricsIndependentlyRecounted": true,
+      "test": {
+        "queries": 2027,
+        "knownQueries": 1003,
+        "unknownQueries": 1024,
+        "knownTop1Accuracy": 0.522432701894317,
+        "knownTop5Accuracy": 0.617148554336989,
+        "knownCorrectAndAcceptedRate": 0.36490528414755735,
+        "unknownFalsePositiveRate": 0.0703125,
+        "unknownRejected": 952,
+        "acceptedIdentityPrecision": 0.7803837953091685,
+        "similarityThreshold": 0.43245886428451535,
+        "unknownGroups": {
+          "test_other": {
+            "queries": 512,
+            "falsePositives": 40
+          },
+          "test_noart": {
+            "queries": 512,
+            "falsePositives": 32
+          }
+        }
+      },
+      "paintingDiagnostics": {
+        "definition": "Official catalogue classification contains 'painting' (case-insensitive)",
+        "positivePaintingQueries": 173,
+        "paintingArtworks": 138,
+        "paintingArtworkTop1Accuracy": 0.6242774566473989,
+        "paintingArtworkTop5Accuracy": 0.7052023121387283,
+        "paintingCorrectAndAcceptedRate": 0.44508670520231214,
+        "paintingAcceptedQueries": 82,
+        "paintingPositiveAcceptedPrecision": 0.9390243902439024,
+        "paintingQueriesWithKnownArtist": 152,
+        "paintingArtistTop1Accuracy": 0.6118421052631579,
+        "limitation": "Positive painting queries only. Artist agreement does not establish the correct artwork. This is not unknown-query rejection accuracy, and no subgroup test metric selects weights."
+      }
+    },
+    "openclip": {
+      "metricsIndependentlyRecounted": true,
+      "test": {
+        "queries": 2027,
+        "knownQueries": 1003,
+        "unknownQueries": 1024,
+        "knownTop1Accuracy": 0.4506480558325025,
+        "knownTop5Accuracy": 0.6081754735792622,
+        "knownCorrectAndAcceptedRate": 0.16550348953140578,
+        "unknownFalsePositiveRate": 0.072265625,
+        "unknownRejected": 950,
+        "acceptedIdentityPrecision": 0.5442622950819672,
+        "similarityThreshold": 0.7850036488304138,
+        "unknownGroups": {
+          "test_other": {
+            "queries": 512,
+            "falsePositives": 67
+          },
+          "test_noart": {
+            "queries": 512,
+            "falsePositives": 7
+          }
+        }
+      },
+      "paintingDiagnostics": {
+        "definition": "Official catalogue classification contains 'painting' (case-insensitive)",
+        "positivePaintingQueries": 173,
+        "paintingArtworks": 138,
+        "paintingArtworkTop1Accuracy": 0.6589595375722543,
+        "paintingArtworkTop5Accuracy": 0.7803468208092486,
+        "paintingCorrectAndAcceptedRate": 0.2023121387283237,
+        "paintingAcceptedQueries": 46,
+        "paintingPositiveAcceptedPrecision": 0.7608695652173914,
+        "paintingQueriesWithKnownArtist": 152,
+        "paintingArtistTop1Accuracy": 0.6710526315789473,
+        "limitation": "Positive painting queries only. Artist agreement does not establish the correct artwork. This is not unknown-query rejection accuracy, and no subgroup test metric selects weights."
+      }
+    },
+    "openclip_exported": {
+      "metricsIndependentlyRecounted": true,
+      "test": {
+        "queries": 2027,
+        "knownQueries": 1003,
+        "unknownQueries": 1024,
+        "knownTop1Accuracy": 0.4506480558325025,
+        "knownTop5Accuracy": 0.6081754735792622,
+        "knownCorrectAndAcceptedRate": 0.16550348953140578,
+        "unknownFalsePositiveRate": 0.072265625,
+        "unknownRejected": 950,
+        "acceptedIdentityPrecision": 0.5442622950819672,
+        "similarityThreshold": 0.7850180731544495,
+        "unknownGroups": {
+          "test_other": {
+            "queries": 512,
+            "falsePositives": 67
+          },
+          "test_noart": {
+            "queries": 512,
+            "falsePositives": 7
+          }
+        }
+      },
+      "paintingDiagnostics": {
+        "definition": "Official catalogue classification contains 'painting' (case-insensitive)",
+        "positivePaintingQueries": 173,
+        "paintingArtworks": 138,
+        "paintingArtworkTop1Accuracy": 0.6589595375722543,
+        "paintingArtworkTop5Accuracy": 0.7803468208092486,
+        "paintingCorrectAndAcceptedRate": 0.2023121387283237,
+        "paintingAcceptedQueries": 46,
+        "paintingPositiveAcceptedPrecision": 0.7608695652173914,
+        "paintingQueriesWithKnownArtist": 152,
+        "paintingArtistTop1Accuracy": 0.6710526315789473,
+        "limitation": "Positive painting queries only. Artist agreement does not establish the correct artwork. This is not unknown-query rejection accuracy, and no subgroup test metric selects weights."
+      }
+    }
+  },
+  "galleryObjects": 33501,
+  "galleryReferences": 38307,
+  "catalogueMatchedObjects": 33369,
+  "sourceSha256": "e0124de7f5aa008b7a2449cae7ae8288e4abcf0e648b3e4002b5556642e6ebff",
+  "limitation": "Exploratory continuation using the same official query benchmark, not an independent new test set. Metadata-defined painting positives are reported separately; official validation contains only two such painting photos."
+}

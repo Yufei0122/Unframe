@@ -1,0 +1,56 @@
+{
+  "identityStatus": "possible_match",
+  "checkpointSha256": "5ca387f4636ba35904d9decb1734ae8a669a7b52e165c0b414663001e4e28410",
+  "similarityThreshold": 0.43245886428451535,
+  "protocol": "fit384",
+  "candidates": [
+    {
+      "metObjectId": 436532,
+      "cosineSimilarity": 0.5238004326820374,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/436532",
+      "title": "Self-Portrait with a Straw Hat (obverse: The Potato Peeler)",
+      "artist": "Vincent van Gogh",
+      "date": "1887",
+      "metadataSource": "local_met_openaccess_catalogue"
+    },
+    {
+      "metObjectId": 702315,
+      "cosineSimilarity": 0.3145178258419037,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/702315",
+      "title": "Wilhelm Willigerod, from the Sea Captains series (N127) issued by Duke Sons & Co. to promote Honest Long Cut Tobacco",
+      "artist": "W. Duke, Sons & Co.|George S. Harris & Sons",
+      "date": "1887",
+      "metadataSource": "local_met_openaccess_catalogue"
+    },
+    {
+      "metObjectId": 207537,
+      "cosineSimilarity": 0.30298227071762085,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/207537",
+      "title": "The Mass of St. Gregory",
+      "artist": null,
+      "date": "1550–60",
+      "metadataSource": "local_met_openaccess_catalogue"
+    },
+    {
+      "metObjectId": 461526,
+      "cosineSimilarity": 0.2886759042739868,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/461526",
+      "title": "Portrait medal of George the Bearded (duke of Saxony) (obverse); coat of arms (reverse)",
+      "artist": "Peter Flötner",
+      "date": "1537",
+      "metadataSource": "local_met_openaccess_catalogue"
+    },
+    {
+      "metObjectId": 350683,
+      "cosineSimilarity": 0.2869778275489807,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/350683",
+      "title": "Mars and Cupid (recto); Female Standing Figure with a Helmet and a Shield (Bellona?) (verso)",
+      "artist": "Andrea Schiavone (Andrea Meldola)",
+      "date": "1501–63",
+      "metadataSource": "local_met_openaccess_catalogue"
+    }
+  ],
+  "retrievalMs": 1452.33,
+  "startupAndRetrievalMs": 3422.22,
+  "note": "Cosine similarity is not an identity probability. Candidates belong only to this run's reference gallery. Timings exclude Python imports and catalogue lookups."
+}

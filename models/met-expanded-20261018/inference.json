@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "protocol": "fit384",
+  "galleryFile": "gallery-fit384.npz",
+  "gallerySha256": "3f92e026d4a26eb6489460d5c6227750da76f5bf7f32fe02cfe9aa82a2419f07",
+  "checkpointSha256": "5ca387f4636ba35904d9decb1734ae8a669a7b52e165c0b414663001e4e28410",
+  "manifestSha256": "40d59f7b568c3e26d5426ad6db469e9438a2da7bad68ac82d242c2da700a438f"
+}

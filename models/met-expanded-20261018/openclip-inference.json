@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "provider": "openclip",
+  "model": "ViT-B-32",
+  "pretrained": "laion2b_s34b_b79k",
+  "dimensions": 512,
+  "normalized": true,
+  "protocol": "openclip_eval",
+  "galleryFile": "openclip-gallery.npz",
+  "gallerySha256": "0a056011845fc42a7203037cef9d3799b240dab06bd842fddad3589b2f1c8cbe",
+  "manifestSha256": "40d59f7b568c3e26d5426ad6db469e9438a2da7bad68ac82d242c2da700a438f"
+}

@@ -1,0 +1,77 @@
+{
+  "model": {
+    "model": "ViT-B-32",
+    "pretrained": "laion2b_s34b_b79k",
+    "dimensions": 512,
+    "normalized": true,
+    "device": "cpu",
+    "threads": 4
+  },
+  "trainingPerformed": false,
+  "verification": "Existing production encoder weights on the identical selected gallery and official query splits",
+  "manifestSha256": "40d59f7b568c3e26d5426ad6db469e9438a2da7bad68ac82d242c2da700a438f",
+  "calibration": {
+    "similarityThreshold": 0.7850036488304138,
+    "calibratedOn": "validation_unknown_queries_only",
+    "targetUnknownFalsePositiveRate": 0.05
+  },
+  "validation": {
+    "queries": 641,
+    "knownQueries": 129,
+    "unknownQueries": 512,
+    "knownTop1Accuracy": 0.5193798449612403,
+    "knownTop5Accuracy": 0.6976744186046512,
+    "knownCorrectAndAcceptedRate": 0.24031007751937986,
+    "unknownFalsePositiveRate": 0.048828125,
+    "unknownRejected": 487,
+    "acceptedIdentityPrecision": 0.484375,
+    "similarityThreshold": 0.7850036488304138,
+    "unknownGroups": {
+      "test_other": {
+        "queries": 256,
+        "falsePositives": 22
+      },
+      "test_noart": {
+        "queries": 256,
+        "falsePositives": 3
+      }
+    }
+  },
+  "test": {
+    "queries": 2027,
+    "knownQueries": 1003,
+    "unknownQueries": 1024,
+    "knownTop1Accuracy": 0.4506480558325025,
+    "knownTop5Accuracy": 0.6081754735792622,
+    "knownCorrectAndAcceptedRate": 0.16550348953140578,
+    "unknownFalsePositiveRate": 0.072265625,
+    "unknownRejected": 950,
+    "acceptedIdentityPrecision": 0.5442622950819672,
+    "similarityThreshold": 0.7850036488304138,
+    "unknownGroups": {
+      "test_other": {
+        "queries": 512,
+        "falsePositives": 67
+      },
+      "test_noart": {
+        "queries": 512,
+        "falsePositives": 7
+      }
+    }
+  },
+  "timingsSeconds": {
+    "gallery": 1639.307,
+    "validation": 24.899,
+    "test": 81.413
+  },
+  "elapsedSeconds": 1754.18,
+  "benchmarkBatchSize": 16,
+  "blasThreadsEnvironment": "4",
+  "sourceSha256": {
+    "compare_met_openclip.py": "2408100b355985acd86f7769d7c74974f10b85d01fccb5cd6b35c56f036582cc",
+    "model.py": "3e299ca9dd1979b8b3538fb8bb504eafcc8fcff2fc4c13e2d06ad5e2c7f0657f",
+    "train_met.py": "391ae8ecdd4bfba7a72778af67a6feba12df3df9ced97f05d8c75bf51fc04811",
+    "train_met_expanded.py": "37ff3a65ed1ffd4aa35804a2bd8f609a2cfe2be229b51a2b4f293374d43ed3e4"
+  },
+  "limitation": "Controlled comparison on a selected Met gallery. Does not establish all-artwork identification or that the current scanner has this larger gallery installed."
+}

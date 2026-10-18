@@ -1,5 +1,7 @@
 import copy
+import csv
 import hashlib
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -14,6 +16,12 @@ from train_met import calibrate, contrastive_loss, metrics, rank
 from met_pretrained import NormalizedGeM, convert_state
 from evaluate_met_fullframe import fit384
 from train_met import NORMALIZE
+from train_met_expanded import hard_batches, reference_groups
+from met_catalogue import extract_catalogue, load_local_catalogue
+from met_training_data import sha256
+from query_met import load_gallery, load_openclip_gallery
+from model import MODEL, PRETRAINED
+from summarize_met import painting_metrics
 
 
 def metadata():
@@ -25,6 +33,121 @@ def metadata():
 
 
 class MetTrainingTests(unittest.TestCase):
+    def test_exported_openclip_index_cannot_be_opened_with_another_model_identity(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            save_json(root / "manifest.json", {"gallery": []})
+            features = np.zeros((1, 512), dtype=np.float16)
+            features[0, 0] = 1
+            np.savez_compressed(root / "openclip-gallery.npz", features=features, ids=np.array([10]), model=np.array(MODEL),
+                                pretrained=np.array(PRETRAINED), calibrationJson=np.array(json.dumps({"similarityThreshold": .8})))
+            manifest = {"version": 1, "provider": "openclip", "model": MODEL, "pretrained": PRETRAINED, "dimensions": 512,
+                        "normalized": True, "protocol": "openclip_eval", "galleryFile": "openclip-gallery.npz",
+                        "manifestSha256": sha256(root / "manifest.json"), "gallerySha256": sha256(root / "openclip-gallery.npz")}
+            save_json(root / "openclip-inference.json", manifest)
+            self.assertEqual(load_openclip_gallery(root)[1].tolist(), [10])
+            manifest["pretrained"] = "another-space"
+            save_json(root / "openclip-inference.json", manifest)
+            with self.assertRaisesRegex(ValueError, "Incompatible OpenCLIP"):
+                load_openclip_gallery(root)
+    def test_painting_diagnostics_distinguish_artist_agreement_from_work_identity(self):
+        catalogue = {"10": {"classification": "Paintings", "artist": "Claude Monet"}, "11": {"classification": "Paintings", "artist": "Claude Monet"},
+                     "12": {"classification": "Paintings", "artist": "Vincent van Gogh"}, "13": {"classification": "Vases", "artist": None}}
+        rows = [{"expectedMetId": 10, "predictedMetIds": [11, 10], "accepted": True},
+                {"expectedMetId": 12, "predictedMetIds": [12, 10], "accepted": False},
+                {"expectedMetId": 13, "predictedMetIds": [13, 10], "accepted": True}]
+        result = painting_metrics(rows, catalogue)
+        self.assertEqual(result["positivePaintingQueries"], 2)
+        self.assertEqual(result["paintingArtworkTop1Accuracy"], .5)
+        self.assertEqual(result["paintingArtistTop1Accuracy"], 1.)
+        self.assertEqual(result["paintingPositiveAcceptedPrecision"], 0.)
+
+    def test_official_csv_lookup_preserves_quoted_titles_and_does_not_guess_artists(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "MetObjects.csv"
+            with path.open("w", encoding="utf-8", newline="") as output:
+                writer = csv.writer(output)
+                writer.writerow(["Object ID", "Title", "Artist Display Name", "Object Date"])
+                writer.writerow([10, 'A painting, "blue"', "Vincent van Gogh", "1887"])
+                writer.writerow([11, "Vase", "", "1200"])
+                writer.writerow([12, "Unselected", "Other artist", "1900"])
+            result = extract_catalogue(path, {10, 11, 13})
+            self.assertEqual(result["10"]["title"], 'A painting, "blue"')
+            self.assertIsNone(result["11"]["artist"])
+            self.assertNotIn("12", result)
+            self.assertNotIn("13", result)
+
+    def test_local_catalogue_rejects_corruption_and_another_gallery(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            save_json(root / "catalogue.json", {"version": 1, "objects": {"10": {"title": "Artwork"}}})
+            save_json(root / "catalogue-source.json", {"manifestSha256": "expected", "catalogueSha256": sha256(root / "catalogue.json")})
+            self.assertIn("10", load_local_catalogue(root, "expected"))
+            with self.assertRaisesRegex(ValueError, "another reference"):
+                load_local_catalogue(root, "other")
+            (root / "catalogue.json").write_text("{}")
+            with self.assertRaisesRegex(ValueError, "checksum"):
+                load_local_catalogue(root, "expected")
+
+    def test_inference_manifest_binds_gallery_weights_and_fullframe_preprocessing(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            save_json(root / "manifest.json", {"gallery": []})
+            np.savez_compressed(root / "gallery-fit384.npz", features=np.array([[1., 0.]], dtype=np.float16), ids=np.array([10]),
+                                checkpointSha256=np.array("model-sha"), transform=np.array("fit384"),
+                                calibrationJson=np.array(json.dumps({"similarityThreshold": .5})))
+            save_json(root / "inference.json", {"version": 1, "protocol": "fit384", "galleryFile": "gallery-fit384.npz", "checkpointSha256": "model-sha",
+                                               "manifestSha256": sha256(root / "manifest.json"), "gallerySha256": sha256(root / "gallery-fit384.npz")})
+            protocol, features, ids, calibration, _ = load_gallery(root, "model-sha")
+            self.assertEqual((protocol, ids.tolist(), features.dtype), ("fit384", [10], np.dtype("float16")))
+            self.assertEqual(calibration["similarityThreshold"], .5)
+            with self.assertRaisesRegex(ValueError, "another checkpoint"):
+                load_gallery(root, "other")
+            with self.assertRaisesRegex(ValueError, "only the full-frame"):
+                load_gallery(root, "model-sha", "center224")
+            (root / "gallery-fit384.npz").write_bytes(b"corrupt")
+            with self.assertRaisesRegex(ValueError, "Gallery file checksum"):
+                load_gallery(root, "model-sha")
+
+    def test_hard_negative_batches_cover_each_identity_once_including_odd_tail(self):
+        for count in [2, 3, 33, 97]:
+            neighbours = np.array([[(i + j) % count for j in range(1, min(count, 9))] for i in range(count)])
+            batches = hard_batches(neighbours, 32, np.random.default_rng(17))
+            flattened = [item for batch in batches for item in batch]
+            self.assertEqual(sorted(flattened), list(range(count)))
+            self.assertTrue(all(2 <= len(batch) <= 33 for batch in batches))
+
+    def test_duplicate_reference_bytes_cannot_be_used_as_different_positive_views(self):
+        rows = [{"id": identity, "path": f"MET/{identity}/{view}.jpg"} for identity in [10, 11, 12] for view in [0, 1]]
+        hashes = {row["path"]: str(i) for i, row in enumerate(rows)}
+        hashes[rows[1]["path"]] = hashes[rows[0]["path"]]
+        data = {"gallery": rows, "training": rows, "imageSha256": hashes}
+        self.assertEqual(set(reference_groups(data)), {11, 12})
+        hashes[rows[2]["path"]] = hashes[rows[4]["path"]]
+        with self.assertRaisesRegex(ValueError, "Too few"):
+            reference_groups(data)
+
+    def test_full_gallery_keeps_unselected_artworks_and_all_reference_views(self):
+        source = metadata()
+        source["mini_MET_database.json"] += [{"id": 99, "path": f"MET/99/{i}.jpg"} for i in range(5)]
+        source["mini_MET_database.json"].append({"id": 100, "path": "MET/100/0.jpg"})
+        result = select_manifest(source, train_classes=2, negatives_per_group=1, full_gallery=True)
+        self.assertEqual(len(result["gallery"]), len(source["mini_MET_database.json"]))
+        self.assertIn(100, {row["id"] for row in result["gallery"]})
+        self.assertEqual(sum(row["id"] == 99 for row in result["gallery"]), 5)
+        self.assertFalse({row["id"] for row in result["training"]} & {1, 2})
+
+    def test_blocked_retrieval_matches_brute_force_across_query_chunks(self):
+        rng = np.random.default_rng(11)
+        gallery, queries = rng.normal(size=(113, 9)).astype("float32"), rng.normal(size=(135, 9)).astype("float32")
+        ids = rng.integers(1, 31, size=113)
+        actual_ids, actual_scores = rank(gallery, ids, queries)
+        identities = np.unique(ids)
+        brute = np.stack([(queries @ gallery.T)[:, ids == key].max(axis=1) for key in identities], axis=1)
+        order = np.argsort(-brute, axis=1, kind="stable")[:, :5]
+        np.testing.assert_array_equal(actual_ids, identities[order])
+        np.testing.assert_allclose(actual_scores, np.take_along_axis(brute, order, axis=1), atol=1e-5)
+
     def test_selection_preserves_query_splits_and_excludes_their_artworks_from_training(self):
         data = select_manifest(metadata(), train_classes=2, distractor_classes=1, negatives_per_group=1, seed=7)
         self.assertFalse({row["id"] for row in data["training"]} & {1, 2})

@@ -1,0 +1,57 @@
+{
+  "identityStatus": "possible_match",
+  "checkpointSha256": null,
+  "encoder": "openclip",
+  "similarityThreshold": 0.7850180731544495,
+  "protocol": "openclip_eval",
+  "candidates": [
+    {
+      "metObjectId": 436532,
+      "cosineSimilarity": 0.8686553239822388,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/436532",
+      "title": "Self-Portrait with a Straw Hat (obverse: The Potato Peeler)",
+      "artist": "Vincent van Gogh",
+      "date": "1887",
+      "metadataSource": "local_met_openaccess_catalogue"
+    },
+    {
+      "metObjectId": 437303,
+      "cosineSimilarity": 0.6528198719024658,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/437303",
+      "title": "Washerwoman, Study",
+      "artist": "Camille Pissarro",
+      "date": "1880",
+      "metadataSource": "local_met_openaccess_catalogue"
+    },
+    {
+      "metObjectId": 435951,
+      "cosineSimilarity": 0.6097301244735718,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/435951",
+      "title": "Portrait of a Man",
+      "artist": "Corneille de Lyon",
+      "date": "ca. 1540–50",
+      "metadataSource": "local_met_openaccess_catalogue"
+    },
+    {
+      "metObjectId": 437401,
+      "cosineSimilarity": 0.6006863117218018,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/437401",
+      "title": "Portrait of a Man Holding Gloves",
+      "artist": "Rembrandt (Rembrandt van Rijn)",
+      "date": "1648",
+      "metadataSource": "local_met_openaccess_catalogue"
+    },
+    {
+      "metObjectId": 437430,
+      "cosineSimilarity": 0.5880841016769409,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/437430",
+      "title": "By the Seashore",
+      "artist": "Auguste Renoir",
+      "date": "1883",
+      "metadataSource": "local_met_openaccess_catalogue"
+    }
+  ],
+  "retrievalMs": 200.48,
+  "startupAndRetrievalMs": 2030.69,
+  "note": "Cosine similarity is not an identity probability. Candidates belong only to this run's reference gallery. Timings exclude Python imports and catalogue lookups."
+}

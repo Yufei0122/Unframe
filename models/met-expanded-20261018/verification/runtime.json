@@ -1,0 +1,12 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux",
+  "torch": "2.8.0+cpu",
+  "torchvision": "0.23.0+cpu",
+  "numpy": "2.5.2",
+  "Pillow": "12.3.0",
+  "cudaAvailable": false,
+  "trainingDevice": "cpu",
+  "trainingThreads": 4,
+  "openclipComparisonBlasThreads": "4"
+}

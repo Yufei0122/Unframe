@@ -1,0 +1,20 @@
+{
+  "recordedAt": "2026-10-18T05:09:25.166870+00:00",
+  "coverage": "Complete mini gallery: 33501 identities, 38307 references",
+  "checkpointSelection": "Official validation known-artwork Top1 only; no test subgroup selects weights",
+  "unknownCalibration": "256 validation examples in each official unknown category; target 5% false acceptance",
+  "test": "1003 official known queries and 512 unknowns per category",
+  "comparisons": [
+    "Starting checkpoint vs trained projection on full gallery",
+    "The same models on the exact legacy reference subset",
+    "Existing OpenCLIP on full gallery"
+  ],
+  "paintingDiagnostics": {
+    "definition": "Official catalogue classification contains painting, case-insensitive",
+    "validationKnownPhotos": 2,
+    "testKnownPhotos": 173,
+    "selectionUse": false,
+    "limitation": "Official validation has too few painting photographs to establish painting-specific gains; report positive painting-query metrics separately."
+  },
+  "appPromotion": "No automatic change to production Scan"
+}

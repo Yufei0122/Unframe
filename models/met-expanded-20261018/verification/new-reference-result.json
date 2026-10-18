@@ -1,0 +1,56 @@
+{
+  "identityStatus": "possible_match",
+  "checkpointSha256": "5ca387f4636ba35904d9decb1734ae8a669a7b52e165c0b414663001e4e28410",
+  "similarityThreshold": 0.43245886428451535,
+  "protocol": "fit384",
+  "candidates": [
+    {
+      "metObjectId": 35970,
+      "cosineSimilarity": 1.000014305114746,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/35970",
+      "title": "明　丁雲鵬　潯陽送客圖　軸|Song of the Lute",
+      "artist": "Ding Yunpeng",
+      "date": "1585",
+      "metadataSource": "local_met_openaccess_catalogue"
+    },
+    {
+      "metObjectId": 44625,
+      "cosineSimilarity": 0.4534439444541931,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/44625",
+      "title": null,
+      "artist": "Gessen",
+      "date": null,
+      "metadataSource": "local_met_openaccess_catalogue"
+    },
+    {
+      "metObjectId": 474429,
+      "cosineSimilarity": 0.3481505513191223,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/474429",
+      "title": "Saint Catherine with the Wheel and Sword, and with the Arms the Cooper’s Guild below (from a series with The Virgin Mary and Five Standing Saints)",
+      "artist": null,
+      "date": "1440–46",
+      "metadataSource": "local_met_openaccess_catalogue"
+    },
+    {
+      "metObjectId": 49061,
+      "cosineSimilarity": 0.34104758501052856,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/49061",
+      "title": null,
+      "artist": "Gan Ku",
+      "date": "dated 1790",
+      "metadataSource": "local_met_openaccess_catalogue"
+    },
+    {
+      "metObjectId": 40508,
+      "cosineSimilarity": 0.3015473783016205,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/40508",
+      "title": "元　趙孟頫　雙松平遠圖　卷|Twin Pines, Level Distance",
+      "artist": "Zhao Mengfu",
+      "date": "ca. 1310",
+      "metadataSource": "local_met_openaccess_catalogue"
+    }
+  ],
+  "retrievalMs": 431.57,
+  "startupAndRetrievalMs": 1335.3,
+  "note": "Cosine similarity is not an identity probability. Candidates belong only to this run's reference gallery. Timings exclude Python imports and catalogue lookups."
+}

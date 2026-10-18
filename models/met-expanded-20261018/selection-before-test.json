@@ -1,0 +1,10 @@
+{
+  "epoch": 1,
+  "calibration": {
+    "similarityThreshold": 0.43245886428451535,
+    "calibratedOn": "validation_unknown_queries_only",
+    "targetUnknownFalsePositiveRate": 0.05
+  },
+  "criterion": "full mini gallery validation known Top1, earliest epoch on ties",
+  "checkpointSha256": "5ca387f4636ba35904d9decb1734ae8a669a7b52e165c0b414663001e4e28410"
+}

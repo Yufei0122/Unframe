@@ -8,8 +8,8 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 try { loadEnvFile(path.join(root, '.env')); } catch (error) { if (error.code !== 'ENOENT') throw error; }
 const [mode, ...args] = process.argv.slice(2);
 const python = process.env.PYTHON_EXE || path.join(root, '.venv', process.platform === 'win32' ? 'Scripts/python.exe' : 'bin/python');
-const scripts = { train: 'train_met.py', query: 'query_met.py', compare: 'compare_met_openclip.py', fullframe: 'evaluate_met_fullframe.py' };
-if (!scripts[mode] && mode !== 'test') throw new Error('Choose train, query, compare, fullframe or test.');
+const scripts = { train: 'train_met.py', expanded: 'train_met_expanded.py', tune: 'tune_met_projection.py', query: 'query_met.py', catalogue: 'met_catalogue.py', evaluate: 'summarize_met.py', export: 'export_met_openclip.py', compare: 'compare_met_openclip.py', fullframe: 'evaluate_met_fullframe.py' };
+if (!scripts[mode] && mode !== 'test') throw new Error('Choose train, expanded, tune, query, catalogue, evaluate, export, compare, fullframe or test.');
 if (!existsSync(python)) throw new Error('Python environment is missing. Run ai:setup, or set PYTHON_EXE to a Python with torch, torchvision, Pillow and numpy.');
 const command = mode === 'test' ? ['-m', 'unittest', 'discover', '-s', 'local-ai', '-p', 'test_met_training.py', '-v', ...args]
   : ['-u', path.join(root, 'local-ai', scripts[mode]), ...args];

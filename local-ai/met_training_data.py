@@ -122,7 +122,7 @@ def read_ground_truth(archive):
     return result
 
 
-def select_manifest(metadata, *, train_classes=512, distractor_classes=128, negatives_per_group=96, seed=7):
+def select_manifest(metadata, *, train_classes=512, distractor_classes=128, negatives_per_group=96, seed=7, full_gallery=False):
     rng = random.Random(seed)
     grouped = defaultdict(list)
     for row in metadata["mini_MET_database.json"]:
@@ -146,16 +146,19 @@ def select_manifest(metadata, *, train_classes=512, distractor_classes=128, nega
     train_ids = set(rng.sample(candidates, train_classes))
     remaining = sorted(set(grouped) - train_ids - evaluation_ids)
     distractor_ids = set(rng.sample(remaining, min(distractor_classes, len(remaining))))
-    gallery_ids = train_ids | evaluation_ids | distractor_ids
-    gallery = [row for key in sorted(gallery_ids) for row in sorted(grouped[key], key=lambda row: row["path"])[:3]]
+    gallery_ids = set(grouped) if full_gallery else train_ids | evaluation_ids | distractor_ids
+    gallery = [row for key in sorted(gallery_ids) for row in sorted(grouped[key], key=lambda row: row["path"])[:None if full_gallery else 3]]
     training = [row for row in gallery if row["id"] in train_ids]
     manifest = {"dataset": "The Met Dataset / official mini gallery and official query splits", "publisher": PUBLISHER,
                 "seed": seed, "training": training, "gallery": gallery, **splits,
                 "selection": {"trainingClasses": len(train_ids), "galleryClasses": len(gallery_ids), "evaluationClasses": len(evaluation_ids),
-                              "negativeSamplesPerGroupPerSplit": negatives_per_group, "maxReferencesPerClass": 3,
+                              "negativeSamplesPerGroupPerSplit": negatives_per_group, "maxReferencesPerClass": None if full_gallery else 3,
                               "trainingIdentitiesExcludedFromQueryIdentities": True},
                 "limitation": "A selected gallery and sampled unknowns, not the full benchmark. Official positive query splits are retained. Gallery metadata selects supported identities; no query pixels enter training."}
     validate_manifest(manifest)
+    if full_gallery:
+        manifest["selection"]["allMiniGalleryReferencesRetained"] = True
+        manifest["limitation"] = "Complete official mini reference gallery; not the full 224,000-class Met benchmark. Query splits are retained, unknown queries are sampled, and query pixels never enter training."
     return manifest
 
 

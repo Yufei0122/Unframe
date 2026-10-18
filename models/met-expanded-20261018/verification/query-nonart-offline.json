@@ -1,0 +1,56 @@
+{
+  "identityStatus": "unidentified",
+  "checkpointSha256": "5ca387f4636ba35904d9decb1734ae8a669a7b52e165c0b414663001e4e28410",
+  "similarityThreshold": 0.43245886428451535,
+  "protocol": "fit384",
+  "candidates": [
+    {
+      "metObjectId": 191301,
+      "cosineSimilarity": 0.37394195795059204,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/191301",
+      "title": "Cabinet of 140 plaques",
+      "artist": null,
+      "date": "18th century",
+      "metadataSource": "local_met_openaccess_catalogue"
+    },
+    {
+      "metObjectId": 42624,
+      "cosineSimilarity": 0.3396034240722656,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/42624",
+      "title": "菊枝蒔絵堤重|Portable Picnic Set (Sagejū) with Chrysanthemum Sprays",
+      "artist": null,
+      "date": "18th century",
+      "metadataSource": "local_met_openaccess_catalogue"
+    },
+    {
+      "metObjectId": 463587,
+      "cosineSimilarity": 0.2916816174983978,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/463587",
+      "title": "Book or Shrine, Cumdach of the Stowe Missal",
+      "artist": null,
+      "date": "early 20th century (original dated 1025–52)",
+      "metadataSource": "local_met_openaccess_catalogue"
+    },
+    {
+      "metObjectId": 827531,
+      "cosineSimilarity": 0.2857213616371155,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/827531",
+      "title": "Richard Redgrave, C.B., Hon. Retired R.A.",
+      "artist": "Joseph Parkin Mayall|Sampson Low, Marston, Searle & Rivington|Richard Redgrave",
+      "date": "1884",
+      "metadataSource": "local_met_openaccess_catalogue"
+    },
+    {
+      "metObjectId": 205512,
+      "cosineSimilarity": 0.2602309584617615,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/205512",
+      "title": "Traveling set case",
+      "artist": "Hunt & Roskell",
+      "date": "1874–75",
+      "metadataSource": "local_met_openaccess_catalogue"
+    }
+  ],
+  "retrievalMs": 365.28,
+  "startupAndRetrievalMs": 1134.6,
+  "note": "Cosine similarity is not an identity probability. Candidates belong only to this run's reference gallery. Timings exclude Python imports and catalogue lookups."
+}

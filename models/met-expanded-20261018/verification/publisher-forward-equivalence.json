@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "upstreamDefinition": "https://github.com/nikosips/met/blob/master/code/networks/backbone.py",
+  "observedSourceSha256": "c6eebc44538f5d7e5f5df923bcedd0336425a5256cb009cad936189e1a2642ee",
+  "formula": "Convolutional backbone -> GeM -> channel L2 normalisation -> linear projection with legacy broadcast bias -> L2 normalisation",
+  "maximumForwardDifference": 0.0,
+  "publisherCodeExecuted": false
+}

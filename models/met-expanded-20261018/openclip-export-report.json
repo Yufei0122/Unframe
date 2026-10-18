@@ -1,0 +1,82 @@
+{
+  "manifestSha256": "40d59f7b568c3e26d5426ad6db469e9438a2da7bad68ac82d242c2da700a438f",
+  "sourceComparisonSha256": "7a55e0bb1c6004d64d28a950ec4758c7006148dba003985ec1eaaf0afa08cd9b",
+  "model": {
+    "model": "ViT-B-32",
+    "pretrained": "laion2b_s34b_b79k",
+    "dimensions": 512,
+    "normalized": true,
+    "device": "cpu",
+    "threads": 4
+  },
+  "storage": "float16",
+  "featureCacheSha256": {
+    "gallery": "18ffcadea63f7dd332691be45f322500e46b743066a9c5f28c452b7fe8c26018",
+    "validation": "b7c9ded8e2f3b4c5d393e5d1a880a4d4f8a2ca7d63080d683dc516dbb126bf9b",
+    "test": "7428f5306d1e31bf42760104bb4f6410c0536ee8debfad32c519260b65b14fe1"
+  },
+  "calibration": {
+    "similarityThreshold": 0.7850180731544495,
+    "calibratedOn": "validation_unknown_queries_only",
+    "targetUnknownFalsePositiveRate": 0.05
+  },
+  "validation": {
+    "queries": 641,
+    "knownQueries": 129,
+    "unknownQueries": 512,
+    "knownTop1Accuracy": 0.5193798449612403,
+    "knownTop5Accuracy": 0.6976744186046512,
+    "knownCorrectAndAcceptedRate": 0.24031007751937986,
+    "unknownFalsePositiveRate": 0.048828125,
+    "unknownRejected": 487,
+    "acceptedIdentityPrecision": 0.484375,
+    "similarityThreshold": 0.7850180731544495,
+    "unknownGroups": {
+      "test_other": {
+        "queries": 256,
+        "falsePositives": 22
+      },
+      "test_noart": {
+        "queries": 256,
+        "falsePositives": 3
+      }
+    }
+  },
+  "test": {
+    "queries": 2027,
+    "knownQueries": 1003,
+    "unknownQueries": 1024,
+    "knownTop1Accuracy": 0.4506480558325025,
+    "knownTop5Accuracy": 0.6081754735792622,
+    "knownCorrectAndAcceptedRate": 0.16550348953140578,
+    "unknownFalsePositiveRate": 0.072265625,
+    "unknownRejected": 950,
+    "acceptedIdentityPrecision": 0.5442622950819672,
+    "similarityThreshold": 0.7850180731544495,
+    "unknownGroups": {
+      "test_other": {
+        "queries": 512,
+        "falsePositives": 67
+      },
+      "test_noart": {
+        "queries": 512,
+        "falsePositives": 7
+      }
+    }
+  },
+  "inference": {
+    "version": 1,
+    "provider": "openclip",
+    "model": "ViT-B-32",
+    "pretrained": "laion2b_s34b_b79k",
+    "dimensions": 512,
+    "normalized": true,
+    "protocol": "openclip_eval",
+    "galleryFile": "openclip-gallery.npz",
+    "gallerySha256": "0a056011845fc42a7203037cef9d3799b240dab06bd842fddad3589b2f1c8cbe",
+    "manifestSha256": "40d59f7b568c3e26d5426ad6db469e9438a2da7bad68ac82d242c2da700a438f"
+  },
+  "trainingPerformed": false,
+  "sourceSha256": "e01c4c6ff979c4dc8ab9607a7bbb9fd80d9156a27cdabaf3ece25c339e7922e6",
+  "limitation": "Export of existing frozen OpenCLIP weights, not a fine-tuning gain. Tested at actual shipped precision on the same exploratory benchmark."
+}

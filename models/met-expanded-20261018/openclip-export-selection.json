@@ -1,0 +1,9 @@
+{
+  "calibration": {
+    "similarityThreshold": 0.7850180731544495,
+    "calibratedOn": "validation_unknown_queries_only",
+    "targetUnknownFalsePositiveRate": 0.05
+  },
+  "storage": "float16",
+  "selectedOn": "validation unknowns only"
+}

@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "url": "https://media.githubusercontent.com/media/metmuseum/openaccess/ee02ef674f1a4e7d6658900765cfa6072a41fffe/MetObjects.csv",
+  "gitCommit": "ee02ef674f1a4e7d6658900765cfa6072a41fffe",
+  "upstreamCsvSha256": "d59d84a3d3588849dfcbc0fe534efffe1d59ed83695adfe7d8db71fb4f3854d0",
+  "gitLfsPointerUrl": "https://raw.githubusercontent.com/metmuseum/openaccess/ee02ef674f1a4e7d6658900765cfa6072a41fffe/MetObjects.csv",
+  "manifestSha256": "40d59f7b568c3e26d5426ad6db469e9438a2da7bad68ac82d242c2da700a438f",
+  "catalogueSha256": "b334b49a0f71415aa25a422fa99016742dc0005ede0f95d1f42550470f58132f",
+  "matchedObjects": 33369,
+  "galleryObjects": 33501,
+  "license": "Public Met Open Access catalogue metadata (CC0)",
+  "photosUploaded": false
+}

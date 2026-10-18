@@ -1,0 +1,7 @@
+{
+  "selected": false,
+  "bestValidationTop1": 0.6124031007751938,
+  "originalBestValidationTop1": 0.6124031007751938,
+  "checkpointSha256": "c794c85d106ca59efcfb781fb2fcc84f9faefb267b7c24c69d96d6ed69d25f50",
+  "criterion": "Strict full-gallery validation Top1 improvement required before any follow-up test inference"
+}

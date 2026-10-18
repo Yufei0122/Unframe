@@ -113,11 +113,22 @@ def rank(gallery, gallery_ids, queries):
         raise ValueError("Incompatible retrieval descriptors")
     if not np.isfinite(gallery).all() or not np.isfinite(queries).all():
         raise ValueError("Non-finite retrieval descriptors")
-    identities = np.unique(gallery_ids)
-    similarities = queries @ gallery.T
-    scores = np.stack([similarities[:, gallery_ids == key].max(axis=1) for key in identities], axis=1)
-    order = np.argsort(-scores, axis=1)[:, :5]
-    return identities[order], np.take_along_axis(scores, order, axis=1)
+    if not len(queries):
+        raise ValueError("No retrieval queries")
+    # Group reference images once; avoid an O(artworks * references) boolean scan
+    # and bound temporary similarity matrices for the complete mini gallery.
+    reference_order = np.argsort(gallery_ids, kind="stable")
+    sorted_ids = np.asarray(gallery_ids)[reference_order]
+    identities, starts = np.unique(sorted_ids, return_index=True)
+    references = np.asarray(gallery[reference_order], dtype=np.float32)
+    predictions, values = [], []
+    for offset in range(0, len(queries), 64):
+        similarities = np.asarray(queries[offset:offset + 64], dtype=np.float32) @ references.T
+        scores = np.maximum.reduceat(similarities, starts, axis=1)
+        order = np.argsort(-scores, axis=1, kind="stable")[:, :5]
+        predictions.append(identities[order])
+        values.append(np.take_along_axis(scores, order, axis=1))
+    return np.concatenate(predictions), np.concatenate(values)
 
 
 def calibrate(scores, rows, target_false_positive=.05):

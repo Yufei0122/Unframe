@@ -9,7 +9,7 @@ DIMENSIONS = 512
 IDENTITY = {"model": MODEL, "pretrained": PRETRAINED, "dimensions": DIMENSIONS, "normalized": True}
 
 
-def load_encoder(*, allow_download=False):
+def load_encoder(*, allow_download=False, batch=False):
     # Set cache paths before importing Hugging Face / OpenCLIP.
     cache = Path(os.environ.get("OPENCLIP_CACHE_DIR", Path(__file__).resolve().parents[1] / ".local-ai" / "cache"))
     cache.mkdir(parents=True, exist_ok=True)
@@ -53,4 +53,14 @@ def load_encoder(*, allow_download=False):
                 raise RuntimeError("OpenCLIP returned an invalid embedding")
             return features[0].cpu().tolist()
 
-    return embed, {**IDENTITY, "device": device, "threads": threads}
+    def embed_batch(images):
+        if not images:
+            raise ValueError("At least one image is required")
+        with torch.inference_mode():
+            pixels = torch.stack([preprocess(image) for image in images]).to(device)
+            features = torch.nn.functional.normalize(visual(pixels).float(), p=2, dim=-1)
+            if features.shape != (len(images), DIMENSIONS) or not torch.isfinite(features).all():
+                raise RuntimeError("OpenCLIP returned invalid batched embeddings")
+            return features.cpu().numpy()
+
+    return embed_batch if batch else embed, {**IDENTITY, "device": device, "threads": threads}
