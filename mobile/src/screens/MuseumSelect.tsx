@@ -30,6 +30,7 @@ export function MuseumSelectScreen({ navigation }: NativeStackScreenProps<RootSt
   const places = useMemo(() => cityPlaces(city), [city]);
   const cityImages = useMemo(() => places.map(item => item.image), [places]);
   const place = places.find(item => item.id === previewId) || places[0];
+  const hasDemo = !!(place.demoMuseumId || place.demoScreen);
   const fade = useRef(new Animated.Value(1)).current;
   const direction = useRef(1);
   const adjacent = drag === 0 ? null : places[(places.findIndex(item => item.id === place.id) + (drag < 0 ? 1 : -1) + places.length) % places.length];
@@ -61,7 +62,8 @@ export function MuseumSelectScreen({ navigation }: NativeStackScreenProps<RootSt
   const changeCity = (next: CityId) => { manual.current = true; direction.current = 1; setCity(next); setPreviewId(cityPlaces(next)[0].id); setInteraction(value => value + 1); };
   const cycle = (step: number) => preview(places[(places.findIndex(item => item.id === place.id) + step + places.length) % places.length].id, step);
   const choose = () => {
-    if (place.demoMuseumId) { selectMuseum(place.demoMuseumId); navigation.navigate('Welcome'); }
+    if (place.demoScreen) { navigation.navigate(place.demoScreen); }
+    else if (place.demoMuseumId) { selectMuseum(place.demoMuseumId); navigation.navigate('Welcome'); }
     else { void Linking.openURL(place.website).catch(() => setLinkError(true)); }
   };
   const meters = coordinates ? distanceMeters(coordinates, place) : null;
@@ -80,13 +82,13 @@ export function MuseumSelectScreen({ navigation }: NativeStackScreenProps<RootSt
           <Icon name="location" size={24} color="#29434C"/><View style={{ flex: 1 }}><T style={styles.eyebrow}>{meters != null && meters < 800 && coordinates?.accuracy != null && coordinates.accuracy <= 300 ? 'LOCATED NEAR' : 'EXPLORE MUSEUMS'}</T><T style={styles.area}>{place.area}</T></View>
         </View>
         <Animated.View pointerEvents="none" style={[styles.copy, { opacity: fade, transform: [{ translateY: fade.interpolate({ inputRange: [0, 1], outputRange: [13, 0] }) }] }]}>
-          <T style={styles.featured}>{place.demoMuseumId ? 'FEATURED · VISIT DEMO' : 'AROUND YOU · MUSEUM PREVIEW'}</T>
+          <T style={styles.featured}>{hasDemo ? 'FEATURED · VISIT DEMO' : 'AROUND YOU · MUSEUM PREVIEW'}</T>
           <T testID="preview-title" accessibilityRole="header" style={[styles.museumTitle, height < 700 && { fontSize: 36, lineHeight: 39 }]}>{place.title}</T>
           <T style={styles.subtitle}>{place.description}</T>
         </Animated.View>
         <Animated.View style={[styles.choice, { opacity: fade, transform: [{ translateY: fade.interpolate({ inputRange: [0, 1], outputRange: [10, 0] }) }] }]}>
           <View style={styles.distanceRow}><Icon name="location-outline" color="#233C44" size={17}/><T style={styles.distance}>{distance}</T></View>
-          <Pressable accessibilityRole="button" accessibilityLabel={place.demoMuseumId ? 'Choose ' + place.shortName : 'Visit ' + place.shortName + ' website'} onPress={choose} style={({ pressed }) => [styles.choose, pressed && { opacity: .8 }]}><T style={styles.chooseText}>{place.demoMuseumId ? 'Choose' : 'Explore'}</T><Icon name={place.demoMuseumId ? 'arrow-forward' : 'open-outline'} size={22} color="white"/></Pressable>
+          <Pressable accessibilityRole="button" accessibilityLabel={hasDemo ? 'Choose ' + place.shortName : 'Visit ' + place.shortName + ' website'} onPress={choose} style={({ pressed }) => [styles.choose, pressed && { opacity: .8 }]}><T style={styles.chooseText}>{hasDemo ? 'Choose' : 'Explore'}</T><Icon name={hasDemo ? 'arrow-forward' : 'open-outline'} size={22} color="white"/></Pressable>
           {linkError && <T style={styles.distance}>Could not open website. Please try again.</T>}
         </Animated.View>
         <View style={styles.pager} pointerEvents="none">
@@ -100,7 +102,7 @@ export function MuseumSelectScreen({ navigation }: NativeStackScreenProps<RootSt
         <View style={styles.mapHeader}><View style={styles.cities}>{(['new-york', 'brisbane'] as CityId[]).map(id => <Pressable key={id} accessibilityRole="button" accessibilityLabel={'Show ' + (id === 'new-york' ? 'New York' : 'Brisbane')} accessibilityState={{ selected: city === id }} aria-pressed={city === id} onPress={() => changeCity(id)} style={[styles.city, city === id && styles.activeCity]}><T style={[styles.cityText, city === id && { color: '#184C88' }]}>{id === 'new-york' ? 'New York' : 'Brisbane'}</T></Pressable>)}</View><Pressable accessibilityRole="button" accessibilityLabel="Refresh my location" accessibilityState={{ disabled: location.status === 'loading' }} disabled={location.status === 'loading'} onPress={() => { void locate(); }} style={styles.locate}>{location.status === 'loading' ? <ActivityIndicator color="#245994" size="small"/> : <Icon name="navigate-outline" size={20} color="#245994"/>}</Pressable></View>
         <View>
           <DiscoveryMap places={places} selectedId={place.id} coordinates={coordinates} onSelect={preview} height={mapHeight} active={focused}/>
-          <Pressable accessibilityRole="button" accessibilityLabel={place.demoMuseumId ? 'Open ' + place.shortName + ' welcome' : 'Open ' + place.shortName + ' official website'} onPress={choose} style={styles.mapLabel}><Image source={place.image} style={styles.thumbnail}/><View style={{ flex: 1 }}><T style={styles.mapName}>{place.name}</T><T style={styles.mapDistance}>{place.demoMuseumId ? 'Visit demo available' : 'Preview · official website'}</T></View><Icon name="chevron-forward" size={18} color="#40515C"/></Pressable>
+          <Pressable accessibilityRole="button" accessibilityLabel={hasDemo ? 'Open ' + place.shortName + ' welcome' : 'Open ' + place.shortName + ' official website'} onPress={choose} style={styles.mapLabel}><Image source={place.image} style={styles.thumbnail}/><View style={{ flex: 1 }}><T style={styles.mapName}>{place.name}</T><T style={styles.mapDistance}>{hasDemo ? 'Visit demo available' : 'Preview · official website'}</T></View><Icon name="chevron-forward" size={18} color="#40515C"/></Pressable>
         </View>
       </View>
       <T style={styles.credit}>{place.credit}</T>

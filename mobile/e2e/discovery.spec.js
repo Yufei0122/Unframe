@@ -36,7 +36,7 @@ test('OpenLayers city markers select the corresponding previews and demo entranc
   await expect(page.getByRole('button', { name: 'Visit Guggenheim website' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Choose Guggenheim' })).toHaveCount(0);
   await page.getByRole('button', { name: 'Show Brisbane' }).click();
-  await expect(page.locator('.museum-pin')).toHaveCount(4);
+  await expect(page.locator('.museum-pin')).toHaveCount(5);
   await expect(page.getByRole('region', { name: 'Brisbane museum map' })).toBeVisible();
   await page.screenshot({ path: 'test-results/discovery-brisbane.png', fullPage: true });
   await page.getByRole('button', { name: 'Preview QAG on map' }).click();
@@ -99,7 +99,7 @@ test('small and desktop entrances fit their viewport and every preview photo loa
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 320, height: 568 });
   await page.goto('/');
-  for (const [city, names] of [['New York', ['The Met', 'Guggenheim', 'MoMA']], ['Brisbane', ['GOMA', 'QAG', 'Queensland Museum', 'Museum of Brisbane']]]) {
+  for (const [city, names] of [['New York', ['The Met', 'Guggenheim', 'MoMA']], ['Brisbane', ['GOMA', 'QUT Art Museum', 'QAG', 'Queensland Museum', 'Museum of Brisbane']]]) {
     await page.getByRole('button', { name: 'Show ' + city }).click();
     for (const name of names) {
       await page.getByRole('button', { name: 'Preview ' + name + ' on map' }).click();

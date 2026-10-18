@@ -1,5 +1,9 @@
 # The Met demo assets
 
+## QUT UI demo assets
+
+`qut-gallery`, `qut-river-rhythm`, `qut-soft-architecture` and `qut-between-places` (SVG sources and bundled PNG renders) are original Unframe prototype illustrations. The gallery is illustrative; the three abstract studies are not QUT collection artworks. See [QUT demo content and behavior](../../QUT-DEMO.md).
+
 For the five nearby-museum preview photographs, see [museum discovery image sources](../../MUSEUM-DISCOVERY.md#new-photo-assets).
 
 - `met-exterior.jpg`: Alvin David, “The met banner on classical building entrance”, https://unsplash.com/photos/6_W4k0CWnns (Unsplash License). Downloaded from https://images.unsplash.com/photo-1764473814276-6032e9070f61 .

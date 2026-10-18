@@ -47,6 +47,7 @@ Open **http://localhost:8081**. Wide browser windows show the same mobile screen
 
 ## Features
 
+- QUT Art Museum UI demo: choose Brisbane → QUT Art Museum in discovery for exhibition browsing, original demo artworks, session bookmarks, a short tour and visitor information. See [QUT demo details](QUT-DEMO.md).
 - Museum selection and isolated The Met / GOMA catalogues, artwork details and maps.
 - Local OpenCLIP image matching and Ollama Qwen explanations grounded in verified catalogue notes.
 - Qwen-assisted artwork selection with deterministic time and accessibility constraints for routes.
