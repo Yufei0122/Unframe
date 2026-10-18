@@ -6,16 +6,24 @@ import type { ArtworkAnalysis } from '../../../shared/ai-types';
 export function ArtworkAnalysisResult({ result }: { result: ArtworkAnalysis }) {
   const [linkError, setLinkError] = useState('');
   const [details, setDetails] = useState(false);
-  return <View style={{ gap: 14 }}>
-    <T accessibilityRole="header" accessibilityLabel={result.identityStatus === 'possible_match' ? 'Possible artwork identity' : 'Artwork identity uncertain'} style={s.sectionTitle}>A closer look</T>
-    <T style={s.small}>AI interpretation · Identity unconfirmed</T>
+  const reference = result.sources.filter(source => source.visualCheck === 'similar').sort((a, b) => (b.similarity ?? -1) - (a.similarity ?? -1))[0];
+  const suggestion = result.hypotheses[0];
+  const identity = reference || suggestion;
+  const otherSuggestions = result.hypotheses.filter(item => item.title !== identity?.title || item.artist !== identity?.artist);
+  return <View testID="artwork-analysis-result" style={{ gap: 14 }}>
+    <View style={{ gap: 5 }}>
+      <T accessibilityRole="header" style={s.sectionTitle}>{identity?.title || 'Artwork not identified'}</T>
+      {identity && <T>{identity.artist || 'Artist unknown'}</T>}
+      <T style={s.small}>{reference ? `Possible match · ${reference.provider} · Unconfirmed` : identity ? 'AI suggestion · Unverified' : 'Visual description only'}</T>
+    </View>
     {result.artworkPresence !== 'likely' && <T style={s.small}>{result.artworkPresence === 'unlikely' ? 'The model could not clearly identify an artwork in this view.' : 'A clearer view may help establish what is shown.'}</T>}
     <T numberOfLines={details ? undefined : 4}>{result.description}</T>
     <Button secondary title={details ? 'Hide details' : 'More details'} onPress={() => setDetails(!details)}/>
     {details && <>
+    {!reference && !!suggestion && <T style={s.small}>{suggestion.basis}</T>}
     {result.visualFeatures.map((feature, index) => <T key={index} style={s.small}>• {feature}</T>)}
     {!!result.visibleText.length && <><T style={s.label}>Possible text in the image</T><T style={s.small}>{result.visibleText.join(' · ')}</T></>}
-    {!!result.hypotheses.length && <><T style={s.label}>Model suggestions · unverified</T>{result.hypotheses.map((item, index) => <View key={index} style={{ gap: 4 }}><T>{item.title}{item.artist ? ` · ${item.artist}` : ''}</T><T style={s.small}>{item.basis}</T></View>)}</>}
+    {!!otherSuggestions.length && <><T style={s.label}>Other suggestions · unverified</T>{otherSuggestions.map((item, index) => <View key={index} style={{ gap: 4 }}><T>{item.title}{item.artist ? ` · ${item.artist}` : ''}</T><T style={s.small}>{item.basis}</T></View>)}</>}
     {!!result.sources.length && <T style={s.label}>Public references to compare</T>}
     {result.sources.map(source => <View key={source.id} style={{ gap: 8 }}>
       {!!source.imageUrl && source.visualCheck !== 'unavailable' && <Image source={{ uri: source.imageUrl }} accessibilityLabel={`Reference: ${source.title}`} style={{ width: '100%', height: 150 }} resizeMode="contain"/>}

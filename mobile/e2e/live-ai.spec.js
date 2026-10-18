@@ -39,7 +39,7 @@ test('real local Scan recognises an uploaded artwork and returns analysis for an
   await page.getByRole('button', { name: 'Resume scanning' }).click();
   await page.getByLabel('Upload artwork image').setInputFiles(path.resolve(__dirname, '../assets/quiet-geometry.png'));
   console.log('LIVE uploaded an unfamiliar image');
-  await expect(page.getByRole('heading', { name: /Artwork identity uncertain|Possible artwork identity/ })).toBeVisible({ timeout: 135000 });
+  await expect(page.getByTestId('artwork-analysis-result')).toBeVisible({ timeout: 135000 });
   await expect(page.getByRole('alert')).toHaveCount(0);
   await page.screenshot({ path: 'test-results/live-scan-general.png' });
   // General vision unloads the text model on memory-constrained Ollama servers.
