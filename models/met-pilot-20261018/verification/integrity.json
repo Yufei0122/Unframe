@@ -1,0 +1,5 @@
+{
+  "wrongCheckpointGalleryRejected": true,
+  "rejectionBeforeImageRead": true,
+  "returnCode": 1
+}

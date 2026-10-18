@@ -1,0 +1,475 @@
+{
+  "startedAt": "2026-10-18T04:26:22.013346+00:00",
+  "status": "completed",
+  "trainingPerformed": true,
+  "configuration": {
+    "output": ".local-ai/met-training/20261018-pilot-v2-met",
+    "archive_dir": "/tmp/unframe-met/sources",
+    "image_dir": "/workspace/Unframe/.local-ai/met-training/images",
+    "train_classes": 512,
+    "negatives": 96,
+    "epochs": 8,
+    "batch_size": 8,
+    "threads": 4,
+    "seed": 7,
+    "device": "cpu",
+    "initialization": "met",
+    "layer4_lr": 1e-07,
+    "projection_lr": 1e-05,
+    "prepare_only": false
+  },
+  "hardware": {
+    "device": "cpu",
+    "torch": "2.8.0+cpu",
+    "threads": 4,
+    "cudaAvailable": false
+  },
+  "sources": {
+    "ground_truth.tar.gz": {
+      "url": "http://ptak.felk.cvut.cz/met/dataset/ground_truth.tar.gz",
+      "bytes": 2891859,
+      "sha256": "f6588fb07d82fdcb5de5e3c2e38556a33f509c33dee43fe42636dce31c91ebb8",
+      "integrity": "Observed download SHA256; publisher supplies no authenticated digest"
+    },
+    "small_MET.tar.gz": {
+      "url": "http://ptak.felk.cvut.cz/met/dataset/small_MET.tar.gz",
+      "bytes": 2865082125,
+      "sha256": "0cf5736dee3eac8598daa1a929723834abcb037d57d3f0f0f58018f4bfa9a916",
+      "integrity": "Observed download SHA256; publisher supplies no authenticated digest"
+    },
+    "test_met.tar.gz": {
+      "url": "http://ptak.felk.cvut.cz/met/dataset/test_met.tar.gz",
+      "bytes": 34048842,
+      "sha256": "2bc9b2e906d5fc69c4c136860b42604ef867b69ada10f1e08aa49175cbe08a35",
+      "integrity": "Observed download SHA256; publisher supplies no authenticated digest"
+    },
+    "test_noart.tar.gz": {
+      "url": "http://ptak.felk.cvut.cz/met/dataset/test_noart.tar.gz",
+      "bytes": 815534763,
+      "sha256": "1bb7a330359335e7aff6c76d255ceff8a272acf5d26eebf1993cfc4a0ab54de2",
+      "integrity": "Observed download SHA256; publisher supplies no authenticated digest"
+    },
+    "test_other.tar.gz": {
+      "url": "http://ptak.felk.cvut.cz/met/dataset/test_other.tar.gz",
+      "bytes": 1016201646,
+      "sha256": "85e4b66a07f636dcf2e414015b12585b81efb9da1a7598b2e32b62638f63fcab",
+      "integrity": "Observed download SHA256; publisher supplies no authenticated digest"
+    }
+  },
+  "epochs": [
+    {
+      "epoch": 1,
+      "optimizerSteps": 64,
+      "meanContrastiveLoss": 1.2789754765108228,
+      "validation": {
+        "queries": 321,
+        "knownQueries": 129,
+        "unknownQueries": 192,
+        "knownTop1Accuracy": 0.5193798449612403,
+        "knownTop5Accuracy": 0.6511627906976745,
+        "knownCorrectAndAcceptedRate": 0.3488372093023256,
+        "unknownFalsePositiveRate": 0.046875,
+        "unknownRejected": 183,
+        "acceptedIdentityPrecision": 0.7377049180327869,
+        "similarityThreshold": 0.42309697134590146,
+        "unknownGroups": {
+          "test_other": {
+            "queries": 96,
+            "falsePositives": 4
+          },
+          "test_noart": {
+            "queries": 96,
+            "falsePositives": 5
+          }
+        }
+      },
+      "calibration": {
+        "similarityThreshold": 0.42309697134590146,
+        "calibratedOn": "validation_unknown_queries_only",
+        "targetUnknownFalsePositiveRate": 0.05
+      },
+      "elapsedSeconds": 81.41
+    },
+    {
+      "epoch": 2,
+      "optimizerSteps": 64,
+      "meanContrastiveLoss": 1.2900782567448914,
+      "validation": {
+        "queries": 321,
+        "knownQueries": 129,
+        "unknownQueries": 192,
+        "knownTop1Accuracy": 0.5193798449612403,
+        "knownTop5Accuracy": 0.6511627906976745,
+        "knownCorrectAndAcceptedRate": 0.3488372093023256,
+        "unknownFalsePositiveRate": 0.046875,
+        "unknownRejected": 183,
+        "acceptedIdentityPrecision": 0.7377049180327869,
+        "similarityThreshold": 0.42304055554962156,
+        "unknownGroups": {
+          "test_other": {
+            "queries": 96,
+            "falsePositives": 4
+          },
+          "test_noart": {
+            "queries": 96,
+            "falsePositives": 5
+          }
+        }
+      },
+      "calibration": {
+        "similarityThreshold": 0.42304055554962156,
+        "calibratedOn": "validation_unknown_queries_only",
+        "targetUnknownFalsePositiveRate": 0.05
+      },
+      "elapsedSeconds": 78.28
+    },
+    {
+      "epoch": 3,
+      "optimizerSteps": 64,
+      "meanContrastiveLoss": 1.27637225901708,
+      "validation": {
+        "queries": 321,
+        "knownQueries": 129,
+        "unknownQueries": 192,
+        "knownTop1Accuracy": 0.5193798449612403,
+        "knownTop5Accuracy": 0.6511627906976745,
+        "knownCorrectAndAcceptedRate": 0.3488372093023256,
+        "unknownFalsePositiveRate": 0.046875,
+        "unknownRejected": 183,
+        "acceptedIdentityPrecision": 0.7377049180327869,
+        "similarityThreshold": 0.42294536693191526,
+        "unknownGroups": {
+          "test_other": {
+            "queries": 96,
+            "falsePositives": 4
+          },
+          "test_noart": {
+            "queries": 96,
+            "falsePositives": 5
+          }
+        }
+      },
+      "calibration": {
+        "similarityThreshold": 0.42294536693191526,
+        "calibratedOn": "validation_unknown_queries_only",
+        "targetUnknownFalsePositiveRate": 0.05
+      },
+      "elapsedSeconds": 79.31
+    },
+    {
+      "epoch": 4,
+      "optimizerSteps": 64,
+      "meanContrastiveLoss": 1.2857812410220504,
+      "validation": {
+        "queries": 321,
+        "knownQueries": 129,
+        "unknownQueries": 192,
+        "knownTop1Accuracy": 0.5193798449612403,
+        "knownTop5Accuracy": 0.6434108527131783,
+        "knownCorrectAndAcceptedRate": 0.3488372093023256,
+        "unknownFalsePositiveRate": 0.046875,
+        "unknownRejected": 183,
+        "acceptedIdentityPrecision": 0.7377049180327869,
+        "similarityThreshold": 0.4225863681564331,
+        "unknownGroups": {
+          "test_other": {
+            "queries": 96,
+            "falsePositives": 4
+          },
+          "test_noart": {
+            "queries": 96,
+            "falsePositives": 5
+          }
+        }
+      },
+      "calibration": {
+        "similarityThreshold": 0.4225863681564331,
+        "calibratedOn": "validation_unknown_queries_only",
+        "targetUnknownFalsePositiveRate": 0.05
+      },
+      "elapsedSeconds": 78.44
+    },
+    {
+      "epoch": 5,
+      "optimizerSteps": 64,
+      "meanContrastiveLoss": 1.2768756253644824,
+      "validation": {
+        "queries": 321,
+        "knownQueries": 129,
+        "unknownQueries": 192,
+        "knownTop1Accuracy": 0.5193798449612403,
+        "knownTop5Accuracy": 0.6434108527131783,
+        "knownCorrectAndAcceptedRate": 0.3488372093023256,
+        "unknownFalsePositiveRate": 0.046875,
+        "unknownRejected": 183,
+        "acceptedIdentityPrecision": 0.7377049180327869,
+        "similarityThreshold": 0.42265473468399045,
+        "unknownGroups": {
+          "test_other": {
+            "queries": 96,
+            "falsePositives": 4
+          },
+          "test_noart": {
+            "queries": 96,
+            "falsePositives": 5
+          }
+        }
+      },
+      "calibration": {
+        "similarityThreshold": 0.42265473468399045,
+        "calibratedOn": "validation_unknown_queries_only",
+        "targetUnknownFalsePositiveRate": 0.05
+      },
+      "elapsedSeconds": 79.93
+    },
+    {
+      "epoch": 6,
+      "optimizerSteps": 64,
+      "meanContrastiveLoss": 1.2511060601100326,
+      "validation": {
+        "queries": 321,
+        "knownQueries": 129,
+        "unknownQueries": 192,
+        "knownTop1Accuracy": 0.5193798449612403,
+        "knownTop5Accuracy": 0.6434108527131783,
+        "knownCorrectAndAcceptedRate": 0.3488372093023256,
+        "unknownFalsePositiveRate": 0.046875,
+        "unknownRejected": 183,
+        "acceptedIdentityPrecision": 0.7377049180327869,
+        "similarityThreshold": 0.4228300021419525,
+        "unknownGroups": {
+          "test_other": {
+            "queries": 96,
+            "falsePositives": 4
+          },
+          "test_noart": {
+            "queries": 96,
+            "falsePositives": 5
+          }
+        }
+      },
+      "calibration": {
+        "similarityThreshold": 0.4228300021419525,
+        "calibratedOn": "validation_unknown_queries_only",
+        "targetUnknownFalsePositiveRate": 0.05
+      },
+      "elapsedSeconds": 84.38
+    },
+    {
+      "epoch": 7,
+      "optimizerSteps": 64,
+      "meanContrastiveLoss": 1.2734448788687587,
+      "validation": {
+        "queries": 321,
+        "knownQueries": 129,
+        "unknownQueries": 192,
+        "knownTop1Accuracy": 0.5271317829457365,
+        "knownTop5Accuracy": 0.6434108527131783,
+        "knownCorrectAndAcceptedRate": 0.3488372093023256,
+        "unknownFalsePositiveRate": 0.046875,
+        "unknownRejected": 183,
+        "acceptedIdentityPrecision": 0.7377049180327869,
+        "similarityThreshold": 0.42273588640785215,
+        "unknownGroups": {
+          "test_other": {
+            "queries": 96,
+            "falsePositives": 4
+          },
+          "test_noart": {
+            "queries": 96,
+            "falsePositives": 5
+          }
+        }
+      },
+      "calibration": {
+        "similarityThreshold": 0.42273588640785215,
+        "calibratedOn": "validation_unknown_queries_only",
+        "targetUnknownFalsePositiveRate": 0.05
+      },
+      "elapsedSeconds": 83.88
+    },
+    {
+      "epoch": 8,
+      "optimizerSteps": 64,
+      "meanContrastiveLoss": 1.2526214183308184,
+      "validation": {
+        "queries": 321,
+        "knownQueries": 129,
+        "unknownQueries": 192,
+        "knownTop1Accuracy": 0.5271317829457365,
+        "knownTop5Accuracy": 0.6434108527131783,
+        "knownCorrectAndAcceptedRate": 0.3488372093023256,
+        "unknownFalsePositiveRate": 0.046875,
+        "unknownRejected": 183,
+        "acceptedIdentityPrecision": 0.7377049180327869,
+        "similarityThreshold": 0.4225844012031555,
+        "unknownGroups": {
+          "test_other": {
+            "queries": 96,
+            "falsePositives": 4
+          },
+          "test_noart": {
+            "queries": 96,
+            "falsePositives": 5
+          }
+        }
+      },
+      "calibration": {
+        "similarityThreshold": 0.4225844012031555,
+        "calibratedOn": "validation_unknown_queries_only",
+        "targetUnknownFalsePositiveRate": 0.05
+      },
+      "elapsedSeconds": 92.97
+    }
+  ],
+  "testUsedForCheckpointSelection": false,
+  "limitation": "A CPU-sized research pilot on a selected Met gallery. The official full-gallery benchmark and arbitrary-artwork identification are not established. The production scanner is unchanged.",
+  "sourceSha256": {
+    "train_met.py": "9d3c7a3c0d5762270e53dbabedbc9fa1e020bc02875cb7d17ce52d4264a57385",
+    "met_training_data.py": "24edaccb95fe55a2dcb3a9bbf063c23e9d60b47501f09d643ec190ee62e331ba",
+    "met_pretrained.py": "00249d4492bc4bd46f971f9b39ae5ffe072c11eb727917beeebf2e088c575235"
+  },
+  "recipe": {
+    "base": "met",
+    "trainable": [
+      "layer4",
+      "fc"
+    ],
+    "projection": "512-dimensional linear projection",
+    "optimizer": "AdamW",
+    "layer4LearningRate": 1e-07,
+    "projectionLearningRate": 1e-05,
+    "weightDecay": 0.0001,
+    "temperature": 0.1,
+    "gradientClipNorm": 1.0,
+    "imageSize": 224,
+    "batchNormRunningStatistics": "frozen"
+  },
+  "manifestSha256": "44987bf5561c1e018758b6560b4d0f7a8801d276dd463e196675d78befe82ef4",
+  "data": {
+    "selection": {
+      "trainingClasses": 512,
+      "galleryClasses": 1485,
+      "evaluationClasses": 845,
+      "negativeSamplesPerGroupPerSplit": 96,
+      "maxReferencesPerClass": 3,
+      "trainingIdentitiesExcludedFromQueryIdentities": true
+    },
+    "training": 1084,
+    "gallery": 2976,
+    "validation": 321,
+    "test": 1195
+  },
+  "dataIsolation": {
+    "queryPathsDisjoint": true,
+    "queryByteHashesDisjoint": true,
+    "pilotTrainingIdentitiesDisjointFromQueryIdentities": true,
+    "publisherPretrainingIncludesMetGalleryIdentities": true
+  },
+  "baseWeights": {
+    "url": "http://ptak.felk.cvut.cz/met/models/r18IN_con-syn+real-closest",
+    "sha256": "0bb1f45a8664ec1153a4d6899e3cd69505c471b9b4522abfa5ba824200509444",
+    "pretraining": "Publisher's Met contrastive-learning checkpoint; its prior training includes Met gallery identities"
+  },
+  "baseline": {
+    "validation": {
+      "queries": 321,
+      "knownQueries": 129,
+      "unknownQueries": 192,
+      "knownTop1Accuracy": 0.5271317829457365,
+      "knownTop5Accuracy": 0.6511627906976745,
+      "knownCorrectAndAcceptedRate": 0.3488372093023256,
+      "unknownFalsePositiveRate": 0.046875,
+      "unknownRejected": 183,
+      "acceptedIdentityPrecision": 0.7377049180327869,
+      "similarityThreshold": 0.4230064914951324,
+      "unknownGroups": {
+        "test_other": {
+          "queries": 96,
+          "falsePositives": 4
+        },
+        "test_noart": {
+          "queries": 96,
+          "falsePositives": 5
+        }
+      }
+    },
+    "timings": {
+      "gallerySeconds": 50.872,
+      "querySeconds": 5.118
+    },
+    "calibration": {
+      "similarityThreshold": 0.4230064914951324,
+      "calibratedOn": "validation_unknown_queries_only",
+      "targetUnknownFalsePositiveRate": 0.05
+    },
+    "test": {
+      "queries": 1195,
+      "knownQueries": 1003,
+      "unknownQueries": 192,
+      "knownTop1Accuracy": 0.4945164506480558,
+      "knownTop5Accuracy": 0.6041874376869392,
+      "knownCorrectAndAcceptedRate": 0.34097706879361916,
+      "unknownFalsePositiveRate": 0.036458333333333336,
+      "unknownRejected": 185,
+      "acceptedIdentityPrecision": 0.8976377952755905,
+      "similarityThreshold": 0.4230064914951324,
+      "unknownGroups": {
+        "test_other": {
+          "queries": 96,
+          "falsePositives": 2
+        },
+        "test_noart": {
+          "queries": 96,
+          "falsePositives": 5
+        }
+      }
+    }
+  },
+  "trainableParameters": 8656384,
+  "selectedCalibration": {
+    "similarityThreshold": 0.42273588640785215,
+    "calibratedOn": "validation_unknown_queries_only",
+    "targetUnknownFalsePositiveRate": 0.05
+  },
+  "selectedEpoch": 7,
+  "optimizerSteps": 512,
+  "parameterChangeL2": 0.31225427985191345,
+  "checkpointRoundTripVerified": true,
+  "trained": {
+    "test": {
+      "queries": 1195,
+      "knownQueries": 1003,
+      "unknownQueries": 192,
+      "knownTop1Accuracy": 0.4965104685942173,
+      "knownTop5Accuracy": 0.6041874376869392,
+      "knownCorrectAndAcceptedRate": 0.34097706879361916,
+      "unknownFalsePositiveRate": 0.036458333333333336,
+      "unknownRejected": 185,
+      "acceptedIdentityPrecision": 0.8952879581151832,
+      "similarityThreshold": 0.42273588640785215,
+      "unknownGroups": {
+        "test_other": {
+          "queries": 96,
+          "falsePositives": 2
+        },
+        "test_noart": {
+          "queries": 96,
+          "falsePositives": 5
+        }
+      }
+    },
+    "timings": {
+      "gallerySeconds": 48.904,
+      "querySeconds": 18.6
+    }
+  },
+  "improvement": {
+    "knownTop1PercentagePoints": 0.1994017946161497,
+    "knownTop5PercentagePoints": 0.0
+  },
+  "promotedToProduction": false,
+  "checkpointSha256": "634c1ae6e273307adc1b8e58d9bb03d8b29a8ca85c08547d32cf551fbebf630b",
+  "finishedAt": "2026-10-18T04:39:58.458994+00:00",
+  "elapsedSeconds": 816.45
+}

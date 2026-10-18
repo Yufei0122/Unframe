@@ -1,0 +1,21 @@
+{
+  "verifiedAt": "2026-10-18T04:47:49.208511+00:00",
+  "status": "passed",
+  "unitTests": 11,
+  "adapterSha256": "634c1ae6e273307adc1b8e58d9bb03d8b29a8ca85c08547d32cf551fbebf630b",
+  "trainedWeightRoundTrip": true,
+  "weightChangeL2": 0.31225427985191345,
+  "optimiserUpdates": 512,
+  "selectedEpoch": 7,
+  "selectedProtocol": "fit384",
+  "manifestAndSourceDigestsVerified": true,
+  "galleryEncoderAndIdsVerified": true,
+  "testMetricsIndependentlyRecountedFromPredictions": true,
+  "queryByteHashIsolationVerified": true,
+  "pilotTrainingIdentitiesDisjointFromQueryIdentities": true,
+  "publisherBasePreviouslyLearnedMetGalleryIdentities": true,
+  "productionScanChanged": false,
+  "arbitraryArtworkRecognitionEstablished": false,
+  "automaticFullFrameKnownQueryAndCatalogueLookup": "passed",
+  "automaticFullFrameNonArtRejection": "passed"
+}

@@ -1,0 +1,12 @@
+{
+  "recordedAt": "2026-10-18T04:32:19.923049+00:00",
+  "reason": "Publisher uses GeM on complete images, while the CPU pilot uses a square centre crop. Evaluate preserved full frames to avoid discarding identifying edges.",
+  "protocol": "Max side384, preserved aspect ratio, no padding, no crop",
+  "selection": "Known Top1 on official validation only before opening full-frame test results",
+  "variants": [
+    "Unchanged published Met checkpoint",
+    "Continued-training checkpoint selected by the 8-epoch validation run"
+  ],
+  "source": "https://github.com/nikosips/met/blob/master/code/utils/augmentations.py",
+  "comparisonIsTraining": false
+}

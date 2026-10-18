@@ -1,0 +1,35 @@
+{
+  "publisher": "https://cmp.felk.cvut.cz/met/",
+  "archives": {
+    "ground_truth.tar.gz": {
+      "url": "http://ptak.felk.cvut.cz/met/dataset/ground_truth.tar.gz",
+      "bytes": 2891859,
+      "sha256": "f6588fb07d82fdcb5de5e3c2e38556a33f509c33dee43fe42636dce31c91ebb8",
+      "integrity": "Observed download SHA256; publisher supplies no authenticated digest"
+    },
+    "small_MET.tar.gz": {
+      "url": "http://ptak.felk.cvut.cz/met/dataset/small_MET.tar.gz",
+      "bytes": 2865082125,
+      "sha256": "0cf5736dee3eac8598daa1a929723834abcb037d57d3f0f0f58018f4bfa9a916",
+      "integrity": "Observed download SHA256; publisher supplies no authenticated digest"
+    },
+    "test_met.tar.gz": {
+      "url": "http://ptak.felk.cvut.cz/met/dataset/test_met.tar.gz",
+      "bytes": 34048842,
+      "sha256": "2bc9b2e906d5fc69c4c136860b42604ef867b69ada10f1e08aa49175cbe08a35",
+      "integrity": "Observed download SHA256; publisher supplies no authenticated digest"
+    },
+    "test_noart.tar.gz": {
+      "url": "http://ptak.felk.cvut.cz/met/dataset/test_noart.tar.gz",
+      "bytes": 815534763,
+      "sha256": "1bb7a330359335e7aff6c76d255ceff8a272acf5d26eebf1993cfc4a0ab54de2",
+      "integrity": "Observed download SHA256; publisher supplies no authenticated digest"
+    },
+    "test_other.tar.gz": {
+      "url": "http://ptak.felk.cvut.cz/met/dataset/test_other.tar.gz",
+      "bytes": 1016201646,
+      "sha256": "85e4b66a07f636dcf2e414015b12585b81efb9da1a7598b2e32b62638f63fcab",
+      "integrity": "Observed download SHA256; publisher supplies no authenticated digest"
+    }
+  }
+}

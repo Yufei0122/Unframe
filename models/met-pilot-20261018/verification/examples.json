@@ -1,0 +1,20 @@
+[
+  {
+    "example": "known",
+    "queryPath": "test_met/313fecccc7df.jpg",
+    "expectedMetId": 436532,
+    "actualStatus": "possible_match",
+    "firstCandidate": 436532,
+    "protocol": "center224",
+    "isAccuracyEstimate": false
+  },
+  {
+    "example": "nonart",
+    "queryPath": "test_noart/8aa38bdac5c0.jpg",
+    "expectedMetId": -1,
+    "actualStatus": "unidentified",
+    "firstCandidate": 251376,
+    "protocol": "center224",
+    "isAccuracyEstimate": false
+  }
+]

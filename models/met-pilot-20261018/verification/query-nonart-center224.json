@@ -1,0 +1,56 @@
+{
+  "identityStatus": "unidentified",
+  "checkpointSha256": "634c1ae6e273307adc1b8e58d9bb03d8b29a8ca85c08547d32cf551fbebf630b",
+  "similarityThreshold": 0.42273588640785215,
+  "protocol": "center224",
+  "candidates": [
+    {
+      "metObjectId": 251376,
+      "cosineSimilarity": 0.25676512718200684,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/251376",
+      "title": "Bronze military diploma",
+      "artist": null,
+      "date": "ca. 149 CE",
+      "metadataSource": "https://collectionapi.metmuseum.org/public/collection/v1/objects/251376"
+    },
+    {
+      "metObjectId": 200280,
+      "cosineSimilarity": 0.2472115457057953,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/200280",
+      "title": "Egg cup",
+      "artist": "Pierre Soulaine",
+      "date": "1725–26",
+      "metadataSource": "https://collectionapi.metmuseum.org/public/collection/v1/objects/200280"
+    },
+    {
+      "metObjectId": 742180,
+      "cosineSimilarity": 0.24257713556289673,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/742180",
+      "title": "Stucco Fragment",
+      "artist": null,
+      "date": "probably 8th–12th century",
+      "metadataSource": "https://collectionapi.metmuseum.org/public/collection/v1/objects/742180"
+    },
+    {
+      "metObjectId": 504397,
+      "cosineSimilarity": 0.2321976125240326,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/504397",
+      "title": "Harmonium",
+      "artist": "Victor and Auguste Mustel",
+      "date": "after 1886",
+      "metadataSource": "https://collectionapi.metmuseum.org/public/collection/v1/objects/504397"
+    },
+    {
+      "metObjectId": 22098,
+      "cosineSimilarity": 0.22951990365982056,
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/22098",
+      "title": "Helmet in the Shape of a Crouching Rabbit",
+      "artist": null,
+      "date": "17th century",
+      "metadataSource": "https://collectionapi.metmuseum.org/public/collection/v1/objects/22098"
+    }
+  ],
+  "retrievalMs": 1355.23,
+  "startupAndRetrievalMs": 3059.43,
+  "note": "Cosine similarity is not an identity probability. Candidates belong only to the selected pilot gallery."
+}
