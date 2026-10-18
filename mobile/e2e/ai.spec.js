@@ -13,6 +13,16 @@ const otherArtwork = { ...artwork, id: 'the-harvesters', title: 'The Harvesters'
 const candidates = { matched: true, requiresConfirmation: true, candidates: [{ artwork, similarity: .94 }, { artwork: otherArtwork, similarity: .87 }] };
 const confirmed = { artwork, aiExplanation: { summary: 'A quiet study of reflections.', historicalContext: 'Not available in the supplied notes.', interestingFacts: ['Oil on canvas.'], whyItMatters: 'An interpretation of colour.', suggestedNextArtwork: null }, interpretationLabel: 'AI interpretation based on collection notes; not museum-approved.' };
 
+test('camera reports a completed no-match rather than silently repeating an empty scan', async ({ page }) => {
+  let analyses = 0;
+  await page.route('**/api/ai/artworks/recognise*', route => route.fulfill({ json: { matched: false, candidates: [], message: 'No match in this collection (8 works). Move closer or try visual analysis.' } }));
+  await page.route('**/api/ai/artworks/analyse', route => { analyses++; return route.abort(); });
+  await openScan(page);
+  await expect(page.getByText('No match in this collection (8 works). Move closer or try visual analysis.', { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Analyse any artwork', exact: true })).toBeVisible();
+  expect(analyses).toBe(0, 'Repeated camera frames must not queue expensive vision requests.');
+});
+
 async function rememberCamera(page) {
   await expect.poll(() => page.evaluate(() => !!document.querySelector('video')?.srcObject)).toBe(true);
   await page.evaluate(() => { window.scanTracks = document.querySelector('video').srcObject.getTracks(); });

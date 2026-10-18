@@ -10,6 +10,7 @@ export const normalizedVector = (v, dimension) => validVector(v, dimension) && M
 export const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 export const referenceArtworks = () => [...catalogues].flatMap(([museumId, { collection }]) => collection.map(artwork => ({ museumId, artwork })));
 const catalogueHash = () => sha256(JSON.stringify(referenceArtworks().map(({ museumId, artwork }) => ({ museumId, artworkId: artwork.id, image: artwork.image }))));
+export const referenceCatalogueHash = catalogueHash;
 export const referenceImageUrl = artwork => new URL(`../../mobile/assets/${artwork.image}`, import.meta.url);
 
 export function cosineSimilarity(a, b) {

@@ -1,0 +1,30 @@
+{
+  "checks": {
+    "ai": {
+      "tests": 106,
+      "pass": 106,
+      "fail": 0
+    },
+    "core": {
+      "tests": 70,
+      "pass": 70,
+      "fail": 0
+    },
+    "mobile": {
+      "tests": 5,
+      "pass": 5,
+      "fail": 0
+    },
+    "startup": {
+      "tests": 14,
+      "pass": 14,
+      "fail": 0
+    }
+  },
+  "notes": [
+    "Test sets overlap.",
+    "18 browser regressions passed; final general-result UI passed all six affected cases.",
+    "Web export and mobile TypeScript check passed.",
+    "Actual model reports are separate from mocked browser regressions."
+  ]
+}

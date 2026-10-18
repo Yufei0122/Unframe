@@ -38,7 +38,7 @@ try {
     const result = await response.json();
     if (!response.ok) throw new AIError(response.status, result.code || 'VISION_HTTP_ERROR', result.error || 'The backend cannot analyse images. Restart it after updating the code.');
     if (!['uncertain', 'possible_match'].includes(result.identityStatus) || typeof result.description !== 'string') throw new AIError(502, 'INVALID_VISION_RESULT', 'The backend returned an invalid visual analysis.');
-    console.log(JSON.stringify({ check: 'real_general_artwork_analysis', liveVerified: true, identityConfirmed: false, model: config.visionModel, result, note: 'Real HTTP and vision inference. This does not establish identification accuracy. Inspect search.status and visualCheck for source coverage; all identity suggestions remain unconfirmed.' }, null, 2));
+    console.log(JSON.stringify({ check: 'real_general_artwork_analysis', liveVerified: true, visionInferenceVerified: result.method === 'vision' && (result.timings?.visionMs || 0) > 0, identityConfirmed: false, model: config.visionModel, result, note: 'Collection matches return without vision generation. To test the vision model, supply --image with a photo outside the bundled catalogue. This check does not establish identification accuracy; suggestions remain unconfirmed.' }, null, 2));
   } else if (!statuses.every(status => status.ready)) {
     console.error('AI is not ready. Follow the service/index messages above. If models are already installed, run npm.cmd run ai:up and keep that terminal open, then rerun ai:doctor in another terminal.');
     process.exitCode = 1;

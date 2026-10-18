@@ -16,7 +16,7 @@ export function createRecognitionService({ config, embeddings, store, ollama, co
     const candidates = [...scores].filter(([, score]) => score >= config.threshold)
       .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, MAX_RECOGNITION_CANDIDATES)
       .map(([id, similarity]) => ({ artwork: collection.find(a => a.id === id), similarity }));
-    if (!candidates.length) return { matched: false, candidates: [], requiresConfirmation: true, message: `No close match among the ${collection.length} artworks in this museum collection. Check the selected museum and try a clear photo with the whole artwork filling the frame.` };
+    if (!candidates.length) return { matched: false, candidates: [], requiresConfirmation: true, message: `No match in this collection (${collection.length} works). Move closer or try visual analysis.` };
     // Legacy fields describe the leading suggestion only. No explanation is generated while scanning.
     return { matched: true, candidates, requiresConfirmation: true, ...candidates[0], aiExplanation: null };
   }, async confirm(input, signal) {

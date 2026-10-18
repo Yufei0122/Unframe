@@ -1,5 +1,6 @@
 import { spawn, spawnSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadEnvFile } from 'node:process';
@@ -8,6 +9,8 @@ import { setTimeout as delay } from 'node:timers/promises';
 import net from 'node:net';
 import { planningConfiguration } from '../server/ai/planning-status.js';
 import { readAIConfig } from '../server/ai/config.js';
+import { ARTWORK_ANALYSIS_VERSION } from '../server/ai/vision.js';
+import { referenceCatalogueHash } from '../server/ai/embeddings.js';
 
 export const root = fileURLToPath(new URL('../', import.meta.url));
 try { loadEnvFile(path.join(root, '.env')); } catch (error) { if (error.code !== 'ENOENT') throw error; }
@@ -272,10 +275,13 @@ export async function ensureNode({ planningOnly = false } = {}) {
     const status = await getJSON(`${address}/api/ai/${planningOnly ? 'planning/status' : 'status?museumId=met'}`, 15000);
     const planning = planningConfiguration(readAIConfig());
     const expected = planningOnly ? planning
-      : { ...planning, embeddingModel: identity.model, embeddingPretrained: identity.pretrained, dimension: identity.dimensions, visionModel: readAIConfig().visionModel, analysisVersion: 3, visionTimeoutMs: readAIConfig().visionTimeoutMs, visionNumPredict: readAIConfig().visionNumPredict, visionNumCtx: readAIConfig().visionNumCtx, analysisBudgetMs: readAIConfig().analysisBudgetMs, explanationTimeoutMs: readAIConfig().explanationTimeoutMs };
+      : { ...planning, embeddingModel: identity.model, embeddingPretrained: identity.pretrained, dimension: identity.dimensions, visionModel: readAIConfig().visionModel, analysisVersion: ARTWORK_ANALYSIS_VERSION, visionTimeoutMs: readAIConfig().visionTimeoutMs, visionNumPredict: readAIConfig().visionNumPredict, visionNumCtx: readAIConfig().visionNumCtx, analysisBudgetMs: readAIConfig().analysisBudgetMs, explanationTimeoutMs: readAIConfig().explanationTimeoutMs };
     const mismatches = Object.entries(expected).filter(([key, value]) => status?.configuration?.[key] !== value).map(([key]) => key);
     if (mismatches.length) {
       throw new Error(`The Unframe process at ${address} is using an older or different AI configuration (${mismatches.join(', ')}). It was left running. Stop it in its original terminal, then rerun npm.cmd run ${planningOnly ? 'ai:routes' : 'ai:up'} (or choose another PORT).`);
+    }
+    if (!planningOnly && (status?.catalogueHash !== referenceCatalogueHash() || !status?.recognitionReady)) {
+      throw new Error(`Scan is not ready at ${address} (${status?.index?.code || 'outdated catalogue or image service'}). Stop the old backend in its original terminal and rerun npm.cmd start so the current catalogue and image index are loaded. ${status?.message || ''}`);
     }
   };
   const existing = await getJSON(`${address}/api/health`);
@@ -290,7 +296,21 @@ export function isUnframeMobileHTML(value) {
   return typeof value === 'string' && /<title>\s*Unframe\s*<\/title>/i.test(value) && /<div\s+id=["']root["']><\/div>/i.test(value);
 }
 
+export function mobilePreviewConfiguration(env = process.env) {
+  const api = `http://127.0.0.1:${env.PORT || 3000}`;
+  return { api, configurationHash: createHash('sha256').update(JSON.stringify([api,
+    env.EXPO_PUBLIC_AI_TIMEOUT_MS || null, env.EXPO_PUBLIC_CLIP_TIMEOUT_MS || null,
+    env.EXPO_PUBLIC_VISION_TIMEOUT_MS || null])).digest('hex') };
+}
+
+export function canReuseMobilePreview(record, expected) {
+  if (record?.root !== root || record.api !== expected.api || record.configurationHash !== expected.configurationHash || !Number.isInteger(record.pid) || record.pid <= 0) return false;
+  try { process.kill(record.pid, 0); return true; } catch { return false; }
+}
+
 export async function startMobileWeb() {
+  const expected = mobilePreviewConfiguration();
+  const recordFile = path.join(root, '.local-ai', 'mobile-preview.json');
   const occupied = await new Promise((resolve, reject) => {
     const socket = net.connect({ host: '127.0.0.1', port: 8081 });
     socket.setTimeout(2000);
@@ -299,24 +319,32 @@ export async function startMobileWeb() {
     socket.once('error', error => error.code === 'ECONNREFUSED' ? resolve(false) : reject(error));
   });
   if (occupied) {
+    let unframe = false;
     try {
       const response = await fetch('http://127.0.0.1:8081/', { redirect: 'error', signal: AbortSignal.timeout(5000) });
       const html = await response.text();
-      if (response.ok && isUnframeMobileHTML(html)) {
-        console.log('Reusing the existing Unframe mobile web preview at http://localhost:8081.');
-        return { reused: true };
-      }
+      unframe = response.ok && isUnframeMobileHTML(html);
     } catch { /* A listener that is not a readable Unframe preview must not be reused. */ }
+    if (unframe) {
+      let record;
+      try { record = JSON.parse(await readFile(recordFile, 'utf8')); } catch { /* Older/unmanaged Expo sessions have no verified configuration. */ }
+      if (!canReuseMobilePreview(record, expected)) throw new Error(`The Unframe preview on port 8081 has older or unverified backend settings. Stop its Expo terminal, then rerun npm.cmd start to connect it to ${expected.api}.`);
+      console.log(`Reusing Unframe mobile web at http://localhost:8081 with backend ${expected.api}.`);
+      return { reused: true };
+    }
     throw new Error('Port 8081 is already in use by another application. Stop that application or its terminal, then rerun npm.cmd start. The existing process was left untouched.');
   }
   const cli = path.join(root, 'mobile', 'node_modules', 'expo', 'bin', 'cli');
   if (!existsSync(cli)) throw new Error('Mobile dependencies are missing. Run npm.cmd --prefix mobile ci.');
-  const api = `http://127.0.0.1:${process.env.PORT || 3000}`;
+  const api = expected.api;
   console.log(`Starting mobile web on http://localhost:8081 with backend ${api}.`);
   console.log(`Planning chat/routes: no automatic timeout; cancel in the app. Other AI features retain their configured deadlines. Restart backend and Expo after changing .env.`);
-  return spawnOwned(process.execPath, [cli, 'start', '--web', '--port', '8081', '--offline'], {
+  const child = spawnOwned(process.execPath, [cli, 'start', '--web', '--port', '8081', '--offline', '--clear'], {
     cwd: path.join(root, 'mobile'), env: { ...process.env, EXPO_PUBLIC_API_URL: api, EXPO_NO_TELEMETRY: '1' },
   });
+  await mkdir(path.dirname(recordFile), { recursive: true });
+  await writeFile(recordFile, JSON.stringify({ root, pid: child.pid, ...expected }));
+  return child;
 }
 
 export async function keepRunning() {

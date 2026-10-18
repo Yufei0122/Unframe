@@ -1,0 +1,17 @@
+
+> unframe@0.1.0 start
+> node scripts/ai-up.mjs --web
+
+Using updated inference settings for this run (AI_RESPONSE_BUDGET_MS, AI_RECOGNITION_BUDGET_MS, AI_ANALYSIS_BUDGET_MS, OPENCLIP_TIMEOUT_MS, OLLAMA_VISION_TIMEOUT_MS, OLLAMA_TIMEOUT_MS, OLLAMA_NUM_CTX, OLLAMA_NUM_GPU, OLLAMA_NUM_PREDICT, OLLAMA_KEEP_ALIVE, OLLAMA_PLANNING_NUM_PREDICT, EXPO_PUBLIC_AI_TIMEOUT_MS, EXPO_PUBLIC_CLIP_TIMEOUT_MS, EXPO_PUBLIC_VISION_TIMEOUT_MS). Planning has no generation deadline.
+Reusing Ollama 0.40.5 at http://127.0.0.1:11434.
+Ollama model qwen3:1.7b is installed.
+Ollama model qwen3:1.7b is installed.
+Warming qwen3:1.7b; startup time is measured separately from planning responses.
+qwen3:1.7b is warm (6 ms).
+Ollama model qwen3-vl:2b-instruct is installed.
+General artwork visual analysis is available.
+Reusing OpenCLIP at http://127.0.0.1:8001.
+Artwork index identity, catalogue and source images are current.
+Reusing Unframe backend at http://127.0.0.1:3004.
+Reusing Unframe mobile web at http://localhost:8081 with backend http://127.0.0.1:3004.
+All services were already running. No existing service will be stopped by this command.

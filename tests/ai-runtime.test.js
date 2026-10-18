@@ -1,3 +1,4 @@
+import { ARTWORK_ANALYSIS_VERSION } from '../server/ai/vision.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import http from 'node:http';
@@ -6,6 +7,7 @@ import path from 'node:path';
 import { createHash, randomUUID } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import { readAIConfig } from '../server/ai/config.js';
+import { referenceCatalogueHash } from '../server/ai/embeddings.js';
 import { planningConfiguration } from '../server/ai/planning-status.js';
 
 async function mockServer(t, responseFor) {
@@ -34,6 +36,20 @@ test('only an Unframe Expo document is eligible for safe mobile preview reuse', 
   assert.equal(api.isUnframeMobileHTML('<html><title>Another app</title><div id="root"></div></html>'), false);
   assert.equal(api.isUnframeMobileHTML('<html><title>Unframe</title></html>'), false);
   api.restore();
+});
+
+test('preview reuse requires a live owned process with the same backend and client budgets', async () => {
+  const api = await runtime({});
+  try {
+    const expected = api.mobilePreviewConfiguration({ PORT: '3008' });
+    const record = { root: api.root, pid: process.pid, ...expected };
+    assert.equal(api.canReuseMobilePreview(record, expected), true);
+    assert.equal(api.canReuseMobilePreview(null, expected), false);
+    assert.equal(api.canReuseMobilePreview({ ...record, pid: -1 }, expected), false);
+    assert.equal(api.canReuseMobilePreview({ ...record, root: '/another/workspace' }, expected), false);
+    assert.equal(api.canReuseMobilePreview(record, api.mobilePreviewConfiguration({ PORT: '3004' })), false);
+    assert.equal(api.canReuseMobilePreview(record, api.mobilePreviewConfiguration({ PORT: '3008', EXPO_PUBLIC_VISION_TIMEOUT_MS: '5000' })), false);
+  } finally { api.restore(); }
 });
 
 test('interactive profile migrates legacy slow defaults without overwriting explicit tuning', async () => {
@@ -192,7 +208,7 @@ test('startup rejects stale inference settings for both route-only and full star
     ? { app: 'unframe', status: 'ok', workspace }
     : { configuration: { ...planningConfiguration(readAIConfig()), embeddingModel: clipIdentity.model,
       embeddingPretrained: clipIdentity.pretrained, dimension: clipIdentity.dimensions,
-      visionModel: readAIConfig().visionModel, analysisVersion: 3, visionTimeoutMs: readAIConfig().visionTimeoutMs, visionNumPredict: readAIConfig().visionNumPredict, visionNumCtx: readAIConfig().visionNumCtx, analysisBudgetMs: readAIConfig().analysisBudgetMs, explanationTimeoutMs: readAIConfig().explanationTimeoutMs, ...stale } });
+      visionModel: readAIConfig().visionModel, analysisVersion: ARTWORK_ANALYSIS_VERSION, visionTimeoutMs: readAIConfig().visionTimeoutMs, visionNumPredict: readAIConfig().visionNumPredict, visionNumCtx: readAIConfig().visionNumCtx, analysisBudgetMs: readAIConfig().analysisBudgetMs, explanationTimeoutMs: readAIConfig().explanationTimeoutMs, ...stale } });
   const api = await runtime({ PORT: new URL(address).port }); t.after(api.restore);
   const dataFile = path.resolve(process.env.UNFRAME_DATA_DIR || path.join(api.root, 'data'), 'unframe.json');
   workspace = createHash('sha256').update(process.platform === 'win32' ? dataFile.toLowerCase() : dataFile).digest('hex');
@@ -216,4 +232,25 @@ test('planning warmup uses the planning context rather than the artwork context'
   t.after(api.restore);
   await api.warmOllamaModel('qwen3:1.7b', { planning: true });
   assert.equal(payload.options.num_ctx, 6144); assert.equal(payload.options.num_gpu, 0); assert.equal(payload.prompt, '');
+});
+
+test('full startup rejects a stale catalogue or broken Scan index even when model settings match', async t => {
+  let workspace, ready = false, hash = referenceCatalogueHash();
+  const address = await mockServer(t, url => url === '/api/health' ? { app: 'unframe', workspace } : {
+    configuration: { ...planningConfiguration(readAIConfig()), embeddingModel: clipIdentity.model,
+      embeddingPretrained: clipIdentity.pretrained, dimension: clipIdentity.dimensions,
+      visionModel: readAIConfig().visionModel, analysisVersion: ARTWORK_ANALYSIS_VERSION,
+      visionTimeoutMs: readAIConfig().visionTimeoutMs, visionNumPredict: readAIConfig().visionNumPredict,
+      visionNumCtx: readAIConfig().visionNumCtx, analysisBudgetMs: readAIConfig().analysisBudgetMs,
+      explanationTimeoutMs: readAIConfig().explanationTimeoutMs },
+    catalogueHash: hash, recognitionReady: ready, index: { code: 'INDEX_INCOMPATIBLE' },
+  });
+  const api = await runtime({ PORT: new URL(address).port }); t.after(api.restore);
+  const dataFile = path.resolve(process.env.UNFRAME_DATA_DIR || path.join(api.root, 'data'), 'unframe.json');
+  workspace = createHash('sha256').update(process.platform === 'win32' ? dataFile.toLowerCase() : dataFile).digest('hex');
+  await assert.rejects(api.ensureNode(), /Scan is not ready/);
+  ready = true; hash = 'old catalogue';
+  await assert.rejects(api.ensureNode(), /Scan is not ready/);
+  hash = referenceCatalogueHash();
+  assert.equal((await api.ensureNode()).reused, true);
 });

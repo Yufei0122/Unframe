@@ -27,7 +27,11 @@ test('real local Scan recognises an uploaded artwork and returns analysis for an
   await page.goto(process.env.UNFRAME_LIVE_WEB_URL || 'http://127.0.0.1:8081'); await enterWelcome(page);
   console.log('LIVE entering Scan');
   await page.getByRole('button', { name: 'Start visit', exact: true }).click();
+  const cameraResponse = page.waitForResponse(response => new URL(response.url()).pathname.endsWith('/artworks/recognise') && response.request().method() === 'POST');
   await page.getByRole('button', { name: 'Scan an artwork', exact: true }).click();
+  expect((await cameraResponse).status()).toBe(200);
+  await expect(page.getByText('No match in this collection', { exact: false })).toBeVisible();
+  expect(requests.some(row => row.endpoint.endsWith('/analyse'))).toBe(false, 'Camera sampling must not invoke slow vision automatically.');
   await page.getByLabel('Upload artwork image').setInputFiles(path.resolve(__dirname, '../assets/water-lilies.jpg'));
   console.log('LIVE uploaded Water Lilies');
   await page.getByRole('button', { name: 'Select Water Lilies', exact: true }).click();
@@ -37,9 +41,12 @@ test('real local Scan recognises an uploaded artwork and returns analysis for an
   await page.screenshot({ path: 'test-results/live-scan-catalogue.png' });
   console.log('LIVE catalogue recognition and interpretation passed');
   await page.getByRole('button', { name: 'Resume scanning' }).click();
+  const generalResponse = page.waitForResponse(response => new URL(response.url()).pathname.endsWith('/artworks/analyse') && response.request().method() === 'POST', { timeout: 135000 });
   await page.getByLabel('Upload artwork image').setInputFiles(path.resolve(__dirname, '../assets/quiet-geometry.png'));
   console.log('LIVE uploaded an unfamiliar image');
   await expect(page.getByTestId('artwork-analysis-result')).toBeVisible({ timeout: 135000 });
+  expect((await (await generalResponse).json()).method).toBe('vision');
+  await expect(page.getByRole('heading', { name: 'Artwork not identified', exact: true })).toBeVisible();
   await expect(page.getByRole('alert')).toHaveCount(0);
   await page.screenshot({ path: 'test-results/live-scan-general.png' });
   // General vision unloads the text model on memory-constrained Ollama servers.

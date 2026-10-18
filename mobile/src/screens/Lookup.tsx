@@ -38,7 +38,7 @@ function NativeLookupContent() {
   const [cameraKey, setCameraKey] = useState(0), [paused, setPaused] = useState(false);
   const [busy, setBusy] = useState(false), [error, setError] = useState('');
   const [candidates, setCandidates] = useState<RecognitionCandidate[]>([]);
-  const [message, setMessage] = useState('Point your camera at an artwork. Scanning starts automatically.');
+  const [message, setMessage] = useState('');
   const [selected, setSelected] = useState<RecognitionCandidate | null>(null);
   const [result, setResult] = useState<ConfirmationResult | null>(null);
   const [confirming, setConfirming] = useState(false), [expanded, setExpanded] = useState(false);
@@ -136,7 +136,7 @@ function NativeLookupContent() {
     setAnalysis(null);
     loop.stop(); cancelConfirmation(); setSelected(null); setResult(null); setExpanded(false);
     setCandidates([]); setError(''); setCameraError(''); setPaused(false); setCameraReady(false);
-    setMessage('Point your camera at an artwork. Scanning starts automatically.');
+    setMessage('');
     setCameraKey(key => key + 1);
   }
   async function analyseImage(capture: () => Promise<{ uri: string; width: number; height: number } | null>, ownedOriginal: boolean) {
@@ -232,6 +232,7 @@ function NativeLookupContent() {
       <View style={styles.sheet}>
         {!!candidates.length && <T style={s.label}>Choose the artwork in view</T>}
         {(busy || analysing) && <View style={styles.scanAnimation}><ArtworkScanTransition compact label={analysing ? (slowAnalysis ? 'Taking a closer look…' : 'Looking closer…') : 'Finding a match…'}/></View>}
+        {!analysing && !candidates.length && !error && !!message && <T accessibilityLiveRegion="polite" style={s.small}>{message}</T>}
         {!!error && <><T accessibilityRole="alert" style={s.small}>{error}</T><Button title="Try scanning again" secondary onPress={scanAgain}/></>}
         {analysing ? <Button title="Cancel analysis" secondary onPress={scanAgain}/> : <View style={{ gap: 8 }}>{cameraVisible && <Button title="Analyse any artwork" secondary disabled={busy || !cameraReady} onPress={analyseCamera}/>}<Button title="Analyse photo" secondary onPress={analysePhoto}/></View>}
         {!!candidates.length && <ScrollView style={styles.candidateList} contentContainerStyle={{ paddingBottom: 4 }}>{candidates.map(candidate => <Pressable key={candidate.artwork.id} accessibilityRole="button" accessibilityLabel={`Confirm ${candidate.artwork.title} by ${candidate.artwork.artist}`} onPress={() => { void choose(candidate); }} style={styles.candidate}>

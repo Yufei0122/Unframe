@@ -26,6 +26,8 @@ export interface RecognitionResult {
   aiExplanation?: null;
 }
 export interface ArtworkAnalysis {
+  method?: 'collection' | 'vision' | 'empty';
+  timings?: { matchingMs: number; visionMs: number; searchMs: number; totalMs: number };
   identityStatus: 'uncertain' | 'possible_match';
   artworkPresence: 'likely' | 'uncertain' | 'unlikely';
   description: string;

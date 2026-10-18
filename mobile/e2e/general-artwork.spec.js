@@ -15,12 +15,14 @@ test('an unknown uploaded photo receives visual analysis with uncertainty and so
   await openScan(page);
   expect(analyses).toBe(0, 'Camera sampling must not repeatedly invoke the large vision model');
   await page.getByLabel('Upload artwork image').setInputFiles(photo);
-  await expect(page.getByRole('heading', { name: 'Mona Lisa', exact: true })).toBeVisible();
-  await expect(page.getByText('Leonardo da Vinci', { exact: true })).toBeVisible();
-  await expect(page.getByText('AI suggestion · Unverified', { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Artwork not identified', exact: true })).toBeVisible();
+  await expect(page.getByText('Leonardo da Vinci', { exact: false })).toHaveCount(0);
+  await expect(page.getByText('Visual description only', { exact: true })).toBeVisible();
   await expect(page.getByText('The pose suggests a comparison.', { exact: true })).toHaveCount(0);
   await expect(page.getByText('A figure against a landscape.')).toBeVisible();
   await page.getByRole('button', { name: 'More details' }).click();
+  await expect(page.getByText('AI suggestions · unverified', { exact: true })).toBeVisible();
+  await expect(page.getByText('Mona Lisa · Leonardo da Vinci', { exact: true })).toBeVisible();
   await expect(page.getByText('The pose suggests a comparison.', { exact: true })).toBeVisible();
   await expect(page.getByText('Some public sources could not be reached.', { exact: false })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Open artwork details' })).toHaveCount(0);
@@ -37,7 +39,7 @@ test('resuming during general analysis discards the late result and restarts lig
   await expect(page.getByRole('progressbar', { name: 'Looking closer…' })).toBeVisible();
   await expect(page.getByText('Target: under 15 seconds.', { exact: false })).toHaveCount(0);
   await expect(page.getByText('Camera frames go to OpenCLIP', { exact: false })).toHaveCount(0);
-  await page.getByRole('button', { name: 'Resume scanning', exact: true }).click();
+  await page.getByRole('button', { name: 'Cancel analysis', exact: true }).click();
   await pending.fulfill({ json: result }).catch(() => {});
   await expect(page.getByTestId('artwork-analysis-result')).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Pause scanning', exact: true })).toBeVisible();
@@ -64,7 +66,7 @@ test('CPU vision survives the former deadline and returns the completed result',
   await expect(page.getByRole('progressbar', { name: 'Taking a closer look…' })).toBeVisible();
   await expect(page.getByRole('alert')).toHaveCount(0);
   await pending.fulfill({ json: result });
-  await expect(page.getByRole('heading', { name: 'Mona Lisa', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Artwork not identified', exact: true })).toBeVisible();
 });
 
 test('a description without an identity is explicitly labelled as an unidentified artwork', async ({ page }) => {

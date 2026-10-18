@@ -1,0 +1,39 @@
+{
+  "elapsedMs": 40986,
+  "status": 200,
+  "result": {
+    "artworkPresence": "likely",
+    "description": "A lush, impressionistic depiction of a pond filled with lily pads and water plants. The composition is dense with overlapping forms, creating a sense of depth and movement. The color palette is dominated by deep greens, blues, and purples, with accents of white and red, evoking a tranquil, natural scene.",
+    "visualFeatures": [
+      "impressionistic brushstrokes",
+      "lily pads and water plants",
+      "dappled light and reflections"
+    ],
+    "visibleText": [],
+    "hypotheses": [
+      {
+        "title": "Water Lilies",
+        "artist": "Claude Monet",
+        "basis": "The photograph resembles the museum collection reference. Compare before confirming."
+      }
+    ],
+    "identityStatus": "possible_match",
+    "sources": [
+      {
+        "id": "collection:water-lilies",
+        "provider": "The Metropolitan Museum of Art · Collection record 437137",
+        "title": "Water Lilies",
+        "artist": "Claude Monet",
+        "date": "1916–19",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "imageUrl": null,
+        "visualCheck": "similar",
+        "similarity": 1
+      }
+    ],
+    "search": {
+      "status": "not_needed",
+      "providers": []
+    }
+  }
+}

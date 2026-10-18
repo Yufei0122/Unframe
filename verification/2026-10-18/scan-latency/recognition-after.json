@@ -1,0 +1,1105 @@
+{
+  "startedAt": "2026-10-18T11:36:11.482Z",
+  "completedAt": "2026-10-18T11:36:20.866Z",
+  "passed": true,
+  "scope": "catalogue_recognition_acceptance",
+  "verification": "Real OpenCLIP embeddings and Node HTTP catalogue recognition; no mocks; no guide/chat inference",
+  "model": {
+    "embedding": "ViT-B-32",
+    "pretrained": "laion2b_s34b_b79k",
+    "dimensions": 512,
+    "guide": "qwen3:1.7b",
+    "planning": "qwen3:1.7b"
+  },
+  "backend": "http://127.0.0.1:3004",
+  "threshold": 0.8,
+  "recognitionBudgetMs": 5000,
+  "responseBudgetMs": 15000,
+  "limitation": "Small, controlled sample of bundled references, mild transformations and six negative controls. Cosine similarity is neither probability nor accuracy. These results do not establish real visitor-camera accuracy or a general false-positive rate.",
+  "references": [
+    {
+      "museumId": "met",
+      "artworkId": "water-lilies",
+      "variant": "reference",
+      "expectedSimilarity": 0.9997296096324385,
+      "topArtworkId": "water-lilies",
+      "maxSimilarity": 0.9997296096324385,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.3312020142443194,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "water-lilies",
+      "variant": "resize_384px",
+      "expectedSimilarity": 0.9211448163740878,
+      "topArtworkId": "water-lilies",
+      "maxSimilarity": 0.9211448163740878,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.2647675618545562,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "water-lilies",
+      "variant": "jpeg_quality_65",
+      "expectedSimilarity": 0.9981591372499423,
+      "topArtworkId": "water-lilies",
+      "maxSimilarity": 0.9981591372499423,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.33093931459284187,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "water-lilies",
+      "variant": "center_crop_5pct_per_edge",
+      "expectedSimilarity": 0.9560234761012216,
+      "topArtworkId": "water-lilies",
+      "maxSimilarity": 0.9560234761012216,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.3218818860025281,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "the-harvesters",
+      "variant": "reference",
+      "expectedSimilarity": 0.9997241210582314,
+      "topArtworkId": "the-harvesters",
+      "maxSimilarity": 0.9997241210582314,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.454327870557822,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "the-harvesters",
+      "variant": "resize_384px",
+      "expectedSimilarity": 0.9271388192854721,
+      "topArtworkId": "the-harvesters",
+      "maxSimilarity": 0.9271388192854721,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.4141365068573928,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "the-harvesters",
+      "variant": "jpeg_quality_65",
+      "expectedSimilarity": 0.953774591326673,
+      "topArtworkId": "the-harvesters",
+      "maxSimilarity": 0.953774591326673,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.4312221983465073,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "the-harvesters",
+      "variant": "center_crop_5pct_per_edge",
+      "expectedSimilarity": 0.919658604393941,
+      "topArtworkId": "the-harvesters",
+      "maxSimilarity": 0.919658604393941,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.4105832947889876,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "the-dancing-class",
+      "variant": "reference",
+      "expectedSimilarity": 0.9999107470458436,
+      "topArtworkId": "the-dancing-class",
+      "maxSimilarity": 0.9999107470458436,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.33432732051435277,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "the-dancing-class",
+      "variant": "resize_384px",
+      "expectedSimilarity": 0.9422946144673339,
+      "topArtworkId": "the-dancing-class",
+      "maxSimilarity": 0.9422946144673339,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.31712593745711737,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "the-dancing-class",
+      "variant": "jpeg_quality_65",
+      "expectedSimilarity": 0.9533303520397662,
+      "topArtworkId": "the-dancing-class",
+      "maxSimilarity": 0.9533303520397662,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.30776306740777093,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "the-dancing-class",
+      "variant": "center_crop_5pct_per_edge",
+      "expectedSimilarity": 0.9176846170501091,
+      "topArtworkId": "the-dancing-class",
+      "maxSimilarity": 0.9176846170501091,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.2752882977134141,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "wheat-field-with-cypresses",
+      "variant": "reference",
+      "expectedSimilarity": 0.9997471806154471,
+      "topArtworkId": "wheat-field-with-cypresses",
+      "maxSimilarity": 0.9997471806154471,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.3273450807933377,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "wheat-field-with-cypresses",
+      "variant": "resize_384px",
+      "expectedSimilarity": 0.9645024625138127,
+      "topArtworkId": "wheat-field-with-cypresses",
+      "maxSimilarity": 0.9645024625138127,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.33621175421115246,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "wheat-field-with-cypresses",
+      "variant": "jpeg_quality_65",
+      "expectedSimilarity": 0.9700727100351167,
+      "topArtworkId": "wheat-field-with-cypresses",
+      "maxSimilarity": 0.9700727100351167,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.3301990528557244,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "wheat-field-with-cypresses",
+      "variant": "center_crop_5pct_per_edge",
+      "expectedSimilarity": 0.9510648949155212,
+      "topArtworkId": "wheat-field-with-cypresses",
+      "maxSimilarity": 0.9510648949155212,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.2888505079747199,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "young-woman-with-a-water-pitcher",
+      "variant": "reference",
+      "expectedSimilarity": 0.9999457694664857,
+      "topArtworkId": "young-woman-with-a-water-pitcher",
+      "maxSimilarity": 0.9999457694664857,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.4402006832484634,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "young-woman-with-a-water-pitcher",
+      "variant": "resize_384px",
+      "expectedSimilarity": 0.9576867167904184,
+      "topArtworkId": "young-woman-with-a-water-pitcher",
+      "maxSimilarity": 0.9576867167904184,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.43151899045923425,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "young-woman-with-a-water-pitcher",
+      "variant": "jpeg_quality_65",
+      "expectedSimilarity": 0.968780978516506,
+      "topArtworkId": "young-woman-with-a-water-pitcher",
+      "maxSimilarity": 0.968780978516506,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.4090113290487303,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "young-woman-with-a-water-pitcher",
+      "variant": "center_crop_5pct_per_edge",
+      "expectedSimilarity": 0.9287558787375784,
+      "topArtworkId": "young-woman-with-a-water-pitcher",
+      "maxSimilarity": 0.9287558787375784,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.3860675408586579,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "the-card-players",
+      "variant": "reference",
+      "expectedSimilarity": 0.9998955781923308,
+      "topArtworkId": "the-card-players",
+      "maxSimilarity": 0.9998955781923308,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.4388794177605321,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "the-card-players",
+      "variant": "resize_384px",
+      "expectedSimilarity": 0.9470993190833161,
+      "topArtworkId": "the-card-players",
+      "maxSimilarity": 0.9470993190833161,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.42254797102707,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "the-card-players",
+      "variant": "jpeg_quality_65",
+      "expectedSimilarity": 0.9660501121558657,
+      "topArtworkId": "the-card-players",
+      "maxSimilarity": 0.9660501121558657,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.42452624017504437,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "the-card-players",
+      "variant": "center_crop_5pct_per_edge",
+      "expectedSimilarity": 0.8944967674626961,
+      "topArtworkId": "the-card-players",
+      "maxSimilarity": 0.8944967674626961,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.3797673966409363,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "madame-charpentier-and-her-children",
+      "variant": "reference",
+      "expectedSimilarity": 0.9999519875432409,
+      "topArtworkId": "madame-charpentier-and-her-children",
+      "maxSimilarity": 0.9999519875432409,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.3342920756133513,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "madame-charpentier-and-her-children",
+      "variant": "resize_384px",
+      "expectedSimilarity": 0.9433541405305726,
+      "topArtworkId": "madame-charpentier-and-her-children",
+      "maxSimilarity": 0.9433541405305726,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.2980610047554868,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "madame-charpentier-and-her-children",
+      "variant": "jpeg_quality_65",
+      "expectedSimilarity": 0.9647051214402805,
+      "topArtworkId": "madame-charpentier-and-her-children",
+      "maxSimilarity": 0.9647051214402805,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.30414868916207494,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "madame-charpentier-and-her-children",
+      "variant": "center_crop_5pct_per_edge",
+      "expectedSimilarity": 0.9236887106634294,
+      "topArtworkId": "madame-charpentier-and-her-children",
+      "maxSimilarity": 0.9236887106634294,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.2913008095999643,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "self-portrait-with-a-straw-hat",
+      "variant": "reference",
+      "expectedSimilarity": 0.9981919552208659,
+      "topArtworkId": "self-portrait-with-a-straw-hat",
+      "maxSimilarity": 0.9981919552208659,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.32494681387858504,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "self-portrait-with-a-straw-hat",
+      "variant": "resize_384px",
+      "expectedSimilarity": 0.9666402060059657,
+      "topArtworkId": "self-portrait-with-a-straw-hat",
+      "maxSimilarity": 0.9666402060059657,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.30657485619252367,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "self-portrait-with-a-straw-hat",
+      "variant": "jpeg_quality_65",
+      "expectedSimilarity": 0.9837169476492637,
+      "topArtworkId": "self-portrait-with-a-straw-hat",
+      "maxSimilarity": 0.9837169476492637,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.3182758895612554,
+      "passed": true
+    },
+    {
+      "museumId": "met",
+      "artworkId": "self-portrait-with-a-straw-hat",
+      "variant": "center_crop_5pct_per_edge",
+      "expectedSimilarity": 0.9642395625306315,
+      "topArtworkId": "self-portrait-with-a-straw-hat",
+      "maxSimilarity": 0.9642395625306315,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.29548766460989584,
+      "passed": true
+    },
+    {
+      "museumId": "goma",
+      "artworkId": "goma-obliteration-room",
+      "variant": "reference",
+      "expectedSimilarity": 0.9999692987566184,
+      "topArtworkId": "goma-obliteration-room",
+      "maxSimilarity": 0.9999692987566184,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.5572732479474576,
+      "passed": true
+    },
+    {
+      "museumId": "goma",
+      "artworkId": "goma-obliteration-room",
+      "variant": "resize_384px",
+      "expectedSimilarity": 0.9073659993003668,
+      "topArtworkId": "goma-obliteration-room",
+      "maxSimilarity": 0.9073659993003668,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.5345136954888215,
+      "passed": true
+    },
+    {
+      "museumId": "goma",
+      "artworkId": "goma-obliteration-room",
+      "variant": "jpeg_quality_65",
+      "expectedSimilarity": 0.9722209774387381,
+      "topArtworkId": "goma-obliteration-room",
+      "maxSimilarity": 0.9722209774387381,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.5599950005997473,
+      "passed": true
+    },
+    {
+      "museumId": "goma",
+      "artworkId": "goma-obliteration-room",
+      "variant": "center_crop_5pct_per_edge",
+      "expectedSimilarity": 0.9337235334224524,
+      "topArtworkId": "goma-obliteration-room",
+      "maxSimilarity": 0.9337235334224524,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.5036176653749036,
+      "passed": true
+    },
+    {
+      "museumId": "goma",
+      "artworkId": "goma-in-bed",
+      "variant": "reference",
+      "expectedSimilarity": 0.999277927321701,
+      "topArtworkId": "goma-in-bed",
+      "maxSimilarity": 0.999277927321701,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.5603734115856335,
+      "passed": true
+    },
+    {
+      "museumId": "goma",
+      "artworkId": "goma-in-bed",
+      "variant": "resize_384px",
+      "expectedSimilarity": 0.9149385347585367,
+      "topArtworkId": "goma-in-bed",
+      "maxSimilarity": 0.9149385347585367,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.5572444343143786,
+      "passed": true
+    },
+    {
+      "museumId": "goma",
+      "artworkId": "goma-in-bed",
+      "variant": "jpeg_quality_65",
+      "expectedSimilarity": 0.9572994746385258,
+      "topArtworkId": "goma-in-bed",
+      "maxSimilarity": 0.9572994746385258,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.5509525630712291,
+      "passed": true
+    },
+    {
+      "museumId": "goma",
+      "artworkId": "goma-in-bed",
+      "variant": "center_crop_5pct_per_edge",
+      "expectedSimilarity": 0.9432194368288137,
+      "topArtworkId": "goma-in-bed",
+      "maxSimilarity": 0.9432194368288137,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.551526813901037,
+      "passed": true
+    },
+    {
+      "museumId": "goma",
+      "artworkId": "goma-heritage",
+      "variant": "reference",
+      "expectedSimilarity": 0.9999277531044348,
+      "topArtworkId": "goma-heritage",
+      "maxSimilarity": 0.9999277531044348,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.5887097483697505,
+      "passed": true
+    },
+    {
+      "museumId": "goma",
+      "artworkId": "goma-heritage",
+      "variant": "resize_384px",
+      "expectedSimilarity": 0.8843139311852349,
+      "topArtworkId": "goma-heritage",
+      "maxSimilarity": 0.8843139311852349,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.5227236581846755,
+      "passed": true
+    },
+    {
+      "museumId": "goma",
+      "artworkId": "goma-heritage",
+      "variant": "jpeg_quality_65",
+      "expectedSimilarity": 0.9946972702863149,
+      "topArtworkId": "goma-heritage",
+      "maxSimilarity": 0.9946972702863149,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.5903233111445993,
+      "passed": true
+    },
+    {
+      "museumId": "goma",
+      "artworkId": "goma-heritage",
+      "variant": "center_crop_5pct_per_edge",
+      "expectedSimilarity": 0.928006569964303,
+      "topArtworkId": "goma-heritage",
+      "maxSimilarity": 0.928006569964303,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.5837049081568341,
+      "passed": true
+    },
+    {
+      "museumId": "goma",
+      "artworkId": "goma-soul-under-the-moon",
+      "variant": "reference",
+      "expectedSimilarity": 0.9879559320053991,
+      "topArtworkId": "goma-soul-under-the-moon",
+      "maxSimilarity": 0.9879559320053991,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.6893751268992436,
+      "passed": true
+    },
+    {
+      "museumId": "goma",
+      "artworkId": "goma-soul-under-the-moon",
+      "variant": "resize_384px",
+      "expectedSimilarity": 0.920983925742248,
+      "topArtworkId": "goma-soul-under-the-moon",
+      "maxSimilarity": 0.920983925742248,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.6778304710089387,
+      "passed": true
+    },
+    {
+      "museumId": "goma",
+      "artworkId": "goma-soul-under-the-moon",
+      "variant": "jpeg_quality_65",
+      "expectedSimilarity": 0.9671918767184663,
+      "topArtworkId": "goma-soul-under-the-moon",
+      "maxSimilarity": 0.9671918767184663,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.669197985099917,
+      "passed": true
+    },
+    {
+      "museumId": "goma",
+      "artworkId": "goma-soul-under-the-moon",
+      "variant": "center_crop_5pct_per_edge",
+      "expectedSimilarity": 0.8994907865901136,
+      "topArtworkId": "goma-soul-under-the-moon",
+      "maxSimilarity": 0.8994907865901136,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.5904926563770789,
+      "passed": true
+    },
+    {
+      "museumId": "qut",
+      "artworkId": "qut-river-rhythm",
+      "variant": "reference",
+      "expectedSimilarity": 0.9970865907233054,
+      "topArtworkId": "qut-river-rhythm",
+      "maxSimilarity": 0.9970865907233054,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.22524241951994628,
+      "passed": true
+    },
+    {
+      "museumId": "qut",
+      "artworkId": "qut-river-rhythm",
+      "variant": "resize_384px",
+      "expectedSimilarity": 0.9047063011354742,
+      "topArtworkId": "qut-river-rhythm",
+      "maxSimilarity": 0.9047063011354742,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.20207378290063405,
+      "passed": true
+    },
+    {
+      "museumId": "qut",
+      "artworkId": "qut-river-rhythm",
+      "variant": "jpeg_quality_65",
+      "expectedSimilarity": 0.9618988853143461,
+      "topArtworkId": "qut-river-rhythm",
+      "maxSimilarity": 0.9618988853143461,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.21939976004356543,
+      "passed": true
+    },
+    {
+      "museumId": "qut",
+      "artworkId": "qut-river-rhythm",
+      "variant": "center_crop_5pct_per_edge",
+      "expectedSimilarity": 0.9730274964263976,
+      "topArtworkId": "qut-river-rhythm",
+      "maxSimilarity": 0.9730274964263976,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.20284817257981613,
+      "passed": true
+    },
+    {
+      "museumId": "qut",
+      "artworkId": "qut-soft-architecture",
+      "variant": "reference",
+      "expectedSimilarity": 0.9953946503797891,
+      "topArtworkId": "qut-soft-architecture",
+      "maxSimilarity": 0.9953946503797891,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.33199910539295396,
+      "passed": true
+    },
+    {
+      "museumId": "qut",
+      "artworkId": "qut-soft-architecture",
+      "variant": "resize_384px",
+      "expectedSimilarity": 0.9258089478272046,
+      "topArtworkId": "qut-soft-architecture",
+      "maxSimilarity": 0.9258089478272046,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.3384860241836547,
+      "passed": true
+    },
+    {
+      "museumId": "qut",
+      "artworkId": "qut-soft-architecture",
+      "variant": "jpeg_quality_65",
+      "expectedSimilarity": 0.9810297758001467,
+      "topArtworkId": "qut-soft-architecture",
+      "maxSimilarity": 0.9810297758001467,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.3282447815112962,
+      "passed": true
+    },
+    {
+      "museumId": "qut",
+      "artworkId": "qut-soft-architecture",
+      "variant": "center_crop_5pct_per_edge",
+      "expectedSimilarity": 0.9549852186091751,
+      "topArtworkId": "qut-soft-architecture",
+      "maxSimilarity": 0.9549852186091751,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.3156253683536121,
+      "passed": true
+    },
+    {
+      "museumId": "qut",
+      "artworkId": "qut-between-places",
+      "variant": "reference",
+      "expectedSimilarity": 0.9999731741251062,
+      "topArtworkId": "qut-between-places",
+      "maxSimilarity": 0.9999731741251062,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.23087136334515312,
+      "passed": true
+    },
+    {
+      "museumId": "qut",
+      "artworkId": "qut-between-places",
+      "variant": "resize_384px",
+      "expectedSimilarity": 0.9400811605117503,
+      "topArtworkId": "qut-between-places",
+      "maxSimilarity": 0.9400811605117503,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.21071534857001173,
+      "passed": true
+    },
+    {
+      "museumId": "qut",
+      "artworkId": "qut-between-places",
+      "variant": "jpeg_quality_65",
+      "expectedSimilarity": 0.9735324658744378,
+      "topArtworkId": "qut-between-places",
+      "maxSimilarity": 0.9735324658744378,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.22817996083305725,
+      "passed": true
+    },
+    {
+      "museumId": "qut",
+      "artworkId": "qut-between-places",
+      "variant": "center_crop_5pct_per_edge",
+      "expectedSimilarity": 0.9765799738423867,
+      "topArtworkId": "qut-between-places",
+      "maxSimilarity": 0.9765799738423867,
+      "top1Correct": true,
+      "passesThreshold": true,
+      "marginToSecond": 0.22919965110916707,
+      "passed": true
+    }
+  ],
+  "negatives": [
+    {
+      "name": "met-exterior.jpg",
+      "description": "Bundled museum exterior photograph, not a catalogue artwork.",
+      "passed": true,
+      "museums": [
+        {
+          "museumId": "met",
+          "topArtworkId": "water-lilies",
+          "maxSimilarity": 0.18971694713581183,
+          "passesThreshold": false
+        },
+        {
+          "museumId": "goma",
+          "topArtworkId": "goma-obliteration-room",
+          "maxSimilarity": 0.26769727233967283,
+          "passesThreshold": false
+        },
+        {
+          "museumId": "qut",
+          "topArtworkId": "qut-soft-architecture",
+          "maxSimilarity": 0.26765892131026114,
+          "passesThreshold": false
+        }
+      ]
+    },
+    {
+      "name": "goma-exterior.jpg",
+      "description": "Bundled museum exterior photograph, not a catalogue artwork.",
+      "passed": true,
+      "museums": [
+        {
+          "museumId": "met",
+          "topArtworkId": "water-lilies",
+          "maxSimilarity": 0.25116419916470456,
+          "passesThreshold": false
+        },
+        {
+          "museumId": "goma",
+          "topArtworkId": "goma-obliteration-room",
+          "maxSimilarity": 0.3712870851801825,
+          "passesThreshold": false
+        },
+        {
+          "museumId": "qut",
+          "topArtworkId": "qut-river-rhythm",
+          "maxSimilarity": 0.2964585692434305,
+          "passesThreshold": false
+        }
+      ]
+    },
+    {
+      "name": "qag-exterior.jpg",
+      "description": "Bundled museum exterior photograph, not a catalogue artwork.",
+      "passed": true,
+      "museums": [
+        {
+          "museumId": "met",
+          "topArtworkId": "the-dancing-class",
+          "maxSimilarity": 0.22725893402590633,
+          "passesThreshold": false
+        },
+        {
+          "museumId": "goma",
+          "topArtworkId": "goma-heritage",
+          "maxSimilarity": 0.3436150331616912,
+          "passesThreshold": false
+        },
+        {
+          "museumId": "qut",
+          "topArtworkId": "qut-soft-architecture",
+          "maxSimilarity": 0.266644597756929,
+          "passesThreshold": false
+        }
+      ]
+    },
+    {
+      "name": "synthetic_white",
+      "description": "Uniform white 512 x 512 image.",
+      "passed": true,
+      "museums": [
+        {
+          "museumId": "met",
+          "topArtworkId": "water-lilies",
+          "maxSimilarity": 0.21592329249175812,
+          "passesThreshold": false
+        },
+        {
+          "museumId": "goma",
+          "topArtworkId": "goma-obliteration-room",
+          "maxSimilarity": 0.3822516188525084,
+          "passesThreshold": false
+        },
+        {
+          "museumId": "qut",
+          "topArtworkId": "qut-between-places",
+          "maxSimilarity": 0.38928776605284876,
+          "passesThreshold": false
+        }
+      ]
+    },
+    {
+      "name": "synthetic_seeded_noise",
+      "description": "Deterministic RGB noise; seed 123456789.",
+      "passed": true,
+      "museums": [
+        {
+          "museumId": "met",
+          "topArtworkId": "water-lilies",
+          "maxSimilarity": 0.4445158895028626,
+          "passesThreshold": false
+        },
+        {
+          "museumId": "goma",
+          "topArtworkId": "goma-obliteration-room",
+          "maxSimilarity": 0.3591780897608395,
+          "passesThreshold": false
+        },
+        {
+          "museumId": "qut",
+          "topArtworkId": "qut-between-places",
+          "maxSimilarity": 0.49609015615629204,
+          "passesThreshold": false
+        }
+      ]
+    },
+    {
+      "name": "synthetic_code_screen",
+      "description": "Generated code screenshot rasterized from SVG to JPEG; SVG uploads are not enabled.",
+      "passed": true,
+      "museums": [
+        {
+          "museumId": "met",
+          "topArtworkId": "water-lilies",
+          "maxSimilarity": 0.14950024577337145,
+          "passesThreshold": false
+        },
+        {
+          "museumId": "goma",
+          "topArtworkId": "goma-obliteration-room",
+          "maxSimilarity": 0.24125779568719252,
+          "passesThreshold": false
+        },
+        {
+          "museumId": "qut",
+          "topArtworkId": "qut-between-places",
+          "maxSimilarity": 0.29401990757137764,
+          "passesThreshold": false
+        }
+      ]
+    }
+  ],
+  "http": [
+    {
+      "name": "met/local_provider_and_catalogue",
+      "passed": true,
+      "elapsedMs": 32,
+      "museumId": "met",
+      "configuration": {
+        "valid": true,
+        "provider": "local",
+        "ollamaModel": "qwen3:1.7b",
+        "planningModel": "qwen3:1.7b",
+        "planningVersion": 7,
+        "ollamaUrl": "http://127.0.0.1:11434",
+        "timeoutMs": 14000,
+        "planningTimeoutMs": 0,
+        "numCtx": 4096,
+        "numGpu": -1,
+        "numPredict": 1024,
+        "retryNumPredict": 2048,
+        "keepAlive": "10m",
+        "embeddingModel": "ViT-B-32",
+        "embeddingPretrained": "laion2b_s34b_b79k",
+        "dimension": 512,
+        "visionModel": "qwen3-vl:2b-instruct",
+        "analysisVersion": 4,
+        "visionTimeoutMs": 120000,
+        "visionNumPredict": 768,
+        "visionNumCtx": 4096,
+        "analysisBudgetMs": 125000,
+        "explanationTimeoutMs": 45000,
+        "recognitionBudgetMs": 5000,
+        "responseBudgetMs": 15000
+      },
+      "catalogueArtworkIds": [
+        "water-lilies",
+        "the-harvesters",
+        "the-dancing-class",
+        "wheat-field-with-cypresses",
+        "young-woman-with-a-water-pitcher",
+        "the-card-players",
+        "madame-charpentier-and-her-children",
+        "self-portrait-with-a-straw-hat"
+      ]
+    },
+    {
+      "name": "met/reference_recognition",
+      "passed": true,
+      "elapsedMs": 139,
+      "museumId": "met",
+      "artworkId": "water-lilies",
+      "similarity": 0.9997296096324385,
+      "requiresConfirmation": true
+    },
+    {
+      "name": "met/foreign_reference_and_confirmation_rejected",
+      "passed": true,
+      "elapsedMs": 125,
+      "museumId": "met",
+      "foreignArtworkId": "goma-obliteration-room",
+      "matched": false,
+      "invalidConfirmationCode": "INVALID_INPUT"
+    },
+    {
+      "name": "met/unrelated_image_rejected",
+      "passed": true,
+      "elapsedMs": 240,
+      "museumId": "met",
+      "sample": "met-exterior.jpg",
+      "matched": false
+    },
+    {
+      "name": "goma/local_provider_and_catalogue",
+      "passed": true,
+      "elapsedMs": 19,
+      "museumId": "goma",
+      "configuration": {
+        "valid": true,
+        "provider": "local",
+        "ollamaModel": "qwen3:1.7b",
+        "planningModel": "qwen3:1.7b",
+        "planningVersion": 7,
+        "ollamaUrl": "http://127.0.0.1:11434",
+        "timeoutMs": 14000,
+        "planningTimeoutMs": 0,
+        "numCtx": 4096,
+        "numGpu": -1,
+        "numPredict": 1024,
+        "retryNumPredict": 2048,
+        "keepAlive": "10m",
+        "embeddingModel": "ViT-B-32",
+        "embeddingPretrained": "laion2b_s34b_b79k",
+        "dimension": 512,
+        "visionModel": "qwen3-vl:2b-instruct",
+        "analysisVersion": 4,
+        "visionTimeoutMs": 120000,
+        "visionNumPredict": 768,
+        "visionNumCtx": 4096,
+        "analysisBudgetMs": 125000,
+        "explanationTimeoutMs": 45000,
+        "recognitionBudgetMs": 5000,
+        "responseBudgetMs": 15000
+      },
+      "catalogueArtworkIds": [
+        "goma-obliteration-room",
+        "goma-in-bed",
+        "goma-heritage",
+        "goma-soul-under-the-moon"
+      ]
+    },
+    {
+      "name": "goma/reference_recognition",
+      "passed": true,
+      "elapsedMs": 102,
+      "museumId": "goma",
+      "artworkId": "goma-obliteration-room",
+      "similarity": 0.9999692987566184,
+      "requiresConfirmation": true
+    },
+    {
+      "name": "goma/foreign_reference_and_confirmation_rejected",
+      "passed": true,
+      "elapsedMs": 155,
+      "museumId": "goma",
+      "foreignArtworkId": "water-lilies",
+      "matched": false,
+      "invalidConfirmationCode": "INVALID_INPUT"
+    },
+    {
+      "name": "goma/unrelated_image_rejected",
+      "passed": true,
+      "elapsedMs": 180,
+      "museumId": "goma",
+      "sample": "goma-exterior.jpg",
+      "matched": false
+    },
+    {
+      "name": "qut/local_provider_and_catalogue",
+      "passed": true,
+      "elapsedMs": 17,
+      "museumId": "qut",
+      "configuration": {
+        "valid": true,
+        "provider": "local",
+        "ollamaModel": "qwen3:1.7b",
+        "planningModel": "qwen3:1.7b",
+        "planningVersion": 7,
+        "ollamaUrl": "http://127.0.0.1:11434",
+        "timeoutMs": 14000,
+        "planningTimeoutMs": 0,
+        "numCtx": 4096,
+        "numGpu": -1,
+        "numPredict": 1024,
+        "retryNumPredict": 2048,
+        "keepAlive": "10m",
+        "embeddingModel": "ViT-B-32",
+        "embeddingPretrained": "laion2b_s34b_b79k",
+        "dimension": 512,
+        "visionModel": "qwen3-vl:2b-instruct",
+        "analysisVersion": 4,
+        "visionTimeoutMs": 120000,
+        "visionNumPredict": 768,
+        "visionNumCtx": 4096,
+        "analysisBudgetMs": 125000,
+        "explanationTimeoutMs": 45000,
+        "recognitionBudgetMs": 5000,
+        "responseBudgetMs": 15000
+      },
+      "catalogueArtworkIds": [
+        "qut-river-rhythm",
+        "qut-soft-architecture",
+        "qut-between-places"
+      ]
+    },
+    {
+      "name": "qut/reference_recognition",
+      "passed": true,
+      "elapsedMs": 129,
+      "museumId": "qut",
+      "artworkId": "qut-river-rhythm",
+      "similarity": 0.9970865907233054,
+      "requiresConfirmation": true
+    },
+    {
+      "name": "qut/foreign_reference_and_confirmation_rejected",
+      "passed": true,
+      "elapsedMs": 136,
+      "museumId": "qut",
+      "foreignArtworkId": "water-lilies",
+      "matched": false,
+      "invalidConfirmationCode": "INVALID_INPUT"
+    },
+    {
+      "name": "qut/unrelated_image_rejected",
+      "passed": true,
+      "elapsedMs": 232,
+      "museumId": "qut",
+      "sample": "met-exterior.jpg",
+      "matched": false
+    }
+  ],
+  "failures": [],
+  "summary": {
+    "referenceAndVariantSamples": 60,
+    "referenceAndVariantChecksPassed": 60,
+    "negativeImages": 6,
+    "negativeImagesRejectedInAllMuseums": 6,
+    "minExpectedArtworkSimilarity": 0.8843139311852349,
+    "maxNegativeSimilarity": 0.49609015615629204,
+    "httpChecks": 12,
+    "httpChecksPassed": 12,
+    "failureCount": 0
+  }
+}

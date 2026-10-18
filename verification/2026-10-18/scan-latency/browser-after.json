@@ -1,0 +1,48 @@
+{
+  "passed": true,
+  "backend": "http://127.0.0.1:3004",
+  "web": "http://127.0.0.1:8081",
+  "verification": "Real browser file uploads, Node endpoints, OpenCLIP and Ollama; no model-response mocks or upload proxy.",
+  "samples": [
+    "water-lilies.jpg",
+    "quiet-geometry.png",
+    "water-lilies.jpg after model switch"
+  ],
+  "requests": [
+    {
+      "endpoint": "/api/ai/artworks/recognise",
+      "status": 200,
+      "elapsedMs": 169
+    },
+    {
+      "endpoint": "/api/ai/artworks/recognise",
+      "status": 200,
+      "elapsedMs": 170
+    },
+    {
+      "endpoint": "/api/ai/artworks/confirm",
+      "status": 200,
+      "elapsedMs": 11352
+    },
+    {
+      "endpoint": "/api/ai/artworks/recognise",
+      "status": 200,
+      "elapsedMs": 143
+    },
+    {
+      "endpoint": "/api/ai/artworks/analyse",
+      "status": 200,
+      "elapsedMs": 63007
+    },
+    {
+      "endpoint": "/api/ai/artworks/recognise",
+      "status": 200,
+      "elapsedMs": 176
+    },
+    {
+      "endpoint": "/api/ai/artworks/confirm",
+      "status": 200,
+      "elapsedMs": 14728
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import { ARTWORK_ANALYSIS_VERSION } from '../server/ai/vision.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import http from 'node:http';
@@ -37,12 +38,12 @@ async function fixture(t, { failSecond = false, ready = true, publicSearch = fal
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
     if (req.url === '/api/health') return res.end(JSON.stringify({ app: 'unframe' }));
-    if (req.url.startsWith('/api/ai/status')) return res.end(JSON.stringify({ analysisReady: ready, analysisMessage: 'Missing test model', configuration: { visionModel: config.visionModel, analysisVersion: 3 }, services: { vision: { available: ready } } }));
+    if (req.url.startsWith('/api/ai/status')) return res.end(JSON.stringify({ analysisReady: ready, analysisMessage: 'Missing test model', configuration: { visionModel: config.visionModel, analysisVersion: ARTWORK_ANALYSIS_VERSION }, services: { vision: { available: ready } } }));
     assert.equal(req.url, '/api/ai/artworks/analyse');
     assert.match(req.headers['content-type'], /^multipart\/form-data/);
     calls++;
-    if (failSecond && calls % 3 === 2) { res.statusCode = 503; return res.end(JSON.stringify({ code: 'VISION_BUSY', error: 'Test busy response' })); }
-    res.end(JSON.stringify(observation(calls % 3 === 0 ? 'unlikely' : 'likely')));
+    if (failSecond && calls % 4 === 2) { res.statusCode = 503; return res.end(JSON.stringify({ code: 'VISION_BUSY', error: 'Test busy response' })); }
+    res.end(JSON.stringify({ ...observation([3, 0].includes(calls % 4) ? 'unlikely' : 'likely'), method: 'vision' }));
   });
   server.listen(0, '127.0.0.1'); await once(server, 'listening');
   t.after(() => new Promise(resolve => server.close(resolve)));
@@ -55,8 +56,8 @@ test('HTTP acceptance saves failures, continues controls, and cannot report a bu
   const { options, calls } = await fixture(t, { failSecond: true });
   const { report, reportFile } = await runVisionAcceptance(options);
   assert.equal(report.passed, false);
-  assert.equal(calls(), 3);
-  assert.equal(report.checks.length, 4);
+  assert.equal(calls(), 4);
+  assert.equal(report.checks.length, 5);
   assert.match(report.failures[0].message, /VISION_BUSY/);
   assert.equal(report.checks.at(-1).passed, true);
   assert.deepEqual(JSON.parse(await readFile(reportFile, 'utf8')), report);
@@ -91,7 +92,7 @@ test('public source outage fails full acceptance even when local vision response
   const sources = { search: async () => ({ records: [], providers: ['The Met', 'Art Institute of Chicago', 'Wikimedia Commons'].map(name => ({ name, status: 'unavailable', results: 0 })) }) };
   const { report } = await runVisionAcceptance({ ...options, sources });
   assert.equal(report.passed, false);
-  assert.equal(report.summary.checksPassed, 4);
+  assert.equal(report.summary.checksPassed, 5);
   assert.match(report.failures[0].message, /public source is unavailable/);
 });
 

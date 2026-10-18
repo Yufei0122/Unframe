@@ -1,0 +1,421 @@
+{
+  "startedAt": "2026-10-18T11:24:57.349Z",
+  "completedAt": "2026-10-18T11:25:40.812Z",
+  "passed": false,
+  "scope": "general_artwork_local_acceptance",
+  "backend": "http://127.0.0.1:3008",
+  "model": "qwen3-vl:2b-instruct",
+  "analysisBudgetMs": 125000,
+  "training": {
+    "performed": false,
+    "method": "pretrained_inference",
+    "labelledTrainingDataset": null
+  },
+  "limitation": "Two bundled paintings, one generated blank and a museum exterior are controlled inputs, not independent visitor photographs. Collection matches bypass vision; the exterior must invoke it. Abstaining from identity is allowed. This does not establish arbitrary-artwork accuracy, fine-tuning, or a general false-positive rate.",
+  "checks": [
+    {
+      "name": "backend_model_and_browser_origin",
+      "passed": true,
+      "configuration": {
+        "valid": true,
+        "provider": "local",
+        "ollamaModel": "qwen3:1.7b",
+        "planningModel": "qwen3:1.7b",
+        "planningVersion": 7,
+        "ollamaUrl": "http://127.0.0.1:11434",
+        "timeoutMs": 14000,
+        "planningTimeoutMs": 0,
+        "numCtx": 4096,
+        "numGpu": 0,
+        "numPredict": 1024,
+        "retryNumPredict": 2048,
+        "keepAlive": "10m",
+        "embeddingModel": "ViT-B-32",
+        "embeddingPretrained": "laion2b_s34b_b79k",
+        "dimension": 512,
+        "visionModel": "qwen3-vl:2b-instruct",
+        "analysisVersion": 4,
+        "visionTimeoutMs": 120000,
+        "visionNumPredict": 768,
+        "visionNumCtx": 4096,
+        "analysisBudgetMs": 125000,
+        "explanationTimeoutMs": 45000,
+        "recognitionBudgetMs": 5000,
+        "responseBudgetMs": 15000
+      },
+      "services": {
+        "openclip": {
+          "available": true
+        },
+        "ollama": {
+          "available": true,
+          "modelAvailable": true,
+          "planningModelAvailable": true
+        },
+        "vision": {
+          "available": true,
+          "model": "qwen3-vl:2b-instruct",
+          "imageInput": true
+        }
+      },
+      "elapsedMs": 41
+    },
+    {
+      "name": "water_lilies",
+      "passed": true,
+      "expected": {
+        "presence": "likely",
+        "titles": [
+          "Water Lilies",
+          "Nympheas",
+          "Nymphéas",
+          "睡莲"
+        ],
+        "artists": [
+          "Claude Monet",
+          "Monet",
+          "克劳德·莫奈",
+          "莫奈"
+        ]
+      },
+      "inputSha256": "7a5f8a43157fd3191394dfd7f33c5e0984778a0816071e9571762bfc34650c76",
+      "responseMs": 169,
+      "actual": {
+        "method": "collection",
+        "artworkPresence": "likely",
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "visualFeatures": [],
+        "visibleText": [],
+        "identityStatus": "possible_match",
+        "hypotheses": [
+          {
+            "title": "Water Lilies",
+            "artist": "Claude Monet",
+            "basis": "A visually similar collection reference. Compare with the work in front of you."
+          }
+        ],
+        "sources": [
+          {
+            "id": "collection:water-lilies",
+            "provider": "The Metropolitan Museum of Art · Collection record 437137",
+            "title": "Water Lilies",
+            "artist": "Claude Monet",
+            "date": "1916–19",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "imageUrl": null,
+            "visualCheck": "similar",
+            "similarity": 0.9997296096324385
+          }
+        ],
+        "search": {
+          "status": "not_needed",
+          "providers": []
+        },
+        "timings": {
+          "matchingMs": 133,
+          "visionMs": 0,
+          "searchMs": 0,
+          "totalMs": 133
+        }
+      },
+      "identitySuggestion": "correct",
+      "elapsedMs": 195
+    },
+    {
+      "name": "harvesters",
+      "passed": true,
+      "expected": {
+        "presence": "likely",
+        "titles": [
+          "The Harvesters",
+          "Harvesters",
+          "The Corn Harvest",
+          "收割者",
+          "收割人"
+        ],
+        "artists": [
+          "Pieter Bruegel the Elder",
+          "Pieter Bruegel",
+          "Bruegel",
+          "老彼得·勃鲁盖尔",
+          "彼得·勃鲁盖尔"
+        ]
+      },
+      "inputSha256": "8ac94a44d6b5380c6444d422fa88e76f4b77db614ac6f9b4bc9f5bbc6987f14c",
+      "responseMs": 104,
+      "actual": {
+        "method": "collection",
+        "artworkPresence": "likely",
+        "description": "Golden fields open onto a distant landscape. Some harvesters work through the late-summer heat while others pause in the shade of a tree.",
+        "visualFeatures": [],
+        "visibleText": [],
+        "identityStatus": "possible_match",
+        "hypotheses": [
+          {
+            "title": "The Harvesters",
+            "artist": "Pieter Bruegel the Elder",
+            "basis": "A visually similar collection reference. Compare with the work in front of you."
+          }
+        ],
+        "sources": [
+          {
+            "id": "collection:the-harvesters",
+            "provider": "The Metropolitan Museum of Art · Collection record 435809",
+            "title": "The Harvesters",
+            "artist": "Pieter Bruegel the Elder",
+            "date": "1565",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/435809",
+            "imageUrl": null,
+            "visualCheck": "similar",
+            "similarity": 0.9997241210582314
+          }
+        ],
+        "search": {
+          "status": "not_needed",
+          "providers": []
+        },
+        "timings": {
+          "matchingMs": 94,
+          "visionMs": 0,
+          "searchMs": 0,
+          "totalMs": 94
+        }
+      },
+      "identitySuggestion": "correct",
+      "elapsedMs": 112
+    },
+    {
+      "name": "blank_negative",
+      "passed": true,
+      "expected": {
+        "presence": "unlikely"
+      },
+      "inputSha256": "f7ceb17d04af9af1309f107ac50c1ec9cc2243127b00d276ef1e363e0a3feeff",
+      "responseMs": 125,
+      "actual": {
+        "artworkPresence": "unlikely",
+        "description": "No distinct visual details are visible. Try a closer photo of the artwork.",
+        "visualFeatures": [],
+        "visibleText": [],
+        "hypotheses": [],
+        "method": "vision",
+        "identityStatus": "uncertain",
+        "sources": [],
+        "search": {
+          "status": "not_needed",
+          "providers": []
+        },
+        "timings": {
+          "matchingMs": 101,
+          "visionMs": 16,
+          "searchMs": 0,
+          "totalMs": 117
+        }
+      },
+      "identitySuggestion": "not_evaluated",
+      "elapsedMs": 133
+    },
+    {
+      "name": "vision_non_art_control",
+      "passed": false,
+      "expected": {
+        "presence": "unlikely"
+      },
+      "inputSha256": "efe735dfd16d40934cb5aeadad5b16de09019f1b50587279e08b2c78da339ee2",
+      "responseMs": 41065,
+      "actual": {
+        "artworkPresence": "likely",
+        "description": "A close-up view of the facade of a grand building, featuring classical columns and arched windows. A prominent red banner with the white text 'THE MET' is displayed above the entrance.",
+        "visualFeatures": [
+          "a red banner with white text",
+          "classical architectural elements"
+        ],
+        "visibleText": [
+          "THE MET"
+        ],
+        "hypotheses": [
+          {
+            "title": "The Met",
+            "artist": "Unknown",
+            "basis": "The text 'THE MET' on a red banner is clearly visible, suggesting the artwork is a sign for the Met,"
+          }
+        ],
+        "method": "vision",
+        "identityStatus": "uncertain",
+        "sources": [
+          {
+            "id": "met:366925",
+            "provider": "The Met",
+            "title": "Grand Tier at the Met.",
+            "artist": "Reginald Marsh",
+            "date": "1939",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/366925",
+            "imageUrl": null,
+            "visualCheck": "not_checked",
+            "similarity": null
+          },
+          {
+            "id": "artic:3083",
+            "provider": "Art Institute of Chicago",
+            "title": "Sketches of Patmos, Sardis, Obelisk of Heliopolis",
+            "artist": "Unknown artist",
+            "date": "n.d.",
+            "sourceUrl": "https://www.artic.edu/artworks/3083",
+            "imageUrl": "https://www.artic.edu/iiif/2/51596129-1036-d146-62df-54adfd954454/full/600,/0/default.jpg",
+            "visualCheck": "unavailable",
+            "similarity": null
+          },
+          {
+            "id": "commons:74929921",
+            "provider": "Wikimedia Commons",
+            "title": "Ewer with Elephant-Headed Spout.jpg",
+            "artist": null,
+            "date": null,
+            "sourceUrl": "https://commons.wikimedia.org/wiki/File%3AEwer_with_Elephant-Headed_Spout.jpg",
+            "imageUrl": null,
+            "visualCheck": "not_checked",
+            "similarity": null
+          },
+          {
+            "id": "met:493217",
+            "provider": "The Met",
+            "title": "Proposal For the Met Roof Garden",
+            "artist": "Andy Goldsworthy",
+            "date": "2003",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/493217",
+            "imageUrl": null,
+            "visualCheck": "not_checked",
+            "similarity": null
+          },
+          {
+            "id": "artic:6471",
+            "provider": "Art Institute of Chicago",
+            "title": "Cylinder Desk and Bookcase",
+            "artist": "Artist unknown",
+            "date": "1800–10",
+            "sourceUrl": "https://www.artic.edu/artworks/6471",
+            "imageUrl": "https://www.artic.edu/iiif/2/37c1e8e6-49d5-8a86-a0cb-a5e8f5aef5f7/full/600,/0/default.jpg",
+            "visualCheck": "unavailable",
+            "similarity": null
+          },
+          {
+            "id": "commons:85069659",
+            "provider": "Wikimedia Commons",
+            "title": "Anonymous - Krishna and the Gopis Take Shelter from the Rain - 1991.94 - Metropolitan Museum of Art.jpg",
+            "artist": null,
+            "date": null,
+            "sourceUrl": "https://commons.wikimedia.org/wiki/File%3AAnonymous_-_Krishna_and_the_Gopis_Take_Shelter_from_the_Rain_-_1991.94_-_Metropolitan_Museum_of_Art.jpg",
+            "imageUrl": null,
+            "visualCheck": "not_checked",
+            "similarity": null
+          }
+        ],
+        "search": {
+          "status": "completed",
+          "providers": [
+            {
+              "name": "The Met",
+              "status": "completed",
+              "results": 2
+            },
+            {
+              "name": "Art Institute of Chicago",
+              "status": "completed",
+              "results": 2
+            },
+            {
+              "name": "Wikimedia Commons",
+              "status": "completed",
+              "results": 2
+            }
+          ]
+        },
+        "timings": {
+          "matchingMs": 110,
+          "visionMs": 38697,
+          "searchMs": 2228,
+          "totalMs": 41036
+        }
+      },
+      "error": "Artwork presence did not match the labelled control.\n+ actual - expected\n\n+ 'likely'\n- 'unlikely'\n",
+      "elapsedMs": 41158
+    },
+    {
+      "name": "public_source_search_and_reference_download",
+      "passed": true,
+      "providers": [
+        {
+          "name": "The Met",
+          "status": "completed",
+          "results": 2
+        },
+        {
+          "name": "Art Institute of Chicago",
+          "status": "completed",
+          "results": 2
+        },
+        {
+          "name": "Wikimedia Commons",
+          "status": "completed",
+          "results": 2
+        }
+      ],
+      "references": [
+        {
+          "id": "met:267643",
+          "sourceUrl": "https://www.metmuseum.org/art/collection/search/267643"
+        },
+        {
+          "id": "artic:16568",
+          "sourceUrl": "https://www.artic.edu/artworks/16568"
+        },
+        {
+          "id": "commons:63880393",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File%3AClaude_Monet_-_Seerosen.jpg"
+        },
+        {
+          "id": "met:286677",
+          "sourceUrl": "https://www.metmuseum.org/art/collection/search/286677"
+        },
+        {
+          "id": "artic:16571",
+          "sourceUrl": "https://www.artic.edu/artworks/16571"
+        },
+        {
+          "id": "commons:136550510",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File%3ADetail_of_%22The_Water-Lily_Pond%22_by_Claude_Monet_02.jpg"
+        }
+      ],
+      "referenceDownloads": [
+        {
+          "id": "artic:16568",
+          "passed": false,
+          "code": "SOURCE_UNAVAILABLE"
+        },
+        {
+          "id": "met:286677",
+          "passed": true
+        }
+      ],
+      "downloadedReference": {
+        "id": "met:286677",
+        "sha256": "e4fd526680fe1bd3bba5e2182e5432edb490c273b8e92bf0a160422feb0a6c68"
+      },
+      "elapsedMs": 1815
+    }
+  ],
+  "failures": [
+    {
+      "name": "vision_non_art_control",
+      "code": "ERR_ASSERTION",
+      "message": "Artwork presence did not match the labelled control.\n+ actual - expected\n\n+ 'likely'\n- 'unlikely'\n"
+    }
+  ],
+  "summary": {
+    "checks": 6,
+    "checksPassed": 5,
+    "identitySuggestionsCorrect": 2,
+    "identityAbstentions": 0,
+    "independentCameraAccuracy": null
+  }
+}

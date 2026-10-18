@@ -14,6 +14,8 @@ import { referenceArtworks } from '../server/ai/embeddings.js';
 
 const config = readAIConfig({});
 const observation = { artworkPresence: 'likely', description: 'A seated figure with a landscape behind it.', visualFeatures: ['Folded hands'], visibleText: [], hypotheses: [{ title: 'Mona Lisa', artist: 'Leonardo da Vinci', basis: 'Figure, pose and landscape resemble this work.' }] };
+const { artworkPresence: _presence, ...modelDetails } = observation;
+const modelObservation = { subjectType: 'painting', ...modelDetails };
 const jpeg = await sharp({ create: { width: 1000, height: 800, channels: 3, noise: { type: 'gaussian', mean: 128, sigma: 30 } } }).jpeg().toBuffer();
 const source = { id: 'commons:1', provider: 'Wikimedia Commons', title: 'Mona Lisa.jpg', artist: null, date: null, sourceUrl: 'https://commons.wikimedia.org/wiki/File:Mona_Lisa.jpg', imageUrl: 'https://upload.wikimedia.org/mona.jpg' };
 const providers = [{ name: 'Wikimedia Commons', status: 'completed', results: 1 }];
@@ -39,21 +41,36 @@ test('vision requires a local image-capable model and sends bounded images to th
     if (endpoint === '/api/tags') return { models: [{ name: config.visionModel }] };
     if (endpoint === '/api/show') return { capabilities: ['completion', 'vision'] };
     sent = body;
-    return { done: true, done_reason: 'stop', message: { content: JSON.stringify(observation) } };
+    return { done: true, done_reason: 'stop', message: { content: JSON.stringify(modelObservation) } };
   } };
-  assert.deepEqual(await createVisionService(config, { client }).analyse(jpeg), observation);
+  assert.deepEqual(await createVisionService(config, { client }).analyse(jpeg), { ...observation, inferencePerformed: true });
   assert.equal(sent.model, 'qwen3-vl:2b-instruct'); assert.equal(sent.keep_alive, '10m'); assert.equal(sent.think, false);
   assert.equal(sent.options.num_predict, 768, 'Vision output must not use the short text budget.');
   assert.equal(sent.options.num_ctx, 4096, 'Vision context must have space for image tokens.');
   const image = Buffer.from(sent.messages[1].images[0], 'base64');
   const metadata = await sharp(image).metadata();
   assert.ok(metadata.width <= 512 && metadata.height <= 512); assert.equal(metadata.exif, undefined);
+  assert.equal(sent.format.properties.description.pattern, '^.{1,200}$');
   await createVisionService(config, { client }).analyse(jpeg, undefined, { title: 'Water Lilies', artist: 'Claude Monet' });
   assert.equal(sent.format.properties.visibleText.maxItems, 0, 'Supplied catalogue names must not be emitted as image text.');
   assert.equal(sent.format.properties.hypotheses.items.properties.artist.const, 'Claude Monet');
   await assert.rejects(inspectVisionModel(config, { request: async () => ({ models: [{ name: config.visionModel, remote_host: 'remote.invalid' }] }) }), { code: 'VISION_REMOTE_MODEL' });
   await assert.rejects(inspectVisionModel(config, { request: async () => ({ models: [] }) }), { code: 'VISION_MODEL_MISSING' });
   await assert.rejects(inspectVisionModel(config, { request: async endpoint => endpoint === '/api/tags' ? { models: [{ name: config.visionModel }] } : { capabilities: ['completion'] } }), { code: 'VISION_NOT_SUPPORTED' });
+});
+
+test('non-art subject categories cannot cause identity lookup even with OCR and a title guess', async () => {
+  for (const subjectType of ['architecture', 'sign', 'person', 'other', 'unclear']) {
+    const client = { request: async endpoint => endpoint === '/api/tags' ? { models: [{ name: config.visionModel }] }
+      : endpoint === '/api/show' ? { capabilities: ['vision'] }
+      : { done: true, done_reason: 'stop', message: { content: JSON.stringify({ ...modelObservation, subjectType }) } } };
+    const result = await createArtworkAnalysis(config, {
+      vision: createVisionService(config, { client }),
+      catalogues: { search: () => assert.fail('Non-art photos must not trigger catalogue lookup') },
+    }).analyse(jpeg);
+    assert.equal(result.artworkPresence, subjectType === 'unclear' ? 'uncertain' : 'unlikely');
+    assert.deepEqual(result.hypotheses, []); assert.deepEqual(result.sources, []);
+  }
 });
 
 test('a vision GPU load failure retries on CPU once and remembers that placement', async () => {
@@ -63,7 +80,7 @@ test('a vision GPU load failure retries on CPU once and remembers that placement
     if (endpoint === '/api/show') return { capabilities: ['vision'] };
     placements.push(payload.options.num_gpu);
     if (payload.options.num_gpu !== 0) throw new AIError(503, 'OLLAMA_HTTP_500', 'Runner failed');
-    return { done: true, done_reason: 'stop', message: { content: JSON.stringify(observation) } };
+    return { done: true, done_reason: 'stop', message: { content: JSON.stringify(modelObservation) } };
   } };
   const vision = createVisionService(config, { client });
   await vision.analyse(jpeg); await vision.analyse(jpeg);
@@ -145,7 +162,7 @@ test('a distinct local image match grounds identity in catalogue metadata rather
   const result = await createArtworkAnalysis(config, {
     store: { load: async () => [{ museumId: reference.museumId, artworkId: reference.artwork.id, vector: [1, 0] }] },
     embeddings: { generate: async () => { embeddingCalls++; return [1, 0]; } },
-    vision: { analyse: async (_image, _signal, known) => { assert.equal(known.id, reference.artwork.id); return observation; } },
+    vision: { analyse: () => assert.fail('A distinct collection match must return without vision generation') },
     catalogues: { search: () => assert.fail('A known visual reference does not need external title lookup') },
   }).analyse(jpeg);
   assert.equal(result.hypotheses[0].title, reference.artwork.title);
@@ -153,7 +170,25 @@ test('a distinct local image match grounds identity in catalogue metadata rather
   assert.equal(result.sources[0].visualCheck, 'similar');
   assert.equal(result.sources[0].similarity, 1);
   assert.equal(result.identityStatus, 'possible_match');
+  assert.equal(result.method, 'collection');
+  assert.equal(result.description, reference.artwork.description);
+  assert.deepEqual(result.visibleText, [], 'Catalogue notes are not OCR.');
+  assert.equal(result.timings.visionMs, 0);
   assert.equal(embeddingCalls, 1);
+});
+
+test('weak or ambiguous collection references still use vision without claiming an identity', async () => {
+  const entries = referenceArtworks().slice(0, 2);
+  for (const vectors of [[[0, 1], [0, 1]], [[1, 0], [1, .01]]]) {
+    let calls = 0;
+    const result = await createArtworkAnalysis({ ...config, publicSearch: false }, {
+      store: { load: async () => entries.map((entry, i) => ({ museumId: entry.museumId, artworkId: entry.artwork.id, vector: vectors[i] })) },
+      embeddings: { generate: async () => [1, 0] },
+      vision: { analyse: async () => { calls++; return { ...observation, hypotheses: [] }; } },
+    }).analyse(jpeg);
+    assert.equal(calls, 1); assert.equal(result.method, 'vision');
+    assert.equal(result.identityStatus, 'uncertain'); assert.deepEqual(result.sources, []);
+  }
 });
 
 test('cancelled visual requests abort the local transport instead of reporting model unavailability', async () => {

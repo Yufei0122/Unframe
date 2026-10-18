@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import { readAIConfig } from '../server/ai/config.js';
-import { parseVision } from '../server/ai/vision.js';
+import { parseVision, ARTWORK_ANALYSIS_VERSION } from '../server/ai/vision.js';
 import { createPublicCatalogues, publicURL } from '../server/ai/public-catalogues.js';
 import { normalizeImage } from '../server/ai/images.js';
 
@@ -59,7 +59,7 @@ export async function runVisionAcceptance({ config = readAIConfig(), backend, fe
   const report = { startedAt: new Date().toISOString(), completedAt: null, passed: false,
     scope: 'general_artwork_local_acceptance', backend, model: config.visionModel, analysisBudgetMs: config.analysisBudgetMs,
     training: { performed: false, method: 'pretrained_inference', labelledTrainingDataset: null },
-    limitation: 'Two bundled paintings and one generated blank image are controlled acceptance inputs, not independent visitor photographs. Abstaining from identity is allowed. This does not establish arbitrary-artwork accuracy, fine-tuning, or a general false-positive rate.',
+    limitation: 'Two bundled paintings, one generated blank and a museum exterior are controlled inputs, not independent visitor photographs. Collection matches bypass vision; the exterior must invoke it. Abstaining from identity is allowed. This does not establish arbitrary-artwork accuracy, fine-tuning, or a general false-positive rate.',
     checks: [], failures: [] };
   async function save() {
     await mkdir(path.dirname(reportFile), { recursive: true });
@@ -99,7 +99,7 @@ export async function runVisionAcceptance({ config = readAIConfig(), backend, fe
     row.configuration = result.configuration; row.services = result.services;
     assert.equal(response.headers.get('access-control-allow-origin'), 'http://localhost:8081', 'The browser origin is not allowed.');
     assert.equal(result.configuration?.visionModel, config.visionModel, 'Restart the updated backend.');
-    assert.equal(result.configuration?.analysisVersion, 3, 'Restart the updated backend.');
+    assert.equal(result.configuration?.analysisVersion, ARTWORK_ANALYSIS_VERSION, 'Restart the updated backend.');
     assert.equal(result.analysisReady, true, result.analysisMessage);
   });
   if (ready) {
@@ -107,6 +107,7 @@ export async function runVisionAcceptance({ config = readAIConfig(), backend, fe
       { name: 'water_lilies', file: 'water-lilies.jpg', expected: { presence: 'likely', titles: ['Water Lilies', 'Nympheas', 'Nymphéas', '睡莲'], artists: ['Claude Monet', 'Monet', '克劳德·莫奈', '莫奈'] } },
       { name: 'harvesters', file: 'the-harvesters.jpg', expected: { presence: 'likely', titles: ['The Harvesters', 'Harvesters', 'The Corn Harvest', '收割者', '收割人'], artists: ['Pieter Bruegel the Elder', 'Pieter Bruegel', 'Bruegel', '老彼得·勃鲁盖尔', '彼得·勃鲁盖尔'] } },
       { name: 'blank_negative', expected: { presence: 'unlikely' } },
+      { name: 'vision_non_art_control', file: 'met-exterior.jpg', expected: { presence: 'unlikely' }, requireVision: true },
     ];
     for (const sample of cases) await check(sample.name, async row => {
       row.expected = sample.expected;
@@ -118,6 +119,7 @@ export async function runVisionAcceptance({ config = readAIConfig(), backend, fe
       const { result, responseMs } = await json('/api/ai/artworks/analyse', { method: 'POST', body: form });
       row.responseMs = responseMs;
       row.actual = result; // Only bundled/synthetic controls, never user photo contents.
+      if (sample.requireVision) assert.equal(result.method, 'vision', 'This control must exercise the vision model, not a collection shortcut.');
       Object.assign(row, assessAnalysis(result, sample.expected));
     });
   }
@@ -144,7 +146,7 @@ export async function runVisionAcceptance({ config = readAIConfig(), backend, fe
   });
   else report.publicSearch = 'disabled_by_configuration';
   report.completedAt = new Date().toISOString();
-  report.passed = ready && report.failures.length === 0 && report.checks.length === (config.publicSearch ? 5 : 4);
+  report.passed = ready && report.failures.length === 0 && report.checks.length === (config.publicSearch ? 6 : 5);
   report.summary = { checks: report.checks.length, checksPassed: report.checks.filter(row => row.passed).length,
     identitySuggestionsCorrect: report.checks.filter(row => row.identitySuggestion === 'correct').length,
     identityAbstentions: report.checks.filter(row => row.identitySuggestion === 'abstained').length,

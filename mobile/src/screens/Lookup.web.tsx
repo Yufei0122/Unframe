@@ -144,6 +144,7 @@ function LookupContent() {
         </ScrollView> : <>
           {candidates.length > 0 && <View style={styles.candidatePanel}><View style={styles.candidateHeading}><T style={styles.candidateTitle}>Possible matches</T><T style={styles.candidateHint}>Tap the work you see</T></View><ScrollView style={styles.candidateList}>{candidates.map(candidate => <Pressable key={candidate.artwork.id} accessibilityRole="button" accessibilityLabel={'Select ' + candidate.artwork.title} onPress={() => { void confirm(candidate); }} style={styles.candidate}><Image source={images[candidate.artwork.id]} style={styles.candidateImage}/><View style={{ flex: 1 }}><T numberOfLines={1} style={styles.candidateName}>{candidate.artwork.title}</T><T numberOfLines={1} style={styles.candidateHint}>{candidate.artwork.artist}</T></View><Icon name="chevron-forward" color="#DBCBAA" size={18}/></Pressable>)}</ScrollView></View>}
           {busy && <ArtworkScanTransition compact label={analysing ? (slowAnalysis ? 'Taking a closer look…' : 'Looking closer…') : 'Finding a match…'}/>}
+          {!analysing && !candidates.length && !error && !!message && <T accessibilityLiveRegion="polite" style={styles.statusText}>{message}</T>}
           {!busy && !candidates.length && !error && (photo || paused) && <View style={styles.status} accessibilityLiveRegion="polite"><T style={styles.statusText}>{photo ? 'Try another photo or look closer' : 'Scanning paused'}</T></View>}
           {!!error && <T accessibilityRole="alert" style={styles.error}>{error}</T>}
         </>}
@@ -151,7 +152,7 @@ function LookupContent() {
         {!selected && !analysis && !analysing && !!(photo || lastFrame.current) && <Pressable accessibilityRole="button" accessibilityLabel="Analyse any artwork" onPress={() => { const frame = photo || lastFrame.current; if (frame) void analyse(frame); }} style={styles.scanButton}><T style={styles.controlLabel}>Analyse any artwork</T></Pressable>}
         <View style={styles.controls}>
           <Pressable accessibilityRole="button" accessibilityLabel="Upload photo" onPress={() => input.current?.click()} style={styles.controlButton}><Icon name="images-outline" color="white" size={21}/><T style={styles.controlLabel}>Photos</T></Pressable>
-          <Pressable accessibilityRole="button" accessibilityLabel={active ? 'Pause scanning' : 'Resume scanning'} onPress={active ? pause : resume} style={styles.scanButton}><Icon name={active ? 'pause' : 'scan-outline'} color="#DBCBAA" size={19}/><T style={styles.controlLabel}>{active ? 'Pause scanning' : 'Resume scanning'}</T></Pressable>
+          <Pressable accessibilityRole="button" accessibilityLabel={analysing ? 'Cancel analysis' : active ? 'Pause scanning' : 'Resume scanning'} onPress={active ? pause : resume} style={styles.scanButton}><Icon name={active ? 'pause' : analysing ? 'close' : 'scan-outline'} color="#DBCBAA" size={19}/><T style={styles.controlLabel}>{analysing ? 'Cancel analysis' : active ? 'Pause scanning' : 'Resume scanning'}</T></Pressable>
         </View>
       </View>
       <input ref={input} aria-label="Upload artwork image" type="file" accept="image/jpeg,image/png,image/webp" style={{ display: 'none' }} onChange={event => { const file = event.target.files?.[0]; if (file) choose(file); event.target.value = ''; }}/>

@@ -1,0 +1,16 @@
+[
+  {
+    "port": 3004,
+    "status": 503,
+    "elapsedMs": 58,
+    "code": "INDEX_INCOMPATIBLE",
+    "error": "Artwork index does not match the local OpenCLIP model, catalogue, or sources. Run npm.cmd run ai:index; legacy vectors cannot be reused."
+  },
+  {
+    "port": 3007,
+    "status": 200,
+    "elapsedMs": 241,
+    "matched": true,
+    "firstCandidate": "Water Lilies"
+  }
+]

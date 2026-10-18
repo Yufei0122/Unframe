@@ -7,6 +7,8 @@ import { AIError } from './config.js';
 export function createArtworkAnalysis(config, { vision = createVisionService(config), catalogues = createPublicCatalogues(), embeddings = createEmbeddingService(config), store } = {}) {
   async function analyse(image, signal) {
     const started = performance.now();
+    const timings = { matchingMs: 0, visionMs: 0, searchMs: 0 };
+    const finish = result => ({ ...result, timings: { ...timings, totalMs: Math.round(performance.now() - started) } });
     let query, reference;
     if (store) {
       try {
@@ -20,17 +22,25 @@ export function createArtworkAnalysis(config, { vision = createVisionService(con
         }
       } catch { signal?.throwIfAborted(); /* Missing CLIP/index must not prevent general visual observations. */ }
     }
-    const observation = await vision.analyse(image, signal, reference?.artwork);
+    timings.matchingMs = Math.round(performance.now() - started);
     signal?.throwIfAborted();
-    const result = { ...observation, identityStatus: 'uncertain', sources: [], search: { status: config.publicSearch ? 'not_needed' : 'disabled', providers: [] } };
-    if (reference && observation.artworkPresence === 'likely') {
+    // A distinctive reference match already supplies catalogue identity and notes.
+    // Do not make visitors wait for a second, generative model to repeat them.
+    if (reference) {
       const { artwork, similarity } = reference;
-      result.hypotheses = [{ title: artwork.title, artist: artwork.artist, basis: 'The photograph resembles the museum collection reference. Compare before confirming.' }];
-      result.sources = [{ id: `collection:${artwork.id}`, provider: artwork.source, title: artwork.title, artist: artwork.artist, date: artwork.year, sourceUrl: artwork.sourceUrl, imageUrl: null, visualCheck: 'similar', similarity }];
-      result.identityStatus = 'possible_match';
-      return result;
+      return finish({ method: 'collection', artworkPresence: 'likely', description: artwork.description,
+        visualFeatures: [], visibleText: [], identityStatus: 'possible_match',
+        hypotheses: [{ title: artwork.title, artist: artwork.artist, basis: 'A visually similar collection reference. Compare with the work in front of you.' }],
+        sources: [{ id: `collection:${artwork.id}`, provider: artwork.source, title: artwork.title, artist: artwork.artist, date: artwork.year, sourceUrl: artwork.sourceUrl, imageUrl: null, visualCheck: 'similar', similarity }],
+        search: { status: 'not_needed', providers: [] } });
     }
-    if (!config.publicSearch || !observation.hypotheses.length) return result;
+    const visionStarted = performance.now();
+    const { inferencePerformed = true, ...observation } = await vision.analyse(image, signal);
+    timings.visionMs = Math.round(performance.now() - visionStarted);
+    signal?.throwIfAborted();
+    const result = { ...observation, method: inferencePerformed ? 'vision' : 'empty', identityStatus: 'uncertain', sources: [], search: { status: config.publicSearch ? 'not_needed' : 'disabled', providers: [] } };
+    if (!config.publicSearch || !observation.hypotheses.length) return finish(result);
+    const searchStarted = performance.now();
     // Network searches and optional reference comparisons have a shared bounded budget.
     const remaining = Math.max(1, config.analysisBudgetMs - Math.round(performance.now() - started) - 750);
     const deadline = AbortSignal.timeout(Math.min(3000, remaining));
@@ -57,7 +67,8 @@ export function createArtworkAnalysis(config, { vision = createVisionService(con
     // Even visually similar references remain suggestions for human comparison.
     result.sources.sort((a, b) => (b.similarity ?? -1) - (a.similarity ?? -1));
     if (result.sources.some(source => source.visualCheck === 'similar')) result.identityStatus = 'possible_match';
-    return result;
+    timings.searchMs = Math.round(performance.now() - searchStarted);
+    return finish(result);
   }
   return { async analyse(image, signal) {
     const deadline = AbortSignal.timeout(config.analysisBudgetMs);

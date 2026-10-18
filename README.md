@@ -49,6 +49,10 @@ During model warmup, Unframe first uses the configured Ollama GPU placement. If 
 
 Museum-catalogue recognition uses OpenCLIP with a 5-second budget. General photo analysis uses its own 768-token output limit and a 125-second total budget including CPU model loading, with cancel/resume in Scan. The larger budget is a ceiling, not a speed promise; actual timings depend on hardware. Route preference understanding uses `qwen3:1.7b` with no automatic chat/route deadline. Run `npm.cmd run ai:verify:features` for recognition and planning checks, or `npm.cmd run ai:acceptance` to include general vision. Failed checks exit unsuccessfully and retain reports under `.local-ai`.
 
+Scan reports a completed collection search even when there is no match. A distinctive reference match returns collection notes immediately without running the vision model. Photos outside the active museum catalogue can still require slow CPU visual analysis; a description is not an artwork identification. The active catalogue has 8 Met, 4 GOMA and 3 QUT references. The separate Met training experiments do not automatically replace this index. See [Scan latency diagnosis and verification](verification/2026-10-18/scan-latency/README.md).
+
+After pulling an update, stop the existing backend and Expo terminals with Ctrl+C, then run `npm.cmd start`. Startup checks the backend's catalogue identity, Scan readiness and the Expo preview's backend settings; it refuses to silently reuse an incompatible session. Model weights and the compatible reference index remain on disk.
+
 ## Features
 
 - QUT Art Museum: choose Brisbane → QUT Art Museum for the shared Home, Plan, Scan and Profile experience, with original illustrated artworks, AI routes and persistent saves. See [QUT integration and content sources](QUT-DEMO.md).
