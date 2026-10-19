@@ -7,6 +7,7 @@ import { images, museumImages } from '../assets';
 import { GalleryIllustration, PortraitPlaceholder, ReflectionIllustration } from '../components/ProfileIllustrations';
 import { AvatarEditor } from '../components/AvatarEditor';
 import { BrandLogo } from '../components/BrandLogo';
+import { HelpSupportDialog } from '../components/HelpSupportDialog';
 import { useProfileNavigation } from '../components/ProfilePage';
 import { profileActivity, savedRouteInfo } from '../profileData';
 import { useMuseumLocation } from '../location';
@@ -39,6 +40,7 @@ export function ProfileScreen() {
   const nav = useRootNavigation();
   const profileNav = useProfileNavigation();
   const [panel, setPanel] = useState<Panel | null>(null);
+  const [supportVisible, setSupportVisible] = useState(false);
   const [editingAvatar, setEditingAvatar] = useState(false);
   const [message, setMessage] = useState('');
   const [width, setWidth] = useState(390);
@@ -70,7 +72,7 @@ export function ProfileScreen() {
   const shortcuts: { title: string; icon: IconName; onPress: () => void }[] = [
     { title: 'App Settings', icon: 'settings-outline', onPress: () => settings() },
     { title: 'Notifications', icon: 'notifications-outline', onPress: notifications },
-    { title: 'Help & Support', icon: 'help-circle-outline', onPress: () => setPanel({ title: 'Help & Support', body: 'Unframe helps you discover artworks, keep your favourites and plan a museum visit. Your preferences and saved collection stay on this device.', action: { label: 'Share feedback', run: () => nav.navigate('Feedback') } }) },
+    { title: 'Help & Support', icon: 'help-circle-outline', onPress: () => setSupportVisible(true) },
     { title: 'Invite Friends', icon: 'people-outline', onPress: () => { void Share.share({ message: 'Discover a new perspective with Unframe — explore art, save your favourites and make your next museum visit your own.' }).catch(() => setMessage('Sharing is unavailable in this browser. Try sharing from your phone.')); } },
   ];
 
@@ -129,6 +131,7 @@ export function ProfileScreen() {
       </View>
     </ScrollView>
     {editingAvatar && <AvatarEditor uri={state.avatarUri} onClose={() => setEditingAvatar(false)} onSave={uri => { dispatch({ type: 'avatar', uri }); setEditingAvatar(false); }}/>}
+    <HelpSupportDialog visible={supportVisible} onClose={() => setSupportVisible(false)}/>
     <Modal transparent visible={panel !== null} animationType="fade" onRequestClose={() => setPanel(null)}>
       <View style={p.modalBackdrop}><View accessibilityViewIsModal style={p.modalCard}><ScrollView contentContainerStyle={{ gap: 18 }}>
         <View style={p.heading}><T accessibilityRole="header" style={p.modalTitle}>{panel?.title}</T><Pressable accessibilityRole="button" accessibilityLabel="Close details" onPress={() => setPanel(null)} style={p.iconButton}><Icon name="close-outline" size={25}/></Pressable></View>

@@ -6,6 +6,7 @@ import * as Speech from 'expo-speech';
 import { artwork, type RootStackParams } from '../model';
 import { museumForArtwork } from '../museum';
 import { images } from '../assets';
+import { HelpSupportDialog } from '../components/HelpSupportDialog';
 import { useStore } from '../store';
 import { Button, Empty, Icon, Notice, T, c, s, serif } from '../ui';
 
@@ -18,6 +19,7 @@ export function ArtworkScreen({ route, navigation }: NativeStackScreenProps<Root
   const [speaking, setSpeaking] = useState(false), [error, setError] = useState(''), [language, setLanguage] = useState<'en' | 'zh'>('en');
   const [elapsed, setElapsed] = useState(0);
   const [expanded, setExpanded] = useState(false);
+  const [supportVisible, setSupportVisible] = useState(false);
   const [screenHeight, setScreenHeight] = useState(height);
   const generation = useRef(0);
   const isSpeaking = useRef(false);
@@ -63,12 +65,14 @@ export function ArtworkScreen({ route, navigation }: NativeStackScreenProps<Root
         {(error || storageError) && <Notice>{error || storageError}</Notice>}
         {museumArt ? <Pressable accessibilityRole="link" accessibilityLabel={`View artwork source at ${museum?.collectionName}`} onPress={() => { void Linking.openURL(museumArt.sourceUrl).catch(() => setError('The source could not be opened. Please try again.')); }} style={styles.source}><T style={styles.sourceText}>{museum?.id === 'qut' ? 'Original illustration · Unframe studio' : `From ${museum?.collectionName} collection`}</T><Icon name="arrow-up-outline" size={12} color={c.muted}/></Pressable> : <View style={{ gap: 12, marginTop: 20 }}><Notice>{a.source}</Notice><Button title="Ask the guide" icon="sparkles-outline" onPress={() => navigation.popTo('Home', { screen: 'Guide', params: { artworkId: a.id } })}/></View>}
         {!!museumArt?.imageCredit && <T style={styles.sourceText}>{museumArt.imageCredit}</T>}
+        <Button title="Feedback" secondary icon="chatbubble-outline" style={styles.feedback} onPress={() => setSupportVisible(true)}/>
       </View>
     </ScrollView>
     <View pointerEvents="box-none" style={[styles.topButtons, { top: insets.top + 18 }]}>
       <Pressable accessibilityRole="button" accessibilityLabel="Back to museum" onPress={() => navigation.goBack()} style={styles.topButton}><Icon name="chevron-back" size={23}/></Pressable>
       <Pressable accessibilityRole="button" accessibilityLabel={saved ? 'Unsave artwork' : 'Bookmark artwork'} accessibilityState={{ selected: saved }} aria-pressed={saved} onPress={save} style={styles.topButton}><Icon name={saved ? 'bookmark' : 'bookmark-outline'} size={21}/></Pressable>
     </View>
+    <HelpSupportDialog visible={supportVisible} onClose={() => setSupportVisible(false)} artworkId={a.id}/>
   </View>;
 }
 
@@ -84,4 +88,5 @@ const styles = StyleSheet.create({
   play: { width: 69, height: 69, borderRadius: 36, backgroundColor: c.green, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: '#172E24', shadowColor: '#22372F', shadowOpacity: .18, shadowRadius: 9, shadowOffset: { width: 0, height: 4 } },
   time: { width: 44, textAlign: 'center', fontSize: 13, lineHeight: 20 }, audioHint: { textAlign: 'center', marginTop: 13, fontSize: 11, lineHeight: 17, color: '#5C6059' },
   source: { minHeight: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, marginTop: 8 }, sourceText: { fontSize: 10, lineHeight: 16, color: c.muted },
+  feedback: { marginTop: 16 },
 });
