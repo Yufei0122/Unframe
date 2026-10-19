@@ -50,7 +50,13 @@ export function ArtworkScreen({ route, navigation }: NativeStackScreenProps<Root
     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: Math.max(insets.bottom, 22) }}>
       <Image source={images[a.id]} style={[styles.image, { height: Math.max(245, Math.min(465, screenHeight * (screenHeight >= 800 ? .48 : .42))) }]} accessibilityLabel={a.title}/>
       <View style={styles.sheet}>
-        <View style={styles.titleRow}><T accessibilityRole="header" style={styles.title}>{a.title}</T><Pressable accessibilityRole="button" accessibilityLabel={saved ? 'Remove from saved artworks' : 'Save artwork'} accessibilityState={{ selected: saved }} aria-pressed={saved} onPress={save} style={styles.heart}><Icon name={saved ? 'heart' : 'heart-outline'} size={27} color={saved ? '#A35E48' : '#17241D'}/></Pressable></View>
+        <View style={styles.titleRow}>
+          <T accessibilityRole="header" style={styles.title}>{a.title}</T>
+          <View style={styles.titleActions}>
+            <Pressable accessibilityRole="button" accessibilityLabel="Feedback" onPress={() => setSupportVisible(true)} style={({ pressed }) => [styles.titleAction, pressed && { opacity: .65 }]}><Icon name="chatbubble-ellipses-outline" size={23} color="#17241D"/></Pressable>
+            <Pressable accessibilityRole="button" accessibilityLabel={saved ? 'Remove from saved artworks' : 'Save artwork'} accessibilityState={{ selected: saved }} aria-pressed={saved} onPress={save} style={styles.titleAction}><Icon name={saved ? 'heart' : 'heart-outline'} size={27} color={saved ? '#A35E48' : '#17241D'}/></Pressable>
+          </View>
+        </View>
         <T style={styles.artist}>{a.artist}</T><T style={styles.metadata}>{a.year}</T><T style={styles.metadata}>{museumArt?.medium || a.category}</T><T style={styles.metadata}>{museum ? museum.name : 'Northbank Gallery · Fictional collection'}</T>
         {museum?.id === 'goma' && <T style={styles.metadata}>QAGOMA Collection · check current display information</T>}
         <T accessibilityRole="header" style={styles.aboutTitle}>{language === 'zh' ? '关于作品' : 'About the Artwork'}</T>
@@ -65,7 +71,6 @@ export function ArtworkScreen({ route, navigation }: NativeStackScreenProps<Root
         {(error || storageError) && <Notice>{error || storageError}</Notice>}
         {museumArt ? <Pressable accessibilityRole="link" accessibilityLabel={`View artwork source at ${museum?.collectionName}`} onPress={() => { void Linking.openURL(museumArt.sourceUrl).catch(() => setError('The source could not be opened. Please try again.')); }} style={styles.source}><T style={styles.sourceText}>{museum?.id === 'qut' ? 'Original illustration · Unframe studio' : `From ${museum?.collectionName} collection`}</T><Icon name="arrow-up-outline" size={12} color={c.muted}/></Pressable> : <View style={{ gap: 12, marginTop: 20 }}><Notice>{a.source}</Notice><Button title="Ask the guide" icon="sparkles-outline" onPress={() => navigation.popTo('Home', { screen: 'Guide', params: { artworkId: a.id } })}/></View>}
         {!!museumArt?.imageCredit && <T style={styles.sourceText}>{museumArt.imageCredit}</T>}
-        <Button title="Feedback" secondary icon="chatbubble-outline" style={styles.feedback} onPress={() => setSupportVisible(true)}/>
       </View>
     </ScrollView>
     <View pointerEvents="box-none" style={[styles.topButtons, { top: insets.top + 18 }]}>
@@ -80,7 +85,7 @@ const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: c.bg }, image: { width: '100%', backgroundColor: '#637D7D' },
   topButtons: { position: 'absolute', left: 19, right: 19, flexDirection: 'row', justifyContent: 'space-between' }, topButton: { width: 39, height: 39, borderRadius: 22, backgroundColor: '#FFFEFC', alignItems: 'center', justifyContent: 'center', shadowColor: '#000', shadowOpacity: .08, shadowRadius: 5, shadowOffset: { width: 0, height: 2 } },
   sheet: { marginTop: -25, paddingHorizontal: 23, paddingTop: 20, backgroundColor: c.bg, borderTopLeftRadius: 27, borderTopRightRadius: 27 },
-  titleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 }, title: { fontFamily: serif, fontSize: 31, lineHeight: 40, letterSpacing: -.8, flex: 1, color: '#111C16' }, heart: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
+  titleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 }, title: { fontFamily: serif, fontSize: 31, lineHeight: 40, letterSpacing: -.8, flex: 1, minWidth: 0, color: '#111C16' }, titleActions: { flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-start', flexShrink: 0, gap: 2 }, titleAction: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   artist: { fontSize: 15, lineHeight: 24, marginTop: 2, marginBottom: 2 }, metadata: { fontSize: 12, lineHeight: 20, color: '#494B45' },
   aboutTitle: { fontSize: 15, lineHeight: 23, fontWeight: '500', marginTop: 20, marginBottom: 8 }, description: { fontSize: 13, lineHeight: 20, color: '#333731' },
   audio: { height: 66, marginTop: 12, borderWidth: 1, borderColor: c.border, borderRadius: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12 },
@@ -88,5 +93,4 @@ const styles = StyleSheet.create({
   play: { width: 69, height: 69, borderRadius: 36, backgroundColor: c.green, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: '#172E24', shadowColor: '#22372F', shadowOpacity: .18, shadowRadius: 9, shadowOffset: { width: 0, height: 4 } },
   time: { width: 44, textAlign: 'center', fontSize: 13, lineHeight: 20 }, audioHint: { textAlign: 'center', marginTop: 13, fontSize: 11, lineHeight: 17, color: '#5C6059' },
   source: { minHeight: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, marginTop: 8 }, sourceText: { fontSize: 10, lineHeight: 16, color: c.muted },
-  feedback: { marginTop: 16 },
 });
