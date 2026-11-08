@@ -1,0 +1,105 @@
+{
+  "retrievedAt": "2026-10-31T08:52:04.129Z",
+  "value": {
+    "count": 15,
+    "hasNextPage": false,
+    "dimension": 512,
+    "nonfilter": [
+      "sourceHash",
+      "imageHash"
+    ],
+    "rows": [
+      {
+        "keyBytes": 113,
+        "vectorBytes": 2048,
+        "metadataUtf8Bytes": 334,
+        "filterableUtf8Bytes": 187
+      },
+      {
+        "keyBytes": 102,
+        "vectorBytes": 2048,
+        "metadataUtf8Bytes": 323,
+        "filterableUtf8Bytes": 176
+      },
+      {
+        "keyBytes": 97,
+        "vectorBytes": 2048,
+        "metadataUtf8Bytes": 318,
+        "filterableUtf8Bytes": 171
+      },
+      {
+        "keyBytes": 93,
+        "vectorBytes": 2048,
+        "metadataUtf8Bytes": 314,
+        "filterableUtf8Bytes": 167
+      },
+      {
+        "keyBytes": 99,
+        "vectorBytes": 2048,
+        "metadataUtf8Bytes": 320,
+        "filterableUtf8Bytes": 173
+      },
+      {
+        "keyBytes": 106,
+        "vectorBytes": 2048,
+        "metadataUtf8Bytes": 327,
+        "filterableUtf8Bytes": 180
+      },
+      {
+        "keyBytes": 98,
+        "vectorBytes": 2048,
+        "metadataUtf8Bytes": 319,
+        "filterableUtf8Bytes": 172
+      },
+      {
+        "keyBytes": 116,
+        "vectorBytes": 2048,
+        "metadataUtf8Bytes": 337,
+        "filterableUtf8Bytes": 190
+      },
+      {
+        "keyBytes": 107,
+        "vectorBytes": 2048,
+        "metadataUtf8Bytes": 328,
+        "filterableUtf8Bytes": 181
+      },
+      {
+        "keyBytes": 104,
+        "vectorBytes": 2048,
+        "metadataUtf8Bytes": 325,
+        "filterableUtf8Bytes": 178
+      },
+      {
+        "keyBytes": 95,
+        "vectorBytes": 2048,
+        "metadataUtf8Bytes": 316,
+        "filterableUtf8Bytes": 169
+      },
+      {
+        "keyBytes": 95,
+        "vectorBytes": 2048,
+        "metadataUtf8Bytes": 316,
+        "filterableUtf8Bytes": 169
+      },
+      {
+        "keyBytes": 93,
+        "vectorBytes": 2048,
+        "metadataUtf8Bytes": 314,
+        "filterableUtf8Bytes": 167
+      },
+      {
+        "keyBytes": 111,
+        "vectorBytes": 2048,
+        "metadataUtf8Bytes": 332,
+        "filterableUtf8Bytes": 185
+      },
+      {
+        "keyBytes": 97,
+        "vectorBytes": 2048,
+        "metadataUtf8Bytes": 318,
+        "filterableUtf8Bytes": 171
+      }
+    ],
+    "note": "UTF8 key/value logical byte estimate, excludes JSON transport punctuation. No embeddings retained."
+  }
+}

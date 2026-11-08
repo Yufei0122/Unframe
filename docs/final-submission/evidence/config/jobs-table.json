@@ -1,0 +1,41 @@
+{
+    "Table": {
+        "AttributeDefinitions": [
+            {
+                "AttributeName": "jobId",
+                "AttributeType": "S"
+            }
+        ],
+        "TableName": "a3-n12281212-unframe-jobs",
+        "KeySchema": [
+            {
+                "AttributeName": "jobId",
+                "KeyType": "HASH"
+            }
+        ],
+        "TableStatus": "ACTIVE",
+        "CreationDateTime": "2026-10-30T11:49:22.904000+10:00",
+        "ProvisionedThroughput": {
+            "NumberOfDecreasesToday": 0,
+            "ReadCapacityUnits": 0,
+            "WriteCapacityUnits": 0
+        },
+        "TableSizeBytes": 8158,
+        "ItemCount": 7,
+        "TableArn": "arn:aws:dynamodb:ap-southeast-2:901444280953:table/a3-n12281212-unframe-jobs",
+        "TableId": "fa13152e-6c83-4fcf-a14a-913adf171ba6",
+        "BillingModeSummary": {
+            "BillingMode": "PAY_PER_REQUEST",
+            "LastUpdateToPayPerRequestDateTime": "2026-10-30T11:49:22.904000+10:00"
+        },
+        "TableClassSummary": {
+            "TableClass": "STANDARD"
+        },
+        "DeletionProtectionEnabled": false,
+        "WarmThroughput": {
+            "ReadUnitsPerSecond": 12000,
+            "WriteUnitsPerSecond": 4000,
+            "Status": "ACTIVE"
+        }
+    }
+}

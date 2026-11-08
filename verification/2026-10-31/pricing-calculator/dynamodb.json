@@ -1,0 +1,15 @@
+{
+  "retrievedAt": "2026-10-31T08:48:18.364Z",
+  "value": {
+    "name": "a3-n12281212-unframe-jobs",
+    "billing": {
+      "BillingMode": "PAY_PER_REQUEST",
+      "LastUpdateToPayPerRequestDateTime": "2026-10-30T11:49:22.904000+10:00"
+    },
+    "itemCount": 7,
+    "bytes": 8158,
+    "indexes": [],
+    "streams": null,
+    "sse": null
+  }
+}

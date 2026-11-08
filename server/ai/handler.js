@@ -2,22 +2,21 @@ import { catalogues } from './catalogues.js';
 import { readAIConfig, AIError, logFailure } from './config.js';
 import { createLocalClient } from './local-http.js';
 import { createEmbeddingService, createEmbeddingStore } from './embeddings.js';
-import { createOllamaService } from './ollama.js';
+import { createAIProviders } from './providers.js';
 import { createRecognitionService } from './recognition.js';
 import { createRouteService } from './routes.js';
 import { createPlanningChatService } from './chat.js';
 import { readImageUpload, readLimited } from './images.js';
 import { getAIStatus } from './status.js';
-import { createVisionService } from './vision.js';
 import { createArtworkAnalysis } from './artwork-analysis.js';
 import { getPlanningStatus } from './planning-status.js';
 
 export function createAIHandler({ config = readAIConfig(), clip = createLocalClient(config, 'OPENCLIP'), ollamaClient = createLocalClient(config, 'OLLAMA'), store = createEmbeddingStore(config), analysis } = {}) {
   const gate = { active: false };
-  const ollama = createOllamaService(config, ollamaClient, gate);
-  const artworkAnalysis = analysis || createArtworkAnalysis(config, { vision: createVisionService(config, { gate }), embeddings: createEmbeddingService(config, clip), store });
+  const { text: ollama, vision } = createAIProviders(config, { ollamaClient, gate });
+  const artworkAnalysis = analysis || createArtworkAnalysis(config, { vision, embeddings: createEmbeddingService(config, clip), store });
   const services = new Map([...catalogues].map(([id, { collection, graph, museum }]) => [id, {
-    recognition: createRecognitionService({ config, embeddings: createEmbeddingService(config, clip), store, ollama, collection }),
+    recognition: createRecognitionService({ config, embeddings: createEmbeddingService(config, clip), store, ollama, collection, museumId: id }),
     routes: createRouteService({ ollama, collection, graph }),
     chat: createPlanningChatService({ ollama, collection, graph, museum }),
   }]));
@@ -35,7 +34,9 @@ export function createAIHandler({ config = readAIConfig(), clip = createLocalCli
     if (origin && !sameOrigin && !config.allowedOrigins.includes(origin)) return send(res, 403, { error: 'This web origin is not allowed.' });
     if (origin) { res.setHeader('Access-Control-Allow-Origin', origin); res.setHeader('Vary', 'Origin'); }
     if (req.method === 'OPTIONS') { res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); res.writeHead(204); return res.end(); }
-    if (req.method === 'GET' && pathname === '/api/ai/planning/status') return send(res, 200, await getPlanningStatus({ config, client: ollamaClient }));
+    if (req.method === 'GET' && pathname === '/api/ai/planning/status') return send(res, 200, config.aiProvider === 'bedrock'
+      ? { ready: false, configured: true, liveVerified: false, provider: 'bedrock', model: config.bedrockPlanningModel, message: 'Configured only; model access has not been verified by this status endpoint.' }
+      : await getPlanningStatus({ config, client: ollamaClient }));
     if (req.method === 'GET' && pathname === '/api/ai/catalogue') {
       const catalogue = catalogues.get(url.searchParams.get('museumId') ?? 'met');
       return catalogue ? send(res, 200, { museum: catalogue.museum, artworks: catalogue.collection, graph: catalogue.graph }) : send(res, 400, { error: `Choose a supported museum: ${[...catalogues.keys()].join(', ')}.`, code: 'INVALID_MUSEUM' });
@@ -44,6 +45,7 @@ export function createAIHandler({ config = readAIConfig(), clip = createLocalCli
       const museumId = url.searchParams.get('museumId') ?? 'met';
       const catalogue = catalogues.get(museumId);
       if (!catalogue) return send(res, 400, { error: `Choose a supported museum: ${[...catalogues.keys()].join(', ')}.`, code: 'INVALID_MUSEUM' });
+      if (config.aiProvider === 'bedrock' || config.vectorStore === 's3vectors') return send(res, 200, { ready: false, configured: true, liveVerified: false, provider: config.aiProvider, vectorStore: config.vectorStore, museumId, message: 'Cloud configuration is present; this endpoint does not invoke AWS to prove readiness.' });
       return send(res, 200, await getAIStatus({ config, store, collection: catalogue.collection, museumId, clip, ollamaClient }));
     }
     if (req.method !== 'POST' || !['/api/ai/artworks/recognise', '/api/ai/artworks/analyse', '/api/ai/artworks/confirm', '/api/ai/routes/plan', '/api/ai/routes/chat', '/api/ai/routes/visit'].includes(pathname)) return send(res, 404, { error: 'AI endpoint not found.' });

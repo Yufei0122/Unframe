@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "path": "D:\\FlyFly\\Study\\QUT\\Assessment\\26S2\\CAB432\\A3\\CAB432-A3-Submission-fixed.zip",
+  "bytes": 8432504,
+  "sha256": "70a26a5f193e2244704a12453ea7d80dd894b32ecbee04ca492ca914cebb4cba",
+  "files": 337,
+  "appFiles": 336,
+  "entries": 338,
+  "roots": [
+    "submission-a3-infra.yml",
+    "app/"
+  ],
+  "crc": "PASS",
+  "symlinks": [],
+  "unsafePaths": [],
+  "nestedArchives": [],
+  "freshExtractionDirectory": "D:\\FlyFly\\Study\\Project\\Unframe\\docs\\final-submission\\gradescope-autograder-repair\\extracted-12th59p8",
+  "extractedFiles": 337,
+  "extractedAppNonempty": true,
+  "allExtractedHashesMatch": true,
+  "previousArchivesUnchanged": true
+}

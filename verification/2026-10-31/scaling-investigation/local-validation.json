@@ -1,0 +1,17 @@
+{
+  "checkedAt": "2026-10-31T07:32:39.699Z",
+  "commands": [
+    "node --check scripts/audit-scaling-behaviour.mjs",
+    "node --check scripts/plan-sustained-scaling.mjs",
+    "node scripts/plan-sustained-scaling.mjs",
+    "node --test tests/aws-jobs.test.js"
+  ],
+  "syntax": "PASS",
+  "jobsTests": {
+    "passed": 17,
+    "failed": 0
+  },
+  "applicationChanges": false,
+  "liveJobsSubmitted": 0,
+  "awsMutations": 0
+}

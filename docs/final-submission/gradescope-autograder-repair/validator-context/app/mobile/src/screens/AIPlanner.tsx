@@ -1,0 +1,195 @@
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Button, Icon, T, c, serif, useRootNavigation } from '../ui';
+import { useStore } from '../store';
+import { useMuseumLocation } from '../location';
+import { requestAI, requestPlanningVisit } from '../ai';
+import type { AIRoute, PlanningMessage, VisitPreferences } from '../../../shared/ai-types';
+import { RoutePlanningTransition } from '../components/AIProcessingAnimations';
+import { PlanningAnswer } from '../components/PlanningAnswer';
+import { FloorPlan, type Floor } from '../components/FloorPlan';
+
+type ActiveRequest = { controller: AbortController; kind: 'chat' | 'route'; message?: string; startedAt: number };
+
+function PlanningWait({ startedAt, onCancel }: { startedAt: number; onCancel: () => void }) {
+  const [seconds, setSeconds] = useState(0);
+  useEffect(() => {
+    const update = () => setSeconds(Math.floor((performance.now() - startedAt) / 1000));
+    update();
+    const timer = setInterval(update, 1000);
+    return () => clearInterval(timer);
+  }, [startedAt]);
+  return <View style={{ gap: 8 }}>
+    {seconds >= 15 && <T style={styles.detail} testID="planning-elapsed">Waiting {seconds}s · You can cancel at any time.</T>}
+    <Pressable accessibilityRole="button" accessibilityLabel="Cancel request" onPress={onCancel} style={{ minHeight: 44, justifyContent: 'center', alignSelf: 'flex-end' }}><T style={styles.detail}>Cancel</T></Pressable>
+  </View>;
+}
+
+export function AIPlannerScreen() {
+  const { museumId } = useMuseumLocation();
+  return <PlanningChat key={museumId}/>;
+}
+
+function PlanningChat() {
+  const { museum, museumId } = useMuseumLocation();
+  const focused = useIsFocused();
+  const nav = useRootNavigation(), { state } = useStore();
+  const defaults = (): VisitPreferences => ({
+    interests: state.preferences.interests.slice(0, 10), availableMinutes: state.preferences.duration,
+    currentLocation: 'entrance', walkingPreference: 'balanced',
+    accessibilityRequirements: state.preferences.stepFree ? ['step_free'] : [], mustSeeArtworkIds: [],
+  });
+  const welcome: PlanningMessage = { role: 'assistant', content: `Let's make ${museum.shortName} your own. Tell me how much time you have, what you love, or an artwork you don't want to miss. We can shape your visit together.` };
+  const [messages, setMessages] = useState<PlanningMessage[]>([welcome]);
+  const [preferences, setPreferences] = useState<VisitPreferences>(defaults);
+  const [draft, setDraft] = useState('');
+  const [revealingReply, setRevealingReply] = useState<number | null>(null);
+  const [busy, setBusy] = useState<'chat' | 'route' | null>(null);
+  const [error, setError] = useState('');
+  const [failedMessage, setFailedMessage] = useState<string | null>(null);
+  const [itinerary, setItinerary] = useState<AIRoute | null>(null);
+  const [previewFloor, setPreviewFloor] = useState<Floor>('1');
+  const request = useRef<ActiveRequest | null>(null);
+  const scroll = useRef<ScrollView>(null);
+  const positionedAnswer = useRef(-1);
+
+  const cancel = useCallback(() => {
+    const active = request.current;
+    if (!active) return;
+    request.current = null;
+    active.controller.abort();
+    setBusy(null);
+    setFailedMessage(active.message ?? null);
+    setError(active.kind === 'chat' ? 'Your message was paused. Retry to continue the conversation.' : 'Route generation was paused. You can generate it again.');
+  }, []);
+  useFocusEffect(useCallback(() => cancel, [cancel]));
+
+  function reset() {
+    cancel(); positionedAnswer.current = -1; setMessages([welcome]); setPreferences(defaults()); setDraft(''); setError(''); setFailedMessage(null); setRevealingReply(null); setItinerary(null);
+  }
+
+  async function send(content = draft, retry = false) {
+    const message = content.trim();
+    if (!message || request.current || (failedMessage && !retry)) return;
+    const history = (retry ? messages.slice(0, -1) : messages).slice(-8);
+    if (!retry) setMessages(previous => [...previous, { role: 'user', content: message }]);
+    setDraft(''); setError(''); setFailedMessage(null); setRevealingReply(null); setBusy('chat');
+    const controller = new AbortController(), startedAt = performance.now();
+    request.current = { controller, kind: 'chat', message, startedAt };
+    let chatCompleted = false;
+    try {
+      const route = await requestPlanningVisit({ museumId, message, history, preferences }, controller.signal, response => {
+        if (request.current?.controller !== controller || controller.signal.aborted) return;
+        chatCompleted = true;
+        setRevealingReply(retry ? messages.length : messages.length + 1);
+        setItinerary(null);
+        setPreferences(response.preferences);
+        setMessages(previous => [...previous, { role: 'assistant', content: response.reply }]);
+        setBusy('route');
+        request.current = { controller, kind: 'route', startedAt };
+      });
+      if (request.current?.controller !== controller || controller.signal.aborted) return;
+      setItinerary(route);
+    } catch (failure) {
+      if (request.current?.controller !== controller) return;
+      if (!chatCompleted) setFailedMessage(message);
+      setError(failure instanceof Error ? failure.message : chatCompleted ? 'Your answer is ready, but the route preview could not be built.' : 'Could not send your message. Please retry.');
+    } finally {
+      if (request.current?.controller === controller) { request.current = null; setBusy(null); }
+    }
+  }
+
+  async function plan() {
+    if (request.current || failedMessage || draft.trim()) return;
+    Keyboard.dismiss(); setBusy('route'); setError('');
+    const controller = new AbortController(), startedAt = performance.now();
+    request.current = { controller, kind: 'route', startedAt };
+    try {
+      const itinerary = await requestAI<AIRoute>('routes/plan', { museumId, ...preferences }, controller.signal);
+      if (request.current?.controller !== controller || controller.signal.aborted) return;
+      setItinerary(itinerary);
+    } catch (failure) {
+      if (request.current?.controller !== controller) return;
+      setError(failure instanceof Error ? failure.message : 'Could not plan this visit.');
+    } finally {
+      if (request.current?.controller === controller) { request.current = null; setBusy(null); }
+    }
+  }
+
+  const locked = !!busy || !!failedMessage;
+  const prompts = [
+    { label: '30-minute highlights', message: 'I have 30 minutes. Help me explore the highlights.' },
+    { label: 'A relaxed, step-free visit', message: 'I would like a step-free route with less walking.' },
+    { label: `Include ${museum.artworks[0].title}`, message: `Please include ${museum.artworks[0].title} as a must-see.` },
+  ];
+  return <SafeAreaView edges={['top']} style={styles.screen}>
+    <View style={styles.header}>
+      <View style={styles.headerCopy}><T style={styles.eyebrow}>YOUR MUSEUM COMPANION</T><T accessibilityRole="header" style={styles.title}>Plan your visit</T></View>
+      <Pressable accessibilityRole="button" accessibilityLabel="New conversation" onPress={reset} style={styles.roundButton}><Icon name="create-outline" size={22}/></Pressable>
+    </View>
+    <View testID="planning-museum" style={styles.museum}><Icon name="location-outline" size={14} color={c.green}/><T style={styles.museumText}>{museum.shortName}</T><View style={styles.dot}/><T style={styles.museumText}>Mira · AI curator</T></View>
+    <KeyboardAvoidingView style={styles.body} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <ScrollView ref={scroll} style={styles.body} contentContainerStyle={styles.conversation} keyboardShouldPersistTaps="handled" onContentSizeChange={() => { if (messages.length > 1 && messages[messages.length - 1].role === 'user') scroll.current?.scrollToEnd({ animated: true }); }}>
+        <T style={styles.caption}>A visit shaped around you</T>
+        {messages.map((message, index) => <View key={index} style={[styles.messageRow, message.role === 'user' && styles.userRow]} onLayout={event => {
+          if (message.role === 'assistant' && index > 0 && index === messages.length - 1 && positionedAnswer.current !== index) {
+            positionedAnswer.current = index; scroll.current?.scrollTo({ y: Math.max(0, event.nativeEvent.layout.y - 8), animated: true });
+          }
+        }}>
+          {message.role === 'assistant' && !(index > 0 && index === messages.length - 1) && <View style={styles.avatar}><Icon name="sparkles-outline" size={16} color={c.green}/></View>}
+          {message.role === 'assistant' && index > 0 && index === messages.length - 1 ? <View style={styles.answerCard} testID="planning-answer-card">
+            <PlanningAnswer key={index} text={message.content} preferences={preferences} mustSeeTitles={preferences.mustSeeArtworkIds.map(id => museum.artworks.find(art => art.id === id)?.title).filter((title): title is string => !!title)} active={focused && revealingReply === index}/>
+            {busy === 'route' && <View style={styles.inlineRoute}><RoutePlanningTransition label="Finishing your route…"/></View>}
+            {!busy && itinerary && <View style={styles.inlineRoute} testID="route-preview-card">
+              <View style={styles.routeCardHeading}><T style={styles.routeTitle}>Your route</T><T style={styles.routeMeta}>{itinerary.route.length} stops · {itinerary.estimatedMinutes} min · {itinerary.estimatedWalkingDistance} m</T></View>
+              <FloorPlan museumId={museumId} floor={previewFloor} setFloor={setPreviewFloor} room={null} onRoom={() => {}} onSearch={() => nav.navigate('Lookup')} height={210} routePaths={itinerary.navigation.map(item => item.nodes)}/>
+              <Button title="View full itinerary" icon="arrow-forward" onPress={() => nav.navigate('AIItinerary', { itinerary, museumId, returnToPlanner: true })}/>
+            </View>}
+          </View> : <View style={[styles.bubble, message.role === 'user' && styles.userBubble]}><T style={[styles.message, message.role === 'user' && styles.userText]}>{message.content}</T></View>}
+        </View>)}
+        {messages.length === 1 && <View style={styles.prompts}>{prompts.map(prompt => <Pressable key={prompt.label} accessibilityRole="button" accessibilityLabel={prompt.label} disabled={locked} onPress={() => { void send(prompt.message); }} style={styles.prompt}><T style={styles.promptText}>{prompt.label}</T><Icon name="arrow-up-outline" size={15} color={c.green}/></Pressable>)}</View>}
+        {busy === 'chat' && <RoutePlanningTransition label="Preparing your visit…"/>}
+        {busy && request.current && <PlanningWait startedAt={request.current.startedAt} onCancel={cancel}/>}
+        {!!error && <View style={styles.errorBox}><T accessibilityRole="alert" style={styles.errorText}>{error}</T>{failedMessage ? <View style={styles.errorActions}>
+          <Button title="Retry message" secondary disabled={!!busy} onPress={() => { void send(failedMessage, true); }}/>
+          <Pressable accessibilityRole="button" accessibilityLabel="Discard message" onPress={() => { setMessages(previous => previous.slice(0, -1)); setFailedMessage(null); setError(''); }} style={styles.discard}><T style={styles.detail}>Discard message</T></Pressable>
+        </View> : messages.length > 1 && <Button title="Try route again" secondary disabled={!!busy} onPress={() => { void plan(); }}/>}</View>}
+        {messages.length === 1 && <View style={styles.summary} testID="visit-preferences"><View style={styles.summaryHeading}><T style={styles.summaryTitle}>Starting preferences</T><View style={styles.time}><Icon name="time-outline" size={13}/><T style={styles.timeText}>{preferences.availableMinutes} min</T></View></View><T style={styles.detail}>Choose a prompt or tell me what matters to you.</T></View>}
+      </ScrollView>
+      <View style={styles.composerArea}>
+        <View style={styles.composer}>
+          <TextInput accessibilityLabel="Message your visit planner" placeholder="Tell me what you have in mind…" placeholderTextColor={c.muted} value={draft} onChangeText={setDraft} multiline maxLength={600} editable={!locked} style={styles.input} onKeyPress={event => {
+            const key = event.nativeEvent as typeof event.nativeEvent & { shiftKey?: boolean; isComposing?: boolean; keyCode?: number };
+            if (Platform.OS === 'web' && key.key === 'Enter' && !key.shiftKey && !key.isComposing && key.keyCode !== 229) { event.preventDefault(); void send(); }
+          }}/>
+          <Pressable accessibilityRole="button" accessibilityLabel="Send message" accessibilityState={{ disabled: locked || !draft.trim() }} disabled={locked || !draft.trim()} onPress={() => { void send(); }} style={[styles.send, (locked || !draft.trim()) && styles.disabled]}><Icon name="arrow-up" color={c.white} size={21}/></Pressable>
+        </View>
+        <T style={styles.composerNote}>Send a change and your route preview updates automatically.</T>
+      </View>
+    </KeyboardAvoidingView>
+  </SafeAreaView>;
+}
+
+const styles = StyleSheet.create({
+  screen: { flex: 1, backgroundColor: c.bg }, body: { flex: 1, minHeight: 0 },
+  header: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, paddingTop: 17, paddingBottom: 13, gap: 12 }, headerCopy: { flex: 1 },
+  eyebrow: { fontSize: 9, lineHeight: 15, letterSpacing: 1.5, color: c.muted }, title: { fontFamily: serif, fontSize: 29, lineHeight: 38, letterSpacing: -.6 },
+  roundButton: { width: 44, height: 44, borderRadius: 22, borderWidth: 1, borderColor: c.border, alignItems: 'center', justifyContent: 'center' },
+  museum: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 7, paddingHorizontal: 20, paddingBottom: 15, borderBottomWidth: 1, borderColor: c.border }, museumText: { fontSize: 11, lineHeight: 17, color: c.green }, dot: { width: 3, height: 3, borderRadius: 2, backgroundColor: c.muted },
+  conversation: { padding: 18, gap: 17, paddingBottom: 22 }, caption: { fontSize: 10, lineHeight: 16, textAlign: 'center', color: c.muted, marginBottom: 3 },
+  messageRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 8 }, userRow: { justifyContent: 'flex-end' },
+  avatar: { width: 28, height: 28, borderRadius: 14, backgroundColor: c.sage, alignItems: 'center', justifyContent: 'center', marginTop: 3 },
+  bubble: { backgroundColor: c.white, paddingHorizontal: 15, paddingVertical: 13, borderRadius: 18, borderTopLeftRadius: 4, flexShrink: 1, maxWidth: '90%', borderWidth: 1, borderColor: c.border },
+  userBubble: { backgroundColor: c.green, borderColor: c.green, borderTopLeftRadius: 18, borderBottomRightRadius: 4 }, message: { fontSize: 13, lineHeight: 21 }, userText: { color: c.white },
+  answerCard: { flex: 1, width: '100%', borderWidth: 1, borderColor: '#D8DED4', backgroundColor: c.white, borderRadius: 18, padding: 16, gap: 11 },
+  prompts: { gap: 8, alignItems: 'flex-start', marginLeft: 36 }, prompt: { borderWidth: 1, borderColor: '#D5DDD3', borderRadius: 18, paddingHorizontal: 13, paddingVertical: 10, minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 10, maxWidth: '100%' }, promptText: { fontSize: 11, lineHeight: 18, color: c.green, flexShrink: 1 },
+  thinking: { flexDirection: 'row', alignItems: 'center', gap: 9, marginLeft: 36 },
+  summary: { padding: 15, gap: 10, borderWidth: 1, borderColor: c.border, backgroundColor: '#F0F2EC', borderRadius: 17 }, summaryHeading: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10 }, summaryTitle: { fontSize: 12, lineHeight: 20, fontWeight: '600', flexShrink: 1 },
+  time: { flexDirection: 'row', alignItems: 'center', gap: 4 }, timeText: { fontSize: 11, lineHeight: 18 }, detail: { fontSize: 11, lineHeight: 18, color: c.muted }, summaryNote: { fontSize: 10, lineHeight: 15, textAlign: 'center', color: c.muted }, demoNote: { fontSize: 10, lineHeight: 16, textAlign: 'center', color: c.muted, paddingHorizontal: 8 },
+  inlineRoute: { borderTopWidth: 1, borderTopColor: '#E5E8E2', paddingTop: 13, gap: 11, overflow: 'hidden' }, routeCardHeading: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', flexWrap: 'wrap', gap: 6 }, routeTitle: { fontFamily: serif, fontSize: 19, lineHeight: 25, color: c.ink }, routeMeta: { fontSize: 10, lineHeight: 16, color: c.muted },
+  errorBox: { padding: 13, borderRadius: 13, backgroundColor: '#F5E9E3', gap: 9 }, errorText: { fontSize: 12, lineHeight: 19, color: '#8A3C29' }, errorActions: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 12 }, discard: { minHeight: 44, justifyContent: 'center' },
+  composerArea: { paddingHorizontal: 15, paddingTop: 12, paddingBottom: 7, backgroundColor: c.bg, borderTopWidth: 1, borderColor: c.border }, composer: { flexDirection: 'row', alignItems: 'flex-end', padding: 5, gap: 6, backgroundColor: c.white, borderWidth: 1, borderColor: '#D6DCD2', borderRadius: 25 },
+  input: { flex: 1, minWidth: 0, minHeight: 42, maxHeight: 104, paddingHorizontal: 12, paddingVertical: 11, color: c.ink, fontSize: 13, lineHeight: 20 }, send: { width: 42, height: 42, borderRadius: 21, backgroundColor: c.green, alignItems: 'center', justifyContent: 'center' }, disabled: { opacity: .4 }, composerNote: { fontSize: 9, lineHeight: 15, textAlign: 'center', color: c.muted, marginTop: 6 },
+});

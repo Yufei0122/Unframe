@@ -1,0 +1,12 @@
+{
+  "retrievedAt": "2026-10-31T07:45:10.143Z",
+  "value": {
+    "Attributes": {
+      "ApproximateNumberOfMessages": "0",
+      "ApproximateNumberOfMessagesNotVisible": "0",
+      "ApproximateNumberOfMessagesDelayed": "0",
+      "VisibilityTimeout": "300",
+      "RedrivePolicy": "{\"deadLetterTargetArn\":\"arn:aws:sqs:ap-southeast-2:901444280953:a3-n12281212-unframe-recognition-dlq\",\"maxReceiveCount\":5}"
+    }
+  }
+}

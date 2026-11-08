@@ -1,0 +1,11 @@
+**
+!package.json
+!package-lock.json
+!server/
+!server/**
+!shared/
+!shared/**
+!scripts/
+!scripts/smoke-lambda.mjs
+**/.env*
+**/node_modules

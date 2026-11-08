@@ -1,0 +1,19 @@
+{
+  "status": "PASS_LOCAL_VALIDATION",
+  "submissionReady": false,
+  "resources": 32,
+  "sourceFilesVerified": 290,
+  "sourceBytes": 9648737,
+  "dashboardUnrelatedWidgetsPreserved": 6,
+  "vectorCount": 15,
+  "liveBrowserJobs": 1,
+  "detectedSecretPatterns": 0,
+  "remaining": [
+    "Bedrock Analyse success",
+    "Planning permission/deployment",
+    "real scaling evidence",
+    "calculator share link",
+    "shared dependency tagging review",
+    "student report/video"
+  ]
+}

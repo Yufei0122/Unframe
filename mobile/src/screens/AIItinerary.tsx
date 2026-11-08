@@ -20,7 +20,7 @@ export function AIItineraryScreen({ route, navigation }: NativeStackScreenProps<
     <Title>Your itinerary</Title>
     <T>{itinerary.estimatedMinutes} minutes · {itinerary.estimatedWalkingDistance} m walking</T>
     {!!itinerary.warning && <Notice>{itinerary.warning}</Notice>}
-    <T style={s.small}>{itinerary.recommendationSource === 'ollama' ? 'Qwen recommendation' : 'Local rules recommendation'} · {itinerary.reasoningSummary}</T>
+    <T style={s.small}>{itinerary.recommendationSource === 'bedrock' ? 'Bedrock recommendation' : itinerary.recommendationSource === 'ollama' ? 'Qwen recommendation' : 'Local rules recommendation'} · {itinerary.reasoningSummary}</T>
     <FloorPlan museumId={museumId} floor={floor} setFloor={setFloor} room={room} onRoom={setRoom} onSearch={() => navigation.navigate('Lookup')} height={300} routePaths={itinerary.navigation.map(n => n.nodes)}/>
     {itinerary.route.map((stop, i) => <View key={stop.artworkId} style={s.card}>
       <T style={s.sectionTitle}>{stop.order}. {stop.title}</T>

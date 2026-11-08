@@ -1,0 +1,9 @@
+[
+    {
+        "serviceArn": "arn:aws:ecs:ap-southeast-2:901444280953:service/n12281212-strobe-a2/a3-n12281212-unframe-worker",
+        "taskDefinition": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:4",
+        "desired": 1,
+        "running": 1,
+        "pending": 0
+    }
+]

@@ -1,0 +1,14 @@
+{
+  "TableName": "a3-n12281212-unframe-jobs",
+  "Key": {
+    "jobId": {
+      "S": "d697fc84-9c23-4f15-abd0-2bcd5f040dc8"
+    }
+  },
+  "ConsistentRead": true,
+  "ProjectionExpression": "jobId, #s, operation, museumId, attempts, #r, completedAt",
+  "ExpressionAttributeNames": {
+    "#s": "status",
+    "#r": "result"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "family": "<TASK_FAMILY>",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "2048",
+  "runtimePlatform": { "cpuArchitecture": "X86_64", "operatingSystemFamily": "LINUX" },
+  "executionRoleArn": "<EXECUTION_ROLE_ARN>",
+  "taskRoleArn": "<TASK_ROLE_ARN>",
+  "containerDefinitions": [{
+    "name": "<CONTAINER_NAME>",
+    "image": "<ECR_IMAGE_URI_WITH_DIGEST>",
+    "essential": true,
+    "cpu": 512,
+    "memory": 2048,
+    "stopTimeout": 120,
+    "environment": [
+      { "name": "AWS_REGION", "value": "ap-southeast-2" },
+      { "name": "AI_PROVIDER", "value": "bedrock" },
+      { "name": "VECTOR_STORE", "value": "s3vectors" },
+      { "name": "S3_VECTOR_INDEX_ARN", "value": "<EXISTING_VECTOR_INDEX_ARN>" },
+      { "name": "S3_VECTOR_VERSION", "value": "openclip-v1" },
+      { "name": "ARTWORK_MATCH_THRESHOLD", "value": "0.80" },
+      { "name": "BEDROCK_MODEL_ID", "value": "google.gemma-3-12b-it" },
+      { "name": "BEDROCK_VISION_MODEL_ID", "value": "google.gemma-3-12b-it" },
+      { "name": "BEDROCK_TIMEOUT_MS", "value": "120000" },
+      { "name": "JOBS_TABLE_NAME", "value": "<JOBS_TABLE_NAME>" },
+      { "name": "JOB_IMAGES_BUCKET", "value": "<TEMP_IMAGE_BUCKET_NAME>" },
+      { "name": "JOB_IMAGE_PREFIX", "value": "uploads/" },
+      { "name": "RECOGNITION_QUEUE_URL", "value": "<QUEUE_URL>" },
+      { "name": "OPENCLIP_URL", "value": "http://127.0.0.1:8001" },
+      { "name": "OPENCLIP_DEVICE", "value": "cpu" },
+      { "name": "OPENCLIP_THREADS", "value": "1" },
+      { "name": "OPENCLIP_TIMEOUT_MS", "value": "30000" },
+      { "name": "WORKER_JOB_TIMEOUT_MS", "value": "180000" },
+      { "name": "WORKER_VISIBILITY_SECONDS", "value": "300" },
+      { "name": "WORKER_MAX_ATTEMPTS", "value": "5" },
+      { "name": "AI_ANALYSIS_BUDGET_MS", "value": "125000" },
+      { "name": "ARTWORK_PUBLIC_SEARCH", "value": "false" }
+    ],
+    "healthCheck": {
+      "command": ["CMD", "node", "worker/healthcheck.js"],
+      "interval": 30, "timeout": 5, "startPeriod": 180, "retries": 3
+    },
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": { "awslogs-group": "<LOG_GROUP>", "awslogs-region": "ap-southeast-2", "awslogs-stream-prefix": "<LOG_STREAM_PREFIX>" }
+    }
+  }]
+}

@@ -1,0 +1,12 @@
+{
+  "retrievedAt": "2026-10-31T08:52:05.868Z",
+  "value": {
+    "found": true,
+    "jobId": "a10046fa-8f8b-45b8-b0e7-bda2c2cd933a",
+    "status": "SUCCEEDED",
+    "estimatedItemBytes": 2921,
+    "stronglyConsistentReadUnits": 1,
+    "ttlSeconds": 86400,
+    "note": "Numeric size approximation follows AWS sizing; no item values persisted."
+  }
+}

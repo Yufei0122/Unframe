@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-10-31T06:11:22.784Z",
+  "image": "mobile/assets/met-exterior.jpg",
+  "model": "ViT-B-32",
+  "pretrained": "laion2b_s34b_b79k",
+  "dimensions": 512,
+  "norm": 1.0000000142710275,
+  "vectorStore": "real AWS S3 Vectors",
+  "threshold": 0.8,
+  "candidates": [
+    {
+      "artworkId": "goma-obliteration-room",
+      "museumId": "goma",
+      "similarity": 0.2678631544113159
+    },
+    {
+      "artworkId": "qut-soft-architecture",
+      "museumId": "qut",
+      "similarity": 0.2677699327468872
+    },
+    {
+      "artworkId": "goma-soul-under-the-moon",
+      "museumId": "goma",
+      "similarity": 0.23801589012145996
+    }
+  ],
+  "catalogueShortcut": false,
+  "bedrockInvocations": 0,
+  "jobsCreated": 0
+}

@@ -1,0 +1,7 @@
+{
+  "ServiceNamespace": "ecs",
+  "ResourceId": "service/n12281212-strobe-a2/a3-n12281212-unframe-worker",
+  "ScalableDimension": "ecs:service:DesiredCount",
+  "MinCapacity": 1,
+  "MaxCapacity": 3
+}

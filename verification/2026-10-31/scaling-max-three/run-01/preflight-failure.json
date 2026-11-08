@@ -1,0 +1,13 @@
+{
+  "startedAt": null,
+  "endedAt": "2026-10-31T08:04:45.084Z",
+  "stopReason": "MONITOR_ERROR_CredentialsProviderError",
+  "fatalCode": "CredentialsProviderError",
+  "created": 0,
+  "succeeded": 0,
+  "correct": 0,
+  "sawRunningOut": false,
+  "peakObservedVisible": null,
+  "peakObservedRunning": null,
+  "note": "Final F15/F16 verdict requires matching CloudWatch metrics and scaling activities."
+}

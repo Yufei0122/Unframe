@@ -1,0 +1,137 @@
+{
+    "services": [
+        {
+            "serviceArn": "arn:aws:ecs:ap-southeast-2:901444280953:service/n12281212-strobe-a2/a3-n12281212-unframe-worker",
+            "serviceName": "a3-n12281212-unframe-worker",
+            "clusterArn": "arn:aws:ecs:ap-southeast-2:901444280953:cluster/n12281212-strobe-a2",
+            "loadBalancers": [],
+            "serviceRegistries": [],
+            "status": "ACTIVE",
+            "desiredCount": 1,
+            "runningCount": 1,
+            "pendingCount": 0,
+            "launchType": "FARGATE",
+            "platformVersion": "LATEST",
+            "platformFamily": "Linux",
+            "taskDefinition": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:4",
+            "deploymentConfiguration": {
+                "deploymentCircuitBreaker": {
+                    "enable": true,
+                    "rollback": true,
+                    "resetOnHealthyTask": false,
+                    "thresholdConfiguration": {
+                        "type": "BOUNDED_PERCENT",
+                        "value": 50
+                    }
+                },
+                "maximumPercent": 200,
+                "minimumHealthyPercent": 100,
+                "strategy": "ROLLING",
+                "bakeTimeInMinutes": 0
+            },
+            "deployments": [
+                {
+                    "id": "ecs-svc/0312324149253549029",
+                    "status": "PRIMARY",
+                    "taskDefinition": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:4",
+                    "desiredCount": 1,
+                    "pendingCount": 0,
+                    "runningCount": 1,
+                    "failedTasks": 0,
+                    "createdAt": "2026-10-31T05:29:36.296000+10:00",
+                    "updatedAt": "2026-10-31T05:32:47.204000+10:00",
+                    "launchType": "FARGATE",
+                    "platformVersion": "1.4.0",
+                    "platformFamily": "Linux",
+                    "networkConfiguration": {
+                        "awsvpcConfiguration": {
+                            "subnets": [
+                                "subnet-075811427d5564cf9",
+                                "subnet-05a3b8177138c8b14"
+                            ],
+                            "securityGroups": [
+                                "sg-078997505ad1c6bbc"
+                            ],
+                            "assignPublicIp": "ENABLED"
+                        }
+                    },
+                    "rolloutState": "COMPLETED",
+                    "rolloutStateReason": "ECS deployment ecs-svc/0312324149253549029 completed."
+                }
+            ],
+            "roleArn": "arn:aws:iam::901444280953:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS",
+            "events": [
+                {
+                    "id": "e9be845d-2b68-49d2-8e28-fbafcdfce6ec",
+                    "createdAt": "2026-10-31T05:32:47.210000+10:00",
+                    "message": "(service a3-n12281212-unframe-worker) has reached a steady state."
+                },
+                {
+                    "id": "b707c575-03d6-4d22-88b5-a9268bdaa6aa",
+                    "createdAt": "2026-10-31T05:32:47.209000+10:00",
+                    "message": "(service a3-n12281212-unframe-worker) (deployment ecs-svc/0312324149253549029) deployment completed."
+                },
+                {
+                    "id": "4297431c-93a8-4bcd-a5e5-db3885c366a1",
+                    "createdAt": "2026-10-31T05:31:33.933000+10:00",
+                    "message": "(service a3-n12281212-unframe-worker) has stopped 1 running tasks: (task b81f902404d244fcacf4a0d277d11f02)."
+                },
+                {
+                    "id": "1ea9d925-f6c8-42d7-8d6b-118c582480f2",
+                    "createdAt": "2026-10-31T05:29:49.486000+10:00",
+                    "message": "(service a3-n12281212-unframe-worker) has started 1 tasks: (task cb916ca6f0484d318109cddf9c3436a1)."
+                },
+                {
+                    "id": "e3456224-9a05-45d3-9262-0f16378ec90d",
+                    "createdAt": "2026-10-31T03:48:38.754000+10:00",
+                    "message": "(service a3-n12281212-unframe-worker) has reached a steady state."
+                },
+                {
+                    "id": "4351deaf-0b05-46eb-999a-320f96fca73c",
+                    "createdAt": "2026-10-31T03:48:38.753000+10:00",
+                    "message": "(service a3-n12281212-unframe-worker) (deployment ecs-svc/0187700546537704791) deployment completed."
+                },
+                {
+                    "id": "0453ff10-464e-42dc-b59a-b2dd66c0b157",
+                    "createdAt": "2026-10-31T03:46:33.789000+10:00",
+                    "message": "(service a3-n12281212-unframe-worker) has started 1 tasks: (task b81f902404d244fcacf4a0d277d11f02)."
+                }
+            ],
+            "createdAt": "2026-10-31T03:46:16.089000+10:00",
+            "currentServiceRevisions": [
+                {
+                    "arn": "arn:aws:ecs:ap-southeast-2:901444280953:service-revision/n12281212-strobe-a2/a3-n12281212-unframe-worker/0312324149253549029",
+                    "requestedTaskCount": 1,
+                    "runningTaskCount": 1,
+                    "pendingTaskCount": 0
+                }
+            ],
+            "placementConstraints": [],
+            "placementStrategy": [],
+            "networkConfiguration": {
+                "awsvpcConfiguration": {
+                    "subnets": [
+                        "subnet-075811427d5564cf9",
+                        "subnet-05a3b8177138c8b14"
+                    ],
+                    "securityGroups": [
+                        "sg-078997505ad1c6bbc"
+                    ],
+                    "assignPublicIp": "ENABLED"
+                }
+            },
+            "healthCheckGracePeriodSeconds": 0,
+            "schedulingStrategy": "REPLICA",
+            "deploymentController": {
+                "type": "ECS"
+            },
+            "createdBy": "arn:aws:iam::901444280953:role/aws-reserved/sso.amazonaws.com/ap-southeast-2/AWSReservedSSO_CAB432-STUDENT_f2baa6a2ba3c79c9",
+            "enableECSManagedTags": true,
+            "propagateTags": "NONE",
+            "enableExecuteCommand": false,
+            "availabilityZoneRebalancing": "ENABLED",
+            "resourceManagementType": "CUSTOMER"
+        }
+    ],
+    "failures": []
+}

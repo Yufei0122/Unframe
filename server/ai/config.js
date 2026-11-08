@@ -4,6 +4,10 @@ import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('../../', import.meta.url));
 try { loadEnvFile(path.join(root, '.env')); } catch (error) { if (error.code !== 'ENOENT') throw error; }
 export function readAIConfig(env = process.env) {
+  const aiProvider = env.AI_PROVIDER || 'ollama';
+  const vectorStore = env.VECTOR_STORE || 'local';
+  if (!['ollama', 'bedrock'].includes(aiProvider)) throw new Error('AI_PROVIDER must be ollama or bedrock');
+  if (!['local', 's3vectors'].includes(vectorStore)) throw new Error('VECTOR_STORE must be local or s3vectors');
   const threshold = Number(env.ARTWORK_MATCH_THRESHOLD || '0.80');
   if (!Number.isFinite(threshold) || threshold < 0 || threshold > 1) throw new Error('ARTWORK_MATCH_THRESHOLD must be between 0 and 1');
   const integer = (key, fallback, min, max) => {
@@ -26,6 +30,13 @@ export function readAIConfig(env = process.env) {
   const ollamaNumCtx = integer('OLLAMA_NUM_CTX', 2048, 2048, 32768);
   const planningNumPredict = integer('OLLAMA_PLANNING_NUM_PREDICT', 1024, 128, 4096);
   return {
+    aiProvider, vectorStore, awsRegion: env.AWS_REGION || 'ap-southeast-2',
+    vectorIndexArn: env.S3_VECTOR_INDEX_ARN,
+    vectorVersion: env.S3_VECTOR_VERSION || 'openclip-v1',
+    bedrockModel: env.BEDROCK_MODEL_ID || 'google.gemma-3-12b-it',
+    bedrockPlanningModel: env.BEDROCK_PLANNING_MODEL_ID || env.BEDROCK_MODEL_ID || 'google.gemma-3-12b-it',
+    bedrockVisionModel: env.BEDROCK_VISION_MODEL_ID || env.BEDROCK_MODEL_ID || 'google.gemma-3-12b-it',
+    bedrockTimeoutMs: integer('BEDROCK_TIMEOUT_MS', 120000, 1000, 600000),
     clipUrl: localUrl('OPENCLIP_URL', 'http://127.0.0.1:8001'),
     ollamaUrl: localUrl('OLLAMA_URL', 'http://127.0.0.1:11434'), ollamaModel, planningModel,
     visionModel, visionTimeoutMs: integer('OLLAMA_VISION_TIMEOUT_MS', 120000, 1000, 720000),

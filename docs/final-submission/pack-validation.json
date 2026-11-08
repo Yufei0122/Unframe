@@ -1,0 +1,17 @@
+{
+  "checkedAt": "2026-10-31T15:45:46.747207+00:00",
+  "status": "PASS",
+  "localLinksChecked": 128,
+  "byteIdenticalEvidenceCopies": 93,
+  "sourceFilesUnchanged": 316,
+  "FEntries": 20,
+  "demoSeconds": 280,
+  "costSumVerified": true,
+  "issues": [],
+  "limits": [
+    "Static document checks only; no runtime or AWS tests rerun.",
+    "Mermaid specs reviewed as text, not rendered; final AWS icons/layout remain student tasks.",
+    "PDF text/link extraction checked; PDF visual layout remains student review.",
+    "Historical AWS evidence dates retained; no new cloud health verification."
+  ]
+}

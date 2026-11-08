@@ -1,0 +1,1 @@
+{"metrics":[["AWS/SQS","ApproximateNumberOfMessagesVisible","QueueName","a3-n12281212-unframe-recognition",{"label":"SQS - Recognition Queue Depth"}]],"view":"timeSeries","stacked":false,"region":"ap-southeast-2","stat":"Average","period":300,"width":1000,"height":380,"start":"2026-10-31T07:02:18.301Z","end":"2026-10-31T07:08:48.772Z","timezone":"+1000"}

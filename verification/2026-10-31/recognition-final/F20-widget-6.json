@@ -1,0 +1,1 @@
+{"metrics":[["AWS/SQS","ApproximateNumberOfMessagesVisible","QueueName","a3-n12281212-unframe-recognition-dlq",{"label":"DLQ - Failed Recognition Messages"}]],"view":"timeSeries","stacked":false,"region":"ap-southeast-2","stat":"Maximum","period":60,"width":1000,"height":380,"start":"2026-10-31T07:02:18.301Z","end":"2026-10-31T07:09:06.319Z","timezone":"+1000"}

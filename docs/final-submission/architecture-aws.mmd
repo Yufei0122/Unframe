@@ -1,0 +1,51 @@
+flowchart LR
+  browser["CloudFront-hosted Expo web client"]
+  cf["CloudFront E2CK5412ICFTJX: PriceClass_100"]
+  web[("S3 frontend in Sydney: public-read static origin")]
+  subgraph region["AWS ap-southeast-2 | account 901444280953"]
+    api["HTTP API 4xfbhsso7a: stage prob"]
+    lambda["Jobs Lambda: handlers.jobsHandler | Node 22"]
+    ddb[("DynamoDB jobs: conditional leases, results, TTL")]
+    photos[("S3 private job-images: signed PUT, lifecycle")]
+    event["S3 ObjectCreated notification feature"]
+    sqs["SQS recognition: standard queue"]
+    dlq["SQS recognition-dlq: maxReceiveCount 5"]
+    subgraph network["Existing shared VPC / public subnets / task public IPv4"]
+      subgraph ecs["ECS Fargate service: revision 6 / v5 | 1 to 3 tasks"]
+        worker["Node worker: 0.5 vCPU / 2 GiB per task"]
+        clip["OpenCLIP ViT-B-32: laion2b_s34b_b79k | 512D normalized"]
+      end
+    end
+    vectors[("S3 Vectors: 15 reference vectors, cosine")]
+    bedrock["Bedrock Gemma 3 12B IT: optional Analyse"]
+    cw["CloudWatch: logs, metrics, dashboard, alarms"]
+    scaling["Application Auto Scaling: target 3 backlog per task"]
+    ecr["ECR worker repository: v5 digest"]
+  end
+  iam["Existing task, execution and Lambda IAM roles"]
+  browser -->|"HTTPS static assets"| cf
+  cf -->|"Origin GET on cache miss"| web
+  browser -->|"POST /a3/jobs and GET /a3/jobs/id"| api
+  api -->|"HTTP API v2 event"| lambda
+  lambda -->|"Create and token-authorized read"| ddb
+  lambda -->|"Return presigned PUT and job capability"| browser
+  browser -->|"Signed PUT: direct image bytes"| photos
+  photos ==>|"ObjectCreated"| event
+  event ==>|"Event message"| sqs
+  worker -->|"ReceiveMessage long poll; DeleteMessage after completion"| sqs
+  sqs ==>|"Async work delivery"| worker
+  sqs ==>|"Automatic redrive"| dlq
+  worker -->|"HTTPS GetObject and success DeleteObject"| photos
+  worker -->|"Lease, attempts, status, durable result"| ddb
+  worker -->|"Loopback Python embedding"| clip
+  worker -->|"QueryVectors with museum and model filters"| vectors
+  worker -->|"Converse only when Analyse requires vision"| bedrock
+  ecr -.->|"Image pull during task startup"| ecs
+  iam -.->|"Authorization configuration"| lambda
+  iam -.->|"Task and execution permissions"| ecs
+  lambda -.->|"Logs and metrics"| cw
+  worker -.->|"Logs, CPU, memory, running count"| cw
+  sqs -.->|"Visible messages and age"| cw
+  dlq -.->|"Visible message count"| cw
+  cw -.->|"Managed high and low alarms: m1 divided by m2"| scaling
+  scaling -.->|"Automatic desired tasks: min 1, max 3"| ecs

@@ -1,0 +1,45 @@
+{
+  "retrievedAt": "2026-10-31T08:35:04.589Z",
+  "value": [
+    {
+      "taskArn": "arn:aws:ecs:ap-southeast-2:901444280953:task/n12281212-strobe-a2/14d226de342f4ebb95672558bd499a7b",
+      "taskDefinition": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:6",
+      "startedAt": "2026-10-31T17:00:16.995000+10:00",
+      "stoppedAt": "2026-10-31T18:30:21.242000+10:00",
+      "stopCode": "ServiceSchedulerInitiated",
+      "stoppedReason": "Scaling activity initiated by (deployment ecs-svc/0247050502470215559)",
+      "containers": [
+        {
+          "name": "unframe-worker",
+          "exitCode": 0,
+          "reason": null
+        },
+        {
+          "name": "aws-guardduty-agent-is6guPj",
+          "exitCode": 0,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "taskArn": "arn:aws:ecs:ap-southeast-2:901444280953:task/n12281212-strobe-a2/619534e3312c409b908b3ee8a1058d3a",
+      "taskDefinition": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:6",
+      "startedAt": "2026-10-31T18:12:03.836000+10:00",
+      "stoppedAt": "2026-10-31T18:33:21.887000+10:00",
+      "stopCode": "ServiceSchedulerInitiated",
+      "stoppedReason": "Scaling activity initiated by (deployment ecs-svc/0247050502470215559)",
+      "containers": [
+        {
+          "name": "unframe-worker",
+          "exitCode": 0,
+          "reason": null
+        },
+        {
+          "name": "aws-guardduty-agent-is6guPj",
+          "exitCode": 0,
+          "reason": null
+        }
+      ]
+    }
+  ]
+}

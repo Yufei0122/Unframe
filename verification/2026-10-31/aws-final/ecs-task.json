@@ -1,0 +1,26 @@
+[
+    {
+        "taskArn": "arn:aws:ecs:ap-southeast-2:901444280953:task/n12281212-strobe-a2/cb916ca6f0484d318109cddf9c3436a1",
+        "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:4",
+        "lastStatus": "RUNNING",
+        "healthStatus": "HEALTHY",
+        "cpu": "512",
+        "memory": "2048",
+        "containers": [
+            {
+                "name": "aws-guardduty-agent-vHmqYZ",
+                "image": null,
+                "imageDigest": "sha256:694927b5f7ee005b25d725fb8a0a2e86c72ccfe967cec6386574e608ceb1777b",
+                "lastStatus": "RUNNING",
+                "healthStatus": "UNKNOWN"
+            },
+            {
+                "name": "unframe-worker",
+                "image": "901444280953.dkr.ecr.ap-southeast-2.amazonaws.com/a3-n12281212-unframe-worker@sha256:ba7c946125932a59495a56c37ea299911a345514c0775ff9e4a4d1f7798cdada",
+                "imageDigest": "sha256:ba7c946125932a59495a56c37ea299911a345514c0775ff9e4a4d1f7798cdada",
+                "lastStatus": "RUNNING",
+                "healthStatus": "HEALTHY"
+            }
+        ]
+    }
+]

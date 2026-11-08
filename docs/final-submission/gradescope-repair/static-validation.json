@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "files": 319,
+  "resourceCount": 33,
+  "lockChecks": [
+    {
+      "package": "package.json",
+      "dependenciesMatchLock": true,
+      "declaredPackagesPresent": true
+    },
+    {
+      "package": "mobile/package.json",
+      "dependenciesMatchLock": true,
+      "declaredPackagesPresent": true
+    }
+  ],
+  "missingRelativeImports": [],
+  "missingSourceFiles": [],
+  "sensitiveFindings": [],
+  "unsafeFiles": [],
+  "symlinks": [],
+  "runtimeSourceChanged": [],
+  "originalEvidenceChanged": [],
+  "originalEvidenceFilesChecked": 577,
+  "secretScanLimit": "Pattern scan; synthetic private.example URL in diagnostic test is not an actual signature or capability. No values logged.",
+  "runtime": "Static dependency/source checks only; no clean install, Docker rebuild or cloud inference"
+}

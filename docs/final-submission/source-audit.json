@@ -1,0 +1,812 @@
+{
+  "auditedAt": "2026-10-31T15:28:49.061823+00:00",
+  "sourceFiles": 316,
+  "original315PresentUnchanged": 315,
+  "additionalFiles": [
+    "README-CAB432-A3.md"
+  ],
+  "differsFromCurrentRoot": [
+    "deployment/ecs/scalable-target.json",
+    "docs/a3-recognition-evidence-checklist.md",
+    "docs/aws-scaling-test-plan.md",
+    "README-CAB432-A3.md",
+    "scripts/collect-a3-price-inputs.mjs",
+    "scripts/load-recognition-jobs.mjs"
+  ],
+  "secretPatternFindings": [
+    {
+      "path": "tests/aws-diagnostics.test.js",
+      "rule": "signed-url"
+    }
+  ],
+  "lockChecks": [
+    {
+      "package": "package.json",
+      "rootDependenciesMatch": true,
+      "rootDevDependenciesMatch": true,
+      "declaredDependenciesPresentInLock": true
+    },
+    {
+      "package": "mobile/package.json",
+      "rootDependenciesMatch": true,
+      "rootDevDependenciesMatch": true,
+      "declaredDependenciesPresentInLock": true
+    }
+  ],
+  "missingStaticImports": [],
+  "externalModuleImports": [
+    {
+      "file": "mobile/App.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/App.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/App.tsx",
+      "module": "@react-navigation/native"
+    },
+    {
+      "file": "mobile/App.tsx",
+      "module": "@react-navigation/native-stack"
+    },
+    {
+      "file": "mobile/App.tsx",
+      "module": "@react-navigation/bottom-tabs"
+    },
+    {
+      "file": "mobile/App.tsx",
+      "module": "react-native-safe-area-context"
+    },
+    {
+      "file": "mobile/App.tsx",
+      "module": "expo-status-bar"
+    },
+    {
+      "file": "mobile/e2e/avatar.spec.js",
+      "module": "sharp"
+    },
+    {
+      "file": "mobile/e2e/fixtures.js",
+      "module": "@playwright/test"
+    },
+    {
+      "file": "mobile/index.ts",
+      "module": "expo"
+    },
+    {
+      "file": "mobile/metro.config.js",
+      "module": "expo/metro-config"
+    },
+    {
+      "file": "mobile/src/ai.ts",
+      "module": "expo/fetch"
+    },
+    {
+      "file": "mobile/src/avatarImage.ts",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/avatarImage.ts",
+      "module": "expo-image-picker"
+    },
+    {
+      "file": "mobile/src/avatarImage.ts",
+      "module": "expo-image-manipulator"
+    },
+    {
+      "file": "mobile/src/avatarImage.ts",
+      "module": "expo-file-system"
+    },
+    {
+      "file": "mobile/src/components/AIProcessingAnimations.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/components/AIProcessingAnimations.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/components/ArtworkAnalysisResult.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/components/ArtworkAnalysisResult.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/components/ArtworkRail.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/components/ArtworkRail.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/components/ArtworkRail.web.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/components/AvatarEditor.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/components/AvatarEditor.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/components/BrandLogo.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/components/BrandLogo.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/components/CameraCapture.web.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/components/CameraCapture.web.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/components/DiscoveryMap.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/components/DiscoveryMap.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/components/DiscoveryMap.web.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/components/DiscoveryMap.web.tsx",
+      "module": "ol/Map.js"
+    },
+    {
+      "file": "mobile/src/components/DiscoveryMap.web.tsx",
+      "module": "ol/View.js"
+    },
+    {
+      "file": "mobile/src/components/DiscoveryMap.web.tsx",
+      "module": "ol/Overlay.js"
+    },
+    {
+      "file": "mobile/src/components/DiscoveryMap.web.tsx",
+      "module": "ol/layer/Tile.js"
+    },
+    {
+      "file": "mobile/src/components/DiscoveryMap.web.tsx",
+      "module": "ol/source/OSM.js"
+    },
+    {
+      "file": "mobile/src/components/DiscoveryMap.web.tsx",
+      "module": "ol/proj.js"
+    },
+    {
+      "file": "mobile/src/components/DiscoveryMap.web.tsx",
+      "module": "ol/extent.js"
+    },
+    {
+      "file": "mobile/src/components/DiscoveryMap.web.tsx",
+      "module": "ol/control/defaults.js"
+    },
+    {
+      "file": "mobile/src/components/DiscoveryMap.web.tsx",
+      "module": "ol/interaction/defaults.js"
+    },
+    {
+      "file": "mobile/src/components/FloorPlan.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/components/FloorPlan.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/components/FloorPlan.tsx",
+      "module": "react-native-svg"
+    },
+    {
+      "file": "mobile/src/components/GalleryFloorPlan.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/components/GalleryFloorPlan.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/components/GalleryFloorPlan.tsx",
+      "module": "react-native-svg"
+    },
+    {
+      "file": "mobile/src/components/HelpSupportDialog.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/components/HelpSupportDialog.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/components/PlanningAnswer.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/components/PlanningAnswer.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/components/PreviewBackdrop.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/components/PreviewBackdrop.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/components/PreviewBackdrop.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/components/PreviewBackdrop.web.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/components/PreviewBackdrop.web.tsx",
+      "module": "expo-asset"
+    },
+    {
+      "file": "mobile/src/components/ProfileIllustrations.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/components/ProfileIllustrations.tsx",
+      "module": "react-native-svg"
+    },
+    {
+      "file": "mobile/src/components/ProfilePage.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/components/ProfilePage.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/components/ProfilePage.tsx",
+      "module": "react-native-safe-area-context"
+    },
+    {
+      "file": "mobile/src/components/ProfilePage.tsx",
+      "module": "@react-navigation/native"
+    },
+    {
+      "file": "mobile/src/components/ProfilePage.tsx",
+      "module": "@react-navigation/native-stack"
+    },
+    {
+      "file": "mobile/src/components/SwipeScene.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/components/SwipeScene.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/components/SwipeScene.web.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/discovery.ts",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/location.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/location.tsx",
+      "module": "expo-location"
+    },
+    {
+      "file": "mobile/src/location.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/model.ts",
+      "module": "@react-navigation/native"
+    },
+    {
+      "file": "mobile/src/screens/AIItinerary.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/screens/AIItinerary.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/screens/AIItinerary.tsx",
+      "module": "@react-navigation/native-stack"
+    },
+    {
+      "file": "mobile/src/screens/AIPlanner.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/screens/AIPlanner.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/screens/AIPlanner.tsx",
+      "module": "@react-navigation/native"
+    },
+    {
+      "file": "mobile/src/screens/AIPlanner.tsx",
+      "module": "react-native-safe-area-context"
+    },
+    {
+      "file": "mobile/src/screens/AppSettings.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/screens/AppSettings.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/screens/Details.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/screens/Details.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/screens/Details.tsx",
+      "module": "react-native-safe-area-context"
+    },
+    {
+      "file": "mobile/src/screens/Details.tsx",
+      "module": "@react-navigation/native-stack"
+    },
+    {
+      "file": "mobile/src/screens/Details.tsx",
+      "module": "expo-speech"
+    },
+    {
+      "file": "mobile/src/screens/Discover.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/screens/Discover.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/screens/Explore.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/screens/Explore.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/screens/Guide.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/screens/Guide.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/screens/Guide.tsx",
+      "module": "react-native-safe-area-context"
+    },
+    {
+      "file": "mobile/src/screens/Guide.tsx",
+      "module": "@react-navigation/bottom-tabs"
+    },
+    {
+      "file": "mobile/src/screens/Lookup.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/screens/Lookup.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/screens/Lookup.tsx",
+      "module": "@react-navigation/native"
+    },
+    {
+      "file": "mobile/src/screens/Lookup.tsx",
+      "module": "react-native-safe-area-context"
+    },
+    {
+      "file": "mobile/src/screens/Lookup.tsx",
+      "module": "expo-camera"
+    },
+    {
+      "file": "mobile/src/screens/Lookup.tsx",
+      "module": "expo-file-system"
+    },
+    {
+      "file": "mobile/src/screens/Lookup.tsx",
+      "module": "expo-image-manipulator"
+    },
+    {
+      "file": "mobile/src/screens/Lookup.tsx",
+      "module": "expo-linear-gradient"
+    },
+    {
+      "file": "mobile/src/screens/Lookup.tsx",
+      "module": "expo-image-picker"
+    },
+    {
+      "file": "mobile/src/screens/Lookup.web.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/screens/Lookup.web.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/screens/Lookup.web.tsx",
+      "module": "react-native-safe-area-context"
+    },
+    {
+      "file": "mobile/src/screens/Lookup.web.tsx",
+      "module": "@react-navigation/native"
+    },
+    {
+      "file": "mobile/src/screens/Lookup.web.tsx",
+      "module": "expo-linear-gradient"
+    },
+    {
+      "file": "mobile/src/screens/Modals.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/screens/Modals.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/screens/Modals.tsx",
+      "module": "@react-navigation/native-stack"
+    },
+    {
+      "file": "mobile/src/screens/Museum.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/screens/Museum.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/screens/Museum.tsx",
+      "module": "react-native-safe-area-context"
+    },
+    {
+      "file": "mobile/src/screens/MuseumSelect.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/screens/MuseumSelect.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/screens/MuseumSelect.tsx",
+      "module": "react-native-safe-area-context"
+    },
+    {
+      "file": "mobile/src/screens/MuseumSelect.tsx",
+      "module": "expo-linear-gradient"
+    },
+    {
+      "file": "mobile/src/screens/MuseumSelect.tsx",
+      "module": "@react-navigation/native"
+    },
+    {
+      "file": "mobile/src/screens/MuseumSelect.tsx",
+      "module": "@react-navigation/native-stack"
+    },
+    {
+      "file": "mobile/src/screens/MuseumSelect.tsx",
+      "module": "expo-status-bar"
+    },
+    {
+      "file": "mobile/src/screens/NearbyArtworks.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/screens/NearbyArtworks.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/screens/NearbyArtworks.tsx",
+      "module": "react-native-safe-area-context"
+    },
+    {
+      "file": "mobile/src/screens/Profile.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/screens/Profile.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/screens/Profile.tsx",
+      "module": "react-native-safe-area-context"
+    },
+    {
+      "file": "mobile/src/screens/Profile.tsx",
+      "module": "expo-linear-gradient"
+    },
+    {
+      "file": "mobile/src/screens/Profile.tsx",
+      "module": "react-native-svg"
+    },
+    {
+      "file": "mobile/src/screens/RecentActivity.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/screens/RecentActivity.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/screens/RecentActivity.tsx",
+      "module": "@react-navigation/native-stack"
+    },
+    {
+      "file": "mobile/src/screens/SavedArtworks.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/screens/SavedArtworks.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/screens/SavedRoutes.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/screens/SavedRoutes.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/screens/SavedRoutes.tsx",
+      "module": "@react-navigation/native-stack"
+    },
+    {
+      "file": "mobile/src/screens/Welcome.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/screens/Welcome.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/screens/Welcome.tsx",
+      "module": "react-native-safe-area-context"
+    },
+    {
+      "file": "mobile/src/screens/Welcome.tsx",
+      "module": "expo-linear-gradient"
+    },
+    {
+      "file": "mobile/src/screens/Welcome.tsx",
+      "module": "expo-status-bar"
+    },
+    {
+      "file": "mobile/src/screens/Welcome.tsx",
+      "module": "@react-navigation/native"
+    },
+    {
+      "file": "mobile/src/screens/Welcome.tsx",
+      "module": "@react-navigation/native-stack"
+    },
+    {
+      "file": "mobile/src/store.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/store.tsx",
+      "module": "@react-native-async-storage/async-storage"
+    },
+    {
+      "file": "mobile/src/store.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/ui.tsx",
+      "module": "react"
+    },
+    {
+      "file": "mobile/src/ui.tsx",
+      "module": "react-native"
+    },
+    {
+      "file": "mobile/src/ui.tsx",
+      "module": "react-native-safe-area-context"
+    },
+    {
+      "file": "mobile/src/ui.tsx",
+      "module": "@expo/vector-icons"
+    },
+    {
+      "file": "mobile/src/ui.tsx",
+      "module": "@react-navigation/native"
+    },
+    {
+      "file": "mobile/src/ui.tsx",
+      "module": "@react-navigation/native-stack"
+    },
+    {
+      "file": "mobile/src/ui.tsx",
+      "module": "expo-haptics"
+    },
+    {
+      "file": "playwright.mobile-dev.config.js",
+      "module": "@playwright/test"
+    },
+    {
+      "file": "playwright.mobile.config.js",
+      "module": "@playwright/test"
+    },
+    {
+      "file": "scripts/build-brand-assets.mjs",
+      "module": "sharp"
+    },
+    {
+      "file": "scripts/check-ai.mjs",
+      "module": "sharp"
+    },
+    {
+      "file": "scripts/collect-analyse-evidence.mjs",
+      "module": "@aws-sdk/util-dynamodb"
+    },
+    {
+      "file": "scripts/probe-bedrock-response.mjs",
+      "module": "ajv"
+    },
+    {
+      "file": "scripts/smoke-lambda.mjs",
+      "module": "sharp"
+    },
+    {
+      "file": "scripts/smoke-lambda.mjs",
+      "module": "/var/task/server/cloud/handlers.js"
+    },
+    {
+      "file": "scripts/smoke-lambda.mjs",
+      "module": "/var/task/server/cloud/planning.js"
+    },
+    {
+      "file": "scripts/smoke-worker.mjs",
+      "module": "sharp"
+    },
+    {
+      "file": "scripts/validate-a3-submission.mjs",
+      "module": "yaml"
+    },
+    {
+      "file": "scripts/validate-artwork-vision.mjs",
+      "module": "sharp"
+    },
+    {
+      "file": "scripts/validate-auto-capture.mjs",
+      "module": "sharp"
+    },
+    {
+      "file": "scripts/validate-local-ai.mjs",
+      "module": "sharp"
+    },
+    {
+      "file": "scripts/verify-cloudfront-browser.mjs",
+      "module": "@playwright/test"
+    },
+    {
+      "file": "scripts/verify-s3-recognition.mjs",
+      "module": "@aws-sdk/client-s3vectors"
+    },
+    {
+      "file": "scripts/verify-worker-limits.mjs",
+      "module": "@aws-sdk/client-sqs"
+    },
+    {
+      "file": "scripts/verify-worker-limits.mjs",
+      "module": "@aws-sdk/client-s3"
+    },
+    {
+      "file": "scripts/verify-worker-limits.mjs",
+      "module": "@aws-sdk/client-s3vectors"
+    },
+    {
+      "file": "scripts/verify-worker-limits.mjs",
+      "module": "@aws-sdk/lib-dynamodb"
+    },
+    {
+      "file": "scripts/verify-worker-limits.mjs",
+      "module": "@aws-sdk/client-bedrock-runtime"
+    },
+    {
+      "file": "server/ai/bedrock.js",
+      "module": "@aws-sdk/client-bedrock-runtime"
+    },
+    {
+      "file": "server/ai/bedrock.js",
+      "module": "ajv"
+    },
+    {
+      "file": "server/ai/bedrock.js",
+      "module": "sharp"
+    },
+    {
+      "file": "server/ai/images.js",
+      "module": "sharp"
+    },
+    {
+      "file": "server/ai/s3-vectors.js",
+      "module": "@aws-sdk/client-s3vectors"
+    },
+    {
+      "file": "server/ai/vision.js",
+      "module": "sharp"
+    },
+    {
+      "file": "server/cloud/job-repository.js",
+      "module": "@aws-sdk/client-dynamodb"
+    },
+    {
+      "file": "server/cloud/job-repository.js",
+      "module": "@aws-sdk/lib-dynamodb"
+    },
+    {
+      "file": "server/cloud/uploads.js",
+      "module": "@aws-sdk/client-s3"
+    },
+    {
+      "file": "server/cloud/uploads.js",
+      "module": "@aws-sdk/s3-request-presigner"
+    },
+    {
+      "file": "tests/ai.test.js",
+      "module": "sharp"
+    },
+    {
+      "file": "tests/artwork-analysis.test.js",
+      "module": "sharp"
+    },
+    {
+      "file": "tests/aws-bedrock.test.js",
+      "module": "sharp"
+    },
+    {
+      "file": "tests/aws-jobs.test.js",
+      "module": "sharp"
+    },
+    {
+      "file": "worker/worker.js",
+      "module": "@aws-sdk/client-sqs"
+    }
+  ],
+  "infraResources": 32,
+  "allDeclaredIDsMatchHistoricalCollection": true,
+  "allDeclaredRegionalARNsSydneyOrGlobal": true,
+  "scope": "Static inspection; no install, build, cloud calls, jobs or tests rerun",
+  "reviewedSecretPatternFindings": [
+    {
+      "path": "tests/aws-diagnostics.test.js",
+      "rule": "signed-url",
+      "disposition": "FALSE_POSITIVE: deliberately invalid private.example URL with literal secret-read-token in redaction test, not a live credential"
+    }
+  ],
+  "confirmedSecretsFound": 0,
+  "dependencyNotes": [
+    "yaml is resolved explicitly from mobile/package.json by createRequire and exists in mobile lockfile; install both root/mobile dependencies.",
+    "@aws-sdk/util-dynamodb is present transitively in root lockfile; explicit direct declaration would be clearer, but current locked install resolves it.",
+    "Verification scripts require original verification fixtures outside app; runtime imports are complete. No clean npm install/build rerun."
+  ]
+}

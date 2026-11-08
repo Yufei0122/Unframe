@@ -1,0 +1,196 @@
+{
+  "start": "2026-11-01T11:42:04.499Z",
+  "end": "2026-11-01T11:51:03.050Z",
+  "function": "a3-n12281212-unframe-jobs",
+  "invocationsWithReports": 31,
+  "reportsWithErrors": 0,
+  "reports": [
+    {
+      "timestamp": 1793533325122,
+      "requestId": "c5c1aa0b-fed2-4cf7-8c00-7fc53737c1a7",
+      "durationMs": 166.58,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533345022,
+      "requestId": "121fa55c-f949-4c46-a464-a14ed215c54f",
+      "durationMs": 1410.46,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533345402,
+      "requestId": "f7bf706a-53e9-4917-8d3d-c1535e6a4ea4",
+      "durationMs": 99.46,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533345896,
+      "requestId": "54d9aee6-5172-4726-9dfa-540e49ea7c72",
+      "durationMs": 1171.06,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533346102,
+      "requestId": "0d576e98-b75d-4932-9000-0fc283a4f8c5",
+      "durationMs": 502.7,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533346202,
+      "requestId": "62a953e5-38d9-497a-bf68-780c2554277e",
+      "durationMs": 82.44,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533360655,
+      "requestId": "53066a01-04cf-460d-9afb-f06d82e982e9",
+      "durationMs": 82.5,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533360662,
+      "requestId": "4b988ef7-9f4f-44dc-bc6c-d54eb91f1e20",
+      "durationMs": 91.33,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533360742,
+      "requestId": "277c7f2f-d5e3-4b5e-8d09-03ce77bcdccf",
+      "durationMs": 76.14,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533360755,
+      "requestId": "1792ea1f-7083-47b6-bf91-e0bf11926334",
+      "durationMs": 94.58,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533361302,
+      "requestId": "8174b636-370d-4606-8440-7d2d820e0e0a",
+      "durationMs": 67.99,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533361315,
+      "requestId": "e7acd5db-fc3d-40f9-9264-9e9bf795e9ef",
+      "durationMs": 90.12,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533361715,
+      "requestId": "fbab9a13-83fc-4b3a-a163-c3f72c2d6234",
+      "durationMs": 82.28,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533361722,
+      "requestId": "b1b707d3-9eb9-4913-9258-8fed6aa69ab0",
+      "durationMs": 84.53,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533362077,
+      "requestId": "2aa06b08-e5f6-4622-a9c5-85835dd36be3",
+      "durationMs": 53.58,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533362122,
+      "requestId": "958ef021-4ad6-4c74-a221-80710de9716d",
+      "durationMs": 107.41,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533362423,
+      "requestId": "94b73de4-cada-48c4-8d66-7ae7d6dedf48",
+      "durationMs": 60.9,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533362455,
+      "requestId": "a82eaa90-57aa-4f5b-b61d-74c156585239",
+      "durationMs": 44.85,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533362628,
+      "requestId": "fb7233ff-9e98-4105-bca6-f461e40e6105",
+      "durationMs": 1146.95,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533362690,
+      "requestId": "480b9f9d-31ce-42ae-8fad-ddc12c6b2413",
+      "durationMs": 1127.34,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533362754,
+      "requestId": "755a92d8-c2f0-4525-bf6f-0620f68169b2",
+      "durationMs": 1174.21,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533362954,
+      "requestId": "4a1894b1-8f29-4517-a68d-c218da4a7133",
+      "durationMs": 89.13,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533363010,
+      "requestId": "64e54f24-30eb-48da-b548-397cc17b81be",
+      "durationMs": 104.88,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533363210,
+      "requestId": "0be06a74-56db-4eb4-88da-87de6b57e0ec",
+      "durationMs": 58.81,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533363350,
+      "requestId": "011823da-2742-45a3-b16f-944fc63d873b",
+      "durationMs": 121.61,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533363414,
+      "requestId": "c73ad2ba-3d0b-4610-8970-370bc95730a6",
+      "durationMs": 80.86,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533363594,
+      "requestId": "c012ae74-4f70-4257-a0ca-1794bd094e93",
+      "durationMs": 105.98,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533363611,
+      "requestId": "74402df8-b749-4fb9-bb7b-f3458a0c1fef",
+      "durationMs": 70.62,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533363810,
+      "requestId": "fe7564e2-77a4-4441-9439-43fa61a0ac03",
+      "durationMs": 57.86,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533363950,
+      "requestId": "68869a37-aaad-4a61-9b56-147e76d544dc",
+      "durationMs": 55.54,
+      "reportedError": false
+    },
+    {
+      "timestamp": 1793533364070,
+      "requestId": "7ab512f6-46f3-4f5e-946f-44ce9642b260",
+      "durationMs": 90.66,
+      "reportedError": false
+    }
+  ],
+  "hasNextToken": true
+}

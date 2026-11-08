@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "mode": "jobs",
+  "apiHost": "jobs.example",
+  "dotenvDisabled": true,
+  "clearCache": true,
+  "maxWorkers": 1,
+  "executedBrowserRequests": false
+}

@@ -1,0 +1,8 @@
+{
+  "status": "PASS_LOCAL_SAVED_DECLARATION",
+  "resources": 33,
+  "identicalToPreviousDeclarations": true,
+  "planningLambdaDeclared": false,
+  "liveAwsVerified": false,
+  "remaining": "AWS CLI default profile could not be found; shared API purpose=assessment 2 still requires course review."
+}

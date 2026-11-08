@@ -1,0 +1,8 @@
+{
+  "retrievedAt": "2026-10-31T07:24:29.482Z",
+  "value": {
+    "taskArns": [
+      "arn:aws:ecs:ap-southeast-2:901444280953:task/n12281212-strobe-a2/14d226de342f4ebb95672558bd499a7b"
+    ]
+  }
+}

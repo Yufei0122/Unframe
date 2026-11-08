@@ -1,0 +1,58 @@
+[
+    {
+        "SubnetId": "subnet-075811427d5564cf9",
+        "SubnetArn": "arn:aws:ec2:ap-southeast-2:901444280953:subnet/subnet-075811427d5564cf9",
+        "VpcId": "vpc-007bab53289655834",
+        "AvailabilityZone": "ap-southeast-2b",
+        "Tags": [
+            {
+                "Key": "aws:cloudformation:logical-id",
+                "Value": "PublicSubnet2"
+            },
+            {
+                "Key": "aws:cloudformation:stack-name",
+                "Value": "StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-1286cbb8-81ee-4405-accd-6f90fe6491bd"
+            },
+            {
+                "Key": "Name",
+                "Value": "aws-controltower-PublicSubnet2"
+            },
+            {
+                "Key": "aws:cloudformation:stack-id",
+                "Value": "arn:aws:cloudformation:ap-southeast-2:901444280953:stack/StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-1286cbb8-81ee-4405-accd-6f90fe6491bd/28fa16f0-c0ba-11ea-8634-0ab38c7eb81e"
+            },
+            {
+                "Key": "Network",
+                "Value": "Public"
+            }
+        ]
+    },
+    {
+        "SubnetId": "subnet-05a3b8177138c8b14",
+        "SubnetArn": "arn:aws:ec2:ap-southeast-2:901444280953:subnet/subnet-05a3b8177138c8b14",
+        "VpcId": "vpc-007bab53289655834",
+        "AvailabilityZone": "ap-southeast-2a",
+        "Tags": [
+            {
+                "Key": "aws:cloudformation:stack-id",
+                "Value": "arn:aws:cloudformation:ap-southeast-2:901444280953:stack/StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-1286cbb8-81ee-4405-accd-6f90fe6491bd/28fa16f0-c0ba-11ea-8634-0ab38c7eb81e"
+            },
+            {
+                "Key": "Network",
+                "Value": "Public"
+            },
+            {
+                "Key": "aws:cloudformation:stack-name",
+                "Value": "StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-1286cbb8-81ee-4405-accd-6f90fe6491bd"
+            },
+            {
+                "Key": "aws:cloudformation:logical-id",
+                "Value": "PublicSubnet1"
+            },
+            {
+                "Key": "Name",
+                "Value": "aws-controltower-PublicSubnet1"
+            }
+        ]
+    }
+]

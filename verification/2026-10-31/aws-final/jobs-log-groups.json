@@ -1,0 +1,15 @@
+{
+    "logGroups": [
+        {
+            "logGroupName": "/aws/lambda/a3-n12281212-unframe-jobs",
+            "creationTime": 1793372559165,
+            "metricFilterCount": 0,
+            "arn": "arn:aws:logs:ap-southeast-2:901444280953:log-group:/aws/lambda/a3-n12281212-unframe-jobs:*",
+            "storedBytes": 0,
+            "logGroupClass": "STANDARD",
+            "logGroupArn": "arn:aws:logs:ap-southeast-2:901444280953:log-group:/aws/lambda/a3-n12281212-unframe-jobs",
+            "deletionProtectionEnabled": false,
+            "bearerTokenAuthenticationEnabled": false
+        }
+    ]
+}

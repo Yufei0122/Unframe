@@ -1,0 +1,11 @@
+{
+  "retrievedAt": "2026-10-31T08:50:21.374Z",
+  "value": [
+    {
+      "name": "/aws/lambda/a3-n12281212-unframe-jobs",
+      "bytes": 14872,
+      "retentionDays": "never-expire",
+      "logGroupClass": "STANDARD"
+    }
+  ]
+}

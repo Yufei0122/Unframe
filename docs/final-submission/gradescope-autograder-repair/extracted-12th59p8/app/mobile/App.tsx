@@ -1,0 +1,96 @@
+import React from 'react';
+import { Platform, Pressable, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
+import { StoreProvider } from './src/store';
+import { LocationProvider } from './src/location';
+import type { RootStackParams, TabParams, ProfileStackParams } from './src/model';
+import { Icon, T, c, type IconName } from './src/ui';
+import { WelcomeScreen } from './src/screens/Welcome';
+import { MuseumSelectScreen } from './src/screens/MuseumSelect';
+import { MuseumScreen } from './src/screens/Museum';
+import { ExploreScreen } from './src/screens/Explore';
+import { GuideScreen } from './src/screens/Guide';
+import { PreferencesScreen } from './src/screens/Preferences';
+import { AppSettingsScreen } from './src/screens/AppSettings';
+import { SavedArtworksScreen } from './src/screens/SavedArtworks';
+import { SavedRoutesScreen, SavedRouteDetailsScreen } from './src/screens/SavedRoutes';
+import { RecentActivityScreen, VisitDetailsScreen } from './src/screens/RecentActivity';
+import { ArtworkScreen } from './src/screens/Details';
+import { AboutScreen, FeedbackScreen, PlannerScreen } from './src/screens/Modals';
+import { LookupScreen } from './src/screens/Lookup';
+import { AIPlannerScreen } from './src/screens/AIPlanner';
+import { AIItineraryScreen } from './src/screens/AIItinerary';
+import { NearbyArtworksScreen } from './src/screens/NearbyArtworks';
+
+const Stack = createNativeStackNavigator<RootStackParams>();
+const Tabs = createBottomTabNavigator<TabParams>();
+const ProfileStack = createNativeStackNavigator<ProfileStackParams>();
+function ProfileNavigation() {
+  return <ProfileStack.Navigator screenOptions={{ headerShown: false }}>
+    <ProfileStack.Screen name="ProfileHome" component={PreferencesScreen}/>
+    <ProfileStack.Screen name="SavedArtworks" component={SavedArtworksScreen}/>
+    <ProfileStack.Screen name="SavedRoutes" component={SavedRoutesScreen}/>
+    <ProfileStack.Screen name="RecentActivity" component={RecentActivityScreen}/>
+    <ProfileStack.Screen name="VisitDetails" component={VisitDetailsScreen}/>
+    <ProfileStack.Screen name="SavedRouteDetails" component={SavedRouteDetailsScreen}/>
+  </ProfileStack.Navigator>;
+}
+const tabIcons: Record<keyof TabParams, [IconName, IconName]> = {
+  Discover: ['home-outline', 'home'],
+  Plan: ['chatbubble-ellipses-outline', 'chatbubble-ellipses'],
+  Scan: ['scan-outline', 'scan'], Guide: ['sparkles-outline', 'sparkles'],
+  You: ['person-outline', 'person'],
+};
+function ScanScreen() { return <LookupScreen/>; }
+function MainTabs() {
+  return <Tabs.Navigator screenOptions={({ route }) => ({
+    headerShown: false, tabBarActiveTintColor: c.green, tabBarInactiveTintColor: '#777771',
+    tabBarStyle: { backgroundColor: c.bg, borderTopColor: c.border, height: Platform.OS === 'web' ? 74 : undefined, paddingTop: 9, paddingBottom: Platform.OS === 'web' ? 14 : undefined },
+    tabBarLabelStyle: { fontSize: 10, lineHeight: 12, fontWeight: '400', flexShrink: 0 },
+    tabBarHideOnKeyboard: true,
+    tabBarIcon: ({ color, focused }) => <Icon name={tabIcons[route.name][focused ? 1 : 0]} size={21} color={color}/>,
+  })}>
+    <Tabs.Screen name="Discover" component={MuseumScreen} options={{ title: 'Home' }}/>
+    <Tabs.Screen name="Plan" component={AIPlannerScreen}/>
+    <Tabs.Screen name="Scan" component={ScanScreen}/>
+    <Tabs.Screen name="You" component={ProfileNavigation} options={{ title: 'Profile', tabBarActiveTintColor: '#A97932', tabBarLabel: ({ focused, color }) => <View style={{ alignItems: 'center', gap: 3 }}><T style={{ color, fontSize: 10, lineHeight: 12 }}>Profile</T><View style={{ height: 2, width: 25, borderRadius: 2, backgroundColor: focused ? '#A97932' : 'transparent' }}/></View> }}/>
+    <Tabs.Screen name="Guide" component={GuideScreen} options={{ tabBarItemStyle: { display: 'none' }, tabBarButton: () => null }}/>
+  </Tabs.Navigator>;
+}
+function AppNavigation() {
+  return <NavigationContainer documentTitle={{ formatter: () => 'Unframe' }} theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, primary: c.green, background: c.bg, card: c.bg, text: c.ink, border: c.border } }}>
+    <Stack.Navigator initialRouteName="MuseumSelect" screenOptions={{ headerTintColor: c.green, headerShadowVisible: false, contentStyle: { backgroundColor: c.bg }, headerTitleStyle: { fontSize: 15 }, headerBackButtonDisplayMode: 'minimal' }}>
+      <Stack.Screen name="MuseumSelect" component={MuseumSelectScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name="Home" component={MainTabs} options={{ headerShown: false }}/>
+      <Stack.Screen name="Artwork" component={ArtworkScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name="Tour" component={ExploreScreen} options={{ title: 'Gallery tour' }}/>
+      <Stack.Screen name="AIItinerary" component={AIItineraryScreen} options={({ navigation }) => ({ title: 'Visit route', headerLeft: () => <Pressable accessibilityRole="button" accessibilityLabel="Back to planner" onPress={() => navigation.goBack()} style={{ width: 44, height: 44, alignItems: 'flex-start', justifyContent: 'center' }}><Icon name="arrow-back" size={22}/></Pressable> })}/>
+      <Stack.Screen name="NearbyArtworks" component={NearbyArtworksScreen} options={{ title: '' }}/>
+      <Stack.Group screenOptions={({ navigation }) => ({ presentation: 'modal', headerRight: () => <Pressable accessibilityRole="button" accessibilityLabel="Close" onPress={() => navigation.goBack()} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }}><Icon name="close-circle-outline"/></Pressable> })}>
+        <Stack.Screen name="AppSettings" component={AppSettingsScreen} options={{ title: 'App Settings' }}/>
+        <Stack.Screen name="Planner" component={PlannerScreen} options={{ title: 'Plan your visit' }}/>
+        <Stack.Screen name="Lookup" component={LookupScreen} options={{ title: 'Find an artwork', headerShown: false }}/>
+        <Stack.Screen name="Feedback" component={FeedbackScreen} options={{ title: 'Your feedback' }}/>
+        <Stack.Screen name="About" component={AboutScreen} options={{ title: 'About Unframe' }}/>
+      </Stack.Group>
+    </Stack.Navigator>
+  </NavigationContainer>;
+}
+export default function App() {
+  const { width, height } = useWindowDimensions();
+  const desktop = Platform.OS === 'web' && width >= 600;
+  return <View style={[styles.canvas, desktop && styles.desktop]}>
+    <View testID="mobile-viewport" style={[styles.viewport, desktop && { width: 406, height: Math.min(860, height - 40), borderRadius: 39, borderWidth: 8, borderColor: '#252723', boxShadow: '0 22px 70px #25392D26, 0 0 0 1px #C8C4BA' }]}>
+      <SafeAreaProvider><StoreProvider><LocationProvider><StatusBar style="dark"/><AppNavigation/></LocationProvider></StoreProvider></SafeAreaProvider>
+    </View>
+  </View>;
+}
+const styles = StyleSheet.create({
+  canvas: { flex: 1, backgroundColor: c.bg }, desktop: { alignItems: 'center', justifyContent: 'center', backgroundColor: '#E9E7E1' },
+  viewport: { height: '100%', width: '100%', overflow: 'hidden', backgroundColor: c.bg },
+});

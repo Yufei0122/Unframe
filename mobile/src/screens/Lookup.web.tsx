@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useIsFocused } from '@react-navigation/native';
@@ -9,6 +9,9 @@ import { useMuseumLocation } from '../location';
 import { images } from '../assets';
 import { useStore } from '../store';
 import { AI_TIMEOUT_MS, CLIP_TIMEOUT_MS, VISION_TIMEOUT_MS, requestAI } from '../ai';
+import { resolveAPIBase, resolveAITimeoutMs } from '../apiConfig';
+import { createWebScanTransport, scanJobStatusLabel } from '../webScanTransport';
+import type { JobStatus } from '../recognitionJobs';
 import { ArtworkAnalysisResult } from '../components/ArtworkAnalysisResult';
 import { ArtworkScanTransition } from '../components/AIProcessingAnimations';
 import { shouldCaptureArtwork } from '../scanCapture';
@@ -23,6 +26,13 @@ function LookupContent() {
   const { museum, museumId } = useMuseumLocation();
   const nav = useRootNavigation(), focused = useIsFocused();
   const { state } = useStore();
+  const scanTransport = useMemo(() => createWebScanTransport({
+    mode: process.env.EXPO_PUBLIC_RECOGNITION_MODE || 'local',
+    baseUrl: resolveAPIBase(process.env.EXPO_PUBLIC_API_URL, window.location),
+    requestLocal: (path, body, signal) => requestAI<RecognitionResult | ArtworkAnalysis>(path, body, signal),
+  }), []);
+  const jobTimeoutMs = resolveAITimeoutMs(process.env.EXPO_PUBLIC_RECOGNITION_JOB_TIMEOUT_MS, 300000);
+  const [jobStatus, setJobStatus] = useState<JobStatus | null>(null);
   const input = useRef<HTMLInputElement>(null), controller = useRef<AbortController | null>(null);
   const lastFrame = useRef<Blob | null>(null);
   const stopCamera = useRef<(() => void) | null>(null);
@@ -79,10 +89,12 @@ function LookupContent() {
     stopCamera.current?.();
     cancel(); setPaused(true); setPhoto(blob); setCandidates([]); setSelected(null); setResult(null); setAnalysis(null); setError(''); setBusy(true); setAnalysing(true);
     const request = new AbortController(); controller.current = request;
-    const timeout = setTimeout(() => request.abort(), VISION_TIMEOUT_MS);
-    const form = new FormData(); form.append('image', blob, 'artwork.jpg');
+    const timeout = setTimeout(() => request.abort(), scanTransport.jobs ? jobTimeoutMs : VISION_TIMEOUT_MS);
+    setJobStatus(null);
     try {
-      const result = await requestAI<ArtworkAnalysis>('artworks/analyse', form, request.signal);
+      const result = await scanTransport.analyse(blob, museumId, request.signal, status => {
+        if (controller.current === request && !request.signal.aborted) setJobStatus(status);
+      });
       if (controller.current === request && !request.signal.aborted) setAnalysis(result);
     } catch (failure) {
       if (controller.current === request) setError(request.signal.aborted ? 'Visual analysis timed out. Try again with a clearer photo.' : failure instanceof Error ? failure.message : 'Visual analysis is unavailable.');
@@ -98,11 +110,13 @@ function LookupContent() {
     lastFrame.current = blob;
     if (controller.current || !focused || document.visibilityState === 'hidden') return;
     const request = new AbortController(); controller.current = request;
-    const timeout = setTimeout(() => request.abort(), CLIP_TIMEOUT_MS);
+    const timeout = setTimeout(() => request.abort(), scanTransport.jobs ? jobTimeoutMs : CLIP_TIMEOUT_MS);
     setBusy(true); setError('');
-    const form = new FormData(); form.append('image', blob, 'artwork-frame.jpg');
+    setJobStatus(null);
     try {
-      const response = await requestAI<RecognitionResult>('artworks/recognise?museumId=' + museumId, form, request.signal);
+      const response = await scanTransport.recognise(blob, museumId, request.signal, status => {
+        if (controller.current === request && !request.signal.aborted) setJobStatus(status);
+      });
       if (controller.current !== request || request.signal.aborted) return;
       // A legacy single match is still just a candidate; it never confirms itself.
       const matches = response.candidates ?? (response.matched && response.artwork ? [{ artwork: response.artwork, similarity: response.similarity ?? 0 }] : []);
@@ -160,7 +174,7 @@ function LookupContent() {
           {!!explanation && <><Pressable accessibilityRole="button" accessibilityLabel={expanded ? 'Hide AI interpretation' : 'Read AI interpretation'} accessibilityState={{ expanded }} onPress={() => setExpanded(!expanded)} style={styles.interpretation}><Icon name="sparkles-outline" size={17}/><T style={s.label}>AI interpretation</T><Icon name={expanded ? 'chevron-up' : 'chevron-down'} size={16}/></Pressable>{expanded && <View style={{ gap: 10 }}><T style={s.small}>{result?.interpretationLabel}</T><T>{explanation.summary}</T><T>{explanation.historicalContext}</T>{explanation.interestingFacts.map((fact, i) => <T key={i}>• {fact}</T>)}<T>{explanation.whyItMatters}</T>{explanation.suggestedNextArtwork && <Button title="Explore suggested artwork" secondary onPress={() => nav.navigate('Artwork', { id: explanation.suggestedNextArtwork! })}/>}</View>}</>}
         </ScrollView> : <>
           {candidates.length > 0 && <View style={styles.candidatePanel}><View style={styles.candidateHeading}><T style={styles.candidateTitle}>Possible matches</T><T style={styles.candidateHint}>Tap the work you see</T></View><ScrollView style={styles.candidateList}>{candidates.map(candidate => <Pressable key={candidate.artwork.id} accessibilityRole="button" accessibilityLabel={'Select ' + candidate.artwork.title} onPress={() => { void confirm(candidate); }} style={styles.candidate}><Image source={images[candidate.artwork.id]} style={styles.candidateImage}/><View style={{ flex: 1 }}><T numberOfLines={1} style={styles.candidateName}>{candidate.artwork.title}</T><T numberOfLines={1} style={styles.candidateHint}>{candidate.artwork.artist}</T></View><Icon name="chevron-forward" color="#DBCBAA" size={18}/></Pressable>)}</ScrollView></View>}
-          {busy && <ArtworkScanTransition compact label={analysing ? (slowAnalysis ? 'Taking a closer look…' : 'Looking closer…') : 'Finding a match…'}/>}
+          {busy && <ArtworkScanTransition compact label={scanTransport.jobs ? scanJobStatusLabel(jobStatus) : analysing ? (slowAnalysis ? 'Taking a closer look…' : 'Looking closer…') : 'Finding a match…'}/>}
           {!analysing && !candidates.length && !error && !!message && <T accessibilityLiveRegion="polite" style={styles.statusText}>{message}</T>}
           {!busy && !candidates.length && !error && (photo || paused) && <View style={styles.status} accessibilityLiveRegion="polite"><T style={styles.statusText}>{photo ? 'Try another photo or look closer' : 'Scanning paused'}</T></View>}
           {!!error && <T accessibilityRole="alert" style={styles.error}>{error}</T>}

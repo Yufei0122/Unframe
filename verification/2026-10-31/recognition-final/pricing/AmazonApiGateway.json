@@ -1,0 +1,347 @@
+{
+  "source": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonApiGateway/current/ap-southeast-2/index.json",
+  "retrievedAt": "2026-10-31T06:55:14.487Z",
+  "publicationDate": "2026-10-13T00:30:44Z",
+  "rates": [
+    {
+      "sku": "ETXPQ8JKH9BTTZ7A",
+      "attributes": {
+        "servicecode": "AmazonApiGateway",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-ApiGatewayCacheUsage:58.2GB",
+        "operation": "RunInstances",
+        "cacheMemorySizeGb": "58.2",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon API Gateway"
+      },
+      "description": "API Gateway Dedicated Cache: 58.2GB - Asia Pacific (Sydney)",
+      "unit": "Hrs",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 1,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "VA3SCD9N9YMS3UQ3",
+      "attributes": {
+        "servicecode": "AmazonApiGateway",
+        "description": "API calls received",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-ApiGatewayRequest",
+        "operation": "ApiGatewayRequest",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon API Gateway"
+      },
+      "description": "$3.50/million requests - first 1 billion requests/month",
+      "unit": "Requests",
+      "begin": "0",
+      "end": "1000000000",
+      "usd": 0.0000035,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "VA3SCD9N9YMS3UQ3",
+      "attributes": {
+        "servicecode": "AmazonApiGateway",
+        "description": "API calls received",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-ApiGatewayRequest",
+        "operation": "ApiGatewayRequest",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon API Gateway"
+      },
+      "description": "$2.98/million requests - next 19 billion requests/month",
+      "unit": "Requests",
+      "begin": "1000000000",
+      "end": "20000000000",
+      "usd": 0.00000298,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "VA3SCD9N9YMS3UQ3",
+      "attributes": {
+        "servicecode": "AmazonApiGateway",
+        "description": "API calls received",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-ApiGatewayRequest",
+        "operation": "ApiGatewayRequest",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon API Gateway"
+      },
+      "description": "$1.89/million requests - over 20 billion requests/month",
+      "unit": "Requests",
+      "begin": "20000000000",
+      "end": "Inf",
+      "usd": 0.00000189,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "U7XU5EVK6VTRH57H",
+      "attributes": {
+        "servicecode": "AmazonApiGateway",
+        "description": "WebSocket Connection Minutes",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-ApiGatewayMinute",
+        "operation": "ApiGatewayWebSocket",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon API Gateway"
+      },
+      "description": "$0.325/million connection minutes",
+      "unit": "minutes",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 3.25e-7,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "FSG2CHVZ924WJBZK",
+      "attributes": {
+        "servicecode": "AmazonApiGateway",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-ApiGatewayCacheUsage:13.5GB",
+        "operation": "RunInstances",
+        "cacheMemorySizeGb": "13.5",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon API Gateway"
+      },
+      "description": "API Gateway Dedicated Cache: 13.5GB - Asia Pacific (Sydney)",
+      "unit": "Hrs",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.25,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "WJN2JPNWN25FXRTM",
+      "attributes": {
+        "servicecode": "AmazonApiGateway",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-ApiGatewayCacheUsage:237GB",
+        "operation": "RunInstances",
+        "cacheMemorySizeGb": "237",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon API Gateway"
+      },
+      "description": "API Gateway Dedicated Cache: 237GB - Asia Pacific (Sydney)",
+      "unit": "Hrs",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 3.8,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "XYQGAP7E7HVJ8G43",
+      "attributes": {
+        "servicecode": "AmazonApiGateway",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-ApiGatewayCacheUsage:28.4GB",
+        "operation": "RunInstances",
+        "cacheMemorySizeGb": "28.4",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon API Gateway"
+      },
+      "description": "API Gateway Dedicated Cache: 28.4GB - Asia Pacific (Sydney)",
+      "unit": "Hrs",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.5,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "JR6KAWKT89CQ48GW",
+      "attributes": {
+        "servicecode": "AmazonApiGateway",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-ApiGatewayCacheUsage:118GB",
+        "operation": "RunInstances",
+        "cacheMemorySizeGb": "118",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon API Gateway"
+      },
+      "description": "API Gateway Dedicated Cache: 118GB - Asia Pacific (Sydney)",
+      "unit": "Hrs",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 1.9,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "GFQ5K6PJV2PWPZUD",
+      "attributes": {
+        "servicecode": "AmazonApiGateway",
+        "description": "WebSocket Messages",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-ApiGatewayMessage",
+        "operation": "ApiGatewayWebSocket",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon API Gateway"
+      },
+      "description": "$1.3/million messages - first 1 billion messages/month",
+      "unit": "Messages",
+      "begin": "0",
+      "end": "1000000000",
+      "usd": 0.0000013,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "GFQ5K6PJV2PWPZUD",
+      "attributes": {
+        "servicecode": "AmazonApiGateway",
+        "description": "WebSocket Messages",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-ApiGatewayMessage",
+        "operation": "ApiGatewayWebSocket",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon API Gateway"
+      },
+      "description": "$1.1/million messages - over 1 billion messages/month",
+      "unit": "Messages",
+      "begin": "1000000000",
+      "end": "Inf",
+      "usd": 0.0000011,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "P2KXAPG9U79WXVWK",
+      "attributes": {
+        "servicecode": "AmazonApiGateway",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-APIGateway-Portal-Months",
+        "operation": "APIGateway-Portals",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon API Gateway"
+      },
+      "description": "$133.56 per Month for APIGateway-Portal-Months in Asia Pacific (Sydney)",
+      "unit": "Month",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 133.56,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "8YETUX796BVKC2BS",
+      "attributes": {
+        "servicecode": "AmazonApiGateway",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-APIGateway-Portal-Product-Months",
+        "operation": "APIGateway-Portals",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon API Gateway"
+      },
+      "description": "$13.36 per Month for APIGateway-Portal-Product-Months in Asia Pacific (Sydney)",
+      "unit": "Month",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 13.36,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "GHZQQPU8NMGFKBQZ",
+      "attributes": {
+        "servicecode": "AmazonApiGateway",
+        "description": "HTTP API Requests",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-ApiGatewayHttpRequest",
+        "operation": "ApiGatewayHttpApi",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon API Gateway"
+      },
+      "description": "$1.29/million requests - API Gateway HTTP API (first 300 million)",
+      "unit": "Requests",
+      "begin": "0",
+      "end": "300000000",
+      "usd": 0.00000129,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "GHZQQPU8NMGFKBQZ",
+      "attributes": {
+        "servicecode": "AmazonApiGateway",
+        "description": "HTTP API Requests",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-ApiGatewayHttpRequest",
+        "operation": "ApiGatewayHttpApi",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon API Gateway"
+      },
+      "description": "$1.18/million requests - API Gateway HTTP API (more than 300 million)",
+      "unit": "Requests",
+      "begin": "300000000",
+      "end": "Inf",
+      "usd": 0.00000118,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "8E8FJNZJGJUNQJ6J",
+      "attributes": {
+        "servicecode": "AmazonApiGateway",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-ApiGatewayCacheUsage:1.55GB",
+        "operation": "RunInstances",
+        "cacheMemorySizeGb": "1.6",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon API Gateway"
+      },
+      "description": "API Gateway Dedicated Cache: 1.55GB - Asia Pacific (Sydney)",
+      "unit": "Hrs",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.038,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "W38WC4C6BERGVXV2",
+      "attributes": {
+        "servicecode": "AmazonApiGateway",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-ApiGatewayCacheUsage:0.5GB",
+        "operation": "RunInstances",
+        "cacheMemorySizeGb": "0.5",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon API Gateway"
+      },
+      "description": "API Gateway Dedicated Cache: 0.5GB - Asia Pacific (Sydney)",
+      "unit": "Hrs",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.02,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "6WKSU6SDBPPPC9PD",
+      "attributes": {
+        "servicecode": "AmazonApiGateway",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-ApiGatewayCacheUsage:6.05GB",
+        "operation": "RunInstances",
+        "cacheMemorySizeGb": "6.1",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon API Gateway"
+      },
+      "description": "API Gateway Dedicated Cache: 6.05GB - Asia Pacific (Sydney)",
+      "unit": "Hrs",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.2,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    }
+  ]
+}

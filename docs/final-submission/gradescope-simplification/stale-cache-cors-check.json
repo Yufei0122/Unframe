@@ -1,0 +1,14 @@
+[
+  {
+    "test": "ai-camera-reports-a-comple-8fa4f-tly-repeating-an-empty-scan",
+    "corsError": "Access to fetch at '[URL]' from origin '[URL]' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."
+  },
+  {
+    "test": "ai-live-recognition-submit-a3095-ndidate-before-confirmation",
+    "corsError": "Access to fetch at '[URL]' from origin '[URL]' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."
+  },
+  {
+    "test": "ai-Scan-starts-automatical-5e012-r-and-keeps-the-map-on-Home",
+    "corsError": "Access to fetch at '[URL]' from origin '[URL]' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."
+  }
+]

@@ -4,6 +4,7 @@ import path from 'node:path';
 import { AIError } from './config.js';
 import { createLocalClient } from './local-http.js';
 import { catalogues } from './catalogues.js';
+import { createS3VectorStore } from './s3-vectors.js';
 
 export const validVector = (v, dimension) => Array.isArray(v) && v.length === dimension && v.every(Number.isFinite) && v.some(n => n !== 0);
 export const normalizedVector = (v, dimension) => validVector(v, dimension) && Math.abs(Math.hypot(...v) - 1) <= 0.001;
@@ -30,6 +31,7 @@ export function createEmbeddingService(config, client = createLocalClient(config
   } };
 }
 export function createEmbeddingStore(config) {
+  if (config.vectorStore === 's3vectors') return createS3VectorStore(config);
   const incompatible = () => new AIError(503, 'INDEX_INCOMPATIBLE', 'Artwork index does not match the local OpenCLIP model, catalogue, or sources. Run npm.cmd run ai:index; legacy vectors cannot be reused.');
   const validateRecords = records => {
     const references = referenceArtworks();

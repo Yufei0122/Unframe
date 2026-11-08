@@ -1,0 +1,344 @@
+{
+  "source": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonCloudFront/current/index.json",
+  "retrievedAt": "2026-10-31T06:55:14.695Z",
+  "publicationDate": "2026-10-19T15:05:00Z",
+  "rates": [
+    {
+      "sku": "8TR9SADHNBYGFMTW",
+      "attributes": {
+        "servicecode": "AmazonCloudFront",
+        "location": "Any",
+        "locationType": "AWS Edge Location",
+        "usagetype": "Global-Requests-Tier1",
+        "operation": "",
+        "regionCode": "",
+        "requestDescription": "HTTP GET and HEAD requests",
+        "requestType": "CloudFront-Request-Tier1",
+        "servicename": "Amazon CloudFront"
+      },
+      "description": "First 10 Million HTTP/S requests free each month under CloudFront free tier",
+      "unit": "Requests",
+      "begin": "0",
+      "end": "10000000",
+      "usd": 0,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "8JNNPNBQD9DSHV5K",
+      "attributes": {
+        "servicecode": "AmazonCloudFront",
+        "transferType": "CloudFront Outbound",
+        "fromLocation": "Australia",
+        "fromLocationType": "AWS Edge Location",
+        "toLocation": "External",
+        "toLocationType": "Other",
+        "usagetype": "AU-DataTransfer-Out-Bytes",
+        "operation": "",
+        "fromRegionCode": "",
+        "servicename": "Amazon CloudFront",
+        "toRegionCode": ""
+      },
+      "description": "$0.114 per GB - first 10 TB / month data transfer out",
+      "unit": "GB",
+      "begin": "0",
+      "end": "10240",
+      "usd": 0.114,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "8JNNPNBQD9DSHV5K",
+      "attributes": {
+        "servicecode": "AmazonCloudFront",
+        "transferType": "CloudFront Outbound",
+        "fromLocation": "Australia",
+        "fromLocationType": "AWS Edge Location",
+        "toLocation": "External",
+        "toLocationType": "Other",
+        "usagetype": "AU-DataTransfer-Out-Bytes",
+        "operation": "",
+        "fromRegionCode": "",
+        "servicename": "Amazon CloudFront",
+        "toRegionCode": ""
+      },
+      "description": "$0.098 per GB - next 40 TB / month data transfer out",
+      "unit": "GB",
+      "begin": "10240",
+      "end": "51200",
+      "usd": 0.098,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "8JNNPNBQD9DSHV5K",
+      "attributes": {
+        "servicecode": "AmazonCloudFront",
+        "transferType": "CloudFront Outbound",
+        "fromLocation": "Australia",
+        "fromLocationType": "AWS Edge Location",
+        "toLocation": "External",
+        "toLocationType": "Other",
+        "usagetype": "AU-DataTransfer-Out-Bytes",
+        "operation": "",
+        "fromRegionCode": "",
+        "servicename": "Amazon CloudFront",
+        "toRegionCode": ""
+      },
+      "description": "$0.094 per GB - next 100 TB / month data transfer out",
+      "unit": "GB",
+      "begin": "51200",
+      "end": "153600",
+      "usd": 0.094,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "8JNNPNBQD9DSHV5K",
+      "attributes": {
+        "servicecode": "AmazonCloudFront",
+        "transferType": "CloudFront Outbound",
+        "fromLocation": "Australia",
+        "fromLocationType": "AWS Edge Location",
+        "toLocation": "External",
+        "toLocationType": "Other",
+        "usagetype": "AU-DataTransfer-Out-Bytes",
+        "operation": "",
+        "fromRegionCode": "",
+        "servicename": "Amazon CloudFront",
+        "toRegionCode": ""
+      },
+      "description": "$0.092 per GB - next 350 TB / month data transfer out",
+      "unit": "GB",
+      "begin": "153600",
+      "end": "512000",
+      "usd": 0.092,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "8JNNPNBQD9DSHV5K",
+      "attributes": {
+        "servicecode": "AmazonCloudFront",
+        "transferType": "CloudFront Outbound",
+        "fromLocation": "Australia",
+        "fromLocationType": "AWS Edge Location",
+        "toLocation": "External",
+        "toLocationType": "Other",
+        "usagetype": "AU-DataTransfer-Out-Bytes",
+        "operation": "",
+        "fromRegionCode": "",
+        "servicename": "Amazon CloudFront",
+        "toRegionCode": ""
+      },
+      "description": "$0.09 per GB - next 524 TB / month data transfer out",
+      "unit": "GB",
+      "begin": "512000",
+      "end": "1048576",
+      "usd": 0.09,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "8JNNPNBQD9DSHV5K",
+      "attributes": {
+        "servicecode": "AmazonCloudFront",
+        "transferType": "CloudFront Outbound",
+        "fromLocation": "Australia",
+        "fromLocationType": "AWS Edge Location",
+        "toLocation": "External",
+        "toLocationType": "Other",
+        "usagetype": "AU-DataTransfer-Out-Bytes",
+        "operation": "",
+        "fromRegionCode": "",
+        "servicename": "Amazon CloudFront",
+        "toRegionCode": ""
+      },
+      "description": "$0.085 per GB - next 4 PB / month data transfer out",
+      "unit": "GB",
+      "begin": "1048576",
+      "end": "5242880",
+      "usd": 0.085,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "8JNNPNBQD9DSHV5K",
+      "attributes": {
+        "servicecode": "AmazonCloudFront",
+        "transferType": "CloudFront Outbound",
+        "fromLocation": "Australia",
+        "fromLocationType": "AWS Edge Location",
+        "toLocation": "External",
+        "toLocationType": "Other",
+        "usagetype": "AU-DataTransfer-Out-Bytes",
+        "operation": "",
+        "fromRegionCode": "",
+        "servicename": "Amazon CloudFront",
+        "toRegionCode": ""
+      },
+      "description": "$0.08 per GB - data transfer out / month over 5 PB",
+      "unit": "GB",
+      "begin": "5242880",
+      "end": "Inf",
+      "usd": 0.08,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "78WBDMMUMU9U8T6A",
+      "attributes": {
+        "servicecode": "AmazonCloudFront",
+        "transferType": "CloudFront to Origin",
+        "fromLocation": "Australia",
+        "fromLocationType": "AWS Edge Location",
+        "toLocation": "Data Origin",
+        "toLocationType": "Other",
+        "usagetype": "AU-DataTransfer-Out-OBytes",
+        "operation": "",
+        "fromRegionCode": "",
+        "servicename": "Amazon CloudFront",
+        "toRegionCode": ""
+      },
+      "description": "$0.08 per GB - All data transfer out to Origin (Australia)",
+      "unit": "GB",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.08,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "K8332CMWJ3TWD222",
+      "attributes": {
+        "servicecode": "AmazonCloudFront",
+        "location": "Any",
+        "locationType": "AWS Edge Location",
+        "group": "AnycastStaticIP-IPv4",
+        "usagetype": "Global-AnycastStaticIP-IPv4",
+        "operation": "",
+        "regionCode": "",
+        "servicename": "Amazon CloudFront"
+      },
+      "description": "$0.005 per Hour for Global-AnycastStaticIP-IPv4",
+      "unit": "Hours",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.005,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "GTNGTASZWM5Y2YH6",
+      "attributes": {
+        "servicecode": "AmazonCloudFront",
+        "location": "Australia",
+        "locationType": "AWS Edge Location",
+        "usagetype": "AU-Requests-HTTP-Proxy",
+        "operation": "",
+        "regionCode": "",
+        "requestDescription": "HTTP DELETE, OPTIONS, PATCH, POST, and PUT requests that CloudFront forwards to your origin",
+        "requestType": "CloudFront-Request-HTTP-Proxy",
+        "servicename": "Amazon CloudFront"
+      },
+      "description": "$0.0090 per 10,000 Proxy HTTP Requests (Australia)",
+      "unit": "Requests",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 9e-7,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "JYWBAKWR4AVKH8DT",
+      "attributes": {
+        "servicecode": "AmazonCloudFront",
+        "location": "Australia",
+        "locationType": "AWS Edge Location",
+        "usagetype": "AU-Requests-Tier1",
+        "operation": "",
+        "regionCode": "",
+        "requestDescription": "HTTP GET and HEAD requests",
+        "requestType": "CloudFront-Request-Tier1",
+        "servicename": "Amazon CloudFront"
+      },
+      "description": "$0.0090 per 10,000 HTTP Requests",
+      "unit": "Requests",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 9e-7,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "J8CRHQCUHGEX3EFR",
+      "attributes": {
+        "servicecode": "AmazonCloudFront",
+        "transferType": "CloudFront Outbound",
+        "fromLocation": "Any",
+        "fromLocationType": "AWS Edge Location",
+        "toLocation": "External",
+        "toLocationType": "Other",
+        "usagetype": "Global-DataTransfer-Out-Bytes",
+        "operation": "",
+        "fromRegionCode": "",
+        "servicename": "Amazon CloudFront",
+        "toRegionCode": ""
+      },
+      "description": "First 1 TB of data transfer free each month under CloudFront free tier",
+      "unit": "GB",
+      "begin": "0",
+      "end": "1024",
+      "usd": 0,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "PD5DWTZFHSSQH4CD",
+      "attributes": {
+        "servicecode": "AmazonCloudFront",
+        "location": "Australia",
+        "locationType": "AWS Edge Location",
+        "usagetype": "AU-Requests-HTTPS-Proxy-FLE",
+        "operation": "",
+        "regionCode": "",
+        "requestDescription": "HTTPS Proxy requests with Field Level Encryption",
+        "requestType": "CloudFront-Request-HTTPS-Proxy-Field-Level-Encryption",
+        "servicename": "Amazon CloudFront"
+      },
+      "description": "$0.02 per 10,000 Proxy HTTPS Field Level Encryption Requests (Australia)",
+      "unit": "Requests",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.000002,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "4V34MN2EVACKUWTK",
+      "attributes": {
+        "servicecode": "AmazonCloudFront",
+        "location": "Australia",
+        "locationType": "AWS Edge Location",
+        "usagetype": "AU-Requests-HTTPS-Proxy",
+        "operation": "",
+        "regionCode": "",
+        "requestDescription": "HTTPS DELETE, OPTIONS, PATCH, POST, and PUT requests that CloudFront forwards to your origin",
+        "requestType": "CloudFront-Request-HTTPS-Proxy",
+        "servicename": "Amazon CloudFront"
+      },
+      "description": "$0.0125 per 10,000 Proxy HTTPS Requests (Australia)",
+      "unit": "Requests",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.00000125,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "XXEA4SCG9TSQCDF2",
+      "attributes": {
+        "servicecode": "AmazonCloudFront",
+        "location": "Australia",
+        "locationType": "AWS Edge Location",
+        "usagetype": "AU-Requests-Tier2-HTTPS",
+        "operation": "",
+        "regionCode": "",
+        "requestDescription": "HTTPS GET and HEAD requests",
+        "requestType": "CloudFront-Request-Tier2",
+        "servicename": "Amazon CloudFront"
+      },
+      "description": "$0.0125 per 10,000 HTTPS Requests",
+      "unit": "Requests",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.00000125,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    }
+  ]
+}

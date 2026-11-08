@@ -1,0 +1,9 @@
+{
+  "start": "2026-11-01T11:42:04.499Z",
+  "mainStart": "2026-11-01T11:42:38.080Z",
+  "finish": "2026-11-01T11:51:03.050Z",
+  "allCompletedObservedAt": "2026-11-01T11:42:57.389Z",
+  "queueDrainedObservedAt": "2026-11-01T11:43:38.208Z",
+  "peakRunning": 1,
+  "reason": "Queue drained; no scale-out observed after eight-minute evaluation window; already at minimum"
+}

@@ -1,0 +1,62 @@
+{
+  "status": "PASS",
+  "createdUtc": "2026-11-01T04:09:51.254058+00:00",
+  "path": "D:\\FlyFly\\Study\\QUT\\Assessment\\26S2\\CAB432\\A3\\CAB432-A3-Submission-recognition-only.zip",
+  "bytes": 8277569,
+  "sha256": "8dc53b02710ef82291c20b1f52f5004d74e663d5bfd136958882a42243335bf2",
+  "entries": 298,
+  "files": 297,
+  "appFiles": 296,
+  "roots": [
+    "app/",
+    "submission-a3-infra.yml"
+  ],
+  "crc": "PASS",
+  "entryHashesMatchSource": true,
+  "unsafePaths": [],
+  "symlinks": [],
+  "excludedBuildArtifacts": true,
+  "originalZipUnchanged": true,
+  "largestFiles": [
+    {
+      "path": "app/mobile/assets/goma-exterior.jpg",
+      "bytes": 765672
+    },
+    {
+      "path": "app/mobile/assets/botanical-notes.png",
+      "bytes": 533906
+    },
+    {
+      "path": "app/mobile/assets/soft-form.png",
+      "bytes": 519491
+    },
+    {
+      "path": "app/mobile/assets/met-exterior.jpg",
+      "bytes": 510257
+    },
+    {
+      "path": "app/mobile/assets/riverlight.png",
+      "bytes": 486064
+    },
+    {
+      "path": "app/mobile/assets/quiet-geometry.png",
+      "bytes": 412717
+    },
+    {
+      "path": "app/mobile/assets/blue-hour.png",
+      "bytes": 396207
+    },
+    {
+      "path": "app/mobile/package-lock.json",
+      "bytes": 391921
+    },
+    {
+      "path": "app/mobile/assets/water-lilies.jpg",
+      "bytes": 372985
+    },
+    {
+      "path": "app/mobile/assets/brand/unframe-mark.png",
+      "bytes": 322547
+    }
+  ]
+}

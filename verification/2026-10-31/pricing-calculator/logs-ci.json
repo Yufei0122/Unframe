@@ -1,0 +1,11 @@
+{
+  "retrievedAt": "2026-10-31T08:50:21.388Z",
+  "value": [
+    {
+      "name": "/aws/ecs/containerinsights/n12281212-strobe-a2/performance",
+      "bytes": 1740273,
+      "retentionDays": 1,
+      "logGroupClass": "STANDARD"
+    }
+  ]
+}

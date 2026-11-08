@@ -1,0 +1,136 @@
+{
+  "checkedAt": "2026-10-31T07:45:59.167Z",
+  "status": "BLOCKED_BEFORE_LOAD",
+  "blocker": {
+    "retrievedAt": "2026-10-31T07:45:07.967Z",
+    "errorCode": "AccessDeniedException",
+    "message": "aws: [ERROR]: An error occurred (AccessDeniedException) when calling the GetServiceQuota operation: Current AWS principal is not authorized to perform: servicequotas:GetServiceQuota on resource: arn:aws:servicequotas:ap-southeast-2:901444280953:fargate/L-3032A538 because no identity-based policy allows the servicequotas:GetServiceQuota action"
+  },
+  "userConstraint": "Task 8: report uncertain quota or cost constraints before generating load",
+  "workload": {
+    "newJobs": 0,
+    "submissionDurationSeconds": 0,
+    "experimentExecuted": false,
+    "jobSuccessRate": null
+  },
+  "service": {
+    "desired": 1,
+    "running": 1,
+    "pending": 0,
+    "taskDefinition": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:6"
+  },
+  "scaling": {
+    "min": 1,
+    "max": 4,
+    "target": 3,
+    "outCooldown": 30,
+    "inCooldown": 120,
+    "suspension": {
+      "DynamicScalingInSuspended": false,
+      "DynamicScalingOutSuspended": false,
+      "ScheduledScalingSuspended": false
+    }
+  },
+  "alarms": [
+    {
+      "name": "TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmHigh-bd150a38-aa09-489f-9726-d0ba56e37c83",
+      "state": "OK",
+      "threshold": 3,
+      "comparison": "GreaterThanThreshold",
+      "periods": 3,
+      "actionsEnabled": true
+    },
+    {
+      "name": "TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmLow-18a6f57d-4b3d-4a15-b8a6-c78ee1cabc5f",
+      "state": "ALARM",
+      "threshold": 2.7,
+      "comparison": "LessThanThreshold",
+      "periods": 15,
+      "actionsEnabled": true
+    }
+  ],
+  "metricRanges": [
+    {
+      "id": "m1",
+      "samples": 15,
+      "min": 0,
+      "max": 0,
+      "status": "Complete"
+    },
+    {
+      "id": "m2",
+      "samples": 15,
+      "min": 1,
+      "max": 1,
+      "status": "Complete"
+    },
+    {
+      "id": "visible_max",
+      "samples": 15,
+      "min": 0,
+      "max": 0,
+      "status": "Complete"
+    },
+    {
+      "id": "cpu",
+      "samples": 14,
+      "min": 1.396577109893163,
+      "max": 1.5740038603544235,
+      "status": "Complete"
+    },
+    {
+      "id": "memory",
+      "samples": 14,
+      "min": 40.966796875,
+      "max": 40.966796875,
+      "status": "Complete"
+    },
+    {
+      "id": "inflight",
+      "samples": 15,
+      "min": 0,
+      "max": 0,
+      "status": "Complete"
+    },
+    {
+      "id": "oldest",
+      "samples": 15,
+      "min": 0,
+      "max": 0,
+      "status": "Complete"
+    },
+    {
+      "id": "backlog_per_task",
+      "samples": 15,
+      "min": 0,
+      "max": 0,
+      "status": "Complete"
+    }
+  ],
+  "F14": "Original direct backlog observed; no new workload",
+  "F15": "FAIL_TO_DEMONSTRATE_BLOCKED",
+  "F16": "FAIL_TO_DEMONSTRATE_BLOCKED",
+  "proposedWorkload": {
+    "maximumJobs": 900,
+    "operation": "recognise",
+    "museumId": "met",
+    "image": "mobile/assets/water-lilies.jpg",
+    "maximumStartsPerSecond": 3,
+    "maximumConcurrentSubmissions": 5,
+    "maximumSubmissionSeconds": 300,
+    "maximumObservationMinutesFromFirstSubmission": 40,
+    "maximumTasks": 4,
+    "cpuUnitsPerTask": 512,
+    "memoryMiBPerTask": 2048,
+    "stopEarly": "At least two healthy running workers with successful jobs on distinct task streams and a scaling activity explaining the increase.",
+    "noScaleOutApproximationAt180Seconds": 206.33712308452792,
+    "noScaleOutApproximationAt300Seconds": 343.89520514087985,
+    "caveat": "Projections assume warm serial throughput and successful paced uploads; capacity, alarm latency and cold starts remain uncertain. Never extend the cap automatically."
+  },
+  "estimatedExperimentUsd": 0.14221770501938494,
+  "planningAllowanceUsd": 0.5,
+  "expectedHeadroomAdditionalVcpu": 1.5,
+  "awsMutations": 0,
+  "temporarySettingsChanged": false,
+  "nextAction": "Obtain course administrator confirmation of current regional Fargate quota and available headroom. Do not change IAM or submit load while this prerequisite is uncertain."
+}

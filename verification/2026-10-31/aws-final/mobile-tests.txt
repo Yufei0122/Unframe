@@ -1,0 +1,52 @@
+
+> unframe-mobile@1.0.0 test
+> tsx --test tests/*.test.ts
+
+✔ a precise location at The Met matches, but another city does not (3.4854ms)
+✔ imprecise location must not claim the visitor is near the museum (0.3656ms)
+✔ distance calculation handles matching and opposite coordinates (0.2938ms)
+✔ GOMA and Met are matched independently; low accuracy never selects a museum (0.5678ms)
+✔ museum artwork IDs remain unique and resolve to their own museum for saved details (0.4546ms)
+✔ QUT selects its own catalogue near Gardens Point, independently of GOMA (0.3186ms)
+✔ a captured frame ends sampling until the visitor explicitly starts another scan (6.1837ms)
+✔ scene detection can freeze an unfamiliar artwork without claiming its identity (0.4135ms)
+✔ camera sampling stays serial and waits between completed requests (1.3248ms)
+✔ stopping before camera warm-up prevents any capture (0.4843ms)
+✔ stop aborts an in-flight sample and discards its eventual result (0.6275ms)
+✔ resuming waits for cancelled capture cleanup and ignores old-session errors (1.1819ms)
+✔ timeout reports failure immediately even when native capture ignores cancellation (5.4516ms)
+✔ provider failure stops automatic retries until the visitor resumes (1.5887ms)
+✔ native API configuration requires an explicit reachable server instead of browser globals (1.2825ms)
+✔ API URL validation rejects malformed URLs and credential or query leakage (0.8763ms)
+✔ web API defaults preserve localhost development and hosted same-origin routing (0.2975ms)
+✔ CPU inference timeouts remain configurable and invalid values retain usable defaults (0.3904ms)
+✔ buffered Lambda NDJSON is compatible with the existing planner answer/route callbacks (70.0844ms)
+✔ answer arrives before the held route, including UTF-8 characters split across chunks (16.2684ms)
+✔ incomplete, malformed and out-of-order visit streams cannot silently succeed (3.1198ms)
+✔ route failure preserves a delivered answer; cancellation closes a waiting reader (1.6882ms)
+✔ legacy bookmarks keep unknown dates; new saves record dates and undoing a bookmark removes its metadata (5.1854ms)
+✔ saved itineraries survive reload and retain exact routing, constraints and museum identity (2.3926ms)
+✔ malformed and cross-museum route snapshots are ignored without losing valid saved data (0.9227ms)
+✔ QUT artwork and route saves survive reload with QUT identity and graph paths (0.814ms)
+✔ activity buckets respect actual local dates and do not fabricate dates for older items (0.2691ms)
+✔ job client creates, uploads, polls and returns existing recognition contract (55.062ms)
+✔ job client reports failure and cancellation without changing capture ownership (2.7161ms)
+✔ Bedrock route snapshots remain valid AI activity without migrating existing local state (3.8184ms)
+✔ avatar persists independently of preferences and legacy collections still restore (10.0911ms)
+✔ avatar crops stay square and inside portrait and landscape images at all edges (2.25ms)
+✔ bookmarks and active tour progress survive a persisted round trip (27.6618ms)
+✔ a stop cannot be both explored and skipped, and unknown stops are ignored (0.5617ms)
+✔ finished visits respect history consent and clearing history preserves bookmarks (0.8002ms)
+✔ corrupt or unsupported data is rejected instead of silently overwritten (1.1829ms)
+✔ stale artwork IDs and malformed visits are removed on restore (0.4972ms)
+✔ web jobs mode uses distinct recognition/analysis jobs, raw PUT and unchanged results without local fallback (50.6335ms)
+✔ web job cancellation stops pending polling and a new scan uses a fresh signal (6.363ms)
+✔ local web mode remains available explicitly and cloud failures do not fall back (1.2682ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 518.7151

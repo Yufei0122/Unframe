@@ -1,5 +1,8 @@
 import { test, expect, enterWelcome } from './fixtures';
 
+// Exercise capture deterministically without a physical camera or permission UI.
+test.use({ launchOptions: { args: ['--use-fake-device-for-media-stream', '--use-fake-ui-for-media-stream'] } });
+
 const empty = { matched: false, candidates: [], requiresConfirmation: true, artworkDetected: false };
 const observation = { method: 'vision', identityStatus: 'uncertain', artworkPresence: 'likely', description: 'A geometric painting.',
   visualFeatures: [], visibleText: [], hypotheses: [], sources: [], search: { status: 'not_needed', providers: [] } };

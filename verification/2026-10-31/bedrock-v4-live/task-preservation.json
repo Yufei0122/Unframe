@@ -1,0 +1,7 @@
+{
+  "verified": true,
+  "revision": 5,
+  "onlyChangeFromRevision4": "worker image URI",
+  "cpu": "512",
+  "memory": "2048"
+}

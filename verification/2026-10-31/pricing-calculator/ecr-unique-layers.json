@@ -1,0 +1,12 @@
+{
+  "retrievedAt": "2026-10-31T08:51:56.708Z",
+  "value": {
+    "manifests": 15,
+    "failures": [],
+    "uniqueLayers": 40,
+    "uniqueLayerBytes": 3884122580,
+    "uniqueConfigBytes": 56786,
+    "manifestBytes": 26720,
+    "note": "Unique referenced compressed content, not CUR billed storage."
+  }
+}

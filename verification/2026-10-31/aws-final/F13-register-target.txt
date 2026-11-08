@@ -1,0 +1,3 @@
+{
+    "ScalableTargetARN": "arn:aws:application-autoscaling:ap-southeast-2:901444280953:scalable-target/0ec5ae38e76bce6147649316c9b9741c455c"
+}

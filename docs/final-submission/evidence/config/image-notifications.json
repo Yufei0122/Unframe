@@ -1,0 +1,21 @@
+{
+    "QueueConfigurations": [
+        {
+            "Id": "recognition-upload-created",
+            "QueueArn": "arn:aws:sqs:ap-southeast-2:901444280953:a3-n12281212-unframe-recognition",
+            "Events": [
+                "s3:ObjectCreated:*"
+            ],
+            "Filter": {
+                "Key": {
+                    "FilterRules": [
+                        {
+                            "Name": "Prefix",
+                            "Value": "uploads/"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

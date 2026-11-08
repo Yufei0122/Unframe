@@ -1,0 +1,38 @@
+{
+  "ok": true,
+  "value": {
+    "Item": {
+      "attempts": {
+        "N": "1"
+      },
+      "bucket": {
+        "S": "a3-n12281212-unframe-job-images"
+      },
+      "error": {
+        "M": {
+          "code": {
+            "S": "PROCESSING_FAILED"
+          },
+          "message": {
+            "S": "Processing will be retried."
+          }
+        }
+      },
+      "imageKey": {
+        "S": "uploads/e606a64c-20fe-4b50-b781-a6f1ee78b63d/image"
+      },
+      "jobId": {
+        "S": "e606a64c-20fe-4b50-b781-a6f1ee78b63d"
+      },
+      "museumId": {
+        "S": "met"
+      },
+      "operation": {
+        "S": "analyse"
+      },
+      "status": {
+        "S": "RETRYING"
+      }
+    }
+  }
+}

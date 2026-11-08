@@ -1,0 +1,2513 @@
+{
+  "playwright.config.js": [
+    {
+      "specifier": "./playwright.mobile.config.js",
+      "resolved": "playwright.mobile.config.js"
+    }
+  ],
+  "playwright.mobile-dev.config.js": [
+    {
+      "specifier": "./playwright.mobile.config.js",
+      "resolved": "playwright.mobile.config.js"
+    }
+  ],
+  "playwright.mobile.config.js": [],
+  "local-ai/compare_met_openclip.py": [],
+  "local-ai/download.py": [],
+  "local-ai/evaluate_met_fullframe.py": [],
+  "local-ai/export_artwork_detector.py": [],
+  "local-ai/export_met_openclip.py": [],
+  "local-ai/image_input.py": [],
+  "local-ai/met_catalogue.py": [],
+  "local-ai/met_pretrained.py": [],
+  "local-ai/met_training_data.py": [],
+  "local-ai/model.py": [],
+  "local-ai/query_met.py": [],
+  "local-ai/server.py": [],
+  "local-ai/summarize_met.py": [],
+  "local-ai/test_image_input.py": [],
+  "local-ai/test_met_training.py": [],
+  "local-ai/train_met.py": [],
+  "local-ai/train_met_expanded.py": [],
+  "local-ai/tune_met_projection.py": [],
+  "mobile/App.tsx": [
+    {
+      "specifier": "./src/store",
+      "resolved": "mobile/src/store.tsx"
+    },
+    {
+      "specifier": "./src/location",
+      "resolved": "mobile/src/location.tsx"
+    },
+    {
+      "specifier": "./src/model",
+      "resolved": "mobile/src/model.ts"
+    },
+    {
+      "specifier": "./src/ui",
+      "resolved": "mobile/src/ui.tsx"
+    },
+    {
+      "specifier": "./src/screens/Welcome",
+      "resolved": "mobile/src/screens/Welcome.tsx"
+    },
+    {
+      "specifier": "./src/screens/MuseumSelect",
+      "resolved": "mobile/src/screens/MuseumSelect.tsx"
+    },
+    {
+      "specifier": "./src/screens/Museum",
+      "resolved": "mobile/src/screens/Museum.tsx"
+    },
+    {
+      "specifier": "./src/screens/Explore",
+      "resolved": "mobile/src/screens/Explore.tsx"
+    },
+    {
+      "specifier": "./src/screens/Guide",
+      "resolved": "mobile/src/screens/Guide.tsx"
+    },
+    {
+      "specifier": "./src/screens/Preferences",
+      "resolved": "mobile/src/screens/Preferences.tsx"
+    },
+    {
+      "specifier": "./src/screens/AppSettings",
+      "resolved": "mobile/src/screens/AppSettings.tsx"
+    },
+    {
+      "specifier": "./src/screens/SavedArtworks",
+      "resolved": "mobile/src/screens/SavedArtworks.tsx"
+    },
+    {
+      "specifier": "./src/screens/SavedRoutes",
+      "resolved": "mobile/src/screens/SavedRoutes.tsx"
+    },
+    {
+      "specifier": "./src/screens/RecentActivity",
+      "resolved": "mobile/src/screens/RecentActivity.tsx"
+    },
+    {
+      "specifier": "./src/screens/Details",
+      "resolved": "mobile/src/screens/Details.tsx"
+    },
+    {
+      "specifier": "./src/screens/Modals",
+      "resolved": "mobile/src/screens/Modals.tsx"
+    },
+    {
+      "specifier": "./src/screens/Lookup",
+      "resolved": "mobile/src/screens/Lookup.tsx"
+    },
+    {
+      "specifier": "./src/screens/AIPlanner",
+      "resolved": "mobile/src/screens/AIPlanner.tsx"
+    },
+    {
+      "specifier": "./src/screens/AIItinerary",
+      "resolved": "mobile/src/screens/AIItinerary.tsx"
+    },
+    {
+      "specifier": "./src/screens/NearbyArtworks",
+      "resolved": "mobile/src/screens/NearbyArtworks.tsx"
+    }
+  ],
+  "mobile/index.ts": [
+    {
+      "specifier": "./App",
+      "resolved": "mobile/App.tsx"
+    }
+  ],
+  "mobile/metro.config.js": [],
+  "scripts/ai-clip.mjs": [
+    {
+      "specifier": "./ai-runtime.mjs",
+      "resolved": "scripts/ai-runtime.mjs"
+    }
+  ],
+  "scripts/ai-met.mjs": [],
+  "scripts/ai-routes.mjs": [
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "./ai-runtime.mjs",
+      "resolved": "scripts/ai-runtime.mjs"
+    }
+  ],
+  "scripts/ai-runtime.mjs": [
+    {
+      "specifier": "../server/ai/planning-status.js",
+      "resolved": "server/ai/planning-status.js"
+    },
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/vision.js",
+      "resolved": "server/ai/vision.js"
+    },
+    {
+      "specifier": "../server/ai/embeddings.js",
+      "resolved": "server/ai/embeddings.js"
+    },
+    {
+      "specifier": "../server/ai/artwork-detection.js",
+      "resolved": "server/ai/artwork-detection.js"
+    }
+  ],
+  "scripts/ai-setup-vision.mjs": [
+    {
+      "specifier": "./ai-runtime.mjs",
+      "resolved": "scripts/ai-runtime.mjs"
+    },
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/vision.js",
+      "resolved": "server/ai/vision.js"
+    }
+  ],
+  "scripts/ai-setup.mjs": [
+    {
+      "specifier": "./ai-runtime.mjs",
+      "resolved": "scripts/ai-runtime.mjs"
+    },
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/vision.js",
+      "resolved": "server/ai/vision.js"
+    }
+  ],
+  "scripts/ai-up.mjs": [
+    {
+      "specifier": "./ai-runtime.mjs",
+      "resolved": "scripts/ai-runtime.mjs"
+    },
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/embeddings.js",
+      "resolved": "server/ai/embeddings.js"
+    },
+    {
+      "specifier": "../server/ai/vision.js",
+      "resolved": "server/ai/vision.js"
+    }
+  ],
+  "scripts/benchmark-planning.mjs": [
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/loopback-fetch.js",
+      "resolved": "server/ai/loopback-fetch.js"
+    },
+    {
+      "specifier": "../server/ai/planning-status.js",
+      "resolved": "server/ai/planning-status.js"
+    },
+    {
+      "specifier": "../server/ai/catalogues.js",
+      "resolved": "server/ai/catalogues.js"
+    },
+    {
+      "specifier": "../server/ai/routes.js",
+      "resolved": "server/ai/routes.js"
+    },
+    {
+      "specifier": "./validate-ai-routes.mjs",
+      "resolved": "scripts/validate-ai-routes.mjs"
+    }
+  ],
+  "scripts/build-brand-assets.mjs": [],
+  "scripts/check-ai.mjs": [
+    {
+      "specifier": "../server/ai/catalogues.js",
+      "resolved": "server/ai/catalogues.js"
+    },
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/embeddings.js",
+      "resolved": "server/ai/embeddings.js"
+    },
+    {
+      "specifier": "../server/ai/ollama.js",
+      "resolved": "server/ai/ollama.js"
+    },
+    {
+      "specifier": "../server/ai/recognition.js",
+      "resolved": "server/ai/recognition.js"
+    },
+    {
+      "specifier": "../server/ai/status.js",
+      "resolved": "server/ai/status.js"
+    },
+    {
+      "specifier": "../server/ai/images.js",
+      "resolved": "server/ai/images.js"
+    },
+    {
+      "specifier": "./ai-runtime.mjs",
+      "resolved": "scripts/ai-runtime.mjs"
+    }
+  ],
+  "scripts/collect-a3-price-inputs.mjs": [],
+  "scripts/collect-analyse-evidence.mjs": [
+    {
+      "specifier": "./evidence-result.mjs",
+      "resolved": "scripts/evidence-result.mjs"
+    }
+  ],
+  "scripts/collect-recognition-load.mjs": [],
+  "scripts/deploy-worker-image.mjs": [],
+  "scripts/estimate-scaling-test.mjs": [],
+  "scripts/evidence-result.mjs": [],
+  "scripts/final-recognition-readiness.mjs": [],
+  "scripts/index-artworks.mjs": [
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/embeddings.js",
+      "resolved": "server/ai/embeddings.js"
+    },
+    {
+      "specifier": "../server/ai/images.js",
+      "resolved": "server/ai/images.js"
+    }
+  ],
+  "scripts/load-recognition-jobs.mjs": [],
+  "scripts/model-a3-costs.mjs": [],
+  "scripts/observe-recognition-scaling.mjs": [],
+  "scripts/preflight-analyse-input.mjs": [
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/embeddings.js",
+      "resolved": "server/ai/embeddings.js"
+    },
+    {
+      "specifier": "../server/ai/s3-vectors.js",
+      "resolved": "server/ai/s3-vectors.js"
+    },
+    {
+      "specifier": "../server/ai/images.js",
+      "resolved": "server/ai/images.js"
+    }
+  ],
+  "scripts/prepare-a3-submission.mjs": [],
+  "scripts/prepare-final-aws-evidence.mjs": [],
+  "scripts/probe-bedrock-response.mjs": [
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/bedrock.js",
+      "resolved": "server/ai/bedrock.js"
+    },
+    {
+      "specifier": "../server/ai/vision.js",
+      "resolved": "server/ai/vision.js"
+    }
+  ],
+  "scripts/render-final-metrics.mjs": [],
+  "scripts/route-acceptance.mjs": [],
+  "scripts/serve-mobile-preview.mjs": [],
+  "scripts/smoke-lambda.mjs": [],
+  "scripts/smoke-worker.mjs": [
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/embeddings.js",
+      "resolved": "server/ai/embeddings.js"
+    },
+    {
+      "specifier": "../server/ai/images.js",
+      "resolved": "server/ai/images.js"
+    },
+    {
+      "specifier": "../worker/worker.js",
+      "resolved": "worker/worker.js"
+    }
+  ],
+  "scripts/validate-a3-submission.mjs": [],
+  "scripts/validate-ai-routes.mjs": [
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/loopback-fetch.js",
+      "resolved": "server/ai/loopback-fetch.js"
+    },
+    {
+      "specifier": "../server/ai/catalogues.js",
+      "resolved": "server/ai/catalogues.js"
+    },
+    {
+      "specifier": "../server/ai/planning-status.js",
+      "resolved": "server/ai/planning-status.js"
+    },
+    {
+      "specifier": "../server/ai/routes.js",
+      "resolved": "server/ai/routes.js"
+    }
+  ],
+  "scripts/validate-ai-visit.mjs": [
+    {
+      "specifier": "../server/ai/catalogues.js",
+      "resolved": "server/ai/catalogues.js"
+    },
+    {
+      "specifier": "../server/ai/planning-status.js",
+      "resolved": "server/ai/planning-status.js"
+    },
+    {
+      "specifier": "../server/ai/loopback-fetch.js",
+      "resolved": "server/ai/loopback-fetch.js"
+    },
+    {
+      "specifier": "./validate-ai-routes.mjs",
+      "resolved": "scripts/validate-ai-routes.mjs"
+    }
+  ],
+  "scripts/validate-artwork-vision.mjs": [
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/vision.js",
+      "resolved": "server/ai/vision.js"
+    },
+    {
+      "specifier": "../server/ai/public-catalogues.js",
+      "resolved": "server/ai/public-catalogues.js"
+    },
+    {
+      "specifier": "../server/ai/images.js",
+      "resolved": "server/ai/images.js"
+    }
+  ],
+  "scripts/validate-auto-capture.mjs": [
+    {
+      "specifier": "../server/ai/embeddings.js",
+      "resolved": "server/ai/embeddings.js"
+    },
+    {
+      "specifier": "../server/ai/images.js",
+      "resolved": "server/ai/images.js"
+    }
+  ],
+  "scripts/validate-local-ai.mjs": [
+    {
+      "specifier": "../server/ai/catalogues.js",
+      "resolved": "server/ai/catalogues.js"
+    },
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/loopback-fetch.js",
+      "resolved": "server/ai/loopback-fetch.js"
+    },
+    {
+      "specifier": "../server/ai/embeddings.js",
+      "resolved": "server/ai/embeddings.js"
+    },
+    {
+      "specifier": "../server/ai/images.js",
+      "resolved": "server/ai/images.js"
+    },
+    {
+      "specifier": "../server/ai/ollama.js",
+      "resolved": "server/ai/ollama.js"
+    }
+  ],
+  "scripts/validate-qwen-routes.mjs": [
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/loopback-fetch.js",
+      "resolved": "server/ai/loopback-fetch.js"
+    },
+    {
+      "specifier": "../server/ai/planning-status.js",
+      "resolved": "server/ai/planning-status.js"
+    },
+    {
+      "specifier": "../server/ai/catalogues.js",
+      "resolved": "server/ai/catalogues.js"
+    },
+    {
+      "specifier": "./route-acceptance.mjs",
+      "resolved": "scripts/route-acceptance.mjs"
+    }
+  ],
+  "scripts/verify-cloudfront-browser.mjs": [],
+  "scripts/verify-cloudfront-cache.mjs": [],
+  "scripts/verify-one-cloud-analyse.ts": [
+    {
+      "specifier": "./evidence-result.mjs",
+      "resolved": "scripts/evidence-result.mjs"
+    },
+    {
+      "specifier": "../mobile/src/recognitionJobs",
+      "resolved": "mobile/src/recognitionJobs.ts"
+    }
+  ],
+  "scripts/verify-one-cloud-job.ts": [
+    {
+      "specifier": "../mobile/src/recognitionJobs",
+      "resolved": "mobile/src/recognitionJobs.ts"
+    },
+    {
+      "specifier": "../shared/ai-types",
+      "resolved": "shared/ai-types.ts"
+    }
+  ],
+  "scripts/verify-s3-recognition.mjs": [
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/embeddings.js",
+      "resolved": "server/ai/embeddings.js"
+    },
+    {
+      "specifier": "../server/ai/s3-vectors.js",
+      "resolved": "server/ai/s3-vectors.js"
+    },
+    {
+      "specifier": "../server/ai/handler.js",
+      "resolved": "server/ai/handler.js"
+    },
+    {
+      "specifier": "../server/ai/images.js",
+      "resolved": "server/ai/images.js"
+    },
+    {
+      "specifier": "../server/ai/catalogues.js",
+      "resolved": "server/ai/catalogues.js"
+    }
+  ],
+  "scripts/verify-worker-limits.mjs": [
+    {
+      "specifier": "../server/ai/embeddings.js",
+      "resolved": "server/ai/embeddings.js"
+    }
+  ],
+  "scripts/verify-worker-rollout.mjs": [],
+  "server/domain.js": [
+    {
+      "specifier": "../shared/domain.js",
+      "resolved": "shared/domain.js"
+    }
+  ],
+  "server/index.js": [
+    {
+      "specifier": "./seed.js",
+      "resolved": "server/seed.js"
+    },
+    {
+      "specifier": "./domain.js",
+      "resolved": "server/domain.js"
+    },
+    {
+      "specifier": "./startup.js",
+      "resolved": "server/startup.js"
+    },
+    {
+      "specifier": "./ai/handler.js",
+      "resolved": "server/ai/handler.js"
+    }
+  ],
+  "server/seed.js": [
+    {
+      "specifier": "../shared/collection.json",
+      "resolved": "shared/collection.json"
+    }
+  ],
+  "server/startup.js": [],
+  "shared/ai-types.ts": [
+    {
+      "specifier": "./domain.js",
+      "resolved": "shared/domain.js"
+    }
+  ],
+  "shared/domain.d.ts": [],
+  "shared/domain.js": [],
+  "tests/ai-runtime.test.js": [
+    {
+      "specifier": "../server/ai/vision.js",
+      "resolved": "server/ai/vision.js"
+    },
+    {
+      "specifier": "../server/ai/artwork-detection.js",
+      "resolved": "server/ai/artwork-detection.js"
+    },
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/embeddings.js",
+      "resolved": "server/ai/embeddings.js"
+    },
+    {
+      "specifier": "../server/ai/planning-status.js",
+      "resolved": "server/ai/planning-status.js"
+    }
+  ],
+  "tests/ai.test.js": [
+    {
+      "specifier": "../shared/met-collection.json",
+      "resolved": "shared/met-collection.json"
+    },
+    {
+      "specifier": "../shared/met-graph.json",
+      "resolved": "shared/met-graph.json"
+    },
+    {
+      "specifier": "../shared/goma-collection.json",
+      "resolved": "shared/goma-collection.json"
+    },
+    {
+      "specifier": "../shared/goma-graph.json",
+      "resolved": "shared/goma-graph.json"
+    },
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/local-http.js",
+      "resolved": "server/ai/local-http.js"
+    },
+    {
+      "specifier": "../server/ai/embeddings.js",
+      "resolved": "server/ai/embeddings.js"
+    },
+    {
+      "specifier": "../server/ai/ollama.js",
+      "resolved": "server/ai/ollama.js"
+    },
+    {
+      "specifier": "../server/ai/recognition.js",
+      "resolved": "server/ai/recognition.js"
+    },
+    {
+      "specifier": "../server/ai/artwork-detection.js",
+      "resolved": "server/ai/artwork-detection.js"
+    },
+    {
+      "specifier": "../server/ai/artwork-detector.json",
+      "resolved": "server/ai/artwork-detector.json"
+    },
+    {
+      "specifier": "../server/ai/routes.js",
+      "resolved": "server/ai/routes.js"
+    },
+    {
+      "specifier": "../server/ai/chat.js",
+      "resolved": "server/ai/chat.js"
+    },
+    {
+      "specifier": "../server/ai/graph.js",
+      "resolved": "server/ai/graph.js"
+    },
+    {
+      "specifier": "../server/ai/images.js",
+      "resolved": "server/ai/images.js"
+    },
+    {
+      "specifier": "../server/ai/handler.js",
+      "resolved": "server/ai/handler.js"
+    },
+    {
+      "specifier": "../server/ai/status.js",
+      "resolved": "server/ai/status.js"
+    },
+    {
+      "specifier": "../scripts/route-acceptance.mjs",
+      "resolved": "scripts/route-acceptance.mjs"
+    }
+  ],
+  "tests/api.test.js": [],
+  "tests/artwork-acceptance.test.js": [
+    {
+      "specifier": "../server/ai/vision.js",
+      "resolved": "server/ai/vision.js"
+    },
+    {
+      "specifier": "../scripts/validate-artwork-vision.mjs",
+      "resolved": "scripts/validate-artwork-vision.mjs"
+    },
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    }
+  ],
+  "tests/artwork-analysis.test.js": [
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/vision.js",
+      "resolved": "server/ai/vision.js"
+    },
+    {
+      "specifier": "../server/ai/public-catalogues.js",
+      "resolved": "server/ai/public-catalogues.js"
+    },
+    {
+      "specifier": "../server/ai/artwork-analysis.js",
+      "resolved": "server/ai/artwork-analysis.js"
+    },
+    {
+      "specifier": "../server/ai/handler.js",
+      "resolved": "server/ai/handler.js"
+    },
+    {
+      "specifier": "../server/ai/ollama.js",
+      "resolved": "server/ai/ollama.js"
+    },
+    {
+      "specifier": "../server/ai/local-http.js",
+      "resolved": "server/ai/local-http.js"
+    },
+    {
+      "specifier": "../server/ai/embeddings.js",
+      "resolved": "server/ai/embeddings.js"
+    }
+  ],
+  "tests/aws-bedrock-schema.test.js": [
+    {
+      "specifier": "../server/ai/vision.js",
+      "resolved": "server/ai/vision.js"
+    },
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/bedrock.js",
+      "resolved": "server/ai/bedrock.js"
+    },
+    {
+      "specifier": "../server/ai/schema-diagnostics.js",
+      "resolved": "server/ai/schema-diagnostics.js"
+    }
+  ],
+  "tests/aws-bedrock.test.js": [
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/bedrock.js",
+      "resolved": "server/ai/bedrock.js"
+    },
+    {
+      "specifier": "../server/ai/providers.js",
+      "resolved": "server/ai/providers.js"
+    },
+    {
+      "specifier": "../server/ai/catalogues.js",
+      "resolved": "server/ai/catalogues.js"
+    },
+    {
+      "specifier": "../server/ai/routes.js",
+      "resolved": "server/ai/routes.js"
+    },
+    {
+      "specifier": "../server/ai/vision.js",
+      "resolved": "server/ai/vision.js"
+    }
+  ],
+  "tests/aws-diagnostics.test.js": [
+    {
+      "specifier": "../server/ai/diagnostics.js",
+      "resolved": "server/ai/diagnostics.js"
+    },
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/bedrock.js",
+      "resolved": "server/ai/bedrock.js"
+    }
+  ],
+  "tests/aws-jobs.test.js": [
+    {
+      "specifier": "../server/cloud/config.js",
+      "resolved": "server/cloud/config.js"
+    },
+    {
+      "specifier": "../server/cloud/jobs.js",
+      "resolved": "server/cloud/jobs.js"
+    },
+    {
+      "specifier": "../server/cloud/handlers.js",
+      "resolved": "server/cloud/handlers.js"
+    },
+    {
+      "specifier": "../server/cloud/job-repository.js",
+      "resolved": "server/cloud/job-repository.js"
+    },
+    {
+      "specifier": "../server/cloud/uploads.js",
+      "resolved": "server/cloud/uploads.js"
+    },
+    {
+      "specifier": "../worker/process-job.js",
+      "resolved": "worker/process-job.js"
+    },
+    {
+      "specifier": "../server/ai/diagnostics.js",
+      "resolved": "server/ai/diagnostics.js"
+    }
+  ],
+  "tests/aws-planning.test.js": [
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/cloud/planning.js",
+      "resolved": "server/cloud/planning.js"
+    }
+  ],
+  "tests/aws-vectors.test.js": [
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/s3-vectors.js",
+      "resolved": "server/ai/s3-vectors.js"
+    },
+    {
+      "specifier": "../server/ai/recognition.js",
+      "resolved": "server/ai/recognition.js"
+    },
+    {
+      "specifier": "../server/ai/artwork-analysis.js",
+      "resolved": "server/ai/artwork-analysis.js"
+    },
+    {
+      "specifier": "../server/ai/embeddings.js",
+      "resolved": "server/ai/embeddings.js"
+    },
+    {
+      "specifier": "../server/ai/catalogues.js",
+      "resolved": "server/ai/catalogues.js"
+    }
+  ],
+  "tests/domain.test.js": [
+    {
+      "specifier": "../server/domain.js",
+      "resolved": "server/domain.js"
+    },
+    {
+      "specifier": "../server/seed.js",
+      "resolved": "server/seed.js"
+    }
+  ],
+  "tests/planning-runtime.test.js": [
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/ai/local-http.js",
+      "resolved": "server/ai/local-http.js"
+    },
+    {
+      "specifier": "../server/ai/loopback-fetch.js",
+      "resolved": "server/ai/loopback-fetch.js"
+    },
+    {
+      "specifier": "../server/ai/handler.js",
+      "resolved": "server/ai/handler.js"
+    },
+    {
+      "specifier": "../server/ai/ollama.js",
+      "resolved": "server/ai/ollama.js"
+    },
+    {
+      "specifier": "../server/ai/chat.js",
+      "resolved": "server/ai/chat.js"
+    },
+    {
+      "specifier": "../server/ai/routes.js",
+      "resolved": "server/ai/routes.js"
+    },
+    {
+      "specifier": "../server/ai/planning-status.js",
+      "resolved": "server/ai/planning-status.js"
+    },
+    {
+      "specifier": "../server/ai/catalogues.js",
+      "resolved": "server/ai/catalogues.js"
+    },
+    {
+      "specifier": "../scripts/validate-ai-routes.mjs",
+      "resolved": "scripts/validate-ai-routes.mjs"
+    },
+    {
+      "specifier": "../scripts/benchmark-planning.mjs",
+      "resolved": "scripts/benchmark-planning.mjs"
+    }
+  ],
+  "tests/scaling-load.test.js": [
+    {
+      "specifier": "../scripts/load-recognition-jobs.mjs",
+      "resolved": "scripts/load-recognition-jobs.mjs"
+    }
+  ],
+  "worker/healthcheck.js": [],
+  "worker/process-job.js": [
+    {
+      "specifier": "../server/cloud/jobs.js",
+      "resolved": "server/cloud/jobs.js"
+    },
+    {
+      "specifier": "../server/ai/catalogues.js",
+      "resolved": "server/ai/catalogues.js"
+    },
+    {
+      "specifier": "../server/ai/images.js",
+      "resolved": "server/ai/images.js"
+    },
+    {
+      "specifier": "../server/ai/job-context.js",
+      "resolved": "server/ai/job-context.js"
+    },
+    {
+      "specifier": "../server/ai/diagnostics.js",
+      "resolved": "server/ai/diagnostics.js"
+    }
+  ],
+  "worker/start.js": [
+    {
+      "specifier": "./worker.js",
+      "resolved": "worker/worker.js"
+    },
+    {
+      "specifier": "../server/ai/diagnostics.js",
+      "resolved": "server/ai/diagnostics.js"
+    }
+  ],
+  "worker/worker.js": [
+    {
+      "specifier": "../server/ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../server/cloud/config.js",
+      "resolved": "server/cloud/config.js"
+    },
+    {
+      "specifier": "../server/cloud/job-repository.js",
+      "resolved": "server/cloud/job-repository.js"
+    },
+    {
+      "specifier": "../server/cloud/uploads.js",
+      "resolved": "server/cloud/uploads.js"
+    },
+    {
+      "specifier": "../server/ai/providers.js",
+      "resolved": "server/ai/providers.js"
+    },
+    {
+      "specifier": "../server/ai/embeddings.js",
+      "resolved": "server/ai/embeddings.js"
+    },
+    {
+      "specifier": "../server/ai/recognition.js",
+      "resolved": "server/ai/recognition.js"
+    },
+    {
+      "specifier": "../server/ai/artwork-analysis.js",
+      "resolved": "server/ai/artwork-analysis.js"
+    },
+    {
+      "specifier": "../server/ai/catalogues.js",
+      "resolved": "server/ai/catalogues.js"
+    },
+    {
+      "specifier": "./process-job.js",
+      "resolved": "worker/process-job.js"
+    },
+    {
+      "specifier": "../server/ai/diagnostics.js",
+      "resolved": "server/ai/diagnostics.js"
+    }
+  ],
+  "mobile/dev-e2e/startup.spec.js": [
+    {
+      "specifier": "../e2e/fixtures",
+      "resolved": "mobile/e2e/fixtures.js"
+    }
+  ],
+  "mobile/e2e/ai.spec.js": [
+    {
+      "specifier": "../e2e/fixtures",
+      "resolved": "mobile/e2e/fixtures.js"
+    }
+  ],
+  "mobile/e2e/auto-capture.spec.js": [
+    {
+      "specifier": "./fixtures",
+      "resolved": "mobile/e2e/fixtures.js"
+    }
+  ],
+  "mobile/e2e/avatar.spec.js": [
+    {
+      "specifier": "./fixtures",
+      "resolved": "mobile/e2e/fixtures.js"
+    }
+  ],
+  "mobile/e2e/cloud-scan.spec.js": [
+    {
+      "specifier": "./fixtures",
+      "resolved": "mobile/e2e/fixtures.js"
+    }
+  ],
+  "mobile/e2e/discovery.spec.js": [
+    {
+      "specifier": "./fixtures",
+      "resolved": "mobile/e2e/fixtures.js"
+    }
+  ],
+  "mobile/e2e/fixtures.js": [],
+  "mobile/e2e/general-artwork.spec.js": [
+    {
+      "specifier": "./fixtures",
+      "resolved": "mobile/e2e/fixtures.js"
+    }
+  ],
+  "mobile/e2e/goma.spec.js": [
+    {
+      "specifier": "../e2e/fixtures",
+      "resolved": "mobile/e2e/fixtures.js"
+    }
+  ],
+  "mobile/e2e/live-ai.spec.js": [
+    {
+      "specifier": "./fixtures",
+      "resolved": "mobile/e2e/fixtures.js"
+    }
+  ],
+  "mobile/e2e/live-auto-capture.spec.js": [
+    {
+      "specifier": "./fixtures",
+      "resolved": "mobile/e2e/fixtures.js"
+    }
+  ],
+  "mobile/e2e/mobile.spec.js": [
+    {
+      "specifier": "../e2e/fixtures",
+      "resolved": "mobile/e2e/fixtures.js"
+    }
+  ],
+  "mobile/e2e/planning.spec.js": [
+    {
+      "specifier": "./fixtures",
+      "resolved": "mobile/e2e/fixtures.js"
+    }
+  ],
+  "mobile/e2e/profile-pages.spec.js": [
+    {
+      "specifier": "./fixtures",
+      "resolved": "mobile/e2e/fixtures.js"
+    }
+  ],
+  "mobile/e2e/qut.spec.js": [
+    {
+      "specifier": "./fixtures",
+      "resolved": "mobile/e2e/fixtures.js"
+    },
+    {
+      "specifier": "../../shared/qut-collection.json",
+      "resolved": "shared/qut-collection.json"
+    }
+  ],
+  "mobile/src/ai.ts": [
+    {
+      "specifier": "./apiConfig",
+      "resolved": "mobile/src/apiConfig.ts"
+    },
+    {
+      "specifier": "./planningStream",
+      "resolved": "mobile/src/planningStream.ts"
+    },
+    {
+      "specifier": "../../shared/ai-types",
+      "resolved": "shared/ai-types.ts"
+    }
+  ],
+  "mobile/src/apiConfig.ts": [],
+  "mobile/src/assets.ts": [
+    {
+      "specifier": "../assets/met-exterior.jpg",
+      "resolved": "mobile/assets/met-exterior.jpg"
+    },
+    {
+      "specifier": "../assets/goma-exterior.jpg",
+      "resolved": "mobile/assets/goma-exterior.jpg"
+    },
+    {
+      "specifier": "../assets/qut-gallery.png",
+      "resolved": "mobile/assets/qut-gallery.png"
+    },
+    {
+      "specifier": "../assets/qut-river-rhythm.png",
+      "resolved": "mobile/assets/qut-river-rhythm.png"
+    },
+    {
+      "specifier": "../assets/qut-soft-architecture.png",
+      "resolved": "mobile/assets/qut-soft-architecture.png"
+    },
+    {
+      "specifier": "../assets/qut-between-places.png",
+      "resolved": "mobile/assets/qut-between-places.png"
+    },
+    {
+      "specifier": "../assets/goma-obliteration-room.jpg",
+      "resolved": "mobile/assets/goma-obliteration-room.jpg"
+    },
+    {
+      "specifier": "../assets/goma-in-bed.jpg",
+      "resolved": "mobile/assets/goma-in-bed.jpg"
+    },
+    {
+      "specifier": "../assets/goma-heritage.jpg",
+      "resolved": "mobile/assets/goma-heritage.jpg"
+    },
+    {
+      "specifier": "../assets/goma-soul-under-the-moon.jpg",
+      "resolved": "mobile/assets/goma-soul-under-the-moon.jpg"
+    },
+    {
+      "specifier": "../assets/water-lilies.jpg",
+      "resolved": "mobile/assets/water-lilies.jpg"
+    },
+    {
+      "specifier": "../assets/the-harvesters.jpg",
+      "resolved": "mobile/assets/the-harvesters.jpg"
+    },
+    {
+      "specifier": "../assets/the-dancing-class.jpg",
+      "resolved": "mobile/assets/the-dancing-class.jpg"
+    },
+    {
+      "specifier": "../assets/wheat-field-with-cypresses.jpg",
+      "resolved": "mobile/assets/wheat-field-with-cypresses.jpg"
+    },
+    {
+      "specifier": "../assets/young-woman-with-a-water-pitcher.jpg",
+      "resolved": "mobile/assets/young-woman-with-a-water-pitcher.jpg"
+    },
+    {
+      "specifier": "../assets/the-card-players.jpg",
+      "resolved": "mobile/assets/the-card-players.jpg"
+    },
+    {
+      "specifier": "../assets/madame-charpentier-and-her-children.jpg",
+      "resolved": "mobile/assets/madame-charpentier-and-her-children.jpg"
+    },
+    {
+      "specifier": "../assets/self-portrait-with-a-straw-hat.jpg",
+      "resolved": "mobile/assets/self-portrait-with-a-straw-hat.jpg"
+    },
+    {
+      "specifier": "../assets/riverlight.png",
+      "resolved": "mobile/assets/riverlight.png"
+    },
+    {
+      "specifier": "../assets/soft-form.png",
+      "resolved": "mobile/assets/soft-form.png"
+    },
+    {
+      "specifier": "../assets/blue-hour.png",
+      "resolved": "mobile/assets/blue-hour.png"
+    },
+    {
+      "specifier": "../assets/quiet-geometry.png",
+      "resolved": "mobile/assets/quiet-geometry.png"
+    },
+    {
+      "specifier": "../assets/botanical-notes.png",
+      "resolved": "mobile/assets/botanical-notes.png"
+    },
+    {
+      "specifier": "../assets/afterimage.png",
+      "resolved": "mobile/assets/afterimage.png"
+    }
+  ],
+  "mobile/src/avatar.ts": [],
+  "mobile/src/avatarImage.ts": [],
+  "mobile/src/discovery.ts": [
+    {
+      "specifier": "./assets",
+      "resolved": "mobile/src/assets.ts"
+    },
+    {
+      "specifier": "./museum",
+      "resolved": "mobile/src/museum.ts"
+    },
+    {
+      "specifier": "../assets/guggenheim-exterior.jpg",
+      "resolved": "mobile/assets/guggenheim-exterior.jpg"
+    },
+    {
+      "specifier": "../assets/moma-exterior.jpg",
+      "resolved": "mobile/assets/moma-exterior.jpg"
+    },
+    {
+      "specifier": "../assets/qut-gallery.png",
+      "resolved": "mobile/assets/qut-gallery.png"
+    },
+    {
+      "specifier": "../assets/qag-exterior.jpg",
+      "resolved": "mobile/assets/qag-exterior.jpg"
+    },
+    {
+      "specifier": "../assets/kurilpa-exterior.jpg",
+      "resolved": "mobile/assets/kurilpa-exterior.jpg"
+    },
+    {
+      "specifier": "../assets/mob-exterior.jpg",
+      "resolved": "mobile/assets/mob-exterior.jpg"
+    }
+  ],
+  "mobile/src/location.tsx": [
+    {
+      "specifier": "./museum",
+      "resolved": "mobile/src/museum.ts"
+    }
+  ],
+  "mobile/src/model.ts": [
+    {
+      "specifier": "../../shared/collection.json",
+      "resolved": "shared/collection.json"
+    },
+    {
+      "specifier": "../../shared/domain.js",
+      "resolved": "shared/domain.js"
+    },
+    {
+      "specifier": "../../shared/ai-types",
+      "resolved": "shared/ai-types.ts"
+    },
+    {
+      "specifier": "./museum",
+      "resolved": "mobile/src/museum.ts"
+    }
+  ],
+  "mobile/src/museum.ts": [
+    {
+      "specifier": "../../shared/met-collection.json",
+      "resolved": "shared/met-collection.json"
+    },
+    {
+      "specifier": "../../shared/goma-collection.json",
+      "resolved": "shared/goma-collection.json"
+    },
+    {
+      "specifier": "../../shared/qut-collection.json",
+      "resolved": "shared/qut-collection.json"
+    },
+    {
+      "specifier": "../../shared/met-graph.json",
+      "resolved": "shared/met-graph.json"
+    },
+    {
+      "specifier": "../../shared/goma-graph.json",
+      "resolved": "shared/goma-graph.json"
+    },
+    {
+      "specifier": "../../shared/qut-graph.json",
+      "resolved": "shared/qut-graph.json"
+    },
+    {
+      "specifier": "../../shared/museums.json",
+      "resolved": "shared/museums.json"
+    },
+    {
+      "specifier": "../../shared/domain.js",
+      "resolved": "shared/domain.js"
+    }
+  ],
+  "mobile/src/nativeScanLoop.ts": [],
+  "mobile/src/planningStream.ts": [
+    {
+      "specifier": "../../shared/ai-types",
+      "resolved": "shared/ai-types.ts"
+    }
+  ],
+  "mobile/src/profileData.ts": [
+    {
+      "specifier": "../../shared/ai-types",
+      "resolved": "shared/ai-types.ts"
+    },
+    {
+      "specifier": "../../shared/domain.js",
+      "resolved": "shared/domain.js"
+    },
+    {
+      "specifier": "./model",
+      "resolved": "mobile/src/model.ts"
+    },
+    {
+      "specifier": "./museum",
+      "resolved": "mobile/src/museum.ts"
+    }
+  ],
+  "mobile/src/recognitionJobs.ts": [
+    {
+      "specifier": "../../shared/ai-types",
+      "resolved": "shared/ai-types.ts"
+    },
+    {
+      "specifier": "./apiConfig",
+      "resolved": "mobile/src/apiConfig.ts"
+    }
+  ],
+  "mobile/src/scanCapture.ts": [
+    {
+      "specifier": "../../shared/ai-types",
+      "resolved": "shared/ai-types.ts"
+    }
+  ],
+  "mobile/src/state.ts": [
+    {
+      "specifier": "./model",
+      "resolved": "mobile/src/model.ts"
+    },
+    {
+      "specifier": "../../shared/domain.js",
+      "resolved": "shared/domain.js"
+    },
+    {
+      "specifier": "./avatar",
+      "resolved": "mobile/src/avatar.ts"
+    },
+    {
+      "specifier": "./profileData",
+      "resolved": "mobile/src/profileData.ts"
+    }
+  ],
+  "mobile/src/store.tsx": [
+    {
+      "specifier": "./model",
+      "resolved": "mobile/src/model.ts"
+    },
+    {
+      "specifier": "./state",
+      "resolved": "mobile/src/state.ts"
+    }
+  ],
+  "mobile/src/ui.tsx": [
+    {
+      "specifier": "./store",
+      "resolved": "mobile/src/store.tsx"
+    },
+    {
+      "specifier": "./model",
+      "resolved": "mobile/src/model.ts"
+    },
+    {
+      "specifier": "../../shared/domain.js",
+      "resolved": "shared/domain.js"
+    },
+    {
+      "specifier": "./assets",
+      "resolved": "mobile/src/assets.ts"
+    }
+  ],
+  "mobile/src/webScanTransport.ts": [
+    {
+      "specifier": "../../shared/ai-types",
+      "resolved": "shared/ai-types.ts"
+    },
+    {
+      "specifier": "./recognitionJobs",
+      "resolved": "mobile/src/recognitionJobs.ts"
+    }
+  ],
+  "mobile/tests/location.test.ts": [
+    {
+      "specifier": "../src/museum",
+      "resolved": "mobile/src/museum.ts"
+    }
+  ],
+  "mobile/tests/nativeScanner.test.ts": [
+    {
+      "specifier": "../src/nativeScanLoop",
+      "resolved": "mobile/src/nativeScanLoop.ts"
+    },
+    {
+      "specifier": "../src/apiConfig",
+      "resolved": "mobile/src/apiConfig.ts"
+    },
+    {
+      "specifier": "../src/scanCapture",
+      "resolved": "mobile/src/scanCapture.ts"
+    }
+  ],
+  "mobile/tests/planningStream.test.ts": [
+    {
+      "specifier": "../src/planningStream",
+      "resolved": "mobile/src/planningStream.ts"
+    },
+    {
+      "specifier": "../../shared/ai-types",
+      "resolved": "shared/ai-types.ts"
+    }
+  ],
+  "mobile/tests/profileData.test.ts": [
+    {
+      "specifier": "../src/model.ts",
+      "resolved": "mobile/src/model.ts"
+    },
+    {
+      "specifier": "../src/state.ts",
+      "resolved": "mobile/src/state.ts"
+    },
+    {
+      "specifier": "../src/profileData.ts",
+      "resolved": "mobile/src/profileData.ts"
+    },
+    {
+      "specifier": "../src/museum.ts",
+      "resolved": "mobile/src/museum.ts"
+    },
+    {
+      "specifier": "../../shared/ai-types.ts",
+      "resolved": "shared/ai-types.ts"
+    }
+  ],
+  "mobile/tests/recognitionJobs.test.ts": [
+    {
+      "specifier": "../src/recognitionJobs",
+      "resolved": "mobile/src/recognitionJobs.ts"
+    },
+    {
+      "specifier": "../src/profileData",
+      "resolved": "mobile/src/profileData.ts"
+    },
+    {
+      "specifier": "../src/model",
+      "resolved": "mobile/src/model.ts"
+    }
+  ],
+  "mobile/tests/state.test.ts": [
+    {
+      "specifier": "../src/model.ts",
+      "resolved": "mobile/src/model.ts"
+    },
+    {
+      "specifier": "../src/state.ts",
+      "resolved": "mobile/src/state.ts"
+    },
+    {
+      "specifier": "../../shared/domain.js",
+      "resolved": "shared/domain.js"
+    },
+    {
+      "specifier": "../src/avatar.ts",
+      "resolved": "mobile/src/avatar.ts"
+    }
+  ],
+  "mobile/tests/webScanTransport.test.ts": [
+    {
+      "specifier": "../src/webScanTransport",
+      "resolved": "mobile/src/webScanTransport.ts"
+    },
+    {
+      "specifier": "../src/recognitionJobs",
+      "resolved": "mobile/src/recognitionJobs.ts"
+    }
+  ],
+  "mobile/src/components/AIProcessingAnimations.tsx": [
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    }
+  ],
+  "mobile/src/components/ArtworkAnalysisResult.tsx": [
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    },
+    {
+      "specifier": "../../../shared/ai-types",
+      "resolved": "shared/ai-types.ts"
+    }
+  ],
+  "mobile/src/components/ArtworkRail.tsx": [],
+  "mobile/src/components/ArtworkRail.web.tsx": [],
+  "mobile/src/components/AvatarEditor.tsx": [
+    {
+      "specifier": "../avatar",
+      "resolved": "mobile/src/avatar.ts"
+    },
+    {
+      "specifier": "../avatarImage",
+      "resolved": "mobile/src/avatarImage.ts"
+    },
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    },
+    {
+      "specifier": "./ProfileIllustrations",
+      "resolved": "mobile/src/components/ProfileIllustrations.tsx"
+    }
+  ],
+  "mobile/src/components/BrandLogo.tsx": [
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    },
+    {
+      "specifier": "../../assets/brand/unframe-logo.png",
+      "resolved": "mobile/assets/brand/unframe-logo.png"
+    },
+    {
+      "specifier": "../../assets/brand/unframe-mark.png",
+      "resolved": "mobile/assets/brand/unframe-mark.png"
+    }
+  ],
+  "mobile/src/components/CameraCapture.web.tsx": [],
+  "mobile/src/components/DiscoveryMap.tsx": [
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    },
+    {
+      "specifier": "../discovery",
+      "resolved": "mobile/src/discovery.ts"
+    },
+    {
+      "specifier": "../location",
+      "resolved": "mobile/src/location.tsx"
+    }
+  ],
+  "mobile/src/components/DiscoveryMap.web.tsx": [
+    {
+      "specifier": "./DiscoveryMap",
+      "resolved": "mobile/src/components/DiscoveryMap.tsx"
+    }
+  ],
+  "mobile/src/components/FloorPlan.tsx": [
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    },
+    {
+      "specifier": "../../../shared/met-graph.json",
+      "resolved": "shared/met-graph.json"
+    },
+    {
+      "specifier": "./GalleryFloorPlan",
+      "resolved": "mobile/src/components/GalleryFloorPlan.tsx"
+    },
+    {
+      "specifier": "../museum",
+      "resolved": "mobile/src/museum.ts"
+    }
+  ],
+  "mobile/src/components/GalleryFloorPlan.tsx": [
+    {
+      "specifier": "../museum",
+      "resolved": "mobile/src/museum.ts"
+    },
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    }
+  ],
+  "mobile/src/components/HelpSupportDialog.tsx": [
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    }
+  ],
+  "mobile/src/components/PlanningAnswer.tsx": [
+    {
+      "specifier": "../../../shared/ai-types",
+      "resolved": "shared/ai-types.ts"
+    },
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    }
+  ],
+  "mobile/src/components/PreviewBackdrop.tsx": [],
+  "mobile/src/components/PreviewBackdrop.web.tsx": [
+    {
+      "specifier": "./PreviewBackdrop",
+      "resolved": "mobile/src/components/PreviewBackdrop.tsx"
+    }
+  ],
+  "mobile/src/components/ProfileIllustrations.tsx": [],
+  "mobile/src/components/ProfilePage.tsx": [
+    {
+      "specifier": "../model",
+      "resolved": "mobile/src/model.ts"
+    },
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    },
+    {
+      "specifier": "../store",
+      "resolved": "mobile/src/store.tsx"
+    }
+  ],
+  "mobile/src/components/SwipeScene.tsx": [],
+  "mobile/src/components/SwipeScene.web.tsx": [
+    {
+      "specifier": "./SwipeScene",
+      "resolved": "mobile/src/components/SwipeScene.tsx"
+    }
+  ],
+  "mobile/src/screens/AIItinerary.tsx": [
+    {
+      "specifier": "../model",
+      "resolved": "mobile/src/model.ts"
+    },
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    },
+    {
+      "specifier": "../components/FloorPlan",
+      "resolved": "mobile/src/components/FloorPlan.tsx"
+    },
+    {
+      "specifier": "../museum",
+      "resolved": "mobile/src/museum.ts"
+    },
+    {
+      "specifier": "../store",
+      "resolved": "mobile/src/store.tsx"
+    },
+    {
+      "specifier": "../profileData",
+      "resolved": "mobile/src/profileData.ts"
+    }
+  ],
+  "mobile/src/screens/AIPlanner.tsx": [
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    },
+    {
+      "specifier": "../store",
+      "resolved": "mobile/src/store.tsx"
+    },
+    {
+      "specifier": "../location",
+      "resolved": "mobile/src/location.tsx"
+    },
+    {
+      "specifier": "../ai",
+      "resolved": "mobile/src/ai.ts"
+    },
+    {
+      "specifier": "../../../shared/ai-types",
+      "resolved": "shared/ai-types.ts"
+    },
+    {
+      "specifier": "../components/AIProcessingAnimations",
+      "resolved": "mobile/src/components/AIProcessingAnimations.tsx"
+    },
+    {
+      "specifier": "../components/PlanningAnswer",
+      "resolved": "mobile/src/components/PlanningAnswer.tsx"
+    },
+    {
+      "specifier": "../components/FloorPlan",
+      "resolved": "mobile/src/components/FloorPlan.tsx"
+    }
+  ],
+  "mobile/src/screens/AppSettings.tsx": [
+    {
+      "specifier": "../model",
+      "resolved": "mobile/src/model.ts"
+    },
+    {
+      "specifier": "../store",
+      "resolved": "mobile/src/store.tsx"
+    },
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    }
+  ],
+  "mobile/src/screens/Details.tsx": [
+    {
+      "specifier": "../model",
+      "resolved": "mobile/src/model.ts"
+    },
+    {
+      "specifier": "../museum",
+      "resolved": "mobile/src/museum.ts"
+    },
+    {
+      "specifier": "../assets",
+      "resolved": "mobile/src/assets.ts"
+    },
+    {
+      "specifier": "../components/HelpSupportDialog",
+      "resolved": "mobile/src/components/HelpSupportDialog.tsx"
+    },
+    {
+      "specifier": "../store",
+      "resolved": "mobile/src/store.tsx"
+    },
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    }
+  ],
+  "mobile/src/screens/Discover.tsx": [
+    {
+      "specifier": "../model",
+      "resolved": "mobile/src/model.ts"
+    },
+    {
+      "specifier": "../assets",
+      "resolved": "mobile/src/assets.ts"
+    },
+    {
+      "specifier": "../components/BrandLogo",
+      "resolved": "mobile/src/components/BrandLogo.tsx"
+    },
+    {
+      "specifier": "../store",
+      "resolved": "mobile/src/store.tsx"
+    },
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    }
+  ],
+  "mobile/src/screens/Explore.tsx": [
+    {
+      "specifier": "../model",
+      "resolved": "mobile/src/model.ts"
+    },
+    {
+      "specifier": "../assets",
+      "resolved": "mobile/src/assets.ts"
+    },
+    {
+      "specifier": "../store",
+      "resolved": "mobile/src/store.tsx"
+    },
+    {
+      "specifier": "../state",
+      "resolved": "mobile/src/state.ts"
+    },
+    {
+      "specifier": "../profileData",
+      "resolved": "mobile/src/profileData.ts"
+    },
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    }
+  ],
+  "mobile/src/screens/Guide.tsx": [
+    {
+      "specifier": "../model",
+      "resolved": "mobile/src/model.ts"
+    },
+    {
+      "specifier": "../../../shared/domain.js",
+      "resolved": "shared/domain.js"
+    },
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    }
+  ],
+  "mobile/src/screens/Lookup.tsx": [
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    },
+    {
+      "specifier": "../location",
+      "resolved": "mobile/src/location.tsx"
+    },
+    {
+      "specifier": "../assets",
+      "resolved": "mobile/src/assets.ts"
+    },
+    {
+      "specifier": "../store",
+      "resolved": "mobile/src/store.tsx"
+    },
+    {
+      "specifier": "../ai",
+      "resolved": "mobile/src/ai.ts"
+    },
+    {
+      "specifier": "../nativeScanLoop",
+      "resolved": "mobile/src/nativeScanLoop.ts"
+    },
+    {
+      "specifier": "../scanCapture",
+      "resolved": "mobile/src/scanCapture.ts"
+    },
+    {
+      "specifier": "../components/ArtworkAnalysisResult",
+      "resolved": "mobile/src/components/ArtworkAnalysisResult.tsx"
+    },
+    {
+      "specifier": "../components/AIProcessingAnimations",
+      "resolved": "mobile/src/components/AIProcessingAnimations.tsx"
+    },
+    {
+      "specifier": "../../../shared/ai-types",
+      "resolved": "shared/ai-types.ts"
+    }
+  ],
+  "mobile/src/screens/Lookup.web.tsx": [
+    {
+      "specifier": "../components/CameraCapture.web",
+      "resolved": "mobile/src/components/CameraCapture.web.tsx"
+    },
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    },
+    {
+      "specifier": "../location",
+      "resolved": "mobile/src/location.tsx"
+    },
+    {
+      "specifier": "../assets",
+      "resolved": "mobile/src/assets.ts"
+    },
+    {
+      "specifier": "../store",
+      "resolved": "mobile/src/store.tsx"
+    },
+    {
+      "specifier": "../ai",
+      "resolved": "mobile/src/ai.ts"
+    },
+    {
+      "specifier": "../apiConfig",
+      "resolved": "mobile/src/apiConfig.ts"
+    },
+    {
+      "specifier": "../webScanTransport",
+      "resolved": "mobile/src/webScanTransport.ts"
+    },
+    {
+      "specifier": "../recognitionJobs",
+      "resolved": "mobile/src/recognitionJobs.ts"
+    },
+    {
+      "specifier": "../components/ArtworkAnalysisResult",
+      "resolved": "mobile/src/components/ArtworkAnalysisResult.tsx"
+    },
+    {
+      "specifier": "../components/AIProcessingAnimations",
+      "resolved": "mobile/src/components/AIProcessingAnimations.tsx"
+    },
+    {
+      "specifier": "../scanCapture",
+      "resolved": "mobile/src/scanCapture.ts"
+    },
+    {
+      "specifier": "../../../shared/ai-types",
+      "resolved": "shared/ai-types.ts"
+    }
+  ],
+  "mobile/src/screens/Modals.tsx": [
+    {
+      "specifier": "../model",
+      "resolved": "mobile/src/model.ts"
+    },
+    {
+      "specifier": "../store",
+      "resolved": "mobile/src/store.tsx"
+    },
+    {
+      "specifier": "../../../shared/domain.js",
+      "resolved": "shared/domain.js"
+    },
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    },
+    {
+      "specifier": "../components/BrandLogo",
+      "resolved": "mobile/src/components/BrandLogo.tsx"
+    }
+  ],
+  "mobile/src/screens/Museum.tsx": [
+    {
+      "specifier": "../components/FloorPlan",
+      "resolved": "mobile/src/components/FloorPlan.tsx"
+    },
+    {
+      "specifier": "../assets",
+      "resolved": "mobile/src/assets.ts"
+    },
+    {
+      "specifier": "../location",
+      "resolved": "mobile/src/location.tsx"
+    },
+    {
+      "specifier": "../store",
+      "resolved": "mobile/src/store.tsx"
+    },
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    },
+    {
+      "specifier": "../components/ArtworkRail",
+      "resolved": "mobile/src/components/ArtworkRail.tsx"
+    }
+  ],
+  "mobile/src/screens/MuseumSelect.tsx": [
+    {
+      "specifier": "../model",
+      "resolved": "mobile/src/model.ts"
+    },
+    {
+      "specifier": "../museum",
+      "resolved": "mobile/src/museum.ts"
+    },
+    {
+      "specifier": "../discovery",
+      "resolved": "mobile/src/discovery.ts"
+    },
+    {
+      "specifier": "../location",
+      "resolved": "mobile/src/location.tsx"
+    },
+    {
+      "specifier": "../store",
+      "resolved": "mobile/src/store.tsx"
+    },
+    {
+      "specifier": "../components/DiscoveryMap",
+      "resolved": "mobile/src/components/DiscoveryMap.tsx"
+    },
+    {
+      "specifier": "../components/SwipeScene",
+      "resolved": "mobile/src/components/SwipeScene.tsx"
+    },
+    {
+      "specifier": "../components/PreviewBackdrop",
+      "resolved": "mobile/src/components/PreviewBackdrop.tsx"
+    },
+    {
+      "specifier": "../components/BrandLogo",
+      "resolved": "mobile/src/components/BrandLogo.tsx"
+    },
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    }
+  ],
+  "mobile/src/screens/NearbyArtworks.tsx": [
+    {
+      "specifier": "../assets",
+      "resolved": "mobile/src/assets.ts"
+    },
+    {
+      "specifier": "../location",
+      "resolved": "mobile/src/location.tsx"
+    },
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    }
+  ],
+  "mobile/src/screens/Preferences.tsx": [
+    {
+      "specifier": "./Profile",
+      "resolved": "mobile/src/screens/Profile.tsx"
+    }
+  ],
+  "mobile/src/screens/Profile.tsx": [
+    {
+      "specifier": "../assets",
+      "resolved": "mobile/src/assets.ts"
+    },
+    {
+      "specifier": "../components/ProfileIllustrations",
+      "resolved": "mobile/src/components/ProfileIllustrations.tsx"
+    },
+    {
+      "specifier": "../components/AvatarEditor",
+      "resolved": "mobile/src/components/AvatarEditor.tsx"
+    },
+    {
+      "specifier": "../components/BrandLogo",
+      "resolved": "mobile/src/components/BrandLogo.tsx"
+    },
+    {
+      "specifier": "../components/HelpSupportDialog",
+      "resolved": "mobile/src/components/HelpSupportDialog.tsx"
+    },
+    {
+      "specifier": "../components/ProfilePage",
+      "resolved": "mobile/src/components/ProfilePage.tsx"
+    },
+    {
+      "specifier": "../profileData",
+      "resolved": "mobile/src/profileData.ts"
+    },
+    {
+      "specifier": "../location",
+      "resolved": "mobile/src/location.tsx"
+    },
+    {
+      "specifier": "../model",
+      "resolved": "mobile/src/model.ts"
+    },
+    {
+      "specifier": "../museum",
+      "resolved": "mobile/src/museum.ts"
+    },
+    {
+      "specifier": "../store",
+      "resolved": "mobile/src/store.tsx"
+    },
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    }
+  ],
+  "mobile/src/screens/RecentActivity.tsx": [
+    {
+      "specifier": "../model",
+      "resolved": "mobile/src/model.ts"
+    },
+    {
+      "specifier": "../assets",
+      "resolved": "mobile/src/assets.ts"
+    },
+    {
+      "specifier": "../profileData",
+      "resolved": "mobile/src/profileData.ts"
+    },
+    {
+      "specifier": "../store",
+      "resolved": "mobile/src/store.tsx"
+    },
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    },
+    {
+      "specifier": "../components/ProfileIllustrations",
+      "resolved": "mobile/src/components/ProfileIllustrations.tsx"
+    },
+    {
+      "specifier": "../components/ProfilePage",
+      "resolved": "mobile/src/components/ProfilePage.tsx"
+    }
+  ],
+  "mobile/src/screens/SavedArtworks.tsx": [
+    {
+      "specifier": "../model",
+      "resolved": "mobile/src/model.ts"
+    },
+    {
+      "specifier": "../assets",
+      "resolved": "mobile/src/assets.ts"
+    },
+    {
+      "specifier": "../museum",
+      "resolved": "mobile/src/museum.ts"
+    },
+    {
+      "specifier": "../store",
+      "resolved": "mobile/src/store.tsx"
+    },
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    },
+    {
+      "specifier": "../components/ProfilePage",
+      "resolved": "mobile/src/components/ProfilePage.tsx"
+    }
+  ],
+  "mobile/src/screens/SavedRoutes.tsx": [
+    {
+      "specifier": "../model",
+      "resolved": "mobile/src/model.ts"
+    },
+    {
+      "specifier": "../assets",
+      "resolved": "mobile/src/assets.ts"
+    },
+    {
+      "specifier": "../location",
+      "resolved": "mobile/src/location.tsx"
+    },
+    {
+      "specifier": "../profileData",
+      "resolved": "mobile/src/profileData.ts"
+    },
+    {
+      "specifier": "../store",
+      "resolved": "mobile/src/store.tsx"
+    },
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    },
+    {
+      "specifier": "../components/ProfilePage",
+      "resolved": "mobile/src/components/ProfilePage.tsx"
+    }
+  ],
+  "mobile/src/screens/Welcome.tsx": [
+    {
+      "specifier": "../model",
+      "resolved": "mobile/src/model.ts"
+    },
+    {
+      "specifier": "../location",
+      "resolved": "mobile/src/location.tsx"
+    },
+    {
+      "specifier": "../assets",
+      "resolved": "mobile/src/assets.ts"
+    },
+    {
+      "specifier": "../components/BrandLogo",
+      "resolved": "mobile/src/components/BrandLogo.tsx"
+    },
+    {
+      "specifier": "../ui",
+      "resolved": "mobile/src/ui.tsx"
+    }
+  ],
+  "server/ai/artwork-analysis.js": [
+    {
+      "specifier": "./vision.js",
+      "resolved": "server/ai/vision.js"
+    },
+    {
+      "specifier": "./public-catalogues.js",
+      "resolved": "server/ai/public-catalogues.js"
+    },
+    {
+      "specifier": "./embeddings.js",
+      "resolved": "server/ai/embeddings.js"
+    },
+    {
+      "specifier": "./images.js",
+      "resolved": "server/ai/images.js"
+    },
+    {
+      "specifier": "./config.js",
+      "resolved": "server/ai/config.js"
+    }
+  ],
+  "server/ai/artwork-detection.js": [
+    {
+      "specifier": "./artwork-detector.json",
+      "resolved": "server/ai/artwork-detector.json"
+    },
+    {
+      "specifier": "./embeddings.js",
+      "resolved": "server/ai/embeddings.js"
+    }
+  ],
+  "server/ai/bedrock.js": [
+    {
+      "specifier": "./config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "./vision.js",
+      "resolved": "server/ai/vision.js"
+    },
+    {
+      "specifier": "./job-context.js",
+      "resolved": "server/ai/job-context.js"
+    },
+    {
+      "specifier": "./diagnostics.js",
+      "resolved": "server/ai/diagnostics.js"
+    },
+    {
+      "specifier": "./schema-diagnostics.js",
+      "resolved": "server/ai/schema-diagnostics.js"
+    }
+  ],
+  "server/ai/catalogues.js": [
+    {
+      "specifier": "../../shared/museums.json",
+      "resolved": "shared/museums.json"
+    },
+    {
+      "specifier": "../../shared/met-collection.json",
+      "resolved": "shared/met-collection.json"
+    },
+    {
+      "specifier": "../../shared/goma-collection.json",
+      "resolved": "shared/goma-collection.json"
+    },
+    {
+      "specifier": "../../shared/qut-collection.json",
+      "resolved": "shared/qut-collection.json"
+    },
+    {
+      "specifier": "../../shared/met-graph.json",
+      "resolved": "shared/met-graph.json"
+    },
+    {
+      "specifier": "../../shared/goma-graph.json",
+      "resolved": "shared/goma-graph.json"
+    },
+    {
+      "specifier": "../../shared/qut-graph.json",
+      "resolved": "shared/qut-graph.json"
+    }
+  ],
+  "server/ai/chat.js": [
+    {
+      "specifier": "./config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "./routes.js",
+      "resolved": "server/ai/routes.js"
+    },
+    {
+      "specifier": "./ollama.js",
+      "resolved": "server/ai/ollama.js"
+    },
+    {
+      "specifier": "./planning-constraints.js",
+      "resolved": "server/ai/planning-constraints.js"
+    }
+  ],
+  "server/ai/config.js": [],
+  "server/ai/diagnostics.js": [
+    {
+      "specifier": "./config.js",
+      "resolved": "server/ai/config.js"
+    }
+  ],
+  "server/ai/embeddings.js": [
+    {
+      "specifier": "./config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "./local-http.js",
+      "resolved": "server/ai/local-http.js"
+    },
+    {
+      "specifier": "./catalogues.js",
+      "resolved": "server/ai/catalogues.js"
+    },
+    {
+      "specifier": "./s3-vectors.js",
+      "resolved": "server/ai/s3-vectors.js"
+    }
+  ],
+  "server/ai/graph.js": [],
+  "server/ai/handler.js": [
+    {
+      "specifier": "./catalogues.js",
+      "resolved": "server/ai/catalogues.js"
+    },
+    {
+      "specifier": "./config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "./local-http.js",
+      "resolved": "server/ai/local-http.js"
+    },
+    {
+      "specifier": "./embeddings.js",
+      "resolved": "server/ai/embeddings.js"
+    },
+    {
+      "specifier": "./providers.js",
+      "resolved": "server/ai/providers.js"
+    },
+    {
+      "specifier": "./recognition.js",
+      "resolved": "server/ai/recognition.js"
+    },
+    {
+      "specifier": "./routes.js",
+      "resolved": "server/ai/routes.js"
+    },
+    {
+      "specifier": "./chat.js",
+      "resolved": "server/ai/chat.js"
+    },
+    {
+      "specifier": "./images.js",
+      "resolved": "server/ai/images.js"
+    },
+    {
+      "specifier": "./status.js",
+      "resolved": "server/ai/status.js"
+    },
+    {
+      "specifier": "./artwork-analysis.js",
+      "resolved": "server/ai/artwork-analysis.js"
+    },
+    {
+      "specifier": "./planning-status.js",
+      "resolved": "server/ai/planning-status.js"
+    }
+  ],
+  "server/ai/images.js": [
+    {
+      "specifier": "./config.js",
+      "resolved": "server/ai/config.js"
+    }
+  ],
+  "server/ai/job-context.js": [],
+  "server/ai/local-http.js": [
+    {
+      "specifier": "./config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "./loopback-fetch.js",
+      "resolved": "server/ai/loopback-fetch.js"
+    }
+  ],
+  "server/ai/loopback-fetch.js": [],
+  "server/ai/ollama.js": [
+    {
+      "specifier": "./config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "./local-http.js",
+      "resolved": "server/ai/local-http.js"
+    },
+    {
+      "specifier": "./planning-constraints.js",
+      "resolved": "server/ai/planning-constraints.js"
+    }
+  ],
+  "server/ai/planning-constraints.js": [],
+  "server/ai/planning-status.js": [
+    {
+      "specifier": "./config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "./local-http.js",
+      "resolved": "server/ai/local-http.js"
+    }
+  ],
+  "server/ai/providers.js": [
+    {
+      "specifier": "./ollama.js",
+      "resolved": "server/ai/ollama.js"
+    },
+    {
+      "specifier": "./vision.js",
+      "resolved": "server/ai/vision.js"
+    },
+    {
+      "specifier": "./bedrock.js",
+      "resolved": "server/ai/bedrock.js"
+    }
+  ],
+  "server/ai/public-catalogues.js": [
+    {
+      "specifier": "./config.js",
+      "resolved": "server/ai/config.js"
+    }
+  ],
+  "server/ai/recognition.js": [
+    {
+      "specifier": "./config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "./embeddings.js",
+      "resolved": "server/ai/embeddings.js"
+    },
+    {
+      "specifier": "./artwork-detection.js",
+      "resolved": "server/ai/artwork-detection.js"
+    }
+  ],
+  "server/ai/routes.js": [
+    {
+      "specifier": "./config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "./graph.js",
+      "resolved": "server/ai/graph.js"
+    },
+    {
+      "specifier": "../../shared/domain.js",
+      "resolved": "shared/domain.js"
+    }
+  ],
+  "server/ai/s3-vectors.js": [
+    {
+      "specifier": "./config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "./embeddings.js",
+      "resolved": "server/ai/embeddings.js"
+    }
+  ],
+  "server/ai/schema-diagnostics.js": [],
+  "server/ai/status.js": [
+    {
+      "specifier": "./local-http.js",
+      "resolved": "server/ai/local-http.js"
+    },
+    {
+      "specifier": "./embeddings.js",
+      "resolved": "server/ai/embeddings.js"
+    },
+    {
+      "specifier": "./vision.js",
+      "resolved": "server/ai/vision.js"
+    },
+    {
+      "specifier": "./planning-status.js",
+      "resolved": "server/ai/planning-status.js"
+    },
+    {
+      "specifier": "./artwork-detection.js",
+      "resolved": "server/ai/artwork-detection.js"
+    }
+  ],
+  "server/ai/vision.js": [
+    {
+      "specifier": "./config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "./local-http.js",
+      "resolved": "server/ai/local-http.js"
+    }
+  ],
+  "server/cloud/config.js": [],
+  "server/cloud/handlers.js": [
+    {
+      "specifier": "./config.js",
+      "resolved": "server/cloud/config.js"
+    },
+    {
+      "specifier": "./job-repository.js",
+      "resolved": "server/cloud/job-repository.js"
+    },
+    {
+      "specifier": "./uploads.js",
+      "resolved": "server/cloud/uploads.js"
+    },
+    {
+      "specifier": "./jobs.js",
+      "resolved": "server/cloud/jobs.js"
+    },
+    {
+      "specifier": "../ai/config.js",
+      "resolved": "server/ai/config.js"
+    }
+  ],
+  "server/cloud/job-repository.js": [],
+  "server/cloud/jobs.js": [
+    {
+      "specifier": "../ai/catalogues.js",
+      "resolved": "server/ai/catalogues.js"
+    },
+    {
+      "specifier": "../ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../ai/images.js",
+      "resolved": "server/ai/images.js"
+    }
+  ],
+  "server/cloud/planning.js": [
+    {
+      "specifier": "../ai/config.js",
+      "resolved": "server/ai/config.js"
+    },
+    {
+      "specifier": "../ai/catalogues.js",
+      "resolved": "server/ai/catalogues.js"
+    },
+    {
+      "specifier": "../ai/providers.js",
+      "resolved": "server/ai/providers.js"
+    },
+    {
+      "specifier": "../ai/chat.js",
+      "resolved": "server/ai/chat.js"
+    },
+    {
+      "specifier": "../ai/routes.js",
+      "resolved": "server/ai/routes.js"
+    },
+    {
+      "specifier": "../ai/recognition.js",
+      "resolved": "server/ai/recognition.js"
+    }
+  ],
+  "server/cloud/uploads.js": [
+    {
+      "specifier": "../ai/images.js",
+      "resolved": "server/ai/images.js"
+    }
+  ]
+}

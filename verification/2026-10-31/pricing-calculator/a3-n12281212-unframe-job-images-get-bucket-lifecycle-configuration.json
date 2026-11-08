@@ -1,0 +1,18 @@
+{
+  "retrievedAt": "2026-10-31T08:48:24.239Z",
+  "value": {
+    "TransitionDefaultMinimumObjectSize": "all_storage_classes_128K",
+    "Rules": [
+      {
+        "Expiration": {
+          "Days": 1
+        },
+        "ID": "expire-unframe-job-images",
+        "Filter": {
+          "Prefix": "uploads/"
+        },
+        "Status": "Enabled"
+      }
+    ]
+  }
+}

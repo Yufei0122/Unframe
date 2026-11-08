@@ -1,0 +1,11 @@
+{
+  "retrievedAt": "2026-10-31T08:50:21.376Z",
+  "value": [
+    {
+      "name": "/ecs/a3-n12281212-unframe-worker",
+      "bytes": 6684,
+      "retentionDays": "never-expire",
+      "logGroupClass": "STANDARD"
+    }
+  ]
+}

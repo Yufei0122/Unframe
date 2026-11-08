@@ -1,0 +1,4 @@
+{
+  "retrievedAt": "2026-10-31T08:50:19.107Z",
+  "error": "aws: [ERROR]: An error occurred (NoSuchLifecycleConfiguration) when calling the GetBucketLifecycleConfiguration operation: The lifecycle configuration does not exist"
+}

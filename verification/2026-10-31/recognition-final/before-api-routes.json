@@ -1,0 +1,134 @@
+[
+  {
+    "route": "DELETE /v1/posts/{id}/like",
+    "target": "integrations/jjygmjd"
+  },
+  {
+    "route": "POST /v1/moments",
+    "target": "integrations/fmkgk51"
+  },
+  {
+    "route": "POST /v1/posts/{postId}/comments",
+    "target": "integrations/498os2n"
+  },
+  {
+    "route": "GET /v1/posts/{postId}/comments",
+    "target": "integrations/498os2n"
+  },
+  {
+    "route": "DELETE /v1/moments/{id}",
+    "target": "integrations/fmkgk51"
+  },
+  {
+    "route": "GET /v1/users/{userId}/following",
+    "target": "integrations/ctjkf16"
+  },
+  {
+    "route": "GET /v1/posts/{id}",
+    "target": "integrations/u9aek42"
+  },
+  {
+    "route": "PUT /v1/uploads/{userId}/{postId}/{fileId}",
+    "target": "integrations/u9aek42"
+  },
+  {
+    "route": "POST /v1/uploads/url",
+    "target": "integrations/u9aek42"
+  },
+  {
+    "route": "GET /v1/users/{userId}/followers",
+    "target": "integrations/ctjkf16"
+  },
+  {
+    "route": "POST /v1/users/{userId}/follow",
+    "target": "integrations/ctjkf16"
+  },
+  {
+    "route": "POST /v1/posts/{id}/hide",
+    "target": "integrations/u9aek42"
+  },
+  {
+    "route": "GET /v1/posts/user/{userId}",
+    "target": "integrations/u9aek42"
+  },
+  {
+    "route": "POST /a3/jobs",
+    "target": "integrations/fffmtna"
+  },
+  {
+    "route": "POST /v1/auth/register",
+    "target": "integrations/6k5fryj"
+  },
+  {
+    "route": "POST /v1/moments/{id}/hide",
+    "target": "integrations/fmkgk51"
+  },
+  {
+    "route": "DELETE /v1/posts/{id}",
+    "target": "integrations/u9aek42"
+  },
+  {
+    "route": "DELETE /v1/posts/{postId}/comments/{commentId}",
+    "target": "integrations/498os2n"
+  },
+  {
+    "route": "GET /v1/moments/archive",
+    "target": "integrations/fmkgk51"
+  },
+  {
+    "route": "OPTIONS /a3/jobs/{jobId}",
+    "target": "integrations/fffmtna"
+  },
+  {
+    "route": "POST /v1/posts",
+    "target": "integrations/u9aek42"
+  },
+  {
+    "route": "DELETE /v1/users/{userId}/follow",
+    "target": "integrations/ctjkf16"
+  },
+  {
+    "route": "POST /v1/posts/{id}/like",
+    "target": "integrations/jjygmjd"
+  },
+  {
+    "route": "GET /health",
+    "target": null
+  },
+  {
+    "route": "GET /v1/users",
+    "target": "integrations/6k5fryj"
+  },
+  {
+    "route": "POST /v1/auth/login",
+    "target": "integrations/6k5fryj"
+  },
+  {
+    "route": "DELETE /v1/users/{id}",
+    "target": "integrations/6k5fryj"
+  },
+  {
+    "route": "PUT /v1/posts/{id}",
+    "target": "integrations/u9aek42"
+  },
+  {
+    "route": "OPTIONS /a3/jobs",
+    "target": "integrations/fffmtna"
+  },
+  {
+    "route": "GET /a3/jobs/{jobId}",
+    "target": "integrations/fffmtna"
+  },
+  {
+    "route": "GET /v1/feed",
+    "target": "integrations/u9aek42"
+  },
+  {
+    "route": "GET /v1/moments/feed",
+    "target": "integrations/fmkgk51"
+  },
+  {
+    "route": "GET /v1/users/{id}",
+    "target": "integrations/6k5fryj"
+  }
+]

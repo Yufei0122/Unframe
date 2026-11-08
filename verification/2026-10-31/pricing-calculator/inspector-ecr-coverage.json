@@ -1,0 +1,3 @@
+{
+  "error": "aws: [ERROR]: An error occurred (AccessDeniedException) when calling the ListCoverage operation: User: arn:aws:sts::901444280953:assumed-role/AWSReservedSSO_CAB432-STUDENT_f2baa6a2ba3c79c9/[session-redacted] is not authorized to perform: inspector2:ListCoverage on resource: arn:aws:inspector2:ap-southeast-2:901444280953:/coverage/list because no identity-based policy allows the inspector2:ListCoverage action"
+}

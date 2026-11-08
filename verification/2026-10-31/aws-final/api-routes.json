@@ -1,0 +1,30 @@
+[
+    {
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "RouteId": "9cbjsw8",
+        "RouteKey": "POST /a3/jobs",
+        "Target": "integrations/fffmtna"
+    },
+    {
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "RouteId": "gbit508",
+        "RouteKey": "OPTIONS /a3/jobs/{jobId}",
+        "Target": "integrations/fffmtna"
+    },
+    {
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "RouteId": "qxr7d01",
+        "RouteKey": "OPTIONS /a3/jobs",
+        "Target": "integrations/fffmtna"
+    },
+    {
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "RouteId": "sy22vkm",
+        "RouteKey": "GET /a3/jobs/{jobId}",
+        "Target": "integrations/fffmtna"
+    }
+]

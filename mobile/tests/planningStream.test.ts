@@ -8,6 +8,15 @@ const answer = { type: 'answer', reply: '为你安排轻松的参观。', prefer
 const route = { type: 'route', itinerary: { route: [{ artworkId: 'water-lilies' }], navigation: [] } };
 const encoder = new TextEncoder();
 
+test('buffered Lambda NDJSON is compatible with the existing planner answer/route callbacks', async () => {
+  const responses: unknown[] = [];
+  const body = new Response([answer, route].map(event => JSON.stringify(event)).join('\n') + '\n', {
+    headers: { 'Content-Type': 'application/x-ndjson; charset=utf-8' },
+  }).body!;
+  assert.deepEqual(await readPlanningVisit(body, new AbortController().signal, response => responses.push(response)), route.itinerary);
+  assert.deepEqual(responses, [{ reply: answer.reply, preferences }]);
+});
+
 test('answer arrives before the held route, including UTF-8 characters split across chunks', async () => {
   let writer!: ReadableStreamDefaultController<Uint8Array>, received: unknown, finished = false;
   const body = new ReadableStream<Uint8Array>({ start(controller) { writer = controller; } });

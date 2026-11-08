@@ -1,0 +1,4 @@
+{
+  "errorCode": "AccessDeniedException",
+  "message": "aws: [ERROR]: An error occurred (AccessDeniedException) when calling the GetServiceQuota operation: User: arn:aws:sts::901444280953:assumed-role/AWSReservedSSO_CAB432-STUDENT_f2baa6a2ba3c79c9/n12281212@qut.edu.au is not authorized to perform: servicequotas:GetServiceQuota on resource: arn:aws:servicequotas:ap-southeast-2:901444280953:fargate/L-3032A538 because no identity-based policy allows the servicequotas:GetServiceQuota action"
+}

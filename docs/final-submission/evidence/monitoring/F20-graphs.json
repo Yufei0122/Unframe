@@ -1,0 +1,52 @@
+[
+  {
+    "widget": 0,
+    "status": "PASS",
+    "metrics": [
+      "ApproximateNumberOfMessagesVisible"
+    ]
+  },
+  {
+    "widget": 1,
+    "status": "PASS",
+    "metrics": [
+      "ApproximateAgeOfOldestMessage"
+    ]
+  },
+  {
+    "widget": 2,
+    "status": "PASS",
+    "metrics": [
+      "RunningTaskCount"
+    ]
+  },
+  {
+    "widget": 3,
+    "status": "PASS",
+    "metrics": [
+      "CPUUtilization",
+      "MemoryUtilization"
+    ]
+  },
+  {
+    "widget": 4,
+    "status": "PASS",
+    "metrics": [
+      "Errors"
+    ]
+  },
+  {
+    "widget": 5,
+    "status": "PASS",
+    "metrics": [
+      "Invocations"
+    ]
+  },
+  {
+    "widget": 6,
+    "status": "PASS",
+    "metrics": [
+      "ApproximateNumberOfMessagesVisible"
+    ]
+  }
+]

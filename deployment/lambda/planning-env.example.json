@@ -1,0 +1,12 @@
+{
+  "Variables": {
+    "AI_PROVIDER": "bedrock",
+    "BEDROCK_MODEL_ID": "google.gemma-3-12b-it",
+    "BEDROCK_PLANNING_MODEL_ID": "google.gemma-3-12b-it",
+    "BEDROCK_TIMEOUT_MS": "24000",
+    "PLANNING_API_TIMEOUT_MS": "25000",
+    "AI_ALLOWED_ORIGINS": "https://<FRONTEND_DOMAIN>",
+    "OLLAMA_PLANNING_NUM_PREDICT": "1024",
+    "OLLAMA_NUM_PREDICT": "256"
+  }
+}

@@ -1,0 +1,285 @@
+{
+  "source": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AWSLambda/current/ap-southeast-2/index.json",
+  "retrievedAt": "2026-10-31T08:59:37.920Z",
+  "publicationDate": "2026-10-30T23:42:55Z",
+  "rates": [
+    {
+      "sku": "BMJVH9ETJRT2P5NN",
+      "attributes": {
+        "servicecode": "AWSLambda",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-Lambda-Managed-Instances-Request-ARM",
+        "operation": "",
+        "lambdaManagedInstances-RequestType": "Request-ARM",
+        "regionCode": "ap-southeast-2",
+        "servicename": "AWS Lambda"
+      },
+      "description": "$0.0000002 per Request for Lambda-Managed-Instances-Request-ARM in Asia Pacific (Sydney)",
+      "unit": "Requests",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 2e-7,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "ZQVCC2M69R4S79XS",
+      "attributes": {
+        "servicecode": "AWSLambda",
+        "location": "Any",
+        "locationType": "AWS Region",
+        "group": "AWS-Lambda-Requests",
+        "groupDescription": "Invocation call for a Lambda function",
+        "usagetype": "Global-Request",
+        "operation": "",
+        "regionCode": "",
+        "servicename": "AWS Lambda"
+      },
+      "description": "AWS Lambda - Requests Free Tier - 1,000,000 Requests",
+      "unit": "Request",
+      "begin": "0",
+      "end": "1000000",
+      "usd": 0,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "ZW6UHD4Q6EPUCZWU",
+      "attributes": {
+        "servicecode": "AWSLambda",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "group": "AWS-Lambda-Requests",
+        "groupDescription": "Invocation call for a Lambda function",
+        "usagetype": "APS2-Request",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "servicename": "AWS Lambda"
+      },
+      "description": "AWS Lambda - Total Requests - Asia Pacific (Sydney)",
+      "unit": "Request",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 2e-7,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "JZS9GKKJS5G7QYU9",
+      "attributes": {
+        "servicecode": "AWSLambda",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "group": "AWS-Lambda-Edge-Requests",
+        "groupDescription": "Invocation call for a Lambda function",
+        "usagetype": "APS2-Lambda-Edge-Request",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "servicename": "AWS Lambda"
+      },
+      "description": "AWS Lambda Edge - Total Requests - Asia Pacific (Sydney)",
+      "unit": "Request",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 6e-7,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "92KS5FMQEEJ39ACN",
+      "attributes": {
+        "servicecode": "AWSLambda",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "group": "AWS-Lambda-Requests-ARM",
+        "groupDescription": "Invocation call for a Lambda function for ARM",
+        "usagetype": "APS2-Request-ARM",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "servicename": "AWS Lambda"
+      },
+      "description": "AWS Lambda - Total Requests for ARM - Asia Pacific (Sydney)",
+      "unit": "Requests",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 2e-7,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "4VCGJ7EG8PJVZG7S",
+      "attributes": {
+        "servicecode": "AWSLambda",
+        "location": "Any",
+        "locationType": "AWS Region",
+        "group": "AWS-Lambda-Duration",
+        "groupDescription": "Invocation duration weighted by memory assigned to function, measured in GB-s",
+        "usagetype": "Global-Lambda-GB-Second",
+        "operation": "",
+        "regionCode": "",
+        "servicename": "AWS Lambda"
+      },
+      "description": "AWS Lambda - Compute Free Tier - 400,000 GB-Seconds",
+      "unit": "Lambda-GB-Second",
+      "begin": "0",
+      "end": "400000",
+      "usd": 0,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "BQ42Y9WMNJD4JHQR",
+      "attributes": {
+        "servicecode": "AWSLambda",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-Lambda-Managed-Instances-Request",
+        "operation": "",
+        "lambdaManagedInstances-RequestType": "Request",
+        "regionCode": "ap-southeast-2",
+        "servicename": "AWS Lambda"
+      },
+      "description": "$0.0000002 per Request for Lambda-Managed-Instances-Request in Asia Pacific (Sydney)",
+      "unit": "Requests",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 2e-7,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "KDEJ26SV7QK2N7DW",
+      "attributes": {
+        "servicecode": "AWSLambda",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "group": "AWS-Lambda-Duration-ARM",
+        "groupDescription": "Invocation duration weighted by memory assigned to function, measured in GB-s for ARM",
+        "usagetype": "APS2-Lambda-GB-Second-ARM",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "servicename": "AWS Lambda"
+      },
+      "description": "AWS Lambda - Total Compute for ARM - Asia Pacific (Sydney)-Tier-1",
+      "unit": "Lambda-GB-Second",
+      "begin": "0",
+      "end": "7500000000",
+      "usd": 0.0000133334,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "KDEJ26SV7QK2N7DW",
+      "attributes": {
+        "servicecode": "AWSLambda",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "group": "AWS-Lambda-Duration-ARM",
+        "groupDescription": "Invocation duration weighted by memory assigned to function, measured in GB-s for ARM",
+        "usagetype": "APS2-Lambda-GB-Second-ARM",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "servicename": "AWS Lambda"
+      },
+      "description": "AWS Lambda - Total Compute for ARM - Asia Pacific (Sydney)-Tier-2",
+      "unit": "Lambda-GB-Second",
+      "begin": "7500000000",
+      "end": "18750000000",
+      "usd": 0.0000120001,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "KDEJ26SV7QK2N7DW",
+      "attributes": {
+        "servicecode": "AWSLambda",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "group": "AWS-Lambda-Duration-ARM",
+        "groupDescription": "Invocation duration weighted by memory assigned to function, measured in GB-s for ARM",
+        "usagetype": "APS2-Lambda-GB-Second-ARM",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "servicename": "AWS Lambda"
+      },
+      "description": "AWS Lambda - Total Compute for ARM - Asia Pacific (Sydney)-Tier-3",
+      "unit": "Lambda-GB-Second",
+      "begin": "18750000000",
+      "end": "Inf",
+      "usd": 0.0000106667,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "4NX7CSSF3DVPXWBT",
+      "attributes": {
+        "servicecode": "AWSLambda",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "group": "AWS-Lambda-Duration",
+        "groupDescription": "Invocation duration weighted by memory assigned to function, measured in GB-s",
+        "usagetype": "APS2-Lambda-GB-Second",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "servicename": "AWS Lambda"
+      },
+      "description": "AWS Lambda - Total Compute - Asia Pacific (Sydney)-Tier-1",
+      "unit": "Lambda-GB-Second",
+      "begin": "0",
+      "end": "6000000000",
+      "usd": 0.0000166667,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "4NX7CSSF3DVPXWBT",
+      "attributes": {
+        "servicecode": "AWSLambda",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "group": "AWS-Lambda-Duration",
+        "groupDescription": "Invocation duration weighted by memory assigned to function, measured in GB-s",
+        "usagetype": "APS2-Lambda-GB-Second",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "servicename": "AWS Lambda"
+      },
+      "description": "AWS Lambda - Total Compute - Asia Pacific (Sydney)-Tier-2",
+      "unit": "Lambda-GB-Second",
+      "begin": "6000000000",
+      "end": "15000000000",
+      "usd": 0.000015,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "4NX7CSSF3DVPXWBT",
+      "attributes": {
+        "servicecode": "AWSLambda",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "group": "AWS-Lambda-Duration",
+        "groupDescription": "Invocation duration weighted by memory assigned to function, measured in GB-s",
+        "usagetype": "APS2-Lambda-GB-Second",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "servicename": "AWS Lambda"
+      },
+      "description": "AWS Lambda - Total Compute - Asia Pacific (Sydney)-Tier-3",
+      "unit": "Lambda-GB-Second",
+      "begin": "15000000000",
+      "end": "Inf",
+      "usd": 0.0000133334,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "V3B39DZXTSDP5KMD",
+      "attributes": {
+        "servicecode": "AWSLambda",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "group": "AWS-Lambda-Web-Request-ARM",
+        "groupDescription": "Request to a Lambda Web function for ARM",
+        "usagetype": "APS2-Lambda-Web-Request-ARM",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "servicename": "AWS Lambda"
+      },
+      "description": "$0.0000003 per Request for Lambda-Web-Request-ARM in Asia Pacific (Sydney)",
+      "unit": "Request",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 3e-7,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    }
+  ]
+}

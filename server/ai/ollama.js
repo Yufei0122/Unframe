@@ -56,9 +56,11 @@ export function assembleGroundedExplanation(selection, artwork, allowedIds) {
     suggestedNextArtwork: selection.suggestedNextArtwork,
   }, allowedIds);
 }
-export function createOllamaService(config, client = createLocalClient(config, 'OLLAMA'), gate = { active: false }) {
+export function createOllamaService(config, client = createLocalClient(config, 'OLLAMA'), gate = { active: false }, generateStructured) {
   // One generation per backend instance keeps CPU memory bounded. Existing fallbacks handle busy requests.
   async function generate(model, instruction, context, schema, latestMessage, signal, planning = false) {
+    // Reuse catalogue prompts and validators without translating an Ollama wire payload.
+    if (generateStructured) return generateStructured({ model, instruction, context, schema, latestMessage, signal, planning });
     if (signal?.aborted) throw new AIError(499, 'REQUEST_CANCELLED', 'The request was cancelled.');
     if (gate.active) throw new AIError(429, 'OLLAMA_BUSY', 'The local Qwen model is busy. Please retry after the current answer finishes.');
     gate.active = true;

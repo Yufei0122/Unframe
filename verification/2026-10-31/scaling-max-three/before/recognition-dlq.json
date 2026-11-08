@@ -1,0 +1,11 @@
+{
+  "retrievedAt": "2026-10-31T07:57:49.553Z",
+  "value": {
+    "Attributes": {
+      "ApproximateNumberOfMessages": "3",
+      "ApproximateNumberOfMessagesNotVisible": "0",
+      "ApproximateNumberOfMessagesDelayed": "0",
+      "VisibilityTimeout": "30"
+    }
+  }
+}

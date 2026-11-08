@@ -1,0 +1,5 @@
+# CPU PyTorch wheels are installed separately by ai:setup from pytorch.org.
+open_clip_torch==3.3.0
+Pillow>=11.3.0,<13
+numpy>=1.26.4,<3
+hf-xet>=1.2.0,<2

@@ -1,0 +1,19 @@
+{
+  "status": "PASS_LOCAL_VALIDATION",
+  "submissionReady": false,
+  "resources": 32,
+  "sourceFilesVerified": 315,
+  "sourceBytes": 9795719,
+  "dashboardWidgetsPreserved": 7,
+  "vectorCount": 15,
+  "liveBrowserJobs": 1,
+  "detectedSecretPatterns": 0,
+  "cloudPlanning": "OUT_OF_SCOPE_FUTURE_WORK",
+  "remaining": [
+    "review real scaling outcome",
+    "optional AI confirmation endpoint unavailable",
+    "calculator share link",
+    "shared dependency tagging review",
+    "student report/video"
+  ]
+}

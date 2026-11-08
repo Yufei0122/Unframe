@@ -1,0 +1,7 @@
+{
+  "AllowOrigins": ["https://<FINAL_CLOUDFRONT_DOMAIN>"],
+  "AllowMethods": ["GET", "POST", "OPTIONS"],
+  "AllowHeaders": ["Content-Type", "X-Job-Token"],
+  "AllowCredentials": false,
+  "MaxAge": 300
+}

@@ -1,0 +1,316 @@
+{
+  "checkedAt": "2026-10-31T07:06:49.737Z",
+  "total": 30,
+  "succeeded": 30,
+  "correct": 30,
+  "bedrockEvents": 0,
+  "processing": {
+    "samples": 30,
+    "minMs": 473,
+    "maxMs": 724,
+    "meanMs": 539.4666666666667,
+    "p95Ms": 709
+  },
+  "jobs": [
+    {
+      "jobId": "8086449b-f72d-4205-af74-faac1ed0147e",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430272,
+      "completedAt": 1793430274,
+      "processingMs": 724
+    },
+    {
+      "jobId": "2677f3b0-9d1a-4c83-8dd3-23b2aa64104b",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430272,
+      "completedAt": 1793430275,
+      "processingMs": 479
+    },
+    {
+      "jobId": "b4f67651-5f53-420e-962a-6e137126dea8",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430273,
+      "completedAt": 1793430276,
+      "processingMs": 544
+    },
+    {
+      "jobId": "d0ede0c0-ce3c-4260-9184-138748fa6df7",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430273,
+      "completedAt": 1793430277,
+      "processingMs": 535
+    },
+    {
+      "jobId": "529b3e76-ae94-41d0-bce4-5d5f625e1ab6",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430273,
+      "completedAt": 1793430275,
+      "processingMs": 491
+    },
+    {
+      "jobId": "44ee1478-f407-428f-9c05-6b2f098179dd",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430274,
+      "completedAt": 1793430276,
+      "processingMs": 589
+    },
+    {
+      "jobId": "85339c9b-8f3c-4f7e-ad95-9e400c5786d6",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430274,
+      "completedAt": 1793430283,
+      "processingMs": 578
+    },
+    {
+      "jobId": "f59d4ae7-caa5-48af-888b-7428df68e5e9",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430274,
+      "completedAt": 1793430277,
+      "processingMs": 580
+    },
+    {
+      "jobId": "8efe2dd6-be75-4f5b-9f34-f50ec410d2d5",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430273,
+      "completedAt": 1793430278,
+      "processingMs": 543
+    },
+    {
+      "jobId": "25a3ae2f-72a1-4dd3-a746-6314cda91917",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430274,
+      "completedAt": 1793430282,
+      "processingMs": 576
+    },
+    {
+      "jobId": "f184f324-2742-45b5-b032-7cd87498d64e",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430273,
+      "completedAt": 1793430280,
+      "processingMs": 490
+    },
+    {
+      "jobId": "fcddcbaf-77fb-497b-ba98-9fecf16d39e6",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430274,
+      "completedAt": 1793430283,
+      "processingMs": 514
+    },
+    {
+      "jobId": "f929e4ac-49b2-4e7f-85d4-25223d1e0288",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430274,
+      "completedAt": 1793430281,
+      "processingMs": 473
+    },
+    {
+      "jobId": "c49dc27d-696f-4b9a-b913-4ba7f9902886",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430275,
+      "completedAt": 1793430280,
+      "processingMs": 552
+    },
+    {
+      "jobId": "aa385136-290a-4d80-98ac-cc93a0253f19",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430275,
+      "completedAt": 1793430284,
+      "processingMs": 493
+    },
+    {
+      "jobId": "a5839821-2305-423c-84f6-9c035c8aec91",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430275,
+      "completedAt": 1793430282,
+      "processingMs": 488
+    },
+    {
+      "jobId": "6820112e-cb8e-43fd-83b2-105959693070",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430275,
+      "completedAt": 1793430284,
+      "processingMs": 555
+    },
+    {
+      "jobId": "167fb5bb-8380-4766-9c9d-d47a23ad5e43",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430275,
+      "completedAt": 1793430287,
+      "processingMs": 497
+    },
+    {
+      "jobId": "47715dcc-f263-447d-bfdc-d8e704d1092b",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430275,
+      "completedAt": 1793430290,
+      "processingMs": 554
+    },
+    {
+      "jobId": "c278a062-d2d6-4612-acb2-d994c4a0352b",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430275,
+      "completedAt": 1793430286,
+      "processingMs": 516
+    },
+    {
+      "jobId": "2f29eee7-1bd5-4409-8e70-24c82e2ec0b8",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430276,
+      "completedAt": 1793430281,
+      "processingMs": 497
+    },
+    {
+      "jobId": "994942af-4b56-444f-8b59-4d574cb25f2a",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430276,
+      "completedAt": 1793430279,
+      "processingMs": 506
+    },
+    {
+      "jobId": "4e74550d-1beb-4144-b7a7-98c13845afaa",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430276,
+      "completedAt": 1793430278,
+      "processingMs": 515
+    },
+    {
+      "jobId": "9cb2b44f-d163-4b66-8cbb-bedd6d4324aa",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430276,
+      "completedAt": 1793430285,
+      "processingMs": 566
+    },
+    {
+      "jobId": "36fd4586-34b0-4471-b049-6a15e652b8ab",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430276,
+      "completedAt": 1793430289,
+      "processingMs": 709
+    },
+    {
+      "jobId": "3da996c6-8be8-48b4-97f0-997ef6d13617",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430276,
+      "completedAt": 1793430289,
+      "processingMs": 515
+    },
+    {
+      "jobId": "7d0809c8-6d56-47a0-a09e-31a8c9051b2a",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430277,
+      "completedAt": 1793430286,
+      "processingMs": 486
+    },
+    {
+      "jobId": "72dd67a4-4021-458a-902c-992baef67c1d",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430277,
+      "completedAt": 1793430288,
+      "processingMs": 571
+    },
+    {
+      "jobId": "2670b05d-0c33-4c06-bf11-d5ab5ce333d3",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430277,
+      "completedAt": 1793430290,
+      "processingMs": 508
+    },
+    {
+      "jobId": "277829b9-3ab0-43e0-936e-6f945ad3d730",
+      "status": "SUCCEEDED",
+      "attempts": 1,
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075,
+      "createdAt": 1793430277,
+      "completedAt": 1793430287,
+      "processingMs": 540
+    }
+  ]
+}

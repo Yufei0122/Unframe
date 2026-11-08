@@ -1,0 +1,188 @@
+{
+  "start": "-PT6H",
+  "periodOverride": "inherit",
+  "widgets": [
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 0,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "title": "Visible recognition backlog",
+        "region": "ap-southeast-2",
+        "view": "timeSeries",
+        "period": 60,
+        "stat": "Maximum",
+        "metrics": [
+          [
+            "AWS/SQS",
+            "ApproximateNumberOfMessagesVisible",
+            "QueueName",
+            "a3-n12281212-unframe-recognition"
+          ]
+        ]
+      }
+    },
+    {
+      "type": "metric",
+      "x": 12,
+      "y": 0,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "title": "Oldest recognition message (seconds)",
+        "region": "ap-southeast-2",
+        "view": "timeSeries",
+        "period": 60,
+        "stat": "Maximum",
+        "metrics": [
+          [
+            "AWS/SQS",
+            "ApproximateAgeOfOldestMessage",
+            "QueueName",
+            "a3-n12281212-unframe-recognition"
+          ]
+        ]
+      }
+    },
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 6,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "title": "Running recognition tasks",
+        "region": "ap-southeast-2",
+        "view": "timeSeries",
+        "period": 60,
+        "stat": "Average",
+        "metrics": [
+          [
+            "ECS/ContainerInsights",
+            "RunningTaskCount",
+            "ClusterName",
+            "n12281212-strobe-a2",
+            "ServiceName",
+            "a3-n12281212-unframe-worker"
+          ]
+        ]
+      }
+    },
+    {
+      "type": "metric",
+      "x": 12,
+      "y": 6,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "title": "Worker CPU utilization (%)",
+        "region": "ap-southeast-2",
+        "view": "timeSeries",
+        "period": 60,
+        "stat": "Average",
+        "metrics": [
+          [
+            "AWS/ECS",
+            "CPUUtilization",
+            "ClusterName",
+            "n12281212-strobe-a2",
+            "ServiceName",
+            "a3-n12281212-unframe-worker"
+          ]
+        ]
+      }
+    },
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 12,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "title": "Worker memory utilization (%)",
+        "region": "ap-southeast-2",
+        "view": "timeSeries",
+        "period": 60,
+        "stat": "Average",
+        "metrics": [
+          [
+            "AWS/ECS",
+            "MemoryUtilization",
+            "ClusterName",
+            "n12281212-strobe-a2",
+            "ServiceName",
+            "a3-n12281212-unframe-worker"
+          ]
+        ]
+      }
+    },
+    {
+      "type": "metric",
+      "x": 12,
+      "y": 12,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "title": "Jobs Lambda invocations",
+        "region": "ap-southeast-2",
+        "view": "timeSeries",
+        "period": 60,
+        "stat": "Sum",
+        "metrics": [
+          [
+            "AWS/Lambda",
+            "Invocations",
+            "FunctionName",
+            "a3-n12281212-unframe-jobs"
+          ]
+        ]
+      }
+    },
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 18,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "title": "Jobs Lambda errors",
+        "region": "ap-southeast-2",
+        "view": "timeSeries",
+        "period": 60,
+        "stat": "Sum",
+        "metrics": [
+          [
+            "AWS/Lambda",
+            "Errors",
+            "FunctionName",
+            "a3-n12281212-unframe-jobs"
+          ]
+        ]
+      }
+    },
+    {
+      "type": "metric",
+      "x": 12,
+      "y": 18,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "title": "Recognition DLQ visible messages",
+        "region": "ap-southeast-2",
+        "view": "timeSeries",
+        "period": 60,
+        "stat": "Maximum",
+        "metrics": [
+          [
+            "AWS/SQS",
+            "ApproximateNumberOfMessagesVisible",
+            "QueueName",
+            "a3-n12281212-unframe-recognition-dlq"
+          ]
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "TargetValue": 3,
+  "ScaleOutCooldown": 30,
+  "ScaleInCooldown": 120,
+  "DisableScaleIn": false,
+  "CustomizedMetricSpecification": {
+    "Metrics": [
+      {
+        "Id": "m1",
+        "MetricStat": {
+          "Metric": {
+            "Namespace": "AWS/SQS",
+            "MetricName": "ApproximateNumberOfMessagesVisible",
+            "Dimensions": [{ "Name": "QueueName", "Value": "a3-n12281212-unframe-recognition" }]
+          },
+          "Stat": "Sum"
+        },
+        "ReturnData": false
+      },
+      {
+        "Id": "m2",
+        "MetricStat": {
+          "Metric": {
+            "Namespace": "ECS/ContainerInsights",
+            "MetricName": "RunningTaskCount",
+            "Dimensions": [
+              { "Name": "ClusterName", "Value": "n12281212-strobe-a2" },
+              { "Name": "ServiceName", "Value": "a3-n12281212-unframe-worker" }
+            ]
+          },
+          "Stat": "Average"
+        },
+        "ReturnData": false
+      },
+      {
+        "Id": "backlog_per_task",
+        "Expression": "m1 / m2",
+        "Label": "Visible recognition messages per running worker",
+        "ReturnData": true
+      }
+    ]
+  }
+}

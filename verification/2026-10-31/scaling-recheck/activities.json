@@ -1,0 +1,23 @@
+{
+  "retrievedAt": "2026-10-31T07:44:52.418Z",
+  "value": {
+    "ScalingActivities": [
+      {
+        "ActivityId": "a92468bb-52f5-494c-9434-5e85a4390bb0",
+        "ServiceNamespace": "ecs",
+        "ResourceId": "service/n12281212-strobe-a2/a3-n12281212-unframe-worker",
+        "ScalableDimension": "ecs:service:DesiredCount",
+        "Description": "Attempting to scale due to alarm triggered",
+        "Cause": "monitor alarm TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmLow-18a6f57d-4b3d-4a15-b8a6-c78ee1cabc5f in state ALARM triggered policy unframe-sqs-backlog",
+        "StartTime": "2026-10-31T05:54:35.475000+10:00",
+        "StatusCode": "Failed",
+        "NotScaledReasons": [
+          {
+            "Code": "AlreadyAtMinCapacity",
+            "MinCapacity": 1
+          }
+        ]
+      }
+    ]
+  }
+}

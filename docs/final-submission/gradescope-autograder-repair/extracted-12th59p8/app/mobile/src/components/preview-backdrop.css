@@ -1,0 +1,11 @@
+.preview-backdrop { position:absolute; inset:0; overflow:hidden; background:#bccbd3; pointer-events:none; }
+.preview-backdrop > img, .preview-backdrop > div { position:absolute; inset:0; width:100%; height:100%; }
+.preview-backdrop > img, .preview-photo { display:block; width:100%; height:100%; object-fit:cover; }
+.preview-photo { animation:preview-breathe 12s ease-in-out infinite alternate; transform-origin:center center; }
+.preview-adjacent { filter:brightness(.9); }
+.preview-incoming { animation:preview-enter 820ms cubic-bezier(.2,.75,.2,1) both; }
+.preview-outgoing { animation:preview-exit 820ms cubic-bezier(.2,.75,.2,1) both; }
+@keyframes preview-enter { from { opacity:.45; transform:translate3d(var(--scene-enter),0,0) scale(1.055); } to { opacity:1; transform:translate3d(0,0,0) scale(1); } }
+@keyframes preview-exit { from { opacity:1; transform:translate3d(0,0,0) scale(1); } to { opacity:0; transform:translate3d(var(--scene-exit),0,0) scale(1.04); } }
+@keyframes preview-breathe { from { transform:scale(1.005); } to { transform:scale(1.045); } }
+@media (prefers-reduced-motion: reduce) { .preview-photo, .preview-incoming, .preview-outgoing { animation:none !important; } }

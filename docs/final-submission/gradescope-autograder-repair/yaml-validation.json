@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "beforeResources": 33,
+  "afterResources": 32,
+  "removed": {
+    "type": "Bedrock foundation model",
+    "arn": "arn:aws:bedrock:ap-southeast-2::foundation-model/google.gemma-3-12b-it",
+    "description": "AWS-managed optional artwork-analysis model with a verified successful vision Analyse job; ordinary recognition does not invoke it."
+  },
+  "allOtherDeclarationsAndMetadataUnchanged": true,
+  "planningLambdaDeclared": false,
+  "originalYamlSha256": "cd8b17a3ae2f0b98af081f06d243536611eec6ce6cdd0f86ec0bfd942c86a111",
+  "repairedYamlSha256": "186153f51b33ad15c3625c759af69c44e74769391aa40a2c40c4568146c6150b",
+  "awsModified": false
+}

@@ -1,0 +1,17 @@
+{
+  "retrievedAt": "2026-10-31T08:35:09.991Z",
+  "value": [
+    {
+      "name": "F14-queue",
+      "status": "AWS_RENDERED_REAL_METRICS"
+    },
+    {
+      "name": "F15-F16-running",
+      "status": "AWS_RENDERED_REAL_METRICS"
+    },
+    {
+      "name": "worker-utilization",
+      "status": "AWS_RENDERED_REAL_METRICS"
+    }
+  ]
+}

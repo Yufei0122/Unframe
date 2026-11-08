@@ -1,0 +1,2072 @@
+[
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533374.0,
+    "createdAt": 1793533362.0,
+    "jobId": "4d590d10-339b-4198-97a5-80e9a61d27f3",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533369.0,
+    "createdAt": 1793533363.0,
+    "jobId": "c5f3f53f-e8b4-4e72-9ac4-e6cd4e1ce436",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533367.0,
+    "createdAt": 1793533361.0,
+    "jobId": "4bb7c77e-b759-42e4-8a2e-8df533a89f58",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533376.0,
+    "createdAt": 1793533363.0,
+    "jobId": "52924acb-24f2-4363-b4b2-7e4f3be5693c",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533371.0,
+    "createdAt": 1793533363.0,
+    "jobId": "51d3d2f9-cf12-4f7c-b636-9dc02b1e3b49",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533372.0,
+    "createdAt": 1793533363.0,
+    "jobId": "83173b2d-996e-4a29-a036-344058bb6e6d",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533368.0,
+    "createdAt": 1793533360.0,
+    "jobId": "340ef031-3b45-497d-8b47-a8914e826fdc",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533348.0,
+    "createdAt": 1793533343.0,
+    "jobId": "5a7b9f3b-4996-4f8c-ba22-01af694e87a0",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533365.0,
+    "createdAt": 1793533361.0,
+    "jobId": "f2dd156f-103c-4b80-8ee5-c62d3a57ee8b",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533363.0,
+    "createdAt": 1793533360.0,
+    "jobId": "ccaee9f8-f1b2-4d37-9599-ed7778d886f7",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533371.0,
+    "createdAt": 1793533363.0,
+    "jobId": "ea88cab4-2fdd-465c-8b9f-4600a2a9e015",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533374.0,
+    "createdAt": 1793533362.0,
+    "jobId": "cc777250-e6ad-41dc-b65e-20702329f174",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533362.0,
+    "createdAt": 1793533361.0,
+    "jobId": "fb3171ad-4f7a-4402-a334-78be9d7f9143",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533372.0,
+    "createdAt": 1793533362.0,
+    "jobId": "65610c2f-ca83-463e-a52d-aed46f909527",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533347.0,
+    "createdAt": 1793533344.0,
+    "jobId": "0b45ec30-bfa8-4d19-9756-17e3759f8dc3",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533375.0,
+    "createdAt": 1793533361.0,
+    "jobId": "f36e2046-fb36-485f-8564-01b67d195b06",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533375.0,
+    "createdAt": 1793533363.0,
+    "jobId": "78d82446-3e90-40e4-932e-412f643e00a5",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533363.0,
+    "createdAt": 1793533360.0,
+    "jobId": "b5976f0e-690a-4ec4-a88e-bc3c7c0c6379",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533370.0,
+    "createdAt": 1793533361.0,
+    "jobId": "b61fe25c-e89b-4861-bc17-b233eede571e",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533373.0,
+    "createdAt": 1793533363.0,
+    "jobId": "9f202a80-8a54-41ea-a78d-0e5618e7d376",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533346.0,
+    "createdAt": 1793533345.0,
+    "jobId": "0ea74591-d708-492c-8270-9f99d1e1bfce",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533365.0,
+    "createdAt": 1793533362.0,
+    "jobId": "7f35b4f0-d4ca-4fe9-9d9f-884eb6585b6c",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533366.0,
+    "createdAt": 1793533361.0,
+    "jobId": "e3b21e59-9c07-4666-ab7d-abce21b7f6f1",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533367.0,
+    "createdAt": 1793533361.0,
+    "jobId": "deda8bec-2fe2-4812-9026-0612643105a3",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533368.0,
+    "createdAt": 1793533362.0,
+    "jobId": "a273f59f-4aa5-4b51-a805-61081f1950c8",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533349.0,
+    "createdAt": 1793533346.0,
+    "jobId": "928d1305-5ee7-4e58-927c-cb23da4975ee",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533370.0,
+    "createdAt": 1793533363.0,
+    "jobId": "44dad621-c970-4531-8523-5de90f0777c2",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533348.0,
+    "createdAt": 1793533345.0,
+    "jobId": "9c7fa13d-0734-44ee-a6e6-1ca26a96f35e",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533366.0,
+    "createdAt": 1793533362.0,
+    "jobId": "9c354d41-88fe-4500-961e-3bf71382d517",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  },
+  {
+    "attempts": 1.0,
+    "completedAt": 1793533364.0,
+    "createdAt": 1793533360.0,
+    "jobId": "51698724-8086-4e9f-bef8-308ad2c097e0",
+    "museumId": "met",
+    "operation": "recognise",
+    "result": {
+      "aiExplanation": null,
+      "artwork": {
+        "accessible": true,
+        "artist": "Claude Monet",
+        "category": "Painting",
+        "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+        "color": "#667C86",
+        "demoDistance": 12.0,
+        "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+        "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+        "id": "water-lilies",
+        "image": "water-lilies.jpg",
+        "medium": "Oil on canvas",
+        "minutes": 4.0,
+        "room": "01",
+        "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "tags": [
+          "Nature",
+          "Colour",
+          "Reflection"
+        ],
+        "title": "Water Lilies",
+        "year": "1916\u201319"
+      },
+      "artworkDetected": true,
+      "candidates": [
+        {
+          "artwork": {
+            "accessible": true,
+            "artist": "Claude Monet",
+            "category": "Painting",
+            "chineseIntroduction": "\u300a\u7761\u83b2\u300b\uff0c\u514b\u52b3\u5fb7\u00b7\u83ab\u5948\uff0c1916\u81f31919\u5e74\uff0c\u5e03\u9762\u6cb9\u753b\u3002\u8fd9\u5e45\u665a\u671f\u4f5c\u54c1\u63cf\u7ed8\u4e86\u83ab\u5948\u5728\u5409\u7ef4\u5c3c\u5bb6\u4e2d\u8425\u9020\u7684\u6c34\u4e0a\u82b1\u56ed\u3002\u753b\u9762\u6ca1\u6709\u660e\u663e\u7684\u5730\u5e73\u7ebf\uff0c\u7761\u83b2\u3001\u5012\u5f71\u4e0e\u6c34\u9762\u878d\u4e3a\u4e00\u4f53\u3002\u8bf7\u653e\u6162\u811a\u6b65\uff0c\u89c2\u5bdf\u8272\u5f69\u4e0e\u7b14\u89e6\uff0c\u611f\u53d7\u6c34\u9762\u548c\u5012\u5f71\u4e4b\u95f4\u82e5\u9690\u82e5\u73b0\u7684\u8fb9\u754c\u3002",
+            "color": "#667C86",
+            "demoDistance": 12.0,
+            "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+            "detail": "Look at how floating leaves, reflections and open water share the same surface. With no horizon to anchor the scene, your eye can wander through the colour and loose brushwork. Take a moment to notice where the water ends and its reflection begins.",
+            "id": "water-lilies",
+            "image": "water-lilies.jpg",
+            "medium": "Oil on canvas",
+            "minutes": 4.0,
+            "room": "01",
+            "source": "The Metropolitan Museum of Art \u00b7 Collection record 437137",
+            "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+            "tags": [
+              "Nature",
+              "Colour",
+              "Reflection"
+            ],
+            "title": "Water Lilies",
+            "year": "1916\u201319"
+          },
+          "similarity": 0.9999953508377075
+        }
+      ],
+      "matched": true,
+      "requiresConfirmation": true,
+      "similarity": 0.9999953508377075
+    },
+    "status": "SUCCEEDED"
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "retrievedAt": "2026-10-31T07:28:27.130Z",
+  "value": [
+    {
+      "SubnetId": "subnet-075811427d5564cf9",
+      "State": "available",
+      "AvailabilityZone": "ap-southeast-2b",
+      "AvailableIpAddressCount": 3339
+    },
+    {
+      "SubnetId": "subnet-05a3b8177138c8b14",
+      "State": "available",
+      "AvailabilityZone": "ap-southeast-2a",
+      "AvailableIpAddressCount": 3361
+    }
+  ]
+}

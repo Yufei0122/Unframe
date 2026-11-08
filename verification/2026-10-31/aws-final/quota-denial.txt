@@ -1,0 +1,11 @@
+aws : 
+所在位置 行:2 字符: 366
++ ... ents.json"; aws service-quotas get-service-quota --service-code farga ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+aws: [ERROR]: An error occurred (AccessDeniedException) when calling the GetServiceQuota operation: User: arn:aws:sts::
+901444280953:assumed-role/AWSReservedSSO_CAB432-STUDENT_f2baa6a2ba3c79c9/n12281212@qut.edu.au is not authorized to perf
+orm: servicequotas:GetServiceQuota on resource: arn:aws:servicequotas:ap-southeast-2:901444280953:fargate/L-3032A538 be
+cause no identity-based policy allows the servicequotas:GetServiceQuota action

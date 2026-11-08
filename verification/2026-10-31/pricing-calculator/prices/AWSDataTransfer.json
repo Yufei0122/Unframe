@@ -1,0 +1,183 @@
+{
+  "source": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AWSDataTransfer/current/index.json",
+  "retrievedAt": "2026-10-31T08:59:49.268Z",
+  "publicationDate": "2026-09-16T13:22:08Z",
+  "rates": [
+    {
+      "sku": "KRXM4TG87VW2NPHA",
+      "attributes": {
+        "servicecode": "AWSDataTransfer",
+        "transferType": "AWS Outbound",
+        "fromLocation": "Asia Pacific (Sydney)",
+        "fromLocationType": "AWS Region",
+        "toLocation": "External",
+        "toLocationType": "Other",
+        "usagetype": "APS2-DataTransfer-Out-Bytes",
+        "operation": "",
+        "fromRegionCode": "ap-southeast-2",
+        "servicename": "AWS Data Transfer",
+        "toRegionCode": ""
+      },
+      "description": "$0.114 per GB - first 10 TB / month data transfer out beyond the global free tier",
+      "unit": "GB",
+      "begin": "0",
+      "end": "10240",
+      "usd": 0.114,
+      "effectiveDate": "2026-06-01T00:00:00Z"
+    },
+    {
+      "sku": "KRXM4TG87VW2NPHA",
+      "attributes": {
+        "servicecode": "AWSDataTransfer",
+        "transferType": "AWS Outbound",
+        "fromLocation": "Asia Pacific (Sydney)",
+        "fromLocationType": "AWS Region",
+        "toLocation": "External",
+        "toLocationType": "Other",
+        "usagetype": "APS2-DataTransfer-Out-Bytes",
+        "operation": "",
+        "fromRegionCode": "ap-southeast-2",
+        "servicename": "AWS Data Transfer",
+        "toRegionCode": ""
+      },
+      "description": "$0.098 per GB - next 40 TB / month data transfer out",
+      "unit": "GB",
+      "begin": "10240",
+      "end": "51200",
+      "usd": 0.098,
+      "effectiveDate": "2026-06-01T00:00:00Z"
+    },
+    {
+      "sku": "KRXM4TG87VW2NPHA",
+      "attributes": {
+        "servicecode": "AWSDataTransfer",
+        "transferType": "AWS Outbound",
+        "fromLocation": "Asia Pacific (Sydney)",
+        "fromLocationType": "AWS Region",
+        "toLocation": "External",
+        "toLocationType": "Other",
+        "usagetype": "APS2-DataTransfer-Out-Bytes",
+        "operation": "",
+        "fromRegionCode": "ap-southeast-2",
+        "servicename": "AWS Data Transfer",
+        "toRegionCode": ""
+      },
+      "description": "$0.094 per GB - next 100 TB / month data transfer out",
+      "unit": "GB",
+      "begin": "51200",
+      "end": "153600",
+      "usd": 0.094,
+      "effectiveDate": "2026-06-01T00:00:00Z"
+    },
+    {
+      "sku": "KRXM4TG87VW2NPHA",
+      "attributes": {
+        "servicecode": "AWSDataTransfer",
+        "transferType": "AWS Outbound",
+        "fromLocation": "Asia Pacific (Sydney)",
+        "fromLocationType": "AWS Region",
+        "toLocation": "External",
+        "toLocationType": "Other",
+        "usagetype": "APS2-DataTransfer-Out-Bytes",
+        "operation": "",
+        "fromRegionCode": "ap-southeast-2",
+        "servicename": "AWS Data Transfer",
+        "toRegionCode": ""
+      },
+      "description": "$0.092 per GB - greater than 150 TB / month data transfer out",
+      "unit": "GB",
+      "begin": "153600",
+      "end": "Inf",
+      "usd": 0.092,
+      "effectiveDate": "2026-06-01T00:00:00Z"
+    },
+    {
+      "sku": "RN5JRT3FSCYH3AHJ",
+      "attributes": {
+        "servicecode": "AWSDataTransfer",
+        "transferType": "Accelerated AWS Outbound using edge locations within US, Europe or Japan",
+        "fromLocation": "Asia Pacific (Sydney)",
+        "fromLocationType": "AWS Region",
+        "toLocation": "External",
+        "toLocationType": "Other",
+        "usagetype": "APS2-DataTransfer-Out-ABytes-T1",
+        "operation": "",
+        "fromRegionCode": "ap-southeast-2",
+        "servicename": "AWS Data Transfer",
+        "toRegionCode": ""
+      },
+      "description": "$0.040 per GB - Amazon S3 accelerated data transfer out (to within US, Europe or Japan)",
+      "unit": "GB",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.04,
+      "effectiveDate": "2026-06-01T00:00:00Z"
+    },
+    {
+      "sku": "YU5YEYG8SXGF4NKZ",
+      "attributes": {
+        "servicecode": "AWSDataTransfer",
+        "transferType": "Accelerated AWS Outbound using edge locations outside US, Europe or Japan",
+        "fromLocation": "Asia Pacific (Sydney)",
+        "fromLocationType": "AWS Region",
+        "toLocation": "External",
+        "toLocationType": "Other",
+        "usagetype": "APS2-DataTransfer-Out-ABytes-T2",
+        "operation": "",
+        "fromRegionCode": "ap-southeast-2",
+        "servicename": "AWS Data Transfer",
+        "toRegionCode": ""
+      },
+      "description": "$0.040 per GB - Amazon S3 accelerated data transfer out (to outside US, Europe or Japan)",
+      "unit": "GB",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.04,
+      "effectiveDate": "2026-06-01T00:00:00Z"
+    },
+    {
+      "sku": "4CWZREBDMM4ZNG5E",
+      "attributes": {
+        "servicecode": "AWSDataTransfer",
+        "transferType": "Inter Region Peering Data Transfer Outbound",
+        "fromLocation": "Asia Pacific (Sydney)",
+        "fromLocationType": "AWS Region",
+        "toLocation": "External",
+        "toLocationType": "Other",
+        "usagetype": "APS2-AWS-Out-Bytes",
+        "operation": "",
+        "fromRegionCode": "ap-southeast-2",
+        "servicename": "AWS Data Transfer",
+        "toRegionCode": ""
+      },
+      "description": "$0.0980 per GB - Data transfer from Asia Pacific (Sydney)",
+      "unit": "GB",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.098,
+      "effectiveDate": "2026-06-01T00:00:00Z"
+    },
+    {
+      "sku": "P2C6Z3P7S8BHQX5G",
+      "attributes": {
+        "servicecode": "AWSDataTransfer",
+        "transferType": "Accelerated AWS Outbound from close by location",
+        "fromLocation": "Asia Pacific (Sydney)",
+        "fromLocationType": "AWS Region",
+        "toLocation": "External",
+        "toLocationType": "Other",
+        "usagetype": "APS2-DataTransfer-Out-ABytes",
+        "operation": "",
+        "fromRegionCode": "ap-southeast-2",
+        "servicename": "AWS Data Transfer",
+        "toRegionCode": ""
+      },
+      "description": "$0.040 per GB - Amazon S3 accelerated data transfer out",
+      "unit": "GB",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.04,
+      "effectiveDate": "2026-06-01T00:00:00Z"
+    }
+  ]
+}

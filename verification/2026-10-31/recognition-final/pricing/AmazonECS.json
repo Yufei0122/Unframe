@@ -1,0 +1,47 @@
+{
+  "source": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonECS/current/ap-southeast-2/index.json",
+  "retrievedAt": "2026-10-31T06:55:15.303Z",
+  "publicationDate": "2026-10-19T22:43:17Z",
+  "rates": [
+    {
+      "sku": "RWBFR84TYF5JT44P",
+      "attributes": {
+        "servicecode": "AmazonECS",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "tenancy": "Shared",
+        "usagetype": "APS2-Fargate-GB-Hours",
+        "operation": "",
+        "memorytype": "perGB",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon Elastic Container Service"
+      },
+      "description": "AWS Fargate - Memory - Asia Pacific (Sydney)",
+      "unit": "hours",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.00532,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "MMQG9GMCKV4JUBKW",
+      "attributes": {
+        "servicecode": "AmazonECS",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "tenancy": "Shared",
+        "usagetype": "APS2-Fargate-vCPU-Hours:perCPU",
+        "operation": "",
+        "cputype": "perCPU",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon Elastic Container Service"
+      },
+      "description": "AWS Fargate - vCPU - Asia Pacific (Sydney)",
+      "unit": "hours",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.04856,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    }
+  ]
+}

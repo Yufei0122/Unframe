@@ -1,0 +1,80 @@
+{
+  "changedWidgetIndex": 3,
+  "before": {
+    "type": "metric",
+    "x": 18,
+    "y": 0,
+    "width": 6,
+    "height": 6,
+    "properties": {
+      "metrics": [
+        [
+          "ECS/ContainerInsights",
+          "CpuUtilized",
+          "ServiceName",
+          "a3-n12281212-unframe-worker",
+          "ClusterName",
+          "n12281212-strobe-a2",
+          {
+            "label": "ECS - CPU Utilization"
+          }
+        ],
+        [
+          ".",
+          "MemoryUtilized",
+          ".",
+          ".",
+          ".",
+          ".",
+          {
+            "label": "ECS - CPU Utilization"
+          }
+        ]
+      ],
+      "view": "timeSeries",
+      "stacked": false,
+      "region": "ap-southeast-2",
+      "stat": "Average",
+      "period": 60
+    }
+  },
+  "after": {
+    "type": "metric",
+    "x": 18,
+    "y": 0,
+    "width": 6,
+    "height": 6,
+    "properties": {
+      "metrics": [
+        [
+          "AWS/ECS",
+          "CPUUtilization",
+          "ServiceName",
+          "a3-n12281212-unframe-worker",
+          "ClusterName",
+          "n12281212-strobe-a2",
+          {
+            "label": "ECS - CPU Utilization (%)"
+          }
+        ],
+        [
+          "AWS/ECS",
+          "MemoryUtilization",
+          "ServiceName",
+          "a3-n12281212-unframe-worker",
+          "ClusterName",
+          "n12281212-strobe-a2",
+          {
+            "label": "ECS - Memory Utilization (%)"
+          }
+        ]
+      ],
+      "view": "timeSeries",
+      "stacked": false,
+      "region": "ap-southeast-2",
+      "stat": "Average",
+      "period": 60
+    }
+  },
+  "untouchedWidgets": 6
+}

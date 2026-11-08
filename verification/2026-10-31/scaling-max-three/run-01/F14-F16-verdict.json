@@ -1,0 +1,341 @@
+{
+  "generatedAt": "2026-10-31T08:35:26.979Z",
+  "cluster": "n12281212-strobe-a2",
+  "target": {
+    "min": 1,
+    "max": 3
+  },
+  "policy": {
+    "TargetValue": 3,
+    "CustomizedMetricSpecification": {
+      "Dimensions": [],
+      "Metrics": [
+        {
+          "Id": "m1",
+          "MetricStat": {
+            "Metric": {
+              "Dimensions": [
+                {
+                  "Name": "QueueName",
+                  "Value": "a3-n12281212-unframe-recognition"
+                }
+              ],
+              "MetricName": "ApproximateNumberOfMessagesVisible",
+              "Namespace": "AWS/SQS"
+            },
+            "Stat": "Sum"
+          },
+          "ReturnData": false
+        },
+        {
+          "Id": "m2",
+          "MetricStat": {
+            "Metric": {
+              "Dimensions": [
+                {
+                  "Name": "ClusterName",
+                  "Value": "n12281212-strobe-a2"
+                },
+                {
+                  "Name": "ServiceName",
+                  "Value": "a3-n12281212-unframe-worker"
+                }
+              ],
+              "MetricName": "RunningTaskCount",
+              "Namespace": "ECS/ContainerInsights"
+            },
+            "Stat": "Average"
+          },
+          "ReturnData": false
+        },
+        {
+          "Expression": "m1 / m2",
+          "Id": "backlog_per_task",
+          "Label": "Visible recognition messages per running worker",
+          "ReturnData": true
+        }
+      ]
+    },
+    "ScaleOutCooldown": 30,
+    "ScaleInCooldown": 120,
+    "DisableScaleIn": false
+  },
+  "policyPreserved": true,
+  "workload": {
+    "at": "2026-10-31T08:11:01.508Z",
+    "event": "load_finished",
+    "attempted": 883,
+    "created": 883,
+    "uploaded": 883,
+    "failed": 0,
+    "elapsedMs": 300115,
+    "stopped": false,
+    "note": "Uploads alone do not prove completion or scaling.",
+    "firstCreated": "2026-10-31T08:06:03.779Z",
+    "lastCreated": "2026-10-31T08:11:01.327Z",
+    "observationMinutes": 26.952866666666665
+  },
+  "successful": 883,
+  "correct": 883,
+  "failed": 0,
+  "retries": 0,
+  "allCorrect": true,
+  "perTaskCompletions": {
+    "14d226de342f4ebb95672558bd499a7b": 765,
+    "619534e3312c409b908b3ee8a1058d3a": 59,
+    "9e358b2881884eb1bb39f74dd293307e": 59
+  },
+  "processing": {
+    "samples": 883,
+    "meanMs": 548.4541336353341,
+    "p95Ms": 663
+  },
+  "peakObservedVisible": 337,
+  "peakCloudWatchVisible": 321,
+  "peakRunning": 3,
+  "firstRunningIncrease": "2026-10-31T08:12:15.317Z",
+  "firstRunningDecrease": "2026-10-31T08:32:56.047Z",
+  "sustainedDrainObserved": "2026-10-31T08:14:15.806Z",
+  "scaleOut": {
+    "ActivityId": "5a0295b6-b643-4649-8589-8a1b8d0271b4",
+    "ServiceNamespace": "ecs",
+    "ResourceId": "service/n12281212-strobe-a2/a3-n12281212-unframe-worker",
+    "ScalableDimension": "ecs:service:DesiredCount",
+    "Description": "Setting desired count to 3.",
+    "Cause": "monitor alarm TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmHigh-bd150a38-aa09-489f-9726-d0ba56e37c83 in state ALARM triggered policy unframe-sqs-backlog",
+    "StartTime": "2026-10-31T18:11:06.016000+10:00",
+    "EndTime": "2026-10-31T18:12:16.013000+10:00",
+    "StatusCode": "Successful",
+    "StatusMessage": "Successfully set desired count to 3. Change successfully fulfilled by ecs."
+  },
+  "scaleIn": {
+    "ActivityId": "8978998f-05aa-45d6-aa7b-eedbd240453b",
+    "ServiceNamespace": "ecs",
+    "ResourceId": "service/n12281212-strobe-a2/a3-n12281212-unframe-worker",
+    "ScalableDimension": "ecs:service:DesiredCount",
+    "Description": "Setting desired count to 1.",
+    "Cause": "monitor alarm TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmLow-18a6f57d-4b3d-4a15-b8a6-c78ee1cabc5f in state ALARM triggered policy unframe-sqs-backlog",
+    "StartTime": "2026-10-31T18:32:35.511000+10:00",
+    "EndTime": "2026-10-31T18:33:11.295000+10:00",
+    "StatusCode": "Successful",
+    "StatusMessage": "Successfully set desired count to 1. Change successfully fulfilled by ecs."
+  },
+  "scaleIns": [
+    {
+      "ActivityId": "6bbb5138-26c3-4572-94d4-25bcdace075c",
+      "ServiceNamespace": "ecs",
+      "ResourceId": "service/n12281212-strobe-a2/a3-n12281212-unframe-worker",
+      "ScalableDimension": "ecs:service:DesiredCount",
+      "Description": "Setting desired count to 2.",
+      "Cause": "monitor alarm TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmLow-18a6f57d-4b3d-4a15-b8a6-c78ee1cabc5f in state ALARM triggered policy unframe-sqs-backlog",
+      "StartTime": "2026-10-31T18:29:35.529000+10:00",
+      "EndTime": "2026-10-31T18:30:09.340000+10:00",
+      "StatusCode": "Successful",
+      "StatusMessage": "Successfully set desired count to 2. Change successfully fulfilled by ecs."
+    },
+    {
+      "ActivityId": "8978998f-05aa-45d6-aa7b-eedbd240453b",
+      "ServiceNamespace": "ecs",
+      "ResourceId": "service/n12281212-strobe-a2/a3-n12281212-unframe-worker",
+      "ScalableDimension": "ecs:service:DesiredCount",
+      "Description": "Setting desired count to 1.",
+      "Cause": "monitor alarm TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmLow-18a6f57d-4b3d-4a15-b8a6-c78ee1cabc5f in state ALARM triggered policy unframe-sqs-backlog",
+      "StartTime": "2026-10-31T18:32:35.511000+10:00",
+      "EndTime": "2026-10-31T18:33:11.295000+10:00",
+      "StatusCode": "Successful",
+      "StatusMessage": "Successfully set desired count to 1. Change successfully fulfilled by ecs."
+    }
+  ],
+  "runningTransitions": [
+    {
+      "at": "2026-10-31T08:06:07.493Z",
+      "running": 1,
+      "desired": 1
+    },
+    {
+      "at": "2026-10-31T08:12:15.317Z",
+      "running": 3,
+      "desired": 3
+    },
+    {
+      "at": "2026-10-31T08:29:56.083Z",
+      "running": 2,
+      "desired": 2
+    },
+    {
+      "at": "2026-10-31T08:32:56.047Z",
+      "running": 1,
+      "desired": 1
+    }
+  ],
+  "otherActivities": [
+    {
+      "ActivityId": "6bbb5138-26c3-4572-94d4-25bcdace075c",
+      "ServiceNamespace": "ecs",
+      "ResourceId": "service/n12281212-strobe-a2/a3-n12281212-unframe-worker",
+      "ScalableDimension": "ecs:service:DesiredCount",
+      "Description": "Setting desired count to 2.",
+      "Cause": "monitor alarm TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmLow-18a6f57d-4b3d-4a15-b8a6-c78ee1cabc5f in state ALARM triggered policy unframe-sqs-backlog",
+      "StartTime": "2026-10-31T18:29:35.529000+10:00",
+      "EndTime": "2026-10-31T18:30:09.340000+10:00",
+      "StatusCode": "Successful",
+      "StatusMessage": "Successfully set desired count to 2. Change successfully fulfilled by ecs."
+    },
+    {
+      "ActivityId": "78e3d6f8-3c96-496f-a596-cbb0e69df154",
+      "ServiceNamespace": "ecs",
+      "ResourceId": "service/n12281212-strobe-a2/a3-n12281212-unframe-worker",
+      "ScalableDimension": "ecs:service:DesiredCount",
+      "Description": "Attempting to scale due to alarm triggered",
+      "Cause": "monitor alarm TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmHigh-bd150a38-aa09-489f-9726-d0ba56e37c83 in state ALARM triggered policy unframe-sqs-backlog",
+      "StartTime": "2026-10-31T18:12:05.938000+10:00",
+      "StatusCode": "Failed",
+      "NotScaledReasons": [
+        {
+          "Code": "AlreadyAtMaxCapacity",
+          "MaxCapacity": 3
+        }
+      ]
+    }
+  ],
+  "finalSample": {
+    "at": "2026-10-31T08:32:56.047Z",
+    "desired": 1,
+    "running": 1,
+    "pending": 0,
+    "queue": {
+      "visible": 0,
+      "inflight": 0,
+      "delayed": 0
+    },
+    "dlq": {
+      "visible": 3,
+      "inflight": 0,
+      "delayed": 0
+    },
+    "health": [
+      {
+        "taskArn": "arn:aws:ecs:ap-southeast-2:901444280953:task/n12281212-strobe-a2/9e358b2881884eb1bb39f74dd293307e",
+        "status": "RUNNING",
+        "health": "HEALTHY",
+        "taskDefinition": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:6",
+        "cpu": "512",
+        "memory": "2048",
+        "startedAt": "2026-10-31T18:12:04.490000+10:00",
+        "containers": [
+          {
+            "name": "unframe-worker",
+            "health": "HEALTHY",
+            "imageDigest": "sha256:a0e14f0a51d37614f8ca567abdeb19f0f9edb1d0837413c85f1ead7ba9ceb258"
+          },
+          {
+            "name": "aws-guardduty-agent-is6guPj",
+            "health": "UNKNOWN",
+            "imageDigest": "sha256:694927b5f7ee005b25d725fb8a0a2e86c72ccfe967cec6386574e608ceb1777b"
+          }
+        ]
+      }
+    ],
+    "newServiceEvents": [
+      {
+        "id": "069e2d26-9a4d-4030-ac49-69a7d08c2c3b",
+        "createdAt": "2026-10-31T18:32:45.412000+10:00",
+        "message": "(service a3-n12281212-unframe-worker) has stopped 1 running tasks: (task 619534e3312c409b908b3ee8a1058d3a)."
+      },
+      {
+        "id": "db924e7f-3210-4c2a-b200-6c1cddbb9845",
+        "createdAt": "2026-10-31T18:29:55.623000+10:00",
+        "message": "(service a3-n12281212-unframe-worker) has reached a steady state."
+      },
+      {
+        "id": "eb2fcb56-dc26-42cd-9c98-a96df7deba04",
+        "createdAt": "2026-10-31T18:29:46.411000+10:00",
+        "message": "(service a3-n12281212-unframe-worker) has stopped 1 running tasks: (task 14d226de342f4ebb95672558bd499a7b)."
+      },
+      {
+        "id": "13e0731f-5668-4056-96c1-70854eb0d77a",
+        "createdAt": "2026-10-31T18:13:12.478000+10:00",
+        "message": "(service a3-n12281212-unframe-worker) has reached a steady state."
+      },
+      {
+        "id": "b4a174a3-54b7-4fed-b319-c37242cc33c0",
+        "createdAt": "2026-10-31T18:11:10.822000+10:00",
+        "message": "(service a3-n12281212-unframe-worker) has started 2 tasks: (task 619534e3312c409b908b3ee8a1058d3a) (task 9e358b2881884eb1bb39f74dd293307e)."
+      }
+    ],
+    "created": 883,
+    "succeeded": 883,
+    "correct": 883,
+    "stopReason": "RUNNING_SCALE_OUT_OBSERVED"
+  },
+  "unexpectedStoppedTasks": [],
+  "stoppedTasks": [
+    {
+      "taskArn": "arn:aws:ecs:ap-southeast-2:901444280953:task/n12281212-strobe-a2/14d226de342f4ebb95672558bd499a7b",
+      "taskDefinition": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:6",
+      "startedAt": "2026-10-31T17:00:16.995000+10:00",
+      "stoppedAt": "2026-10-31T18:30:21.242000+10:00",
+      "stopCode": "ServiceSchedulerInitiated",
+      "stoppedReason": "Scaling activity initiated by (deployment ecs-svc/0247050502470215559)",
+      "containers": [
+        {
+          "name": "unframe-worker",
+          "exitCode": 0,
+          "reason": null
+        },
+        {
+          "name": "aws-guardduty-agent-is6guPj",
+          "exitCode": 0,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "taskArn": "arn:aws:ecs:ap-southeast-2:901444280953:task/n12281212-strobe-a2/619534e3312c409b908b3ee8a1058d3a",
+      "taskDefinition": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:6",
+      "startedAt": "2026-10-31T18:12:03.836000+10:00",
+      "stoppedAt": "2026-10-31T18:33:21.887000+10:00",
+      "stopCode": "ServiceSchedulerInitiated",
+      "stoppedReason": "Scaling activity initiated by (deployment ecs-svc/0247050502470215559)",
+      "containers": [
+        {
+          "name": "unframe-worker",
+          "exitCode": 0,
+          "reason": null
+        },
+        {
+          "name": "aws-guardduty-agent-is6guPj",
+          "exitCode": 0,
+          "reason": null
+        }
+      ]
+    }
+  ],
+  "cpuRange": [
+    1.4109396735827129,
+    96.01224958896637
+  ],
+  "memoryRange": [
+    25.59769241898148,
+    43.636067708333336
+  ],
+  "F14": "PASS",
+  "F15": "PASS",
+  "F16": "PASS",
+  "estimatedCost": {
+    "currency": "USD",
+    "observedRunningTaskHours": 1.0861250000000005,
+    "computeAndIPv4FromSampledRunningTime": 0.04335811000000001,
+    "extraComputeAndIPv4AboveOneTask": 0.02552103342222224,
+    "conservativePlannedTotal": 0.1156043716860516,
+    "caveat": "Sampled running time excludes some provisioning/image-pull and stopping time. Total is a pre-run cost scenario, not billing. Requests, monitoring, retries and taxes vary."
+  },
+  "limits": {
+    "maxSubmitted": 900,
+    "maxCreateDurationSeconds": 300,
+    "maxWorkers": 3,
+    "maxObservationMinutes": 40,
+    "actualMaxWorkers": 3
+  },
+  "note": "No manually adjusted DesiredCount, synthetic metrics, new worker deployment, IAM changes or DLQ changes. Max 3 is the requested new baseline, not a temporary setting."
+}

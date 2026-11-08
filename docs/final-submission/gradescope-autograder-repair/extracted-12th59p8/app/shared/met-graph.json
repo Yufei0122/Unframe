@@ -1,0 +1,32 @@
+{
+  "demo": true,
+  "description": "Illustrative floor 1 only. Positions, distances and accessibility are demo data, not The Met navigation guidance.",
+  "nodes": [
+    { "id": "entrance", "label": "Entrance", "x": 53, "y": 92, "floor": "1" },
+    { "id": "great-hall", "label": "The Great Hall", "x": 53, "y": 55, "floor": "1" },
+    { "id": "european-paintings", "label": "European Paintings", "x": 53, "y": 23, "floor": "1" },
+    { "id": "water-lilies", "label": "Water Lilies", "x": 41, "y": 11, "floor": "1", "galleryId": "european-paintings" },
+    { "id": "the-harvesters", "label": "The Harvesters", "x": 53, "y": 11, "floor": "1", "galleryId": "european-paintings" },
+    { "id": "the-dancing-class", "label": "The Dancing Class", "x": 63, "y": 11, "floor": "1", "galleryId": "european-paintings" },
+    { "id": "wheat-field-with-cypresses", "label": "Wheat Field with Cypresses", "x": 40, "y": 6, "floor": "1", "galleryId": "european-paintings" },
+    { "id": "young-woman-with-a-water-pitcher", "label": "Young Woman with a Water Pitcher", "x": 49, "y": 6, "floor": "1", "galleryId": "european-paintings" },
+    { "id": "the-card-players", "label": "The Card Players", "x": 60, "y": 6, "floor": "1", "galleryId": "european-paintings" },
+    { "id": "madame-charpentier-and-her-children", "label": "Madame Georges Charpentier and Her Children", "x": 40, "y": 16, "floor": "1", "galleryId": "european-paintings" },
+    { "id": "self-portrait-with-a-straw-hat", "label": "Self-Portrait with a Straw Hat", "x": 62, "y": 16, "floor": "1", "galleryId": "european-paintings" }
+  ],
+  "edges": [
+    { "from": "entrance", "to": "great-hall", "distance": 35, "estimatedSeconds": 50, "accessible": true },
+    { "from": "great-hall", "to": "european-paintings", "distance": 25, "estimatedSeconds": 40, "accessible": true },
+    { "from": "european-paintings", "to": "water-lilies", "distance": 12, "estimatedSeconds": 20, "accessible": true },
+    { "from": "european-paintings", "to": "the-harvesters", "distance": 10, "estimatedSeconds": 15, "accessible": true },
+    { "from": "european-paintings", "to": "the-dancing-class", "distance": 14, "estimatedSeconds": 22, "accessible": true },
+    { "from": "water-lilies", "to": "the-harvesters", "distance": 8, "estimatedSeconds": 12, "accessible": true },
+    { "from": "the-harvesters", "to": "the-dancing-class", "distance": 9, "estimatedSeconds": 14, "accessible": true },
+    { "from": "water-lilies", "to": "wheat-field-with-cypresses", "distance": 8, "estimatedSeconds": 12, "accessible": true },
+    { "from": "wheat-field-with-cypresses", "to": "young-woman-with-a-water-pitcher", "distance": 10, "estimatedSeconds": 15, "accessible": true },
+    { "from": "young-woman-with-a-water-pitcher", "to": "the-card-players", "distance": 9, "estimatedSeconds": 14, "accessible": true },
+    { "from": "the-card-players", "to": "the-dancing-class", "distance": 8, "estimatedSeconds": 12, "accessible": true },
+    { "from": "water-lilies", "to": "madame-charpentier-and-her-children", "distance": 7, "estimatedSeconds": 11, "accessible": true },
+    { "from": "the-dancing-class", "to": "self-portrait-with-a-straw-hat", "distance": 7, "estimatedSeconds": 11, "accessible": true }
+  ]
+}

@@ -1,0 +1,29 @@
+export const museumImages = {
+  met: require('../assets/met-exterior.jpg'),
+  goma: require('../assets/goma-exterior.jpg'),
+  qut: require('../assets/qut-gallery.png'),
+};
+
+export const images: Record<string, number> = {
+  'qut-river-rhythm': require('../assets/qut-river-rhythm.png'),
+  'qut-soft-architecture': require('../assets/qut-soft-architecture.png'),
+  'qut-between-places': require('../assets/qut-between-places.png'),
+  'goma-obliteration-room': require('../assets/goma-obliteration-room.jpg'),
+  'goma-in-bed': require('../assets/goma-in-bed.jpg'),
+  'goma-heritage': require('../assets/goma-heritage.jpg'),
+  'goma-soul-under-the-moon': require('../assets/goma-soul-under-the-moon.jpg'),
+  'water-lilies': require('../assets/water-lilies.jpg'),
+  'the-harvesters': require('../assets/the-harvesters.jpg'),
+  'the-dancing-class': require('../assets/the-dancing-class.jpg'),
+  'wheat-field-with-cypresses': require('../assets/wheat-field-with-cypresses.jpg'),
+  'young-woman-with-a-water-pitcher': require('../assets/young-woman-with-a-water-pitcher.jpg'),
+  'the-card-players': require('../assets/the-card-players.jpg'),
+  'madame-charpentier-and-her-children': require('../assets/madame-charpentier-and-her-children.jpg'),
+  'self-portrait-with-a-straw-hat': require('../assets/self-portrait-with-a-straw-hat.jpg'),
+  riverlight: require('../assets/riverlight.png'),
+  'soft-form': require('../assets/soft-form.png'),
+  'blue-hour': require('../assets/blue-hour.png'),
+  'quiet-geometry': require('../assets/quiet-geometry.png'),
+  'botanical-notes': require('../assets/botanical-notes.png'),
+  afterimage: require('../assets/afterimage.png'),
+};

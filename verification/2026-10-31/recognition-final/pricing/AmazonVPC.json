@@ -1,0 +1,67 @@
+{
+  "source": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonVPC/current/ap-southeast-2/index.json",
+  "retrievedAt": "2026-10-31T06:55:14.564Z",
+  "publicationDate": "2026-10-16T22:43:21Z",
+  "rates": [
+    {
+      "sku": "39Q94ABY2SWG3WP7",
+      "attributes": {
+        "servicecode": "AmazonVPC",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "group": "VPCIPv4ContiguousBlocks",
+        "groupDescription": "Hourly charge for IPv4 address in a contiguous block of IPv4 address",
+        "usagetype": "APS2-PublicIPv4:ContiguousBlock",
+        "operation": "ProvisionIpamPoolCidr",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon Virtual Private Cloud"
+      },
+      "description": "$0.008 per hour per IPv4 address in contiguous IPv4 block",
+      "unit": "Hrs",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.008,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "JZP2PURP9VVQ96GH",
+      "attributes": {
+        "servicecode": "AmazonVPC",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "group": "VPCPublicIPv4Address",
+        "groupDescription": "Hourly charge for In-use Public IPv4 Addresses",
+        "usagetype": "APS2-PublicIPv4:InUseAddress",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon Virtual Private Cloud"
+      },
+      "description": "$0.005 per In-use public IPv4 address per hour",
+      "unit": "Hrs",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.005,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "QY2D8KY5X94X6NEB",
+      "attributes": {
+        "servicecode": "AmazonVPC",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "group": "VPCPublicIPv4Address",
+        "groupDescription": "Hourly charge for Idle Public IPv4 Addresses",
+        "usagetype": "APS2-PublicIPv4:IdleAddress",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon Virtual Private Cloud"
+      },
+      "description": "$0.005 per Idle public IPv4 address per hour",
+      "unit": "Hrs",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.005,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    }
+  ]
+}

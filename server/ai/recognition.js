@@ -2,15 +2,21 @@ import { AIError, logFailure, requireInput } from './config.js';
 import { cosineSimilarity } from './embeddings.js';
 import { detectArtwork } from './artwork-detection.js';
 export const MAX_RECOGNITION_CANDIDATES = 3;
-export function createRecognitionService({ config, embeddings, store, ollama, collection }) {
+export function createRecognitionService({ config, embeddings, store, ollama, collection, museumId }) {
   return { async recognise(image, signal) {
     if (!collection.length) throw new AIError(503, 'EMPTY_COLLECTION', 'No artworks are available in this collection.');
-    const records = (await store.load()).filter(r => collection.some(a => a.id === r.artworkId));
-    if (!records.length) throw new AIError(503, 'EMPTY_INDEX', 'No indexed artworks are available. Run npm run ai:index.');
+    // Local fallback keeps the original pre-inference index validation.
+    const records = store.search ? null : (await store.load()).filter(r => collection.some(a => a.id === r.artworkId));
+    if (records && !records.length) throw new AIError(503, 'EMPTY_INDEX', 'No indexed artworks are available. Run npm run ai:index.');
+    if (store.search && !museumId) throw new Error('museumId is required for remote recognition');
     const query = await embeddings.generate(image, signal);
+    const ranked = store.search ? await store.search(query, { museumId, topK: Math.min(100, collection.length), signal })
+      : records.map(record => ({ ...record, similarity: cosineSimilarity(query, record.vector) }));
+    if (!ranked.length) throw new AIError(503, 'EMPTY_INDEX', 'No indexed artworks are available for this museum and index version.');
     const scores = new Map();
-    for (const record of records) {
-      const similarity = cosineSimilarity(query, record.vector);
+    for (const record of ranked) {
+      if (!collection.some(a => a.id === record.artworkId)) continue;
+      const similarity = record.similarity;
       scores.set(record.artworkId, Math.max(scores.get(record.artworkId) ?? -1, similarity));
     }
     // A similarity score is a retrieval signal, not a probability or a confirmed identity.

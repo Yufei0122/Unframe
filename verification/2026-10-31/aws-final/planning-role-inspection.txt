@@ -1,0 +1,13 @@
+aws : 
+所在位置 行:2 字符: 1270
++ ... arms.json"; aws iam list-attached-role-policies --role-name CAB432-La ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+aws: [ERROR]: An error occurred (AccessDenied) when calling the ListAttachedRolePolicies operation: User: arn:aws:sts::
+901444280953:assumed-role/AWSReservedSSO_CAB432-STUDENT_f2baa6a2ba3c79c9/n12281212@qut.edu.au is not authorized to perf
+orm: iam:ListAttachedRolePolicies on resource: role CAB432-Lambda-Role because no identity-based policy allows the iam:
+ListAttachedRolePolicies action. Go to https://us-east-1.console.aws.amazon.com/iam/home?region=us-east-1#/authorizatio
+n-details/c819iuvmwtnn3ikj5oqaaqz05 for complete details, or call the GetRequestAuthorizationDetails API with the follo
+wing authorization id: c819iuvmwtnn3ikj5oqaaqz05

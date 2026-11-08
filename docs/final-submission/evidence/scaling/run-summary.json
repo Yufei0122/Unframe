@@ -1,0 +1,91 @@
+{
+  "startedAt": "2026-10-31T08:05:58.875Z",
+  "endedAt": "2026-10-31T08:32:56.054Z",
+  "loadResult": {
+    "attempted": 883,
+    "created": 883,
+    "uploaded": 883,
+    "failed": 0,
+    "elapsedMs": 300115,
+    "stopped": false,
+    "note": "Uploads alone do not prove completion or scaling."
+  },
+  "stopReason": "RUNNING_SCALE_OUT_OBSERVED",
+  "created": 883,
+  "succeeded": 883,
+  "correct": 883,
+  "sawRunningOut": true,
+  "peakObservedVisible": 337,
+  "peakObservedRunning": 3,
+  "finalSample": {
+    "at": "2026-10-31T08:32:56.047Z",
+    "desired": 1,
+    "running": 1,
+    "pending": 0,
+    "queue": {
+      "visible": 0,
+      "inflight": 0,
+      "delayed": 0
+    },
+    "dlq": {
+      "visible": 3,
+      "inflight": 0,
+      "delayed": 0
+    },
+    "health": [
+      {
+        "taskArn": "arn:aws:ecs:ap-southeast-2:901444280953:task/n12281212-strobe-a2/9e358b2881884eb1bb39f74dd293307e",
+        "status": "RUNNING",
+        "health": "HEALTHY",
+        "taskDefinition": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:6",
+        "cpu": "512",
+        "memory": "2048",
+        "startedAt": "2026-10-31T18:12:04.490000+10:00",
+        "containers": [
+          {
+            "name": "unframe-worker",
+            "health": "HEALTHY",
+            "imageDigest": "sha256:a0e14f0a51d37614f8ca567abdeb19f0f9edb1d0837413c85f1ead7ba9ceb258"
+          },
+          {
+            "name": "aws-guardduty-agent-is6guPj",
+            "health": "UNKNOWN",
+            "imageDigest": "sha256:694927b5f7ee005b25d725fb8a0a2e86c72ccfe967cec6386574e608ceb1777b"
+          }
+        ]
+      }
+    ],
+    "newServiceEvents": [
+      {
+        "id": "069e2d26-9a4d-4030-ac49-69a7d08c2c3b",
+        "createdAt": "2026-10-31T18:32:45.412000+10:00",
+        "message": "(service a3-n12281212-unframe-worker) has stopped 1 running tasks: (task 619534e3312c409b908b3ee8a1058d3a)."
+      },
+      {
+        "id": "db924e7f-3210-4c2a-b200-6c1cddbb9845",
+        "createdAt": "2026-10-31T18:29:55.623000+10:00",
+        "message": "(service a3-n12281212-unframe-worker) has reached a steady state."
+      },
+      {
+        "id": "eb2fcb56-dc26-42cd-9c98-a96df7deba04",
+        "createdAt": "2026-10-31T18:29:46.411000+10:00",
+        "message": "(service a3-n12281212-unframe-worker) has stopped 1 running tasks: (task 14d226de342f4ebb95672558bd499a7b)."
+      },
+      {
+        "id": "13e0731f-5668-4056-96c1-70854eb0d77a",
+        "createdAt": "2026-10-31T18:13:12.478000+10:00",
+        "message": "(service a3-n12281212-unframe-worker) has reached a steady state."
+      },
+      {
+        "id": "b4a174a3-54b7-4fed-b319-c37242cc33c0",
+        "createdAt": "2026-10-31T18:11:10.822000+10:00",
+        "message": "(service a3-n12281212-unframe-worker) has started 2 tasks: (task 619534e3312c409b908b3ee8a1058d3a) (task 9e358b2881884eb1bb39f74dd293307e)."
+      }
+    ],
+    "created": 883,
+    "succeeded": 883,
+    "correct": 883,
+    "stopReason": "RUNNING_SCALE_OUT_OBSERVED"
+  },
+  "note": "Final F15/F16 verdict requires matching CloudWatch metrics and scaling activities."
+}

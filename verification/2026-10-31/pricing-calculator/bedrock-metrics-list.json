@@ -1,0 +1,85 @@
+{
+  "retrievedAt": "2026-10-31T08:48:24.032Z",
+  "value": [
+    {
+      "Namespace": "AWS/Bedrock",
+      "MetricName": "InvocationServerErrors",
+      "Dimensions": [
+        {
+          "Name": "ModelId",
+          "Value": "google.gemma-3-12b-it"
+        }
+      ]
+    },
+    {
+      "Namespace": "AWS/Bedrock",
+      "MetricName": "InvocationLatency",
+      "Dimensions": [
+        {
+          "Name": "ModelId",
+          "Value": "google.gemma-3-12b-it"
+        }
+      ]
+    },
+    {
+      "Namespace": "AWS/Bedrock",
+      "MetricName": "InvocationClientErrors",
+      "Dimensions": [
+        {
+          "Name": "ModelId",
+          "Value": "google.gemma-3-12b-it"
+        }
+      ]
+    },
+    {
+      "Namespace": "AWS/Bedrock",
+      "MetricName": "Invocations",
+      "Dimensions": [
+        {
+          "Name": "ModelId",
+          "Value": "google.gemma-3-12b-it"
+        }
+      ]
+    },
+    {
+      "Namespace": "AWS/Bedrock",
+      "MetricName": "InputTokenCount",
+      "Dimensions": [
+        {
+          "Name": "ModelId",
+          "Value": "google.gemma-3-12b-it"
+        }
+      ]
+    },
+    {
+      "Namespace": "AWS/Bedrock",
+      "MetricName": "EstimatedTPMQuotaUsage",
+      "Dimensions": [
+        {
+          "Name": "ModelId",
+          "Value": "google.gemma-3-12b-it"
+        }
+      ]
+    },
+    {
+      "Namespace": "AWS/Bedrock",
+      "MetricName": "OutputTokenCount",
+      "Dimensions": [
+        {
+          "Name": "ModelId",
+          "Value": "google.gemma-3-12b-it"
+        }
+      ]
+    },
+    {
+      "Namespace": "AWS/Bedrock",
+      "MetricName": "TimeToFirstToken",
+      "Dimensions": [
+        {
+          "Name": "ModelId",
+          "Value": "google.gemma-3-12b-it"
+        }
+      ]
+    }
+  ]
+}

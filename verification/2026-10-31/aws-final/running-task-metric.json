@@ -1,0 +1,18 @@
+{
+    "Metrics": [
+        {
+            "Namespace": "ECS/ContainerInsights",
+            "MetricName": "RunningTaskCount",
+            "Dimensions": [
+                {
+                    "Name": "ServiceName",
+                    "Value": "a3-n12281212-unframe-worker"
+                },
+                {
+                    "Name": "ClusterName",
+                    "Value": "n12281212-strobe-a2"
+                }
+            ]
+        }
+    ]
+}

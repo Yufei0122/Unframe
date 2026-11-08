@@ -1,0 +1,23 @@
+[
+  {
+    "test": "ai-camera-reports-a-comple-8fa4f-tly-repeating-an-empty-scan",
+    "method": "POST",
+    "status": -1,
+    "failure": null,
+    "path": "/a3/jobs"
+  },
+  {
+    "test": "ai-live-recognition-submit-a3095-ndidate-before-confirmation",
+    "method": "POST",
+    "status": -1,
+    "failure": null,
+    "path": "/a3/jobs"
+  },
+  {
+    "test": "ai-Scan-starts-automatical-5e012-r-and-keeps-the-map-on-Home",
+    "method": "POST",
+    "status": -1,
+    "failure": null,
+    "path": "/a3/jobs"
+  }
+]

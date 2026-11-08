@@ -1,0 +1,18 @@
+{
+  "retrievedAt": "2026-10-31T08:48:15.875Z",
+  "value": {
+    "functionName": "a3-n12281212-unframe-jobs",
+    "runtime": "nodejs22.x",
+    "memoryMiB": 128,
+    "architecture": [
+      "x86_64"
+    ],
+    "timeout": 3,
+    "ephemeralStorage": {
+      "Size": 512
+    },
+    "tracing": {
+      "Mode": "PassThrough"
+    }
+  }
+}

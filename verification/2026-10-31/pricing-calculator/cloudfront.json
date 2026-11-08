@@ -1,0 +1,96 @@
+{
+  "retrievedAt": "2026-10-31T08:48:21.729Z",
+  "value": {
+    "id": "E2CK5412ICFTJX",
+    "priceClass": "PriceClass_100",
+    "origins": {
+      "Quantity": 1,
+      "Items": [
+        {
+          "Id": "unframe-static",
+          "DomainName": "a3-n12281212-unframe-web.s3.ap-southeast-2.amazonaws.com",
+          "OriginPath": "",
+          "CustomHeaders": {
+            "Quantity": 0
+          },
+          "S3OriginConfig": {
+            "OriginAccessIdentity": "",
+            "OriginReadTimeout": 30
+          },
+          "ConnectionAttempts": 3,
+          "ConnectionTimeout": 10,
+          "OriginShield": {
+            "Enabled": false
+          },
+          "OriginAccessControlId": ""
+        }
+      ]
+    },
+    "defaultBehavior": {
+      "TargetOriginId": "unframe-static",
+      "TrustedSigners": {
+        "Enabled": false,
+        "Quantity": 0
+      },
+      "TrustedKeyGroups": {
+        "Enabled": false,
+        "Quantity": 0
+      },
+      "ViewerProtocolPolicy": "redirect-to-https",
+      "AllowedMethods": {
+        "Quantity": 2,
+        "Items": [
+          "HEAD",
+          "GET"
+        ],
+        "CachedMethods": {
+          "Quantity": 2,
+          "Items": [
+            "HEAD",
+            "GET"
+          ]
+        }
+      },
+      "SmoothStreaming": false,
+      "Compress": true,
+      "LambdaFunctionAssociations": {
+        "Quantity": 0
+      },
+      "FunctionAssociations": {
+        "Quantity": 0
+      },
+      "FieldLevelEncryptionId": "",
+      "GrpcConfig": {
+        "Enabled": false
+      },
+      "ForwardedValues": {
+        "QueryString": false,
+        "Cookies": {
+          "Forward": "none"
+        },
+        "Headers": {
+          "Quantity": 0
+        },
+        "QueryStringCacheKeys": {
+          "Quantity": 0
+        }
+      },
+      "MinTTL": 0,
+      "DefaultTTL": 300,
+      "MaxTTL": 86400
+    },
+    "cacheBehaviors": {
+      "Quantity": 0
+    },
+    "logging": {
+      "Enabled": false,
+      "IncludeCookies": false,
+      "Bucket": "",
+      "Prefix": ""
+    },
+    "webAcl": "",
+    "aliases": {
+      "Quantity": 0
+    }
+  }
+}

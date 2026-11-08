@@ -1,0 +1,3088 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "scope": "Real OpenCLIP and production worker entrypoint; all AWS SDK sends mocked; network disabled",
+  "threads": "1",
+  "startupMs": 53987,
+  "elapsedMs": 103189,
+  "completed": 12,
+  "healthChecks": 15,
+  "memoryPeakBytes": 1537060864,
+  "inferenceMemoryPeak": 1490587648,
+  "pythonRssPeak": 1554141184,
+  "nodeRssPeak": 124936192,
+  "pythonAnonPeak": 867192832,
+  "pythonFilePeak": 686948352,
+  "memoryStat": {
+    "anon": 65413120,
+    "file": 605679616,
+    "kernel": 25632768,
+    "kernel_stack": 180224,
+    "pagetables": 1359872,
+    "sec_pagetables": 0,
+    "percpu": 5656,
+    "sock": 0,
+    "vmalloc": 12288,
+    "shmem": 0,
+    "file_mapped": 212992,
+    "file_dirty": 0,
+    "file_writeback": 0,
+    "swapcached": 0,
+    "anon_thp": 0,
+    "file_thp": 0,
+    "shmem_thp": 0,
+    "inactive_anon": 65404928,
+    "active_anon": 4096,
+    "inactive_file": 500920320,
+    "active_file": 104759296,
+    "unevictable": 0,
+    "slab_reclaimable": 21181160,
+    "slab_unreclaimable": 382464,
+    "slab": 21563624,
+    "workingset_refault_anon": 0,
+    "workingset_refault_file": 26160,
+    "workingset_activate_anon": 0,
+    "workingset_activate_file": 26160,
+    "workingset_restore_anon": 0,
+    "workingset_restore_file": 52,
+    "workingset_nodereclaim": 0,
+    "pgscan": 31657,
+    "pgsteal": 26108,
+    "pgscan_kswapd": 31657,
+    "pgscan_direct": 0,
+    "pgscan_khugepaged": 0,
+    "pgsteal_kswapd": 26108,
+    "pgsteal_direct": 0,
+    "pgsteal_khugepaged": 0,
+    "pgfault": 461126,
+    "pgmajfault": 14,
+    "pgrefill": 609,
+    "pgactivate": 11,
+    "pgdeactivate": 609,
+    "pglazyfree": 0,
+    "pglazyfreed": 0,
+    "thp_fault_alloc": 0,
+    "thp_collapse_alloc": 0
+  },
+  "memoryEvents": {
+    "low": 0,
+    "high": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_kill": 0,
+    "oom_group_kill": 0
+  },
+  "cpuUsageUsec": 34499998,
+  "cpuPercentOneCore": 33.43379429978002,
+  "cpu": {
+    "usage_usec": 41949326,
+    "user_usec": 20140388,
+    "system_usec": 21808938,
+    "nr_periods": 988,
+    "nr_throttled": 832,
+    "throttled_usec": 60838912,
+    "nr_bursts": 0,
+    "burst_usec": 0
+  },
+  "measurements": [
+    {
+      "jobId": "12345678-1234-4234-8234-000000000000",
+      "museumId": "met",
+      "large": false,
+      "durationMs": 1801,
+      "cpuUsec": 889847,
+      "memoryBytes": 1449402368,
+      "candidates": [
+        {
+          "artworkId": "water-lilies",
+          "similarity": 0.9999999999996751
+        }
+      ]
+    },
+    {
+      "jobId": "12345678-1234-4234-8234-000000000001",
+      "museumId": "goma",
+      "large": false,
+      "durationMs": 710,
+      "cpuUsec": 362288,
+      "memoryBytes": 1456934912,
+      "candidates": []
+    },
+    {
+      "jobId": "12345678-1234-4234-8234-000000000002",
+      "museumId": "met",
+      "large": false,
+      "durationMs": 692,
+      "cpuUsec": 338298,
+      "memoryBytes": 1460359168,
+      "candidates": [
+        {
+          "artworkId": "water-lilies",
+          "similarity": 0.9999999999996751
+        }
+      ]
+    },
+    {
+      "jobId": "12345678-1234-4234-8234-000000000003",
+      "museumId": "met",
+      "large": false,
+      "durationMs": 1418,
+      "cpuUsec": 710177,
+      "memoryBytes": 1460199424,
+      "candidates": [
+        {
+          "artworkId": "water-lilies",
+          "similarity": 0.9999999999996751
+        }
+      ]
+    },
+    {
+      "jobId": "12345678-1234-4234-8234-000000000004",
+      "museumId": "met",
+      "large": false,
+      "durationMs": 703,
+      "cpuUsec": 347585,
+      "memoryBytes": 1462239232,
+      "candidates": [
+        {
+          "artworkId": "water-lilies",
+          "similarity": 0.9999999999996751
+        }
+      ]
+    },
+    {
+      "jobId": "12345678-1234-4234-8234-000000000005",
+      "museumId": "met",
+      "large": false,
+      "durationMs": 578,
+      "cpuUsec": 271198,
+      "memoryBytes": 1463738368,
+      "candidates": [
+        {
+          "artworkId": "water-lilies",
+          "similarity": 0.9999999999996751
+        }
+      ]
+    },
+    {
+      "jobId": "12345678-1234-4234-8234-000000000006",
+      "museumId": "met",
+      "large": false,
+      "durationMs": 666,
+      "cpuUsec": 314216,
+      "memoryBytes": 1462558720,
+      "candidates": [
+        {
+          "artworkId": "water-lilies",
+          "similarity": 0.9999999999996751
+        }
+      ]
+    },
+    {
+      "jobId": "12345678-1234-4234-8234-000000000007",
+      "museumId": "met",
+      "large": false,
+      "durationMs": 623,
+      "cpuUsec": 317230,
+      "memoryBytes": 1465163776,
+      "candidates": [
+        {
+          "artworkId": "water-lilies",
+          "similarity": 0.9999999999996751
+        }
+      ]
+    },
+    {
+      "jobId": "12345678-1234-4234-8234-000000000008",
+      "museumId": "met",
+      "large": false,
+      "durationMs": 596,
+      "cpuUsec": 294529,
+      "memoryBytes": 1469263872,
+      "candidates": [
+        {
+          "artworkId": "water-lilies",
+          "similarity": 0.9999999999996751
+        }
+      ]
+    },
+    {
+      "jobId": "12345678-1234-4234-8234-000000000009",
+      "museumId": "met",
+      "large": false,
+      "durationMs": 523,
+      "cpuUsec": 271867,
+      "memoryBytes": 1468096512,
+      "candidates": [
+        {
+          "artworkId": "water-lilies",
+          "similarity": 0.9999999999996751
+        }
+      ]
+    },
+    {
+      "jobId": "12345678-1234-4234-8234-000000000010",
+      "museumId": "met",
+      "large": false,
+      "durationMs": 511,
+      "cpuUsec": 260540,
+      "memoryBytes": 1470562304,
+      "candidates": [
+        {
+          "artworkId": "water-lilies",
+          "similarity": 0.9999999999996751
+        }
+      ]
+    },
+    {
+      "jobId": "12345678-1234-4234-8234-000000000011",
+      "museumId": "met",
+      "large": false,
+      "durationMs": 611,
+      "cpuUsec": 311702,
+      "memoryBytes": 1469722624,
+      "candidates": [
+        {
+          "artworkId": "water-lilies",
+          "similarity": 0.9999999999996751
+        }
+      ]
+    }
+  ],
+  "queries": [
+    {
+      "jobId": "12345678-1234-4234-8234-000000000000",
+      "fields": {
+        "model": "ViT-B-32",
+        "pretrained": "laion2b_s34b_b79k",
+        "version": "openclip-v1",
+        "catalogueHash": "c0a114cab28bd664b597857e4685491f5209119767ae36a40462014a507ec241",
+        "museumId": "met"
+      },
+      "norm": 1.0000000023282216,
+      "top": [
+        {
+          "artworkId": "water-lilies",
+          "similarity": 0.9999999999996751
+        },
+        {
+          "artworkId": "wheat-field-with-cypresses",
+          "similarity": 0.6678415058150996
+        },
+        {
+          "artworkId": "self-portrait-with-a-straw-hat",
+          "similarity": 0.5927224260048973
+        }
+      ]
+    },
+    {
+      "jobId": "12345678-1234-4234-8234-000000000001",
+      "fields": {
+        "model": "ViT-B-32",
+        "pretrained": "laion2b_s34b_b79k",
+        "version": "openclip-v1",
+        "catalogueHash": "c0a114cab28bd664b597857e4685491f5209119767ae36a40462014a507ec241",
+        "museumId": "goma"
+      },
+      "norm": 1.0000000023282216,
+      "top": [
+        {
+          "artworkId": "goma-heritage",
+          "similarity": 0.38865213519442454
+        },
+        {
+          "artworkId": "goma-obliteration-room",
+          "similarity": 0.27105129514244997
+        },
+        {
+          "artworkId": "goma-soul-under-the-moon",
+          "similarity": 0.2551508947392226
+        }
+      ]
+    },
+    {
+      "jobId": "12345678-1234-4234-8234-000000000002",
+      "fields": {
+        "model": "ViT-B-32",
+        "pretrained": "laion2b_s34b_b79k",
+        "version": "openclip-v1",
+        "catalogueHash": "c0a114cab28bd664b597857e4685491f5209119767ae36a40462014a507ec241",
+        "museumId": "met"
+      },
+      "norm": 1.0000000023282216,
+      "top": [
+        {
+          "artworkId": "water-lilies",
+          "similarity": 0.9999999999996751
+        },
+        {
+          "artworkId": "wheat-field-with-cypresses",
+          "similarity": 0.6678415058150996
+        },
+        {
+          "artworkId": "self-portrait-with-a-straw-hat",
+          "similarity": 0.5927224260048973
+        }
+      ]
+    },
+    {
+      "jobId": "12345678-1234-4234-8234-000000000003",
+      "fields": {
+        "model": "ViT-B-32",
+        "pretrained": "laion2b_s34b_b79k",
+        "version": "openclip-v1",
+        "catalogueHash": "c0a114cab28bd664b597857e4685491f5209119767ae36a40462014a507ec241",
+        "museumId": "met"
+      },
+      "norm": 1.0000000023282216,
+      "top": [
+        {
+          "artworkId": "water-lilies",
+          "similarity": 0.9999999999996751
+        },
+        {
+          "artworkId": "wheat-field-with-cypresses",
+          "similarity": 0.6678415058150996
+        },
+        {
+          "artworkId": "self-portrait-with-a-straw-hat",
+          "similarity": 0.5927224260048973
+        }
+      ]
+    },
+    {
+      "jobId": "12345678-1234-4234-8234-000000000004",
+      "fields": {
+        "model": "ViT-B-32",
+        "pretrained": "laion2b_s34b_b79k",
+        "version": "openclip-v1",
+        "catalogueHash": "c0a114cab28bd664b597857e4685491f5209119767ae36a40462014a507ec241",
+        "museumId": "met"
+      },
+      "norm": 1.0000000023282216,
+      "top": [
+        {
+          "artworkId": "water-lilies",
+          "similarity": 0.9999999999996751
+        },
+        {
+          "artworkId": "wheat-field-with-cypresses",
+          "similarity": 0.6678415058150996
+        },
+        {
+          "artworkId": "self-portrait-with-a-straw-hat",
+          "similarity": 0.5927224260048973
+        }
+      ]
+    },
+    {
+      "jobId": "12345678-1234-4234-8234-000000000005",
+      "fields": {
+        "model": "ViT-B-32",
+        "pretrained": "laion2b_s34b_b79k",
+        "version": "openclip-v1",
+        "catalogueHash": "c0a114cab28bd664b597857e4685491f5209119767ae36a40462014a507ec241",
+        "museumId": "met"
+      },
+      "norm": 1.0000000023282216,
+      "top": [
+        {
+          "artworkId": "water-lilies",
+          "similarity": 0.9999999999996751
+        },
+        {
+          "artworkId": "wheat-field-with-cypresses",
+          "similarity": 0.6678415058150996
+        },
+        {
+          "artworkId": "self-portrait-with-a-straw-hat",
+          "similarity": 0.5927224260048973
+        }
+      ]
+    },
+    {
+      "jobId": "12345678-1234-4234-8234-000000000006",
+      "fields": {
+        "model": "ViT-B-32",
+        "pretrained": "laion2b_s34b_b79k",
+        "version": "openclip-v1",
+        "catalogueHash": "c0a114cab28bd664b597857e4685491f5209119767ae36a40462014a507ec241",
+        "museumId": "met"
+      },
+      "norm": 1.0000000023282216,
+      "top": [
+        {
+          "artworkId": "water-lilies",
+          "similarity": 0.9999999999996751
+        },
+        {
+          "artworkId": "wheat-field-with-cypresses",
+          "similarity": 0.6678415058150996
+        },
+        {
+          "artworkId": "self-portrait-with-a-straw-hat",
+          "similarity": 0.5927224260048973
+        }
+      ]
+    },
+    {
+      "jobId": "12345678-1234-4234-8234-000000000007",
+      "fields": {
+        "model": "ViT-B-32",
+        "pretrained": "laion2b_s34b_b79k",
+        "version": "openclip-v1",
+        "catalogueHash": "c0a114cab28bd664b597857e4685491f5209119767ae36a40462014a507ec241",
+        "museumId": "met"
+      },
+      "norm": 1.0000000023282216,
+      "top": [
+        {
+          "artworkId": "water-lilies",
+          "similarity": 0.9999999999996751
+        },
+        {
+          "artworkId": "wheat-field-with-cypresses",
+          "similarity": 0.6678415058150996
+        },
+        {
+          "artworkId": "self-portrait-with-a-straw-hat",
+          "similarity": 0.5927224260048973
+        }
+      ]
+    },
+    {
+      "jobId": "12345678-1234-4234-8234-000000000008",
+      "fields": {
+        "model": "ViT-B-32",
+        "pretrained": "laion2b_s34b_b79k",
+        "version": "openclip-v1",
+        "catalogueHash": "c0a114cab28bd664b597857e4685491f5209119767ae36a40462014a507ec241",
+        "museumId": "met"
+      },
+      "norm": 1.0000000023282216,
+      "top": [
+        {
+          "artworkId": "water-lilies",
+          "similarity": 0.9999999999996751
+        },
+        {
+          "artworkId": "wheat-field-with-cypresses",
+          "similarity": 0.6678415058150996
+        },
+        {
+          "artworkId": "self-portrait-with-a-straw-hat",
+          "similarity": 0.5927224260048973
+        }
+      ]
+    },
+    {
+      "jobId": "12345678-1234-4234-8234-000000000009",
+      "fields": {
+        "model": "ViT-B-32",
+        "pretrained": "laion2b_s34b_b79k",
+        "version": "openclip-v1",
+        "catalogueHash": "c0a114cab28bd664b597857e4685491f5209119767ae36a40462014a507ec241",
+        "museumId": "met"
+      },
+      "norm": 1.0000000023282216,
+      "top": [
+        {
+          "artworkId": "water-lilies",
+          "similarity": 0.9999999999996751
+        },
+        {
+          "artworkId": "wheat-field-with-cypresses",
+          "similarity": 0.6678415058150996
+        },
+        {
+          "artworkId": "self-portrait-with-a-straw-hat",
+          "similarity": 0.5927224260048973
+        }
+      ]
+    },
+    {
+      "jobId": "12345678-1234-4234-8234-000000000010",
+      "fields": {
+        "model": "ViT-B-32",
+        "pretrained": "laion2b_s34b_b79k",
+        "version": "openclip-v1",
+        "catalogueHash": "c0a114cab28bd664b597857e4685491f5209119767ae36a40462014a507ec241",
+        "museumId": "met"
+      },
+      "norm": 1.0000000023282216,
+      "top": [
+        {
+          "artworkId": "water-lilies",
+          "similarity": 0.9999999999996751
+        },
+        {
+          "artworkId": "wheat-field-with-cypresses",
+          "similarity": 0.6678415058150996
+        },
+        {
+          "artworkId": "self-portrait-with-a-straw-hat",
+          "similarity": 0.5927224260048973
+        }
+      ]
+    },
+    {
+      "jobId": "12345678-1234-4234-8234-000000000011",
+      "fields": {
+        "model": "ViT-B-32",
+        "pretrained": "laion2b_s34b_b79k",
+        "version": "openclip-v1",
+        "catalogueHash": "c0a114cab28bd664b597857e4685491f5209119767ae36a40462014a507ec241",
+        "museumId": "met"
+      },
+      "norm": 1.0000000023282216,
+      "top": [
+        {
+          "artworkId": "water-lilies",
+          "similarity": 0.9999999999996751
+        },
+        {
+          "artworkId": "wheat-field-with-cypresses",
+          "similarity": 0.6678415058150996
+        },
+        {
+          "artworkId": "self-portrait-with-a-straw-hat",
+          "similarity": 0.5927224260048973
+        }
+      ]
+    }
+  ],
+  "samples": [
+    {
+      "ms": 565,
+      "memory": 666976256,
+      "pythonRss": 1048576,
+      "cpuUsec": 7716918
+    },
+    {
+      "ms": 814,
+      "memory": 671006720,
+      "pythonRss": 9306112,
+      "cpuUsec": 7862779
+    },
+    {
+      "ms": 1064,
+      "memory": 675418112,
+      "pythonRss": 14417920,
+      "cpuUsec": 7964432
+    },
+    {
+      "ms": 1363,
+      "memory": 678739968,
+      "pythonRss": 21495808,
+      "cpuUsec": 8116456
+    },
+    {
+      "ms": 1566,
+      "memory": 682262528,
+      "pythonRss": 26607616,
+      "cpuUsec": 8215898
+    },
+    {
+      "ms": 1816,
+      "memory": 684621824,
+      "pythonRss": 37224448,
+      "cpuUsec": 8364587
+    },
+    {
+      "ms": 2066,
+      "memory": 686194688,
+      "pythonRss": 44564480,
+      "cpuUsec": 8467812
+    },
+    {
+      "ms": 2316,
+      "memory": 686981120,
+      "pythonRss": 50069504,
+      "cpuUsec": 8613077
+    },
+    {
+      "ms": 2565,
+      "memory": 697217024,
+      "pythonRss": 63557632,
+      "cpuUsec": 8722255
+    },
+    {
+      "ms": 2863,
+      "memory": 699863040,
+      "pythonRss": 70234112,
+      "cpuUsec": 8876070
+    },
+    {
+      "ms": 3065,
+      "memory": 714145792,
+      "pythonRss": 89153536,
+      "cpuUsec": 8961635
+    },
+    {
+      "ms": 3363,
+      "memory": 724369408,
+      "pythonRss": 102785024,
+      "cpuUsec": 9113041
+    },
+    {
+      "ms": 3566,
+      "memory": 731447296,
+      "pythonRss": 112746496,
+      "cpuUsec": 9216059
+    },
+    {
+      "ms": 3818,
+      "memory": 739049472,
+      "pythonRss": 132931584,
+      "cpuUsec": 9361397
+    },
+    {
+      "ms": 4068,
+      "memory": 742981632,
+      "pythonRss": 140533760,
+      "cpuUsec": 9464605
+    },
+    {
+      "ms": 4319,
+      "memory": 746651648,
+      "pythonRss": 146825216,
+      "cpuUsec": 9609487
+    },
+    {
+      "ms": 4570,
+      "memory": 752156672,
+      "pythonRss": 153378816,
+      "cpuUsec": 9717328
+    },
+    {
+      "ms": 4821,
+      "memory": 755929088,
+      "pythonRss": 157356032,
+      "cpuUsec": 9861691
+    },
+    {
+      "ms": 5071,
+      "memory": 760647680,
+      "pythonRss": 163254272,
+      "cpuUsec": 9968720
+    },
+    {
+      "ms": 5321,
+      "memory": 761860096,
+      "pythonRss": 164302848,
+      "cpuUsec": 10110154
+    },
+    {
+      "ms": 5572,
+      "memory": 763346944,
+      "pythonRss": 166006784,
+      "cpuUsec": 10217315
+    },
+    {
+      "ms": 5822,
+      "memory": 768221184,
+      "pythonRss": 170987520,
+      "cpuUsec": 10361268
+    },
+    {
+      "ms": 6071,
+      "memory": 768225280,
+      "pythonRss": 172036096,
+      "cpuUsec": 10468745
+    },
+    {
+      "ms": 6322,
+      "memory": 768368640,
+      "pythonRss": 173084672,
+      "cpuUsec": 10609939
+    },
+    {
+      "ms": 6573,
+      "memory": 769155072,
+      "pythonRss": 173871104,
+      "cpuUsec": 10718342
+    },
+    {
+      "ms": 6863,
+      "memory": 770465792,
+      "pythonRss": 175050752,
+      "cpuUsec": 10860429
+    },
+    {
+      "ms": 7073,
+      "memory": 771506176,
+      "pythonRss": 176623616,
+      "cpuUsec": 10972317
+    },
+    {
+      "ms": 7363,
+      "memory": 774127616,
+      "pythonRss": 179376128,
+      "cpuUsec": 11113781
+    },
+    {
+      "ms": 7573,
+      "memory": 774914048,
+      "pythonRss": 180162560,
+      "cpuUsec": 11221996
+    },
+    {
+      "ms": 7824,
+      "memory": 777457664,
+      "pythonRss": 182390784,
+      "cpuUsec": 11361897
+    },
+    {
+      "ms": 8075,
+      "memory": 778223616,
+      "pythonRss": 183177216,
+      "cpuUsec": 11486029
+    },
+    {
+      "ms": 8363,
+      "memory": 785494016,
+      "pythonRss": 186454016,
+      "cpuUsec": 11616560
+    },
+    {
+      "ms": 8577,
+      "memory": 783048704,
+      "pythonRss": 189661184,
+      "cpuUsec": 11730406
+    },
+    {
+      "ms": 8828,
+      "memory": 782692352,
+      "pythonRss": 189792256,
+      "cpuUsec": 11862279
+    },
+    {
+      "ms": 9079,
+      "memory": 783683584,
+      "pythonRss": 190447616,
+      "cpuUsec": 11977640
+    },
+    {
+      "ms": 9330,
+      "memory": 785473536,
+      "pythonRss": 192282624,
+      "cpuUsec": 12114832
+    },
+    {
+      "ms": 9581,
+      "memory": 786530304,
+      "pythonRss": 193200128,
+      "cpuUsec": 12231986
+    },
+    {
+      "ms": 9832,
+      "memory": 787722240,
+      "pythonRss": 194248704,
+      "cpuUsec": 12363859
+    },
+    {
+      "ms": 10082,
+      "memory": 787968000,
+      "pythonRss": 196653056,
+      "cpuUsec": 12483252
+    },
+    {
+      "ms": 10332,
+      "memory": 788488192,
+      "pythonRss": 197439488,
+      "cpuUsec": 12612821
+    },
+    {
+      "ms": 10582,
+      "memory": 790323200,
+      "pythonRss": 199012352,
+      "cpuUsec": 12732810
+    },
+    {
+      "ms": 10833,
+      "memory": 792682496,
+      "pythonRss": 201502720,
+      "cpuUsec": 12863545
+    },
+    {
+      "ms": 11084,
+      "memory": 795979776,
+      "pythonRss": 204779520,
+      "cpuUsec": 12984176
+    },
+    {
+      "ms": 11334,
+      "memory": 797290496,
+      "pythonRss": 205959168,
+      "cpuUsec": 13113451
+    },
+    {
+      "ms": 11585,
+      "memory": 797171712,
+      "pythonRss": 208056320,
+      "cpuUsec": 13236735
+    },
+    {
+      "ms": 11836,
+      "memory": 799006720,
+      "pythonRss": 210022400,
+      "cpuUsec": 13364032
+    },
+    {
+      "ms": 12088,
+      "memory": 800841728,
+      "pythonRss": 211726336,
+      "cpuUsec": 13486791
+    },
+    {
+      "ms": 12338,
+      "memory": 803692544,
+      "pythonRss": 214478848,
+      "cpuUsec": 13612614
+    },
+    {
+      "ms": 12589,
+      "memory": 804954112,
+      "pythonRss": 218804224,
+      "cpuUsec": 13739361
+    },
+    {
+      "ms": 12840,
+      "memory": 810459136,
+      "pythonRss": 224309248,
+      "cpuUsec": 13861857
+    },
+    {
+      "ms": 13090,
+      "memory": 812482560,
+      "pythonRss": 226275328,
+      "cpuUsec": 13988904
+    },
+    {
+      "ms": 13363,
+      "memory": 811577344,
+      "pythonRss": 227586048,
+      "cpuUsec": 14114016
+    },
+    {
+      "ms": 13592,
+      "memory": 812863488,
+      "pythonRss": 228765696,
+      "cpuUsec": 14241899
+    },
+    {
+      "ms": 13860,
+      "memory": 814698496,
+      "pythonRss": 229552128,
+      "cpuUsec": 14370494
+    },
+    {
+      "ms": 14110,
+      "memory": 822353920,
+      "pythonRss": 231124992,
+      "cpuUsec": 14520993
+    },
+    {
+      "ms": 14360,
+      "memory": 818155520,
+      "pythonRss": 233877504,
+      "cpuUsec": 14618396
+    },
+    {
+      "ms": 14610,
+      "memory": 824446976,
+      "pythonRss": 240693248,
+      "cpuUsec": 14767646
+    },
+    {
+      "ms": 14860,
+      "memory": 826458112,
+      "pythonRss": 242659328,
+      "cpuUsec": 14869148
+    },
+    {
+      "ms": 15110,
+      "memory": 826376192,
+      "pythonRss": 244887552,
+      "cpuUsec": 15017733
+    },
+    {
+      "ms": 15361,
+      "memory": 827424768,
+      "pythonRss": 245805056,
+      "cpuUsec": 15118890
+    },
+    {
+      "ms": 15659,
+      "memory": 830832640,
+      "pythonRss": 249081856,
+      "cpuUsec": 15269216
+    },
+    {
+      "ms": 15862,
+      "memory": 833155072,
+      "pythonRss": 251179008,
+      "cpuUsec": 15372192
+    },
+    {
+      "ms": 16159,
+      "memory": 835776512,
+      "pythonRss": 253800448,
+      "cpuUsec": 15518692
+    },
+    {
+      "ms": 16362,
+      "memory": 837873664,
+      "pythonRss": 255635456,
+      "cpuUsec": 15622184
+    },
+    {
+      "ms": 16612,
+      "memory": 840495104,
+      "pythonRss": 258256896,
+      "cpuUsec": 15768490
+    },
+    {
+      "ms": 16971,
+      "memory": 832675840,
+      "pythonRss": 261271552,
+      "cpuUsec": 15961723
+    },
+    {
+      "ms": 17221,
+      "memory": 835952640,
+      "pythonRss": 265859072,
+      "cpuUsec": 16062596
+    },
+    {
+      "ms": 17471,
+      "memory": 837742592,
+      "pythonRss": 267300864,
+      "cpuUsec": 16173808
+    },
+    {
+      "ms": 17721,
+      "memory": 839254016,
+      "pythonRss": 268873728,
+      "cpuUsec": 16309748
+    },
+    {
+      "ms": 17971,
+      "memory": 841621504,
+      "pythonRss": 271364096,
+      "cpuUsec": 16421198
+    },
+    {
+      "ms": 18221,
+      "memory": 845029376,
+      "pythonRss": 277131264,
+      "cpuUsec": 16562595
+    },
+    {
+      "ms": 18471,
+      "memory": 846360576,
+      "pythonRss": 284864512,
+      "cpuUsec": 16670673
+    },
+    {
+      "ms": 18759,
+      "memory": 847724544,
+      "pythonRss": 285933568,
+      "cpuUsec": 16811965
+    },
+    {
+      "ms": 18971,
+      "memory": 847495168,
+      "pythonRss": 285933568,
+      "cpuUsec": 16923203
+    },
+    {
+      "ms": 19259,
+      "memory": 847843328,
+      "pythonRss": 285933568,
+      "cpuUsec": 17063606
+    },
+    {
+      "ms": 19472,
+      "memory": 848314368,
+      "pythonRss": 287244288,
+      "cpuUsec": 17189241
+    },
+    {
+      "ms": 19722,
+      "memory": 854437888,
+      "pythonRss": 288030720,
+      "cpuUsec": 17314768
+    },
+    {
+      "ms": 19973,
+      "memory": 847486976,
+      "pythonRss": 288161792,
+      "cpuUsec": 17424807
+    },
+    {
+      "ms": 20223,
+      "memory": 851419136,
+      "pythonRss": 291831808,
+      "cpuUsec": 17563085
+    },
+    {
+      "ms": 20473,
+      "memory": 855031808,
+      "pythonRss": 295895040,
+      "cpuUsec": 17678137
+    },
+    {
+      "ms": 20724,
+      "memory": 855105536,
+      "pythonRss": 297861120,
+      "cpuUsec": 17812142
+    },
+    {
+      "ms": 20974,
+      "memory": 858554368,
+      "pythonRss": 301363200,
+      "cpuUsec": 17927047
+    },
+    {
+      "ms": 21259,
+      "memory": 862269440,
+      "pythonRss": 305033216,
+      "cpuUsec": 18064378
+    },
+    {
+      "ms": 21509,
+      "memory": 867614720,
+      "pythonRss": 310669312,
+      "cpuUsec": 18207774
+    },
+    {
+      "ms": 21759,
+      "memory": 867987456,
+      "pythonRss": 312766464,
+      "cpuUsec": 18311849
+    },
+    {
+      "ms": 22009,
+      "memory": 872443904,
+      "pythonRss": 317222912,
+      "cpuUsec": 18462919
+    },
+    {
+      "ms": 22260,
+      "memory": 875589632,
+      "pythonRss": 320237568,
+      "cpuUsec": 18563580
+    },
+    {
+      "ms": 22511,
+      "memory": 880046080,
+      "pythonRss": 324694016,
+      "cpuUsec": 18714313
+    },
+    {
+      "ms": 22761,
+      "memory": 879968256,
+      "pythonRss": 327446528,
+      "cpuUsec": 18814741
+    },
+    {
+      "ms": 23011,
+      "memory": 889135104,
+      "pythonRss": 336359424,
+      "cpuUsec": 18963742
+    },
+    {
+      "ms": 23261,
+      "memory": 896958464,
+      "pythonRss": 345300992,
+      "cpuUsec": 19061109
+    },
+    {
+      "ms": 23512,
+      "memory": 887930880,
+      "pythonRss": 337268736,
+      "cpuUsec": 19212278
+    },
+    {
+      "ms": 23762,
+      "memory": 903102464,
+      "pythonRss": 352604160,
+      "cpuUsec": 19316613
+    },
+    {
+      "ms": 24013,
+      "memory": 911036416,
+      "pythonRss": 362172416,
+      "cpuUsec": 19461930
+    },
+    {
+      "ms": 24263,
+      "memory": 916148224,
+      "pythonRss": 369512448,
+      "cpuUsec": 19565366
+    },
+    {
+      "ms": 24514,
+      "memory": 926138368,
+      "pythonRss": 380391424,
+      "cpuUsec": 19714422
+    },
+    {
+      "ms": 24763,
+      "memory": 932872192,
+      "pythonRss": 388386816,
+      "cpuUsec": 19814208
+    },
+    {
+      "ms": 25059,
+      "memory": 941195264,
+      "pythonRss": 396382208,
+      "cpuUsec": 19969153
+    },
+    {
+      "ms": 25264,
+      "memory": 952098816,
+      "pythonRss": 402542592,
+      "cpuUsec": 20072732
+    },
+    {
+      "ms": 25559,
+      "memory": 954667008,
+      "pythonRss": 412241920,
+      "cpuUsec": 20217621
+    },
+    {
+      "ms": 25763,
+      "memory": 955752448,
+      "pythonRss": 416043008,
+      "cpuUsec": 20328985
+    },
+    {
+      "ms": 26014,
+      "memory": 964894720,
+      "pythonRss": 425349120,
+      "cpuUsec": 20465467
+    },
+    {
+      "ms": 26264,
+      "memory": 971448320,
+      "pythonRss": 433868800,
+      "cpuUsec": 20569063
+    },
+    {
+      "ms": 26559,
+      "memory": 983851008,
+      "pythonRss": 446582784,
+      "cpuUsec": 20714127
+    },
+    {
+      "ms": 26765,
+      "memory": 988991488,
+      "pythonRss": 453398528,
+      "cpuUsec": 20815204
+    },
+    {
+      "ms": 27059,
+      "memory": 998342656,
+      "pythonRss": 465063936,
+      "cpuUsec": 20964965
+    },
+    {
+      "ms": 27266,
+      "memory": 1008566272,
+      "pythonRss": 475156480,
+      "cpuUsec": 21072708
+    },
+    {
+      "ms": 27559,
+      "memory": 1015119872,
+      "pythonRss": 483938304,
+      "cpuUsec": 21213848
+    },
+    {
+      "ms": 27768,
+      "memory": 1023401984,
+      "pythonRss": 494424064,
+      "cpuUsec": 21322972
+    },
+    {
+      "ms": 28018,
+      "memory": 1033596928,
+      "pythonRss": 504516608,
+      "cpuUsec": 21465314
+    },
+    {
+      "ms": 28268,
+      "memory": 1042780160,
+      "pythonRss": 515788800,
+      "cpuUsec": 21572561
+    },
+    {
+      "ms": 28519,
+      "memory": 1053802496,
+      "pythonRss": 528764928,
+      "cpuUsec": 21713704
+    },
+    {
+      "ms": 28769,
+      "memory": 1063763968,
+      "pythonRss": 538988544,
+      "cpuUsec": 21822819
+    },
+    {
+      "ms": 29059,
+      "memory": 1071255552,
+      "pythonRss": 548294656,
+      "cpuUsec": 21965053
+    },
+    {
+      "ms": 29271,
+      "memory": 1081741312,
+      "pythonRss": 558780416,
+      "cpuUsec": 22076500
+    },
+    {
+      "ms": 29559,
+      "memory": 1089527808,
+      "pythonRss": 568610816,
+      "cpuUsec": 22214396
+    },
+    {
+      "ms": 29773,
+      "memory": 1097478144,
+      "pythonRss": 578441216,
+      "cpuUsec": 22325495
+    },
+    {
+      "ms": 30023,
+      "memory": 1106702336,
+      "pythonRss": 589582336,
+      "cpuUsec": 22464300
+    },
+    {
+      "ms": 30273,
+      "memory": 1115877376,
+      "pythonRss": 598888448,
+      "cpuUsec": 22575818
+    },
+    {
+      "ms": 30523,
+      "memory": 1125179392,
+      "pythonRss": 610160640,
+      "cpuUsec": 22717347
+    },
+    {
+      "ms": 30773,
+      "memory": 1138937856,
+      "pythonRss": 618287104,
+      "cpuUsec": 22837993
+    },
+    {
+      "ms": 31059,
+      "memory": 1139666944,
+      "pythonRss": 626282496,
+      "cpuUsec": 22967081
+    },
+    {
+      "ms": 31274,
+      "memory": 1147887616,
+      "pythonRss": 636375040,
+      "cpuUsec": 23078461
+    },
+    {
+      "ms": 31559,
+      "memory": 1158111232,
+      "pythonRss": 646598656,
+      "cpuUsec": 23215557
+    },
+    {
+      "ms": 31774,
+      "memory": 1165262848,
+      "pythonRss": 655904768,
+      "cpuUsec": 23329266
+    },
+    {
+      "ms": 32059,
+      "memory": 1177120768,
+      "pythonRss": 669536256,
+      "cpuUsec": 23466596
+    },
+    {
+      "ms": 32275,
+      "memory": 1188528128,
+      "pythonRss": 681332736,
+      "cpuUsec": 23578092
+    },
+    {
+      "ms": 32559,
+      "memory": 1200816128,
+      "pythonRss": 696143872,
+      "cpuUsec": 23714865
+    },
+    {
+      "ms": 32776,
+      "memory": 1207631872,
+      "pythonRss": 704532480,
+      "cpuUsec": 23830107
+    },
+    {
+      "ms": 33027,
+      "memory": 1217175552,
+      "pythonRss": 714493952,
+      "cpuUsec": 23966601
+    },
+    {
+      "ms": 33277,
+      "memory": 1223471104,
+      "pythonRss": 721702912,
+      "cpuUsec": 24078227
+    },
+    {
+      "ms": 33528,
+      "memory": 1231978496,
+      "pythonRss": 732188672,
+      "cpuUsec": 24215307
+    },
+    {
+      "ms": 33778,
+      "memory": 1242988544,
+      "pythonRss": 743198720,
+      "cpuUsec": 24334444
+    },
+    {
+      "ms": 34059,
+      "memory": 1249509376,
+      "pythonRss": 751980544,
+      "cpuUsec": 24464329
+    },
+    {
+      "ms": 34279,
+      "memory": 1258307584,
+      "pythonRss": 762728448,
+      "cpuUsec": 24584221
+    },
+    {
+      "ms": 34559,
+      "memory": 1268899840,
+      "pythonRss": 773345280,
+      "cpuUsec": 24717278
+    },
+    {
+      "ms": 34779,
+      "memory": 1276928000,
+      "pythonRss": 783044608,
+      "cpuUsec": 24831416
+    },
+    {
+      "ms": 35060,
+      "memory": 1286766592,
+      "pythonRss": 794841088,
+      "cpuUsec": 24964517
+    },
+    {
+      "ms": 35279,
+      "memory": 1298038784,
+      "pythonRss": 806113280,
+      "cpuUsec": 25084167
+    },
+    {
+      "ms": 35559,
+      "memory": 1305800704,
+      "pythonRss": 815550464,
+      "cpuUsec": 25213385
+    },
+    {
+      "ms": 35780,
+      "memory": 1315921920,
+      "pythonRss": 827609088,
+      "cpuUsec": 25334321
+    },
+    {
+      "ms": 36059,
+      "memory": 1326600192,
+      "pythonRss": 840454144,
+      "cpuUsec": 25463992
+    },
+    {
+      "ms": 36280,
+      "memory": 1337712640,
+      "pythonRss": 850153472,
+      "cpuUsec": 25602870
+    },
+    {
+      "ms": 36530,
+      "memory": 1344720896,
+      "pythonRss": 855658496,
+      "cpuUsec": 25720564
+    },
+    {
+      "ms": 36780,
+      "memory": 1347203072,
+      "pythonRss": 864833536,
+      "cpuUsec": 25834290
+    },
+    {
+      "ms": 37059,
+      "memory": 1362075648,
+      "pythonRss": 881872896,
+      "cpuUsec": 25967631
+    },
+    {
+      "ms": 37281,
+      "memory": 1372299264,
+      "pythonRss": 891965440,
+      "cpuUsec": 26083428
+    },
+    {
+      "ms": 37559,
+      "memory": 1381146624,
+      "pythonRss": 902582272,
+      "cpuUsec": 26216256
+    },
+    {
+      "ms": 37782,
+      "memory": 1388888064,
+      "pythonRss": 911233024,
+      "cpuUsec": 26338254
+    },
+    {
+      "ms": 38059,
+      "memory": 1401274368,
+      "pythonRss": 925388800,
+      "cpuUsec": 26467310
+    },
+    {
+      "ms": 38283,
+      "memory": 1412866048,
+      "pythonRss": 937971712,
+      "cpuUsec": 26586827
+    },
+    {
+      "ms": 38559,
+      "memory": 1421471744,
+      "pythonRss": 948457472,
+      "cpuUsec": 26716445
+    },
+    {
+      "ms": 38783,
+      "memory": 1429336064,
+      "pythonRss": 956715008,
+      "cpuUsec": 26836744
+    },
+    {
+      "ms": 39059,
+      "memory": 1429422080,
+      "pythonRss": 956715008,
+      "cpuUsec": 26966534
+    },
+    {
+      "ms": 39284,
+      "memory": 1429422080,
+      "pythonRss": 956715008,
+      "cpuUsec": 27086114
+    },
+    {
+      "ms": 39559,
+      "memory": 1427558400,
+      "pythonRss": 956715008,
+      "cpuUsec": 27215184
+    },
+    {
+      "ms": 39784,
+      "memory": 1430966272,
+      "pythonRss": 965758976,
+      "cpuUsec": 27336352
+    },
+    {
+      "ms": 40035,
+      "memory": 1431490560,
+      "pythonRss": 983191552,
+      "cpuUsec": 27468109
+    },
+    {
+      "ms": 40285,
+      "memory": 1431752704,
+      "pythonRss": 1002196992,
+      "cpuUsec": 27591364
+    },
+    {
+      "ms": 40535,
+      "memory": 1431752704,
+      "pythonRss": 1035358208,
+      "cpuUsec": 27716221
+    },
+    {
+      "ms": 40785,
+      "memory": 1431752704,
+      "pythonRss": 1049776128,
+      "cpuUsec": 27837960
+    },
+    {
+      "ms": 41059,
+      "memory": 1431859200,
+      "pythonRss": 1065504768,
+      "cpuUsec": 27966837
+    },
+    {
+      "ms": 41285,
+      "memory": 1431859200,
+      "pythonRss": 1086869504,
+      "cpuUsec": 28086337
+    },
+    {
+      "ms": 41535,
+      "memory": 1431859200,
+      "pythonRss": 1111773184,
+      "cpuUsec": 28215200
+    },
+    {
+      "ms": 41786,
+      "memory": 1433169920,
+      "pythonRss": 1136545792,
+      "cpuUsec": 28354304
+    },
+    {
+      "ms": 42059,
+      "memory": 1435938816,
+      "pythonRss": 1142312960,
+      "cpuUsec": 28472427
+    },
+    {
+      "ms": 42287,
+      "memory": 1431842816,
+      "pythonRss": 1153847296,
+      "cpuUsec": 28593622
+    },
+    {
+      "ms": 42537,
+      "memory": 1431842816,
+      "pythonRss": 1165905920,
+      "cpuUsec": 28715058
+    },
+    {
+      "ms": 42787,
+      "memory": 1431842816,
+      "pythonRss": 1177833472,
+      "cpuUsec": 28839473
+    },
+    {
+      "ms": 43059,
+      "memory": 1431842816,
+      "pythonRss": 1184124928,
+      "cpuUsec": 28965640
+    },
+    {
+      "ms": 43287,
+      "memory": 1431842816,
+      "pythonRss": 1198149632,
+      "cpuUsec": 29092937
+    },
+    {
+      "ms": 43559,
+      "memory": 1431842816,
+      "pythonRss": 1211387904,
+      "cpuUsec": 29214064
+    },
+    {
+      "ms": 43787,
+      "memory": 1431842816,
+      "pythonRss": 1225936896,
+      "cpuUsec": 29339210
+    },
+    {
+      "ms": 44057,
+      "memory": 1431842816,
+      "pythonRss": 1240879104,
+      "cpuUsec": 29464175
+    },
+    {
+      "ms": 44285,
+      "memory": 1432104960,
+      "pythonRss": 1256607744,
+      "cpuUsec": 29591585
+    },
+    {
+      "ms": 44557,
+      "memory": 1432104960,
+      "pythonRss": 1277317120,
+      "cpuUsec": 29716789
+    },
+    {
+      "ms": 44786,
+      "memory": 1432363008,
+      "pythonRss": 1295929344,
+      "cpuUsec": 29841367
+    },
+    {
+      "ms": 45057,
+      "memory": 1432363008,
+      "pythonRss": 1310085120,
+      "cpuUsec": 29966118
+    },
+    {
+      "ms": 45286,
+      "memory": 1436033024,
+      "pythonRss": 1329221632,
+      "cpuUsec": 30091248
+    },
+    {
+      "ms": 45557,
+      "memory": 1436033024,
+      "pythonRss": 1344819200,
+      "cpuUsec": 30216120
+    },
+    {
+      "ms": 45787,
+      "memory": 1436033024,
+      "pythonRss": 1360547840,
+      "cpuUsec": 30347097
+    },
+    {
+      "ms": 46057,
+      "memory": 1436033024,
+      "pythonRss": 1375883264,
+      "cpuUsec": 30463627
+    },
+    {
+      "ms": 46287,
+      "memory": 1436033024,
+      "pythonRss": 1420054528,
+      "cpuUsec": 30590977
+    },
+    {
+      "ms": 46537,
+      "memory": 1436295168,
+      "pythonRss": 1440501760,
+      "cpuUsec": 30714106
+    },
+    {
+      "ms": 46788,
+      "memory": 1441026048,
+      "pythonRss": 1466847232,
+      "cpuUsec": 30843226
+    },
+    {
+      "ms": 47057,
+      "memory": 1450827776,
+      "pythonRss": 1476546560,
+      "cpuUsec": 30964571
+    },
+    {
+      "ms": 47357,
+      "memory": 1462378496,
+      "pythonRss": 1487032320,
+      "cpuUsec": 31127970
+    },
+    {
+      "ms": 47540,
+      "memory": 1464991744,
+      "pythonRss": 1488605184,
+      "cpuUsec": 31221586
+    },
+    {
+      "ms": 47857,
+      "memory": 1471815680,
+      "pythonRss": 1494372352,
+      "cpuUsec": 31369831
+    },
+    {
+      "ms": 48040,
+      "memory": 1478598656,
+      "pythonRss": 1497780224,
+      "cpuUsec": 31471543
+    },
+    {
+      "ms": 48290,
+      "memory": 1476222976,
+      "pythonRss": 1502236672,
+      "cpuUsec": 31601756
+    },
+    {
+      "ms": 48557,
+      "memory": 1486176256,
+      "pythonRss": 1511673856,
+      "cpuUsec": 31714054
+    },
+    {
+      "ms": 48790,
+      "memory": 1494294528,
+      "pythonRss": 1520062464,
+      "cpuUsec": 31852279
+    },
+    {
+      "ms": 49040,
+      "memory": 1501876224,
+      "pythonRss": 1527402496,
+      "cpuUsec": 31968639
+    },
+    {
+      "ms": 49290,
+      "memory": 1516556288,
+      "pythonRss": 1542344704,
+      "cpuUsec": 32100196
+    },
+    {
+      "ms": 49540,
+      "memory": 1521012736,
+      "pythonRss": 1546539008,
+      "cpuUsec": 32214824
+    },
+    {
+      "ms": 49857,
+      "memory": 1524740096,
+      "pythonRss": 1550733312,
+      "cpuUsec": 32377156
+    },
+    {
+      "ms": 50057,
+      "memory": 1528672256,
+      "pythonRss": 1554141184,
+      "cpuUsec": 32467678
+    },
+    {
+      "ms": 50291,
+      "memory": 1537060864,
+      "pythonRss": 1086623744,
+      "cpuUsec": 32599270
+    },
+    {
+      "ms": 50557,
+      "memory": 1434472448,
+      "pythonRss": 857169920,
+      "cpuUsec": 32716223
+    },
+    {
+      "ms": 50791,
+      "memory": 1434472448,
+      "pythonRss": 857169920,
+      "cpuUsec": 32852965
+    },
+    {
+      "ms": 51042,
+      "memory": 1434365952,
+      "pythonRss": 857169920,
+      "cpuUsec": 32965783
+    },
+    {
+      "ms": 51293,
+      "memory": 1434365952,
+      "pythonRss": 857169920,
+      "cpuUsec": 33100995
+    },
+    {
+      "ms": 51557,
+      "memory": 1434365952,
+      "pythonRss": 857169920,
+      "cpuUsec": 33218017
+    },
+    {
+      "ms": 51795,
+      "memory": 1434365952,
+      "pythonRss": 857169920,
+      "cpuUsec": 33354938
+    },
+    {
+      "ms": 52046,
+      "memory": 1434365952,
+      "pythonRss": 857169920,
+      "cpuUsec": 33467849
+    },
+    {
+      "ms": 52297,
+      "memory": 1434365952,
+      "pythonRss": 857169920,
+      "cpuUsec": 33607029
+    },
+    {
+      "ms": 52548,
+      "memory": 1434365952,
+      "pythonRss": 857169920,
+      "cpuUsec": 33716081
+    },
+    {
+      "ms": 52798,
+      "memory": 1434365952,
+      "pythonRss": 857169920,
+      "cpuUsec": 33856068
+    },
+    {
+      "ms": 53049,
+      "memory": 1434628096,
+      "pythonRss": 857169920,
+      "cpuUsec": 33967443
+    },
+    {
+      "ms": 53299,
+      "memory": 1439330304,
+      "pythonRss": 857169920,
+      "cpuUsec": 34022789
+    },
+    {
+      "ms": 53549,
+      "memory": 1434972160,
+      "pythonRss": 857169920,
+      "cpuUsec": 34051709
+    },
+    {
+      "ms": 53798,
+      "memory": 1435496448,
+      "pythonRss": 857169920,
+      "cpuUsec": 34077258
+    },
+    {
+      "ms": 54059,
+      "memory": 1436004352,
+      "pythonRss": 857169920,
+      "cpuUsec": 34207125
+    },
+    {
+      "ms": 54308,
+      "memory": 1449283584,
+      "pythonRss": 857169920,
+      "cpuUsec": 34359918
+    },
+    {
+      "ms": 54582,
+      "memory": 1435598848,
+      "pythonRss": 857169920,
+      "cpuUsec": 34476343
+    },
+    {
+      "ms": 54857,
+      "memory": 1440698368,
+      "pythonRss": 857169920,
+      "cpuUsec": 34605347
+    },
+    {
+      "ms": 55093,
+      "memory": 1447276544,
+      "pythonRss": 858218496,
+      "cpuUsec": 34739772
+    },
+    {
+      "ms": 55357,
+      "memory": 1451995136,
+      "pythonRss": 863068160,
+      "cpuUsec": 34851627
+    },
+    {
+      "ms": 55593,
+      "memory": 1466904576,
+      "pythonRss": 885088256,
+      "cpuUsec": 34984011
+    },
+    {
+      "ms": 55842,
+      "memory": 1466036224,
+      "pythonRss": 888233984,
+      "cpuUsec": 35101974
+    },
+    {
+      "ms": 56093,
+      "memory": 1466036224,
+      "pythonRss": 888233984,
+      "cpuUsec": 35237415
+    },
+    {
+      "ms": 56274,
+      "memory": 1449402368,
+      "pythonRss": 872685568,
+      "cpuUsec": 35311805
+    },
+    {
+      "ms": 56357,
+      "memory": 1452953600,
+      "pythonRss": 872685568,
+      "cpuUsec": 35351464
+    },
+    {
+      "ms": 56594,
+      "memory": 1455304704,
+      "pythonRss": 872685568,
+      "cpuUsec": 35499331
+    },
+    {
+      "ms": 56844,
+      "memory": 1475665920,
+      "pythonRss": 890642432,
+      "cpuUsec": 35601820
+    },
+    {
+      "ms": 57095,
+      "memory": 1474412544,
+      "pythonRss": 890642432,
+      "cpuUsec": 35741705
+    },
+    {
+      "ms": 57271,
+      "memory": 1456934912,
+      "pythonRss": 873328640,
+      "cpuUsec": 35815291
+    },
+    {
+      "ms": 57357,
+      "memory": 1464610816,
+      "pythonRss": 873328640,
+      "cpuUsec": 35849833
+    },
+    {
+      "ms": 57657,
+      "memory": 1458184192,
+      "pythonRss": 873328640,
+      "cpuUsec": 36002838
+    },
+    {
+      "ms": 57845,
+      "memory": 1478819840,
+      "pythonRss": 890761216,
+      "cpuUsec": 36104260
+    },
+    {
+      "ms": 58095,
+      "memory": 1478144000,
+      "pythonRss": 890761216,
+      "cpuUsec": 36235810
+    },
+    {
+      "ms": 58186,
+      "memory": 1460359168,
+      "pythonRss": 873332736,
+      "cpuUsec": 36279581
+    },
+    {
+      "ms": 58345,
+      "memory": 1467768832,
+      "pythonRss": 873332736,
+      "cpuUsec": 36355336
+    },
+    {
+      "ms": 58595,
+      "memory": 1474076672,
+      "pythonRss": 873332736,
+      "cpuUsec": 36505080
+    },
+    {
+      "ms": 58858,
+      "memory": 1467088896,
+      "pythonRss": 873332736,
+      "cpuUsec": 36620367
+    },
+    {
+      "ms": 59158,
+      "memory": 1466396672,
+      "pythonRss": 873332736,
+      "cpuUsec": 36759323
+    },
+    {
+      "ms": 59410,
+      "memory": 1490587648,
+      "pythonRss": 888668160,
+      "cpuUsec": 36905700
+    },
+    {
+      "ms": 59661,
+      "memory": 1477677056,
+      "pythonRss": 890765312,
+      "cpuUsec": 37000696
+    },
+    {
+      "ms": 59957,
+      "memory": 1477677056,
+      "pythonRss": 890765312,
+      "cpuUsec": 37150078
+    },
+    {
+      "ms": 60080,
+      "memory": 1460199424,
+      "pythonRss": 873357312,
+      "cpuUsec": 37223913
+    },
+    {
+      "ms": 60161,
+      "memory": 1465937920,
+      "pythonRss": 873357312,
+      "cpuUsec": 37252768
+    },
+    {
+      "ms": 60411,
+      "memory": 1461149696,
+      "pythonRss": 873357312,
+      "cpuUsec": 37400592
+    },
+    {
+      "ms": 60661,
+      "memory": 1463033856,
+      "pythonRss": 873357312,
+      "cpuUsec": 37501763
+    },
+    {
+      "ms": 60957,
+      "memory": 1463025664,
+      "pythonRss": 873357312,
+      "cpuUsec": 37651908
+    },
+    {
+      "ms": 61002,
+      "memory": 1462239232,
+      "pythonRss": 873357312,
+      "cpuUsec": 37695218
+    },
+    {
+      "ms": 61161,
+      "memory": 1471475712,
+      "pythonRss": 873357312,
+      "cpuUsec": 37754208
+    },
+    {
+      "ms": 61411,
+      "memory": 1463500800,
+      "pythonRss": 873357312,
+      "cpuUsec": 37898895
+    },
+    {
+      "ms": 61662,
+      "memory": 1463762944,
+      "pythonRss": 873357312,
+      "cpuUsec": 38001969
+    },
+    {
+      "ms": 61872,
+      "memory": 1463738368,
+      "pythonRss": 873357312,
+      "cpuUsec": 38115788
+    },
+    {
+      "ms": 61957,
+      "memory": 1470885888,
+      "pythonRss": 873357312,
+      "cpuUsec": 38153403
+    },
+    {
+      "ms": 62162,
+      "memory": 1464881152,
+      "pythonRss": 873357312,
+      "cpuUsec": 38265117
+    },
+    {
+      "ms": 62457,
+      "memory": 1462816768,
+      "pythonRss": 873357312,
+      "cpuUsec": 38400707
+    },
+    {
+      "ms": 62662,
+      "memory": 1462816768,
+      "pythonRss": 873357312,
+      "cpuUsec": 38503546
+    },
+    {
+      "ms": 62765,
+      "memory": 1462558720,
+      "pythonRss": 873357312,
+      "cpuUsec": 38559784
+    },
+    {
+      "ms": 62912,
+      "memory": 1474945024,
+      "pythonRss": 873357312,
+      "cpuUsec": 38655585
+    },
+    {
+      "ms": 63162,
+      "memory": 1462521856,
+      "pythonRss": 873357312,
+      "cpuUsec": 38758536
+    },
+    {
+      "ms": 63413,
+      "memory": 1464401920,
+      "pythonRss": 873357312,
+      "cpuUsec": 38898474
+    },
+    {
+      "ms": 63663,
+      "memory": 1464401920,
+      "pythonRss": 873357312,
+      "cpuUsec": 39006252
+    },
+    {
+      "ms": 63695,
+      "memory": 1465163776,
+      "pythonRss": 873357312,
+      "cpuUsec": 39035410
+    },
+    {
+      "ms": 63957,
+      "memory": 1478578176,
+      "pythonRss": 873357312,
+      "cpuUsec": 39150445
+    },
+    {
+      "ms": 64207,
+      "memory": 1468264448,
+      "pythonRss": 873357312,
+      "cpuUsec": 39298235
+    },
+    {
+      "ms": 64458,
+      "memory": 1468502016,
+      "pythonRss": 873357312,
+      "cpuUsec": 39403566
+    },
+    {
+      "ms": 64571,
+      "memory": 1469263872,
+      "pythonRss": 873357312,
+      "cpuUsec": 39465805
+    },
+    {
+      "ms": 64757,
+      "memory": 1482858496,
+      "pythonRss": 873357312,
+      "cpuUsec": 39550830
+    },
+    {
+      "ms": 64958,
+      "memory": 1467858944,
+      "pythonRss": 873357312,
+      "cpuUsec": 39649114
+    },
+    {
+      "ms": 65208,
+      "memory": 1468121088,
+      "pythonRss": 873357312,
+      "cpuUsec": 39801285
+    },
+    {
+      "ms": 65297,
+      "memory": 1468096512,
+      "pythonRss": 873357312,
+      "cpuUsec": 39841947
+    },
+    {
+      "ms": 65460,
+      "memory": 1477062656,
+      "pythonRss": 873357312,
+      "cpuUsec": 39901153
+    },
+    {
+      "ms": 65757,
+      "memory": 1467572224,
+      "pythonRss": 873357312,
+      "cpuUsec": 40053870
+    },
+    {
+      "ms": 66007,
+      "memory": 1469800448,
+      "pythonRss": 873357312,
+      "cpuUsec": 40197774
+    },
+    {
+      "ms": 66176,
+      "memory": 1470562304,
+      "pythonRss": 873357312,
+      "cpuUsec": 40271009
+    },
+    {
+      "ms": 66257,
+      "memory": 1472847872,
+      "pythonRss": 873357312,
+      "cpuUsec": 40299668
+    },
+    {
+      "ms": 66557,
+      "memory": 1471873024,
+      "pythonRss": 873357312,
+      "cpuUsec": 40451874
+    },
+    {
+      "ms": 66757,
+      "memory": 1471176704,
+      "pythonRss": 873357312,
+      "cpuUsec": 40549456
+    },
+    {
+      "ms": 67057,
+      "memory": 1469767680,
+      "pythonRss": 873357312,
+      "cpuUsec": 40701303
+    },
+    {
+      "ms": 67081,
+      "memory": 1469722624,
+      "pythonRss": 873357312,
+      "cpuUsec": 40724666
+    },
+    {
+      "ms": 67259,
+      "memory": 1479208960,
+      "pythonRss": 873357312,
+      "cpuUsec": 40800276
+    },
+    {
+      "ms": 67509,
+      "memory": 1469972480,
+      "pythonRss": 873357312,
+      "cpuUsec": 40911860
+    },
+    {
+      "ms": 67760,
+      "memory": 1469972480,
+      "pythonRss": 873357312,
+      "cpuUsec": 40912759
+    },
+    {
+      "ms": 68011,
+      "memory": 1469755392,
+      "pythonRss": 873357312,
+      "cpuUsec": 40913737
+    },
+    {
+      "ms": 68262,
+      "memory": 1469755392,
+      "pythonRss": 873357312,
+      "cpuUsec": 40914577
+    },
+    {
+      "ms": 68513,
+      "memory": 1469755392,
+      "pythonRss": 873357312,
+      "cpuUsec": 40915478
+    },
+    {
+      "ms": 68764,
+      "memory": 1469755392,
+      "pythonRss": 873357312,
+      "cpuUsec": 40916142
+    },
+    {
+      "ms": 69014,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40916884
+    },
+    {
+      "ms": 69264,
+      "memory": 1469440000,
+      "pythonRss": 873357312,
+      "cpuUsec": 40917734
+    },
+    {
+      "ms": 69514,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40918393
+    },
+    {
+      "ms": 69764,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40919524
+    },
+    {
+      "ms": 70014,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40920412
+    },
+    {
+      "ms": 70265,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40921200
+    },
+    {
+      "ms": 70515,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40923482
+    },
+    {
+      "ms": 70765,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40924625
+    },
+    {
+      "ms": 71016,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40925383
+    },
+    {
+      "ms": 71267,
+      "memory": 1469440000,
+      "pythonRss": 873357312,
+      "cpuUsec": 40926226
+    },
+    {
+      "ms": 71518,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40927028
+    },
+    {
+      "ms": 71769,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40927712
+    },
+    {
+      "ms": 72020,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40928573
+    },
+    {
+      "ms": 72270,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40929264
+    },
+    {
+      "ms": 72520,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40930004
+    },
+    {
+      "ms": 72770,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40930536
+    },
+    {
+      "ms": 73021,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40931213
+    },
+    {
+      "ms": 73272,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40931752
+    },
+    {
+      "ms": 73522,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40932477
+    },
+    {
+      "ms": 73772,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40933381
+    },
+    {
+      "ms": 74018,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40934124
+    },
+    {
+      "ms": 74268,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40934737
+    },
+    {
+      "ms": 74519,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40935454
+    },
+    {
+      "ms": 74770,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40936174
+    },
+    {
+      "ms": 75021,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40936851
+    },
+    {
+      "ms": 75270,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40937420
+    },
+    {
+      "ms": 75520,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40938106
+    },
+    {
+      "ms": 75771,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40938836
+    },
+    {
+      "ms": 76022,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40939578
+    },
+    {
+      "ms": 76273,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40940198
+    },
+    {
+      "ms": 76523,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40941246
+    },
+    {
+      "ms": 76774,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40941830
+    },
+    {
+      "ms": 77024,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40942484
+    },
+    {
+      "ms": 77274,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40943460
+    },
+    {
+      "ms": 77524,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40944167
+    },
+    {
+      "ms": 77774,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40945099
+    },
+    {
+      "ms": 78024,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40946114
+    },
+    {
+      "ms": 78273,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40946901
+    },
+    {
+      "ms": 78524,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40947705
+    },
+    {
+      "ms": 78774,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40948773
+    },
+    {
+      "ms": 79023,
+      "memory": 1469698048,
+      "pythonRss": 873357312,
+      "cpuUsec": 40949669
+    },
+    {
+      "ms": 79273,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40950500
+    },
+    {
+      "ms": 79523,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40951396
+    },
+    {
+      "ms": 79774,
+      "memory": 1469440000,
+      "pythonRss": 873357312,
+      "cpuUsec": 40952320
+    },
+    {
+      "ms": 80025,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40953306
+    },
+    {
+      "ms": 80276,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40954139
+    },
+    {
+      "ms": 80527,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40954790
+    },
+    {
+      "ms": 80778,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40955555
+    },
+    {
+      "ms": 81029,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40956420
+    },
+    {
+      "ms": 81279,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40957292
+    },
+    {
+      "ms": 81529,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40958158
+    },
+    {
+      "ms": 81779,
+      "memory": 1469435904,
+      "pythonRss": 873357312,
+      "cpuUsec": 40958961
+    },
+    {
+      "ms": 82029,
+      "memory": 1469378560,
+      "pythonRss": 873357312,
+      "cpuUsec": 40961029
+    },
+    {
+      "ms": 82279,
+      "memory": 1469026304,
+      "pythonRss": 873357312,
+      "cpuUsec": 40963263
+    },
+    {
+      "ms": 82529,
+      "memory": 1469026304,
+      "pythonRss": 873357312,
+      "cpuUsec": 40966966
+    },
+    {
+      "ms": 82780,
+      "memory": 1469026304,
+      "pythonRss": 873357312,
+      "cpuUsec": 40967965
+    },
+    {
+      "ms": 83030,
+      "memory": 1469026304,
+      "pythonRss": 873357312,
+      "cpuUsec": 40968588
+    },
+    {
+      "ms": 83279,
+      "memory": 1469026304,
+      "pythonRss": 873357312,
+      "cpuUsec": 40969190
+    },
+    {
+      "ms": 83530,
+      "memory": 1469026304,
+      "pythonRss": 873357312,
+      "cpuUsec": 40969801
+    },
+    {
+      "ms": 83781,
+      "memory": 1469026304,
+      "pythonRss": 873357312,
+      "cpuUsec": 40970557
+    },
+    {
+      "ms": 84032,
+      "memory": 1469026304,
+      "pythonRss": 873357312,
+      "cpuUsec": 40971312
+    },
+    {
+      "ms": 84283,
+      "memory": 1469001728,
+      "pythonRss": 873357312,
+      "cpuUsec": 40972229
+    },
+    {
+      "ms": 84534,
+      "memory": 1469001728,
+      "pythonRss": 873357312,
+      "cpuUsec": 40973070
+    },
+    {
+      "ms": 84785,
+      "memory": 1469001728,
+      "pythonRss": 873357312,
+      "cpuUsec": 40973607
+    },
+    {
+      "ms": 85036,
+      "memory": 1469001728,
+      "pythonRss": 873357312,
+      "cpuUsec": 40974218
+    },
+    {
+      "ms": 85286,
+      "memory": 1469001728,
+      "pythonRss": 873357312,
+      "cpuUsec": 40974938
+    },
+    {
+      "ms": 85535,
+      "memory": 1469001728,
+      "pythonRss": 873357312,
+      "cpuUsec": 40975558
+    },
+    {
+      "ms": 85786,
+      "memory": 1469001728,
+      "pythonRss": 873357312,
+      "cpuUsec": 40976107
+    },
+    {
+      "ms": 86037,
+      "memory": 1469001728,
+      "pythonRss": 873357312,
+      "cpuUsec": 40976701
+    },
+    {
+      "ms": 86288,
+      "memory": 1469001728,
+      "pythonRss": 873357312,
+      "cpuUsec": 40977288
+    },
+    {
+      "ms": 86537,
+      "memory": 1469001728,
+      "pythonRss": 873357312,
+      "cpuUsec": 40978308
+    },
+    {
+      "ms": 86787,
+      "memory": 1469001728,
+      "pythonRss": 873357312,
+      "cpuUsec": 40978830
+    },
+    {
+      "ms": 87038,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 40979537
+    },
+    {
+      "ms": 87289,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 40980164
+    },
+    {
+      "ms": 87540,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 40981240
+    },
+    {
+      "ms": 87790,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 40982017
+    },
+    {
+      "ms": 88041,
+      "memory": 1469083648,
+      "pythonRss": 873357312,
+      "cpuUsec": 40982736
+    },
+    {
+      "ms": 88291,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 40983387
+    },
+    {
+      "ms": 88540,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 40984179
+    },
+    {
+      "ms": 88791,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 40984666
+    },
+    {
+      "ms": 89042,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 40990114
+    },
+    {
+      "ms": 89293,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 40990815
+    },
+    {
+      "ms": 89544,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 40991645
+    },
+    {
+      "ms": 89794,
+      "memory": 1478590464,
+      "pythonRss": 873357312,
+      "cpuUsec": 41082496
+    },
+    {
+      "ms": 90045,
+      "memory": 1483362304,
+      "pythonRss": 873357312,
+      "cpuUsec": 41178140
+    },
+    {
+      "ms": 90297,
+      "memory": 1483362304,
+      "pythonRss": 873357312,
+      "cpuUsec": 41178949
+    },
+    {
+      "ms": 90547,
+      "memory": 1483362304,
+      "pythonRss": 873357312,
+      "cpuUsec": 41507952
+    },
+    {
+      "ms": 90853,
+      "memory": 1483362304,
+      "pythonRss": 873357312,
+      "cpuUsec": 41508987
+    },
+    {
+      "ms": 91049,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41530918
+    },
+    {
+      "ms": 91300,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41531640
+    },
+    {
+      "ms": 91551,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41532205
+    },
+    {
+      "ms": 91801,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41533127
+    },
+    {
+      "ms": 92050,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41533681
+    },
+    {
+      "ms": 92301,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41534384
+    },
+    {
+      "ms": 92552,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41534999
+    },
+    {
+      "ms": 92803,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41535602
+    },
+    {
+      "ms": 93052,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41536132
+    },
+    {
+      "ms": 93303,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41536689
+    },
+    {
+      "ms": 93554,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41537242
+    },
+    {
+      "ms": 93805,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41538465
+    },
+    {
+      "ms": 94056,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41539135
+    },
+    {
+      "ms": 94307,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41539916
+    },
+    {
+      "ms": 94558,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41540457
+    },
+    {
+      "ms": 94807,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41541258
+    },
+    {
+      "ms": 95057,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41541810
+    },
+    {
+      "ms": 95308,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41542382
+    },
+    {
+      "ms": 95559,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41542904
+    },
+    {
+      "ms": 95810,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41543520
+    },
+    {
+      "ms": 96059,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41544147
+    },
+    {
+      "ms": 96310,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41544724
+    },
+    {
+      "ms": 96561,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41545261
+    },
+    {
+      "ms": 96817,
+      "memory": 1469419520,
+      "pythonRss": 873357312,
+      "cpuUsec": 41546068
+    },
+    {
+      "ms": 97062,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 41546765
+    },
+    {
+      "ms": 97312,
+      "memory": 1469341696,
+      "pythonRss": 873357312,
+      "cpuUsec": 41547867
+    },
+    {
+      "ms": 97563,
+      "memory": 1469341696,
+      "pythonRss": 873357312,
+      "cpuUsec": 41548467
+    },
+    {
+      "ms": 97814,
+      "memory": 1469341696,
+      "pythonRss": 873357312,
+      "cpuUsec": 41549379
+    },
+    {
+      "ms": 98065,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 41549982
+    },
+    {
+      "ms": 98315,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 41550989
+    },
+    {
+      "ms": 98566,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 41551791
+    },
+    {
+      "ms": 98816,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 41552553
+    },
+    {
+      "ms": 99065,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 41553233
+    },
+    {
+      "ms": 99316,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 41554001
+    },
+    {
+      "ms": 99566,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 41555464
+    },
+    {
+      "ms": 99817,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 41556110
+    },
+    {
+      "ms": 100066,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 41556606
+    },
+    {
+      "ms": 100317,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 41557177
+    },
+    {
+      "ms": 100568,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 41557838
+    },
+    {
+      "ms": 100818,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 41558410
+    },
+    {
+      "ms": 101068,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 41559029
+    },
+    {
+      "ms": 101317,
+      "memory": 1469079552,
+      "pythonRss": 873357312,
+      "cpuUsec": 41559805
+    },
+    {
+      "ms": 101568,
+      "memory": 1469345792,
+      "pythonRss": 873357312,
+      "cpuUsec": 41560484
+    },
+    {
+      "ms": 101819,
+      "memory": 1469345792,
+      "pythonRss": 873357312,
+      "cpuUsec": 41561261
+    },
+    {
+      "ms": 102070,
+      "memory": 1469345792,
+      "pythonRss": 873357312,
+      "cpuUsec": 41561800
+    },
+    {
+      "ms": 102319,
+      "memory": 1469345792,
+      "pythonRss": 873357312,
+      "cpuUsec": 41562388
+    },
+    {
+      "ms": 102570,
+      "memory": 1481793536,
+      "pythonRss": 873357312,
+      "cpuUsec": 41637793
+    },
+    {
+      "ms": 102820,
+      "memory": 1481666560,
+      "pythonRss": 873357312,
+      "cpuUsec": 41766390
+    },
+    {
+      "ms": 103071,
+      "memory": 1099341824,
+      "pythonRss": 0,
+      "cpuUsec": 41877116
+    },
+    {
+      "ms": 103189,
+      "memory": 697954304,
+      "pythonRss": 0,
+      "cpuUsec": 41947841
+    }
+  ]
+}

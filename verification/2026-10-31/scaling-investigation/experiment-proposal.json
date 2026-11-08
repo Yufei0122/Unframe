@@ -1,0 +1,91 @@
+{
+  "createdAt": "2026-10-31T07:29:50.784Z",
+  "status": "PROPOSED_NOT_EXECUTED",
+  "policyChanges": [],
+  "observed": {
+    "jobs": 30,
+    "succeeded": 30,
+    "processing": {
+      "samples": 30,
+      "minMs": 473,
+      "maxMs": 724,
+      "meanMs": 539.4666666666667,
+      "p95Ms": 709
+    },
+    "firstCreatedAt": "2026-10-31T07:04:32.000Z",
+    "lastCreatedAt": "2026-10-31T07:04:37.000Z",
+    "lastCompletedAt": "2026-10-31T07:04:50.000Z",
+    "note": "DynamoDB timestamps have one-second precision; submission duration is approximate.",
+    "createSpanSeconds": 5,
+    "nominalCreatesPerSecond": 6,
+    "wholeBurstCompletionSeconds": 18,
+    "serialCapacityJobsPerSecond": 1.8536826495304002,
+    "receivedToCompletedMeanSeconds": 0.5492,
+    "receiveToLastCompletionSeconds": 17.019,
+    "peakObservedVisible": 13
+  },
+  "targetReasoning": {
+    "formula": "acceptable queue delay / average processing time",
+    "currentTarget": 3,
+    "currentImpliedQueueSeconds": 1.6183999999999998,
+    "illustrativeFiveSecondTarget": 9,
+    "caution": "No queue-delay SLO has been specified. Retain target 3. Processing excludes receive/get/claim overhead; this is a planning approximation, not a latency guarantee."
+  },
+  "proposal": {
+    "maximumJobs": 900,
+    "operation": "recognise",
+    "museumId": "met",
+    "image": "mobile/assets/water-lilies.jpg",
+    "maximumStartsPerSecond": 3,
+    "maximumConcurrentSubmissions": 5,
+    "maximumSubmissionSeconds": 300,
+    "maximumObservationMinutesFromFirstSubmission": 40,
+    "maximumTasks": 4,
+    "cpuUnitsPerTask": 512,
+    "memoryMiBPerTask": 2048,
+    "stopEarly": "At least two healthy running workers with successful jobs on distinct task streams and a scaling activity explaining the increase.",
+    "noScaleOutApproximationAt180Seconds": 206.33712308452792,
+    "noScaleOutApproximationAt300Seconds": 343.89520514087985,
+    "caveat": "Projections assume warm serial throughput and successful paced uploads; capacity, alarm latency and cold starts remain uncertain. Never extend the cap automatically."
+  },
+  "cost": {
+    "currency": "USD",
+    "source": "verification/2026-10-31/recognition-final/cost-model.json",
+    "priceRetrievedAt": "2026-10-31T06:58:36.597Z",
+    "perTaskHourlyComputeAndIPv4": 0.03992,
+    "lines": {
+      "fargateAndIPv4AllFourTasksWholeWindow": 0.10645333333333332,
+      "apiAndLambda": 0.00917100225,
+      "dynamodbRequests": 0.0046035,
+      "s3PutGetAndTenMinuteImageStorage": 0.005347916018835616,
+      "sqsAndIdleReceives": 0.001272,
+      "vectorQueries": 0.002430177417216,
+      "logIngestionAssuming8KiBPerJob": 0.004939776,
+      "metricReadsAssumingTwentyMetricsEachMinute": 0.008
+    },
+    "modelledTotal": 0.14221770501938494,
+    "incrementalComputeAndIPv4AboveOneTask": 0.07984,
+    "planningAllowance": 0.5,
+    "allowanceIsNotEnforcedBillingCap": true,
+    "imageUploadBytes": 335686500,
+    "exclusions": [
+      "Tax, discounts and credits",
+      "Retries beyond assumptions",
+      "Existing baseline infrastructure/storage charges",
+      "Enhanced Container Insights observations and additional performance logs",
+      "Data transfer where applicable",
+      "Runtime after the observation window"
+    ],
+    "note": "All-four-task whole-window scenario is conservative for compute, not an upper bound on the complete AWS bill. No Bedrock calls planned."
+  },
+  "evidenceStatus": {
+    "policyConfigured": "PASS",
+    "F14QueueBacklogObserved": "PASS_DIRECT_SQS_OBSERVATION",
+    "highAlarmTriggered": "NO",
+    "desiredCountIncreased": "NO",
+    "F15RunningCountIncreased": "NOT_DEMONSTRATED",
+    "F16ScaledBackDown": "NOT_DEMONSTRATED",
+    "originalJobSuccess": "30/30",
+    "newJobsSubmitted": 0
+  }
+}

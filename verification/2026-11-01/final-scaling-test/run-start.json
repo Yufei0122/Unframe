@@ -1,0 +1,8 @@
+{
+  "start": "2026-11-01T11:42:04.499Z",
+  "totalCap": 30,
+  "warmup": 5,
+  "main": 25,
+  "warmupConcurrency": 2,
+  "mainConcurrency": 5
+}

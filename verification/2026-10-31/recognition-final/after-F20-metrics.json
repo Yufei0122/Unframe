@@ -1,0 +1,129 @@
+{
+  "MetricDataResults": [
+    {
+      "Id": "visible",
+      "Label": "AWS/SQS a3-n12281212-unframe-recognition ApproximateNumberOfMessagesVisible",
+      "Timestamps": [
+        "2026-10-31T17:07:00+10:00",
+        "2026-10-31T17:06:00+10:00",
+        "2026-10-31T17:05:00+10:00",
+        "2026-10-31T17:04:00+10:00"
+      ],
+      "Values": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "StatusCode": "Complete"
+    },
+    {
+      "Id": "oldest",
+      "Label": "AWS/SQS a3-n12281212-unframe-recognition ApproximateAgeOfOldestMessage",
+      "Timestamps": [
+        "2026-10-31T17:07:00+10:00",
+        "2026-10-31T17:06:00+10:00",
+        "2026-10-31T17:05:00+10:00",
+        "2026-10-31T17:04:00+10:00"
+      ],
+      "Values": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "StatusCode": "Complete"
+    },
+    {
+      "Id": "running",
+      "Label": "ECS/ContainerInsights n12281212-strobe-a2 a3-n12281212-unframe-worker RunningTaskCount",
+      "Timestamps": [
+        "2026-10-31T17:07:00+10:00",
+        "2026-10-31T17:06:00+10:00",
+        "2026-10-31T17:05:00+10:00",
+        "2026-10-31T17:04:00+10:00"
+      ],
+      "Values": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "StatusCode": "Complete"
+    },
+    {
+      "Id": "cpu",
+      "Label": "AWS/ECS n12281212-strobe-a2 a3-n12281212-unframe-worker CPUUtilization",
+      "Timestamps": [
+        "2026-10-31T17:07:00+10:00",
+        "2026-10-31T17:06:00+10:00",
+        "2026-10-31T17:05:00+10:00",
+        "2026-10-31T17:04:00+10:00"
+      ],
+      "Values": [
+        1.8946131269137065,
+        1.8588171650966008,
+        12.391991004347801,
+        12.210076729456583
+      ],
+      "StatusCode": "Complete"
+    },
+    {
+      "Id": "memory",
+      "Label": "AWS/ECS n12281212-strobe-a2 a3-n12281212-unframe-worker MemoryUtilization",
+      "Timestamps": [
+        "2026-10-31T17:07:00+10:00",
+        "2026-10-31T17:06:00+10:00",
+        "2026-10-31T17:05:00+10:00",
+        "2026-10-31T17:04:00+10:00"
+      ],
+      "Values": [
+        41.048177083333336,
+        41.064453125,
+        41.0400390625,
+        40.681966145833336
+      ],
+      "StatusCode": "Complete"
+    },
+    {
+      "Id": "lambdaerrors",
+      "Label": "AWS/Lambda a3-n12281212-unframe-jobs Errors",
+      "Timestamps": [
+        "2026-10-31T17:04:00+10:00"
+      ],
+      "Values": [
+        0
+      ],
+      "StatusCode": "Complete"
+    },
+    {
+      "Id": "lambdainvocations",
+      "Label": "AWS/Lambda a3-n12281212-unframe-jobs Invocations",
+      "Timestamps": [
+        "2026-10-31T17:04:00+10:00"
+      ],
+      "Values": [
+        30
+      ],
+      "StatusCode": "Complete"
+    },
+    {
+      "Id": "dlq",
+      "Label": "AWS/SQS a3-n12281212-unframe-recognition-dlq ApproximateNumberOfMessagesVisible",
+      "Timestamps": [
+        "2026-10-31T17:07:00+10:00",
+        "2026-10-31T17:06:00+10:00",
+        "2026-10-31T17:05:00+10:00",
+        "2026-10-31T17:04:00+10:00"
+      ],
+      "Values": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "StatusCode": "Complete"
+    }
+  ],
+  "Messages": []
+}

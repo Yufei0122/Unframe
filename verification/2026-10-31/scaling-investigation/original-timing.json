@@ -1,0 +1,19 @@
+{
+  "jobs": 30,
+  "succeeded": 30,
+  "processing": {
+    "samples": 30,
+    "minMs": 473,
+    "maxMs": 724,
+    "meanMs": 539.4666666666667,
+    "p95Ms": 709
+  },
+  "firstCreatedAt": "2026-10-31T07:04:32.000Z",
+  "lastCreatedAt": "2026-10-31T07:04:37.000Z",
+  "lastCompletedAt": "2026-10-31T07:04:50.000Z",
+  "note": "DynamoDB timestamps have one-second precision; submission duration is approximate.",
+  "createSpanSeconds": 5,
+  "nominalCreatesPerSecond": 6,
+  "wholeBurstCompletionSeconds": 18,
+  "serialCapacityJobsPerSecond": 1.8536826495304002
+}

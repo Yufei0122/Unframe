@@ -1,0 +1,52 @@
+{
+  "retrievedAt": "2026-10-31T05:09:09.158Z",
+  "source": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonECS/current/ap-southeast-2/index.json",
+  "publicationDate": "2026-10-19T22:43:17Z",
+  "rates": [
+    {
+      "sku": "RWBFR84TYF5JT44P",
+      "usage": "APS2-Fargate-GB-Hours",
+      "description": "AWS Fargate - Memory - Asia Pacific (Sydney)",
+      "unit": "hours",
+      "usd": 0.00532,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "MMQG9GMCKV4JUBKW",
+      "usage": "APS2-Fargate-vCPU-Hours:perCPU",
+      "description": "AWS Fargate - vCPU - Asia Pacific (Sydney)",
+      "unit": "hours",
+      "usd": 0.04856,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    }
+  ],
+  "assumptions": {
+    "cpu": 0.5,
+    "memoryGiB": 2,
+    "maximumTasks": 4,
+    "observationMinutes": 30,
+    "publicIPv4PerTask": 1,
+    "publicIPv4HourlyUsd": 0.005,
+    "ipv4Source": "https://aws.amazon.com/vpc/pricing/",
+    "noDiscountsOrTax": true,
+    "loadJobs": 30,
+    "concurrency": 5,
+    "imageBytes": 372985
+  },
+  "taskHourlyComputeUsd": 0.03492,
+  "fourTasksThirtyMinutesComputeUsd": 0.06984,
+  "fourTasksThirtyMinutesComputeAndIPv4Usd": 0.07984,
+  "incrementalThreeTasksThirtyMinutesComputeAndIPv4Usd": 0.059879999999999996,
+  "excluded": [
+    "S3 requests/storage",
+    "SQS requests",
+    "DynamoDB",
+    "S3 Vectors queries",
+    "API Gateway/Lambda",
+    "CloudWatch/Container Insights",
+    "data transfer where applicable",
+    "ECR storage",
+    "runtime beyond assumed 30 minutes"
+  ],
+  "note": "Illustrative compute/network-address estimate, not a total bill or spending cap. No load test executed."
+}

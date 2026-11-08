@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "configurationPreserved": true,
+  "at": "2026-10-31T07:02:36.953Z",
+  "desired": 1,
+  "running": 1,
+  "pending": 0,
+  "deployments": [
+    {
+      "taskDefinition": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:6",
+      "status": "PRIMARY",
+      "rollout": "COMPLETED",
+      "failedTasks": 0
+    }
+  ],
+  "tasks": [
+    {
+      "taskArn": "arn:aws:ecs:ap-southeast-2:901444280953:task/n12281212-strobe-a2/14d226de342f4ebb95672558bd499a7b",
+      "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:6",
+      "lastStatus": "RUNNING",
+      "healthStatus": "HEALTHY",
+      "cpu": "512",
+      "memory": "2048",
+      "containers": [
+        {
+          "name": "unframe-worker",
+          "healthStatus": "HEALTHY",
+          "image": "901444280953.dkr.ecr.ap-southeast-2.amazonaws.com/a3-n12281212-unframe-worker@sha256:a0e14f0a51d37614f8ca567abdeb19f0f9edb1d0837413c85f1ead7ba9ceb258",
+          "imageDigest": "sha256:a0e14f0a51d37614f8ca567abdeb19f0f9edb1d0837413c85f1ead7ba9ceb258"
+        },
+        {
+          "name": "aws-guardduty-agent-is6guPj",
+          "healthStatus": "UNKNOWN",
+          "imageDigest": "sha256:694927b5f7ee005b25d725fb8a0a2e86c72ccfe967cec6386574e608ceb1777b"
+        }
+      ]
+    }
+  ]
+}

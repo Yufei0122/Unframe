@@ -1,0 +1,9 @@
+SCALING TEST RESULT
+Jobs submitted: 30 (5 warm-up + 25 main)
+Peak queue depth: 15 sampled visible messages (CloudWatch: 3)
+ECS tasks: 1 -> 1 -> 1; no increase observed
+Queue drain time: approximately 60 seconds to observed empty queue
+Peak CPU: 26.15%
+Peak memory: 42.31%
+DLQ before/after: 3 / 3
+Result: PARTIAL

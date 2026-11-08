@@ -18,7 +18,7 @@ export const visionSchema = object({
 const compactText = length => ({ ...text(length), pattern: `^.{1,${length}}$` });
 const artworkTypes = ['painting', 'drawing', 'print', 'sculpture', 'craft'];
 const subjectTypes = [...artworkTypes, 'architecture', 'sign', 'person', 'other', 'unclear'];
-const compactVisionSchema = object({
+export const compactVisionSchema = object({
   subjectType: { type: 'string', enum: subjectTypes },
   description: compactText(200),
   visualFeatures: { type: 'array', maxItems: 2, items: compactText(60) },
@@ -41,6 +41,12 @@ export function parseVision(value) {
     return !unknownArtist || value.visibleText.some(label => label.toLowerCase().includes(item.title.toLowerCase()));
   });
   return { ...value, hypotheses: value.artworkPresence === 'likely' ? hypotheses : [] };
+}
+
+export function parseCompactVision(result) {
+  if (!exact(result, Object.keys(compactVisionSchema.properties)) || !subjectTypes.includes(result.subjectType)) throw new AIError(502, 'INVALID_VISION_RESULT', 'The image category was not valid. Try a clearer image.');
+  const { subjectType, ...observation } = result;
+  return { ...parseVision({ ...observation, artworkPresence: artworkTypes.includes(subjectType) ? 'likely' : subjectType === 'unclear' ? 'uncertain' : 'unlikely' }), inferencePerformed: true };
 }
 
 export async function inspectVisionModel(config, client = createLocalClient(config, 'OLLAMA'), signal) {

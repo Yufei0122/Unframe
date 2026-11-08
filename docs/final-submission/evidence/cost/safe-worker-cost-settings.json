@@ -1,0 +1,25 @@
+{
+  "retrievedAt": "2026-10-31T08:59:26.968Z",
+  "value": [
+    {
+      "name": "ARTWORK_MATCH_THRESHOLD",
+      "value": "0.80"
+    },
+    {
+      "name": "AI_ANALYSIS_BUDGET_MS",
+      "value": "125000"
+    },
+    {
+      "name": "AI_PROVIDER",
+      "value": "bedrock"
+    },
+    {
+      "name": "BEDROCK_MODEL_ID",
+      "value": "google.gemma-3-12b-it"
+    },
+    {
+      "name": "OPENCLIP_THREADS",
+      "value": "1"
+    }
+  ]
+}

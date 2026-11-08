@@ -56,5 +56,5 @@ export interface AIRoute {
   demo: boolean; mapNotice: string; estimatedMinutes: number; estimatedWalkingDistance: number;
   route: { order: number; artworkId: string; title: string; galleryId: string; estimatedVisitMinutes: number }[];
   navigation: { from: string; to: string; nodes: string[]; distance: number; estimatedSeconds: number }[];
-  reasoningSummary: string; recommendationSource: 'ollama' | 'local'; warning?: string; errorCode?: string;
+  reasoningSummary: string; recommendationSource: 'ollama' | 'bedrock' | 'local'; warning?: string; errorCode?: string;
 }

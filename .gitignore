@@ -13,6 +13,7 @@ data/*.tmp
 *.log
 .expo/
 mobile/dist/
+artifacts/
 mobile/ios/
 mobile/android/
 mobile/.env*

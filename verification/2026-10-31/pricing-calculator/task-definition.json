@@ -1,0 +1,30 @@
+{
+  "retrievedAt": "2026-10-31T08:48:15.702Z",
+  "value": {
+    "cpu": "512",
+    "memory": "2048",
+    "runtime": {
+      "cpuArchitecture": "X86_64",
+      "operatingSystemFamily": "LINUX"
+    },
+    "networkMode": "awsvpc",
+    "ephemeralStorage": {
+      "sizeInGiB": 20
+    },
+    "containers": [
+      {
+        "name": "unframe-worker",
+        "image": "901444280953.dkr.ecr.ap-southeast-2.amazonaws.com/a3-n12281212-unframe-worker@sha256:a0e14f0a51d37614f8ca567abdeb19f0f9edb1d0837413c85f1ead7ba9ceb258",
+        "logConfiguration": {
+          "logDriver": "awslogs",
+          "options": {
+            "awslogs-group": "/ecs/a3-n12281212-unframe-worker",
+            "awslogs-region": "ap-southeast-2",
+            "awslogs-stream-prefix": "ecs"
+          },
+          "secretOptions": []
+        }
+      }
+    ]
+  }
+}

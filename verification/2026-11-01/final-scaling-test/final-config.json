@@ -1,0 +1,190 @@
+{
+  "target": {
+    "ScalableTargets": [
+      {
+        "ServiceNamespace": "ecs",
+        "ResourceId": "service/n12281212-strobe-a2/a3-n12281212-unframe-worker",
+        "ScalableDimension": "ecs:service:DesiredCount",
+        "MinCapacity": 1,
+        "MaxCapacity": 3,
+        "RoleARN": "arn:aws:iam::901444280953:role/aws-service-role/ecs.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_ECSService",
+        "CreationTime": "2026-10-31T05:53:24.308000+10:00",
+        "SuspendedState": {
+          "DynamicScalingInSuspended": false,
+          "DynamicScalingOutSuspended": false,
+          "ScheduledScalingSuspended": false
+        },
+        "ScalableTargetARN": "arn:aws:application-autoscaling:ap-southeast-2:901444280953:scalable-target/0ec5ae38e76bce6147649316c9b9741c455c"
+      }
+    ]
+  },
+  "policy": {
+    "ScalingPolicies": [
+      {
+        "PolicyARN": "arn:aws:autoscaling:ap-southeast-2:901444280953:scalingPolicy:ae38e76b-ce61-4764-9316-c9b9741c455c:resource/ecs/service/n12281212-strobe-a2/a3-n12281212-unframe-worker:policyName/unframe-sqs-backlog",
+        "PolicyName": "unframe-sqs-backlog",
+        "ServiceNamespace": "ecs",
+        "ResourceId": "service/n12281212-strobe-a2/a3-n12281212-unframe-worker",
+        "ScalableDimension": "ecs:service:DesiredCount",
+        "PolicyType": "TargetTrackingScaling",
+        "TargetTrackingScalingPolicyConfiguration": {
+          "TargetValue": 3.0,
+          "CustomizedMetricSpecification": {
+            "Dimensions": [],
+            "Metrics": [
+              {
+                "Id": "m1",
+                "MetricStat": {
+                  "Metric": {
+                    "Dimensions": [
+                      {
+                        "Name": "QueueName",
+                        "Value": "a3-n12281212-unframe-recognition"
+                      }
+                    ],
+                    "MetricName": "ApproximateNumberOfMessagesVisible",
+                    "Namespace": "AWS/SQS"
+                  },
+                  "Stat": "Sum"
+                },
+                "ReturnData": false
+              },
+              {
+                "Id": "m2",
+                "MetricStat": {
+                  "Metric": {
+                    "Dimensions": [
+                      {
+                        "Name": "ClusterName",
+                        "Value": "n12281212-strobe-a2"
+                      },
+                      {
+                        "Name": "ServiceName",
+                        "Value": "a3-n12281212-unframe-worker"
+                      }
+                    ],
+                    "MetricName": "RunningTaskCount",
+                    "Namespace": "ECS/ContainerInsights"
+                  },
+                  "Stat": "Average"
+                },
+                "ReturnData": false
+              },
+              {
+                "Expression": "m1 / m2",
+                "Id": "backlog_per_task",
+                "Label": "Visible recognition messages per running worker",
+                "ReturnData": true
+              }
+            ]
+          },
+          "ScaleOutCooldown": 30,
+          "ScaleInCooldown": 120,
+          "DisableScaleIn": false
+        },
+        "Alarms": [
+          {
+            "AlarmName": "TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmHigh-bd150a38-aa09-489f-9726-d0ba56e37c83",
+            "AlarmARN": "arn:aws:cloudwatch:ap-southeast-2:901444280953:alarm:TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmHigh-bd150a38-aa09-489f-9726-d0ba56e37c83"
+          },
+          {
+            "AlarmName": "TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmLow-18a6f57d-4b3d-4a15-b8a6-c78ee1cabc5f",
+            "AlarmARN": "arn:aws:cloudwatch:ap-southeast-2:901444280953:alarm:TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmLow-18a6f57d-4b3d-4a15-b8a6-c78ee1cabc5f"
+          }
+        ],
+        "CreationTime": "2026-10-31T05:53:53.841000+10:00"
+      }
+    ]
+  },
+  "activities": {
+    "ScalingActivities": [
+      {
+        "ActivityId": "3adcccb2-e0eb-4516-ae95-49fd6ea62bb1",
+        "ServiceNamespace": "ecs",
+        "ResourceId": "service/n12281212-strobe-a2/a3-n12281212-unframe-worker",
+        "ScalableDimension": "ecs:service:DesiredCount",
+        "Description": "Attempting to scale due to alarm triggered",
+        "Cause": "monitor alarm TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmLow-18a6f57d-4b3d-4a15-b8a6-c78ee1cabc5f in state ALARM triggered policy unframe-sqs-backlog",
+        "StartTime": "2026-10-31T18:35:35.494000+10:00",
+        "StatusCode": "Failed",
+        "NotScaledReasons": [
+          {
+            "Code": "AlreadyAtMinCapacity",
+            "MinCapacity": 1
+          }
+        ]
+      },
+      {
+        "ActivityId": "8978998f-05aa-45d6-aa7b-eedbd240453b",
+        "ServiceNamespace": "ecs",
+        "ResourceId": "service/n12281212-strobe-a2/a3-n12281212-unframe-worker",
+        "ScalableDimension": "ecs:service:DesiredCount",
+        "Description": "Setting desired count to 1.",
+        "Cause": "monitor alarm TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmLow-18a6f57d-4b3d-4a15-b8a6-c78ee1cabc5f in state ALARM triggered policy unframe-sqs-backlog",
+        "StartTime": "2026-10-31T18:32:35.511000+10:00",
+        "EndTime": "2026-10-31T18:33:11.295000+10:00",
+        "StatusCode": "Successful",
+        "StatusMessage": "Successfully set desired count to 1. Change successfully fulfilled by ecs."
+      },
+      {
+        "ActivityId": "6bbb5138-26c3-4572-94d4-25bcdace075c",
+        "ServiceNamespace": "ecs",
+        "ResourceId": "service/n12281212-strobe-a2/a3-n12281212-unframe-worker",
+        "ScalableDimension": "ecs:service:DesiredCount",
+        "Description": "Setting desired count to 2.",
+        "Cause": "monitor alarm TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmLow-18a6f57d-4b3d-4a15-b8a6-c78ee1cabc5f in state ALARM triggered policy unframe-sqs-backlog",
+        "StartTime": "2026-10-31T18:29:35.529000+10:00",
+        "EndTime": "2026-10-31T18:30:09.340000+10:00",
+        "StatusCode": "Successful",
+        "StatusMessage": "Successfully set desired count to 2. Change successfully fulfilled by ecs."
+      },
+      {
+        "ActivityId": "78e3d6f8-3c96-496f-a596-cbb0e69df154",
+        "ServiceNamespace": "ecs",
+        "ResourceId": "service/n12281212-strobe-a2/a3-n12281212-unframe-worker",
+        "ScalableDimension": "ecs:service:DesiredCount",
+        "Description": "Attempting to scale due to alarm triggered",
+        "Cause": "monitor alarm TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmHigh-bd150a38-aa09-489f-9726-d0ba56e37c83 in state ALARM triggered policy unframe-sqs-backlog",
+        "StartTime": "2026-10-31T18:12:05.938000+10:00",
+        "StatusCode": "Failed",
+        "NotScaledReasons": [
+          {
+            "Code": "AlreadyAtMaxCapacity",
+            "MaxCapacity": 3
+          }
+        ]
+      },
+      {
+        "ActivityId": "5a0295b6-b643-4649-8589-8a1b8d0271b4",
+        "ServiceNamespace": "ecs",
+        "ResourceId": "service/n12281212-strobe-a2/a3-n12281212-unframe-worker",
+        "ScalableDimension": "ecs:service:DesiredCount",
+        "Description": "Setting desired count to 3.",
+        "Cause": "monitor alarm TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmHigh-bd150a38-aa09-489f-9726-d0ba56e37c83 in state ALARM triggered policy unframe-sqs-backlog",
+        "StartTime": "2026-10-31T18:11:06.016000+10:00",
+        "EndTime": "2026-10-31T18:12:16.013000+10:00",
+        "StatusCode": "Successful",
+        "StatusMessage": "Successfully set desired count to 3. Change successfully fulfilled by ecs."
+      },
+      {
+        "ActivityId": "a92468bb-52f5-494c-9434-5e85a4390bb0",
+        "ServiceNamespace": "ecs",
+        "ResourceId": "service/n12281212-strobe-a2/a3-n12281212-unframe-worker",
+        "ScalableDimension": "ecs:service:DesiredCount",
+        "Description": "Attempting to scale due to alarm triggered",
+        "Cause": "monitor alarm TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmLow-18a6f57d-4b3d-4a15-b8a6-c78ee1cabc5f in state ALARM triggered policy unframe-sqs-backlog",
+        "StartTime": "2026-10-31T05:54:35.475000+10:00",
+        "StatusCode": "Failed",
+        "NotScaledReasons": [
+          {
+            "Code": "AlreadyAtMinCapacity",
+            "MinCapacity": 1
+          }
+        ]
+      }
+    ]
+  },
+  "targetUnchanged": true,
+  "policyUnchanged": true,
+  "utilityUnchanged": true
+}

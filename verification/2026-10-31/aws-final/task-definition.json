@@ -1,0 +1,37 @@
+{
+    "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:4",
+    "cpu": "512",
+    "memory": "2048",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "taskRoleArn": "arn:aws:iam::901444280953:role/Task-Role-CAB432-ECS",
+    "executionRoleArn": "arn:aws:iam::901444280953:role/Execution-Role-CAB432-ECS",
+    "containers": [
+        {
+            "name": "unframe-worker",
+            "image": "901444280953.dkr.ecr.ap-southeast-2.amazonaws.com/a3-n12281212-unframe-worker@sha256:ba7c946125932a59495a56c37ea299911a345514c0775ff9e4a4d1f7798cdada",
+            "healthCheck": {
+                "command": [
+                    "CMD",
+                    "node",
+                    "worker/healthcheck.js"
+                ],
+                "interval": 30,
+                "timeout": 5,
+                "retries": 3,
+                "startPeriod": 180
+            },
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/a3-n12281212-unframe-worker",
+                    "awslogs-region": "ap-southeast-2",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            }
+        }
+    ]
+}

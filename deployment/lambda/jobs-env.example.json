@@ -1,0 +1,10 @@
+{
+  "Variables": {
+    "JOBS_TABLE_NAME": "<JOBS_TABLE_NAME>",
+    "JOB_IMAGES_BUCKET": "<TEMPORARY_IMAGE_BUCKET>",
+    "JOB_IMAGE_PREFIX": "uploads/",
+    "JOBS_ALLOWED_ORIGINS": "https://<FRONTEND_DOMAIN>",
+    "JOB_UPLOAD_TTL_SECONDS": "300",
+    "JOB_TTL_SECONDS": "86400"
+  }
+}

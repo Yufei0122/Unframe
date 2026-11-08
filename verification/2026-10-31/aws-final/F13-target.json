@@ -1,0 +1,19 @@
+{
+    "ScalableTargets": [
+        {
+            "ServiceNamespace": "ecs",
+            "ResourceId": "service/n12281212-strobe-a2/a3-n12281212-unframe-worker",
+            "ScalableDimension": "ecs:service:DesiredCount",
+            "MinCapacity": 1,
+            "MaxCapacity": 4,
+            "RoleARN": "arn:aws:iam::901444280953:role/aws-service-role/ecs.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_ECSService",
+            "CreationTime": "2026-10-31T05:53:24.308000+10:00",
+            "SuspendedState": {
+                "DynamicScalingInSuspended": false,
+                "DynamicScalingOutSuspended": false,
+                "ScheduledScalingSuspended": false
+            },
+            "ScalableTargetARN": "arn:aws:application-autoscaling:ap-southeast-2:901444280953:scalable-target/0ec5ae38e76bce6147649316c9b9741c455c"
+        }
+    ]
+}

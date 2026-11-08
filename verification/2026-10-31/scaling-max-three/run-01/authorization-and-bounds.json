@@ -1,0 +1,12 @@
+{
+  "startedAt": "2026-10-31T08:05:58.875Z",
+  "maxJobs": 900,
+  "maxStartsPerSecond": 3,
+  "concurrency": 5,
+  "maxSubmissionSeconds": 300,
+  "maxObservationSeconds": 2400,
+  "maximumWorkers": 3,
+  "estimatedUsd": 0.116,
+  "allowanceUsd": 0.5,
+  "note": "Explicit user authorization includes proceeding with quota-read denial and stopping on actual capacity errors. No manual DesiredCount changes."
+}

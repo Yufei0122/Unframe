@@ -1,0 +1,78 @@
+{
+  "retrievedAt": "2026-10-31T07:28:24.515Z",
+  "value": [
+    {
+      "clusterName": "n12281212-strobe-a2",
+      "status": "ACTIVE",
+      "runningTasksCount": 4,
+      "pendingTasksCount": 0,
+      "activeServicesCount": 4,
+      "statistics": [
+        {
+          "name": "runningEC2TasksCount",
+          "value": "0"
+        },
+        {
+          "name": "runningFargateTasksCount",
+          "value": "4"
+        },
+        {
+          "name": "pendingEC2TasksCount",
+          "value": "0"
+        },
+        {
+          "name": "pendingFargateTasksCount",
+          "value": "0"
+        },
+        {
+          "name": "runningExternalTasksCount",
+          "value": "0"
+        },
+        {
+          "name": "pendingExternalTasksCount",
+          "value": "0"
+        },
+        {
+          "name": "runningManagedInstancesTasksCount",
+          "value": "0"
+        },
+        {
+          "name": "pendingManagedInstancesTasksCount",
+          "value": "0"
+        },
+        {
+          "name": "activeEC2ServiceCount",
+          "value": "2"
+        },
+        {
+          "name": "activeFargateServiceCount",
+          "value": "2"
+        },
+        {
+          "name": "drainingEC2ServiceCount",
+          "value": "0"
+        },
+        {
+          "name": "drainingFargateServiceCount",
+          "value": "0"
+        },
+        {
+          "name": "activeExternalServiceCount",
+          "value": "0"
+        },
+        {
+          "name": "drainingExternalServiceCount",
+          "value": "0"
+        },
+        {
+          "name": "activeManagedInstancesServiceCount",
+          "value": "0"
+        },
+        {
+          "name": "drainingManagedInstancesServiceCount",
+          "value": "0"
+        }
+      ]
+    }
+  ]
+}

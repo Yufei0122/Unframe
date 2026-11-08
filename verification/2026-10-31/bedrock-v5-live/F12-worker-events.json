@@ -1,0 +1,39 @@
+{
+  "ok": true,
+  "events": [
+    {
+      "timestamp": 1793430169910,
+      "logStreamName": "ecs/unframe-worker/14d226de342f4ebb95672558bd499a7b",
+      "event": "job_received",
+      "jobId": "48eb6b33-57e8-4d22-92bd-67690289915c"
+    },
+    {
+      "timestamp": 1793430169948,
+      "logStreamName": "ecs/unframe-worker/14d226de342f4ebb95672558bd499a7b",
+      "event": "job_processing",
+      "jobId": "48eb6b33-57e8-4d22-92bd-67690289915c",
+      "operation": "analyse",
+      "attempt": 1
+    },
+    {
+      "timestamp": 1793430174137,
+      "logStreamName": "ecs/unframe-worker/14d226de342f4ebb95672558bd499a7b",
+      "event": "bedrock_complete",
+      "jobId": "48eb6b33-57e8-4d22-92bd-67690289915c",
+      "modelId": "google.gemma-3-12b-it",
+      "elapsedMs": 2785
+    },
+    {
+      "timestamp": 1793430174145,
+      "logStreamName": "ecs/unframe-worker/14d226de342f4ebb95672558bd499a7b",
+      "event": "job_result_saved",
+      "jobId": "48eb6b33-57e8-4d22-92bd-67690289915c"
+    },
+    {
+      "timestamp": 1793430174182,
+      "logStreamName": "ecs/unframe-worker/14d226de342f4ebb95672558bd499a7b",
+      "event": "job_completed",
+      "jobId": "48eb6b33-57e8-4d22-92bd-67690289915c"
+    }
+  ]
+}

@@ -31,7 +31,7 @@ export function createRouteService({ ollama, collection, graph }) {
       || eligible.filter(a => prefs.mustSeeArtworkIds.includes(a.id)).reduce((sum, a) => sum + a.minutes, 0) > prefs.availableMinutes) {
       throw new AIError(422, 'NO_ROUTE', 'No feasible route fits this time and these must-see/accessibility requirements. Increase the time or change the starting point or selections.');
     }
-    let recommendations, warning, errorCode, recommendationSource = 'ollama';
+    let recommendations, warning, errorCode, recommendationSource = ollama.provider || 'ollama';
     try { recommendations = preparedRecommendations ?? await ollama.generateRouteRecommendations(prefs, eligible, signal); }
     catch (error) {
       if (signal?.aborted || error?.code === 'REQUEST_CANCELLED') throw new AIError(499, 'REQUEST_CANCELLED', 'The request was cancelled.');

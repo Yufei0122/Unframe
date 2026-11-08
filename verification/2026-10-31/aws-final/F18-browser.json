@@ -1,0 +1,56 @@
+{
+  "startedAt": "2026-10-30T19:58:30.468Z",
+  "origin": "https://d3x3iexpafsgf.cloudfront.net",
+  "status": "PARTIAL_CONFIRMATION_ENDPOINT_MISSING",
+  "stage": "complete",
+  "jobsCreated": 1,
+  "suppressedExtraJobs": 0,
+  "requests": [
+    {
+      "kind": "jobs",
+      "method": "POST",
+      "status": 201,
+      "cacheControl": "no-store",
+      "allowOrigin": "https://d3x3iexpafsgf.cloudfront.net"
+    },
+    {
+      "kind": "upload",
+      "method": "PUT",
+      "status": 200,
+      "allowOrigin": "https://d3x3iexpafsgf.cloudfront.net"
+    },
+    {
+      "kind": "jobs",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "no-store",
+      "allowOrigin": "https://d3x3iexpafsgf.cloudfront.net"
+    },
+    {
+      "kind": "jobs",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "no-store",
+      "allowOrigin": "https://d3x3iexpafsgf.cloudfront.net"
+    }
+  ],
+  "browserErrors": [],
+  "jobId": "f81413e3-2075-4571-898c-8e05701bd1c5",
+  "recognition": {
+    "status": "SUCCEEDED",
+    "matched": true,
+    "artworkId": "water-lilies",
+    "similarity": 0.9999953508377075,
+    "requiresConfirmation": true,
+    "candidates": [
+      {
+        "artworkId": "water-lilies",
+        "similarity": 0.9999953508377075
+      }
+    ]
+  },
+  "candidateDisplayed": true,
+  "confirmationHttpSucceeded": false,
+  "detailsButtonVisible": true,
+  "finishedAt": "2026-10-30T19:58:52.527Z"
+}

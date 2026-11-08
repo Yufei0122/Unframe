@@ -1,0 +1,37 @@
+{
+  "ok": true,
+  "value": {
+    "Item": {
+      "attempts": {
+        "N": "1"
+      },
+      "bucket": {
+        "S": "a3-n12281212-unframe-job-images"
+      },
+      "completedAt": {
+        "N": "1793430174"
+      },
+      "imageKey": {
+        "S": "uploads/48eb6b33-57e8-4d22-92bd-67690289915c/image"
+      },
+      "jobId": {
+        "S": "48eb6b33-57e8-4d22-92bd-67690289915c"
+      },
+      "museumId": {
+        "S": "met"
+      },
+      "operation": {
+        "S": "analyse"
+      },
+      "status": {
+        "S": "SUCCEEDED"
+      }
+    }
+  },
+  "resultSummary": {
+    "method": "vision",
+    "identityStatus": "uncertain",
+    "artworkPresence": "unlikely"
+  },
+  "resultSha256": "adda271759792b7acdd391777c133fd8e68d251a722e4e80c7d7bd1cbc6eb300"
+}

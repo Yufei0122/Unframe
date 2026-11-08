@@ -1,0 +1,27 @@
+{
+    "clusters": [
+        {
+            "clusterArn": "arn:aws:ecs:ap-southeast-2:901444280953:cluster/n12281212-strobe-a2",
+            "clusterName": "n12281212-strobe-a2",
+            "status": "ACTIVE",
+            "registeredContainerInstancesCount": 0,
+            "runningTasksCount": 4,
+            "pendingTasksCount": 0,
+            "activeServicesCount": 4,
+            "statistics": [],
+            "tags": [],
+            "settings": [
+                {
+                    "name": "containerInsights",
+                    "value": "enabled"
+                }
+            ],
+            "capacityProviders": [
+                "FARGATE",
+                "FARGATE_SPOT"
+            ],
+            "defaultCapacityProviderStrategy": []
+        }
+    ],
+    "failures": []
+}

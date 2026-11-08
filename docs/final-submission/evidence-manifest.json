@@ -1,0 +1,750 @@
+{
+  "preparedAt": "2026-10-31T15:28:49.065600+00:00",
+  "files": [
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\resource-inventory.json",
+      "copy": "evidence/config/resource-inventory.json",
+      "sha256": "534b82f7581c3bee2baa33e9e4312174b1e15f413eb6f050e8c861d86d7a1d7c",
+      "bytes": 7606,
+      "sourceFileModifiedUtc": "2026-10-31T07:14:31.132403+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\jobs-table.json",
+      "copy": "evidence/config/jobs-table.json",
+      "sha256": "ce87d4ef4858d07948aae52266543208c00d5e7dd1a5d4b606e00db465a39982",
+      "bytes": 1282,
+      "sourceFileModifiedUtc": "2026-10-31T06:57:22.748116+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\jobs-ttl.json",
+      "copy": "evidence/config/jobs-ttl.json",
+      "sha256": "f387344e47a9dc4ddf6e962db3e4b450c6c7d5b8b9aabe157d3363382083ad23",
+      "bytes": 116,
+      "sourceFileModifiedUtc": "2026-10-31T06:57:24.908246+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\image-lifecycle.json",
+      "copy": "evidence/config/image-lifecycle.json",
+      "sha256": "c1f55528468f48855f1953c3651ea150ef896178c2300b9613005ecc14612580",
+      "bytes": 338,
+      "sourceFileModifiedUtc": "2026-10-31T06:57:35.239324+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\image-notifications.json",
+      "copy": "evidence/config/image-notifications.json",
+      "sha256": "f6527e4aaca4c6960672c67bcb205b8aa86b7fa4a9ab086938c72dcdad38fa1e",
+      "bytes": 568,
+      "sourceFileModifiedUtc": "2026-10-31T06:57:37.804794+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\vector-index.json",
+      "copy": "evidence/config/vector-index.json",
+      "sha256": "9f4d5f7a6ab975a73b677942fa86654e6cfd4e5e6608cb95b5c169c71aef6786",
+      "bytes": 663,
+      "sourceFileModifiedUtc": "2026-10-31T06:58:08.892374+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\vector-keys.json",
+      "copy": "evidence/config/vector-keys.json",
+      "sha256": "91c16638e4ca6e33fb3de4dd03a56c522a3d534e80a35bce3d4b28f11787e191",
+      "bytes": 2196,
+      "sourceFileModifiedUtc": "2026-10-31T06:58:10.563066+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\public-access-a3-n12281212-unframe-job-images.json",
+      "copy": "evidence/config/public-access-a3-n12281212-unframe-job-images.json",
+      "sha256": "12b57f15e8de8f8be9c9fc86e8ad6b6cc9da25de6eeb929674f313ebcac2ddc9",
+      "bytes": 189,
+      "sourceFileModifiedUtc": "2026-10-31T06:57:32.993367+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\public-access-a3-n12281212-unframe-web.json",
+      "copy": "evidence/config/public-access-a3-n12281212-unframe-web.json",
+      "sha256": "2a238dd160df3b38399cf67a8dcc0dba344e99e33c7da90cea3ba0077cd49a39",
+      "bytes": 191,
+      "sourceFileModifiedUtc": "2026-10-31T06:57:29.064638+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\attributes-a3-n12281212-unframe-recognition.json",
+      "copy": "evidence/config/attributes-a3-n12281212-unframe-recognition.json",
+      "sha256": "37a42034fcc3bd9c76411368af558252644a39748241525581a8ec937546df29",
+      "bytes": 1455,
+      "sourceFileModifiedUtc": "2026-10-31T06:57:41.712775+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\attributes-a3-n12281212-unframe-recognition-dlq.json",
+      "copy": "evidence/config/attributes-a3-n12281212-unframe-recognition-dlq.json",
+      "sha256": "22869a4e7d21f7d437b071041f1d2904bab5fa712a7d0ccfea63b546bab11904",
+      "bytes": 925,
+      "sourceFileModifiedUtc": "2026-10-31T06:57:45.599191+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\F18-browser.json",
+      "copy": "evidence/recognition/F18-browser.json",
+      "sha256": "f18233031611e12770b9c1a20c26a0b8704749e6d610fb97089623cddcfd4ca2",
+      "bytes": 1417,
+      "sourceFileModifiedUtc": "2026-10-31T07:03:45.705244+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\F18-candidate.png",
+      "copy": "evidence/recognition/F18-candidate.png",
+      "sha256": "1b71592fb8bd2f5408abaa14ac91cb2efbb0de15171be536671d976ee28c0c74",
+      "bytes": 254825,
+      "sourceFileModifiedUtc": "2026-10-31T07:03:34.187594+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\F18-confirmation.png",
+      "copy": "evidence/recognition/F18-confirmation.png",
+      "sha256": "ec10a137d337b540bff9a15fa3d7109af1b4a43818755e3cfca25f06e7c63c39",
+      "bytes": 224635,
+      "sourceFileModifiedUtc": "2026-10-31T07:03:44.838134+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\F19-cache.json",
+      "copy": "evidence/recognition/F19-cache.json",
+      "sha256": "2a31136e20bbd198c079459265f8682a926eac92ba9f315246028f53a27e3402",
+      "bytes": 969,
+      "sourceFileModifiedUtc": "2026-10-31T06:53:28.578043+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\F14-load-results.json",
+      "copy": "evidence/recognition/F14-load-results.json",
+      "sha256": "67d059d2eaf21f0efd0df1558ea2b7ca8c7a6edafddc6235a204c90846bca5da",
+      "bytes": 8752,
+      "sourceFileModifiedUtc": "2026-10-31T07:06:49.740284+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\bedrock-v5-live\\F12-summary.json",
+      "copy": "evidence/bedrock/F12-summary.json",
+      "sha256": "067e1b997b50372f44136b02082092c538c5d33928c1af614a7a26d0e54e1f11",
+      "bytes": 516,
+      "sourceFileModifiedUtc": "2026-10-31T07:03:10.664201+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\bedrock-v5-live\\F12-worker-events.json",
+      "copy": "evidence/bedrock/F12-worker-events.json",
+      "sha256": "b1e88ac387c640776e4b3f67a7add2e97ef35d6c4327c6d70980ee8e23433e20",
+      "bytes": 1212,
+      "sourceFileModifiedUtc": "2026-10-31T07:03:10.662201+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\scaling-max-three\\run-01\\F14-F16-verdict.json",
+      "copy": "evidence/scaling/F14-F16-verdict.json",
+      "sha256": "b8444526761e838f275e729e255bdb8c0a74ebf600a63d8e29b3cd8388c86d79",
+      "bytes": 12537,
+      "sourceFileModifiedUtc": "2026-10-31T08:35:26.983230+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\scaling-max-three\\run-01\\F14-F16-metrics.csv",
+      "copy": "evidence/scaling/F14-F16-metrics.csv",
+      "sha256": "6b2da2cace43d9132a7fa9d930bdd26b1f8d09d8d4c17e7203f861c5fc9125e4",
+      "bytes": 2320,
+      "sourceFileModifiedUtc": "2026-10-31T08:34:51.800162+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\scaling-max-three\\run-01\\F14-F16-cloudwatch-metrics.json",
+      "copy": "evidence/scaling/F14-F16-cloudwatch-metrics.json",
+      "sha256": "e82d7e0ba79dc8a297c46a278e9a324284f402f5062e3f74f55e8004f68b2c96",
+      "bytes": 15851,
+      "sourceFileModifiedUtc": "2026-10-31T08:34:51.798590+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\scaling-max-three\\run-01\\F15-F16-scaling-activities.json",
+      "copy": "evidence/scaling/F15-F16-scaling-activities.json",
+      "sha256": "41afa797a5fc2a6b9b9f47a36a0aecf6c5fdf0f7f117f8ef1e1971546431d3c7",
+      "bytes": 3876,
+      "sourceFileModifiedUtc": "2026-10-31T08:34:53.230244+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\scaling-max-three\\run-01\\F14-queue.png",
+      "copy": "evidence/scaling/F14-queue.png",
+      "sha256": "5fddfca37dfdf0d5e406f3aa2efa9b4bc8a0de8c013eeddf4f7253b191e72bc3",
+      "bytes": 36362,
+      "sourceFileModifiedUtc": "2026-10-31T08:35:06.266799+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\scaling-max-three\\run-01\\F15-F16-running.png",
+      "copy": "evidence/scaling/F15-F16-running.png",
+      "sha256": "953dfdcfaa4d4775201a5c42441ad931e93e806661872162ee13a35677b4250f",
+      "bytes": 31815,
+      "sourceFileModifiedUtc": "2026-10-31T08:35:08.156501+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\scaling-max-three\\run-01\\worker-utilization.png",
+      "copy": "evidence/scaling/worker-utilization.png",
+      "sha256": "e8bb799197bed052fe6d383c1ed9d019df8b3b729a23aec435b4b9c3fc5d5872",
+      "bytes": 39025,
+      "sourceFileModifiedUtc": "2026-10-31T08:35:09.991080+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\scaling-max-three\\run-01\\final-health.json",
+      "copy": "evidence/scaling/final-health.json",
+      "sha256": "6c946ccb627137ced56bd7cec64033eb1695a30f599cfcd15fe5e7b2206a9ab6",
+      "bytes": 840,
+      "sourceFileModifiedUtc": "2026-10-31T08:36:30.801222+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\scaling-max-three\\run-01\\final-target.json",
+      "copy": "evidence/scaling/final-target.json",
+      "sha256": "ae58cf32585d839587b6235982955c891af0a975811437e7dd0a8daeedc6af77",
+      "bytes": 881,
+      "sourceFileModifiedUtc": "2026-10-31T08:34:58.433629+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\scaling-max-three\\run-01\\final-policy.json",
+      "copy": "evidence/scaling/final-policy.json",
+      "sha256": "e8092bdea521eae2397ae9074a76918d5c31584bb9f0c5ad5330cd55c29e666d",
+      "bytes": 3251,
+      "sourceFileModifiedUtc": "2026-10-31T08:34:58.434636+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\scaling-max-three\\run-01\\run-summary.json",
+      "copy": "evidence/scaling/run-summary.json",
+      "sha256": "0ad81ab89cf2a817cdcf56f3e2eab1e30face159f2d103671bf786e0ea060f3f",
+      "bytes": 3110,
+      "sourceFileModifiedUtc": "2026-10-31T08:32:56.055431+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\scaling-max-three\\run-01\\jobs.json",
+      "copy": "evidence/scaling/jobs.json",
+      "sha256": "0e5f96bd469ddac4de1bc59a5771eaf86611d96358b6df634e40493684d64823",
+      "bytes": 355851,
+      "sourceFileModifiedUtc": "2026-10-31T08:32:56.052907+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\scaling-max-three\\run-01\\stopped-tasks.json",
+      "copy": "evidence/scaling/stopped-tasks.json",
+      "sha256": "05b120b29b01bb05bf7a28d403797b1b068d70f2b8e61062c7314b00107a1d8e",
+      "bytes": 1572,
+      "sourceFileModifiedUtc": "2026-10-31T08:35:04.589939+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\scaling-max-three\\run-01\\alarms.json",
+      "copy": "evidence/scaling/alarms.json",
+      "sha256": "5ac4022f597c9ce0380351f8c8be42dc1fc37ceacf0171998d4d4a040998d1f7",
+      "bytes": 7538,
+      "sourceFileModifiedUtc": "2026-10-31T08:32:47.872867+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\scaling-max-three\\run-01\\alarm-0-history.json",
+      "copy": "evidence/scaling/alarm-0-history.json",
+      "sha256": "0a21e570a811c530818bd2522c1ac7489a0985eed0c4a6ecb472c7ff289ea1bc",
+      "bytes": 4168,
+      "sourceFileModifiedUtc": "2026-10-31T08:35:00.104595+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\scaling-max-three\\run-01\\alarm-1-history.json",
+      "copy": "evidence/scaling/alarm-1-history.json",
+      "sha256": "cbd57530e6072de9696279cc7eeaf4d0fe860652020cce0d2b17e047027d2d4e",
+      "bytes": 5993,
+      "sourceFileModifiedUtc": "2026-10-31T08:35:01.551011+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\scaling-max-three\\run-01\\observations.json",
+      "copy": "evidence/scaling/observations.json",
+      "sha256": "b95ee5f6f03d739e89e85f9d46f3d360ddc1ce69ebbcfb8ec39271c76698c997",
+      "bytes": 512025,
+      "sourceFileModifiedUtc": "2026-10-31T08:32:56.049882+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\F20-graphs.json",
+      "copy": "evidence/monitoring/F20-graphs.json",
+      "sha256": "63315e00d9b24b93396020e4e1519423fa4da17b3563c10f7eee903c902bca48",
+      "bytes": 733,
+      "sourceFileModifiedUtc": "2026-10-31T07:09:08.390891+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\F20-widget-0.png",
+      "copy": "evidence/monitoring/F20-widget-0.png",
+      "sha256": "76c6f95e8ce8c2cdfeb186df5fd957e8461989c09047a203ef150760223ed3ea",
+      "bytes": 21184,
+      "sourceFileModifiedUtc": "2026-10-31T07:08:51.034685+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\F20-widget-1.png",
+      "copy": "evidence/monitoring/F20-widget-1.png",
+      "sha256": "9a71ff66751231939cf52dc6e2678617f068d031004cfdd1a951614da752ae57",
+      "bytes": 20851,
+      "sourceFileModifiedUtc": "2026-10-31T07:08:53.641638+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\F20-widget-2.png",
+      "copy": "evidence/monitoring/F20-widget-2.png",
+      "sha256": "94e895ba25cc329740b99661510a12aa3ee42e321de00f07eedcb7d37a958046",
+      "bytes": 15029,
+      "sourceFileModifiedUtc": "2026-10-31T07:08:55.972174+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\F20-widget-3.png",
+      "copy": "evidence/monitoring/F20-widget-3.png",
+      "sha256": "1351be0e754e2f98bd104cf27ed685a70281bf0502866628dd515e28bb3f3586",
+      "bytes": 18867,
+      "sourceFileModifiedUtc": "2026-10-31T07:08:58.708173+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\F20-widget-4.png",
+      "copy": "evidence/monitoring/F20-widget-4.png",
+      "sha256": "722f36321c7f7aadb89b152711cc4268d83d642c6a3531565dbbb30a7c106334",
+      "bytes": 14073,
+      "sourceFileModifiedUtc": "2026-10-31T07:09:01.420152+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\F20-widget-5.png",
+      "copy": "evidence/monitoring/F20-widget-5.png",
+      "sha256": "455cc75c51db83883ce973b4ec6cc071b5b7f32d817fde1b4434e1269f476bad",
+      "bytes": 21329,
+      "sourceFileModifiedUtc": "2026-10-31T07:09:06.318729+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\F20-widget-6.png",
+      "copy": "evidence/monitoring/F20-widget-6.png",
+      "sha256": "111ec27e062b33da035ad7d91366686ee89cc9e7c3d2919e1f9894c047dbbf9d",
+      "bytes": 16346,
+      "sourceFileModifiedUtc": "2026-10-31T07:09:08.390891+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\calculator-model.json",
+      "copy": "evidence/cost/calculator-model.json",
+      "sha256": "bf2329efbba16740e0c5ccf5482d058d3eafbd75b4ac6a44f7cb7121ff7e6291",
+      "bytes": 27860,
+      "sourceFileModifiedUtc": "2026-10-31T09:06:55.554877+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\lambda-reports.json",
+      "copy": "evidence/cost/lambda-reports.json",
+      "sha256": "4acd49f610b02603d5b050aa7cbe711d1843d207f1f022da35c06ccb35b817a6",
+      "bytes": 137507,
+      "sourceFileModifiedUtc": "2026-10-31T08:50:26.870316+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\safe-worker-cost-settings.json",
+      "copy": "evidence/cost/safe-worker-cost-settings.json",
+      "sha256": "c984684d78355453866e98c92c9a8b5ccbc78a523830e91beb6383ce88dfda1d",
+      "bytes": 435,
+      "sourceFileModifiedUtc": "2026-10-31T08:59:26.977549+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\vector-sizes.json",
+      "copy": "evidence/cost/vector-sizes.json",
+      "sha256": "87812b953d462d67b2bea9b5d8c0e980900d6e7ee217a0428475dbbc7943e175",
+      "bytes": 2419,
+      "sourceFileModifiedUtc": "2026-10-31T08:52:04.135258+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\ecr-scanning.json",
+      "copy": "evidence/cost/ecr-scanning.json",
+      "sha256": "5a5f81dec1b35905b177b796158f2dca082219335e0c259eed23dc0ba722ec8d",
+      "bytes": 312,
+      "sourceFileModifiedUtc": "2026-10-31T08:59:30.365890+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\ecr-unique-layers.json",
+      "copy": "evidence/cost/ecr-unique-layers.json",
+      "sha256": "01cf212155f88ca13e513b3cca76f6c22c3c6f0b25b589799939e711b910c39d",
+      "bytes": 302,
+      "sourceFileModifiedUtc": "2026-10-31T08:51:56.719790+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\vpc-endpoints.json",
+      "copy": "evidence/cost/vpc-endpoints.json",
+      "sha256": "24903da1ad7545c96c08924bfc131498dd4b99ad422d92858886685510a9d0bb",
+      "bytes": 272,
+      "sourceFileModifiedUtc": "2026-10-31T08:59:28.668451+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\cloudfront.json",
+      "copy": "evidence/cost/cloudfront.json",
+      "sha256": "02519365fb16745c72c8cf926525d94cc3b98d6d452ef79cfdb3b966ab515f53",
+      "bytes": 2104,
+      "sourceFileModifiedUtc": "2026-10-31T08:48:21.729529+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\api-routes.json",
+      "copy": "evidence/cost/api-routes.json",
+      "sha256": "a4ef84400ddfd71e6cc3b04fe2fdb64ae7ed66759509a570a5cf17b86dfb5d1a",
+      "bytes": 421,
+      "sourceFileModifiedUtc": "2026-10-31T08:48:15.918058+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\api-stage.json",
+      "copy": "evidence/cost/api-stage.json",
+      "sha256": "e67b836e66d006ee97f0f81dfeeca661ac685f0030fd3d70687040143915ea4e",
+      "bytes": 209,
+      "sourceFileModifiedUtc": "2026-10-31T08:48:18.474955+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\tags-a3-n12281212-unframe-job-images.json",
+      "copy": "evidence/tags/tags-a3-n12281212-unframe-job-images.json",
+      "sha256": "628475038f0a923dfc9a06643943a5ee2665e1760503e2c031bf017c9a3f4b3c",
+      "bytes": 211,
+      "sourceFileModifiedUtc": "2026-10-31T06:57:31.021129+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\tags-a3-n12281212-unframe-recognition-dlq.json",
+      "copy": "evidence/tags/tags-a3-n12281212-unframe-recognition-dlq.json",
+      "sha256": "87b3a944842fe8700e83617b1d766915bda7822c2a6e889439bfcb2132ea29d7",
+      "bytes": 105,
+      "sourceFileModifiedUtc": "2026-10-31T06:57:43.664407+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\tags-a3-n12281212-unframe-recognition.json",
+      "copy": "evidence/tags/tags-a3-n12281212-unframe-recognition.json",
+      "sha256": "87b3a944842fe8700e83617b1d766915bda7822c2a6e889439bfcb2132ea29d7",
+      "bytes": 105,
+      "sourceFileModifiedUtc": "2026-10-31T06:57:39.831605+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\tags-a3-n12281212-unframe-web.json",
+      "copy": "evidence/tags/tags-a3-n12281212-unframe-web.json",
+      "sha256": "628475038f0a923dfc9a06643943a5ee2665e1760503e2c031bf017c9a3f4b3c",
+      "bytes": 211,
+      "sourceFileModifiedUtc": "2026-10-31T06:57:27.013442+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\tags-api-shared.json",
+      "copy": "evidence/tags/tags-api-shared.json",
+      "sha256": "b3309f2ee90ea6ab63c2079c086e551d2a9fef22c5dc5dabef19b2dc98fa77b0",
+      "bytes": 105,
+      "sourceFileModifiedUtc": "2026-10-31T06:58:03.228715+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\tags-cloudfront.json",
+      "copy": "evidence/tags/tags-cloudfront.json",
+      "sha256": "a4e4fd51694f3b40a86ce8afd7d25a7cbebcfe3d1131b738fb50dc7033f5acb1",
+      "bytes": 270,
+      "sourceFileModifiedUtc": "2026-10-31T06:57:58.685541+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\tags-cluster-shared.json",
+      "copy": "evidence/tags/tags-cluster-shared.json",
+      "sha256": "b184e69f3f1be586a6108ab483e584e5a565d5b199e9676944b083918bc52cd3",
+      "bytes": 209,
+      "sourceFileModifiedUtc": "2026-10-31T06:57:53.646108+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\tags-dashboard.json",
+      "copy": "evidence/tags/tags-dashboard.json",
+      "sha256": "c5977c559f3c436fd3c8ef618c5b28b9e1cec0f7cfe39a5cd01310ee803552d6",
+      "bytes": 209,
+      "sourceFileModifiedUtc": "2026-10-31T06:58:01.203819+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\tags-ecr.json",
+      "copy": "evidence/tags/tags-ecr.json",
+      "sha256": "9ac371f3f8cb259b64bd4d1812e2913939c0f856a792285b63c230dd09d22a44",
+      "bytes": 209,
+      "sourceFileModifiedUtc": "2026-10-31T06:57:55.759437+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\tags-jobs-lambda.json",
+      "copy": "evidence/tags/tags-jobs-lambda.json",
+      "sha256": "29ce23b5ac05b5ff73e38d53c64165b53b88f093d7eada856c8d964c0410808d",
+      "bytes": 105,
+      "sourceFileModifiedUtc": "2026-10-31T06:57:18.692891+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\tags-jobs-logs.json",
+      "copy": "evidence/tags/tags-jobs-logs.json",
+      "sha256": "df302325bc5fd2c7712b094bec90004bbc0badd049ecabafc636bdad05b8bdfa",
+      "bytes": 105,
+      "sourceFileModifiedUtc": "2026-10-31T06:58:17.970191+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\tags-jobs-table.json",
+      "copy": "evidence/tags/tags-jobs-table.json",
+      "sha256": "c5977c559f3c436fd3c8ef618c5b28b9e1cec0f7cfe39a5cd01310ee803552d6",
+      "bytes": 209,
+      "sourceFileModifiedUtc": "2026-10-31T06:57:20.712884+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\tags-vector-bucket.json",
+      "copy": "evidence/tags/tags-vector-bucket.json",
+      "sha256": "e5b4f7b01bed561d87206794f47e929dad66d18b28bc27a507b9e30cea31d161",
+      "bytes": 105,
+      "sourceFileModifiedUtc": "2026-10-31T06:58:05.284746+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\tags-vector-index.json",
+      "copy": "evidence/tags/tags-vector-index.json",
+      "sha256": "e5b4f7b01bed561d87206794f47e929dad66d18b28bc27a507b9e30cea31d161",
+      "bytes": 105,
+      "sourceFileModifiedUtc": "2026-10-31T06:58:07.097177+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\tags-worker-logs.json",
+      "copy": "evidence/tags/tags-worker-logs.json",
+      "sha256": "a30a7861a01a9303745adc3f097b0feacf4dadfca0e23d6f48ee1e04e1ac4a79",
+      "bytes": 141,
+      "sourceFileModifiedUtc": "2026-10-31T06:58:15.923749+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\tags-worker-service.json",
+      "copy": "evidence/tags/tags-worker-service.json",
+      "sha256": "b184e69f3f1be586a6108ab483e584e5a565d5b199e9676944b083918bc52cd3",
+      "bytes": 209,
+      "sourceFileModifiedUtc": "2026-10-31T06:57:47.739219+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\recognition-final\\tags-worker-task-definition.json",
+      "copy": "evidence/tags/tags-worker-task-definition.json",
+      "sha256": "b184e69f3f1be586a6108ab483e584e5a565d5b199e9676944b083918bc52cd3",
+      "bytes": 209,
+      "sourceFileModifiedUtc": "2026-10-31T07:15:16.691319+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\prices\\AmazonApiGateway.json",
+      "copy": "evidence/cost/prices/AmazonApiGateway.json",
+      "sha256": "da8e439f3a8bbf33846ee73d6f2ce239ea94b775eb7cff7500b2d0a5624fe943",
+      "bytes": 11653,
+      "sourceFileModifiedUtc": "2026-10-31T08:59:37.414814+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\prices\\AmazonBedrock.json",
+      "copy": "evidence/cost/prices/AmazonBedrock.json",
+      "sha256": "6ef62aa63d204b366d1304c79e0368d9274a708daee416aed1a35cb19dd57287",
+      "bytes": 6566,
+      "sourceFileModifiedUtc": "2026-10-31T08:59:38.000929+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\prices\\AmazonCloudFront.json",
+      "copy": "evidence/cost/prices/AmazonCloudFront.json",
+      "sha256": "0af5f33a30c5b7752e993ea9dfdf244279e7c340d0fccc5cad3c9c88acc60f14",
+      "bytes": 29589,
+      "sourceFileModifiedUtc": "2026-10-31T08:59:37.667243+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\prices\\AmazonCloudWatch.json",
+      "copy": "evidence/cost/prices/AmazonCloudWatch.json",
+      "sha256": "3c3750b74f8dceb85f770a986e77ac2f3756f19c84e6cb5a3fe1ffac00167f4c",
+      "bytes": 131088,
+      "sourceFileModifiedUtc": "2026-10-31T08:59:37.664564+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\prices\\AmazonDynamoDB.json",
+      "copy": "evidence/cost/prices/AmazonDynamoDB.json",
+      "sha256": "d0fbc6cafd9d1e8676260727dad2c5105d38d271075e43b144f05886242c8af3",
+      "bytes": 22020,
+      "sourceFileModifiedUtc": "2026-10-31T08:59:37.550004+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\prices\\AmazonECR.json",
+      "copy": "evidence/cost/prices/AmazonECR.json",
+      "sha256": "4c2406a538da9c142c0387c7f8a6cea22bcc9d0a4411a78f43bffcf706f9873c",
+      "bytes": 3239,
+      "sourceFileModifiedUtc": "2026-10-31T08:59:37.437069+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\prices\\AmazonECS.json",
+      "copy": "evidence/cost/prices/AmazonECS.json",
+      "sha256": "e7782cbdee74f52200c21e41e2b1b2ca4a4efe8b561b9baafd2fb087ccd644da",
+      "bytes": 1479,
+      "sourceFileModifiedUtc": "2026-10-31T08:59:37.172683+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\prices\\AmazonGuardDuty.json",
+      "copy": "evidence/cost/prices/AmazonGuardDuty.json",
+      "sha256": "e28ff505d7ae3506d1c3f844e925d5f4a9669dfc1acb7ca0688168fb30a0a130",
+      "bytes": 3018,
+      "sourceFileModifiedUtc": "2026-10-31T08:59:36.913969+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\prices\\AmazonInspectorV2.json",
+      "copy": "evidence/cost/prices/AmazonInspectorV2.json",
+      "sha256": "7e6c5a3e083e094150964237279e3dddc7542f18a4118c218caf5e461cbe0c91",
+      "bytes": 26546,
+      "sourceFileModifiedUtc": "2026-10-31T08:59:37.686776+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\prices\\AmazonS3.json",
+      "copy": "evidence/cost/prices/AmazonS3.json",
+      "sha256": "abac479e2ebf0b1d542be5e2ff5687dc9faa06e76bbad004158186d5dda15ebc",
+      "bytes": 306362,
+      "sourceFileModifiedUtc": "2026-10-31T08:59:37.910931+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\prices\\AmazonVPC.json",
+      "copy": "evidence/cost/prices/AmazonVPC.json",
+      "sha256": "77566d975f4f6943428da2022fcb102df2d0ece8daa460da3bcc9895ab5df0f2",
+      "bytes": 2334,
+      "sourceFileModifiedUtc": "2026-10-31T08:59:37.552769+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\prices\\AWSDataTransfer.json",
+      "copy": "evidence/cost/prices/AWSDataTransfer.json",
+      "sha256": "46dab48bd06f2fc119b5d14f79102ec4c04e8027b34b2d9f877c6532a55be73d",
+      "bytes": 6249,
+      "sourceFileModifiedUtc": "2026-10-31T08:59:49.270432+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\prices\\AWSLambda.json",
+      "copy": "evidence/cost/prices/AWSLambda.json",
+      "sha256": "bc4deeeed2e8d8d2180e92b2d44f6025aeac402425fa59d275985de4157419d9",
+      "bytes": 9999,
+      "sourceFileModifiedUtc": "2026-10-31T08:59:37.920774+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\prices\\AWSQueueService.json",
+      "copy": "evidence/cost/prices/AWSQueueService.json",
+      "sha256": "33a5aa6ddf3c436ef043f88e8fccf976f8b0d3eea63f6b6b5dedda20396ad46e",
+      "bytes": 6706,
+      "sourceFileModifiedUtc": "2026-10-31T08:59:37.436069+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\pricing-calculator\\prices\\CloudWatchDashboards.json",
+      "copy": "evidence/cost/prices/CloudWatchDashboards.json",
+      "sha256": "48069df1372f64056f1737e4f81868778fe59911ff68a8e9430108728e560b6c",
+      "bytes": 1938,
+      "sourceFileModifiedUtc": "2026-10-31T08:54:57.780544+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\artifacts\\bedrock-v5-deployment\\worker-limits\\summary.json",
+      "copy": "evidence/local/v5-worker-limits.json",
+      "sha256": "2b1b08c9563c649108d8c0256fc78ffe4616df0ca458ff0f2bbcda1170f65887",
+      "bytes": 63471,
+      "sourceFileModifiedUtc": "2026-10-31T06:53:46.984590+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\artifacts\\bedrock-v5-deployment\\deployment-verified.json",
+      "copy": "evidence/config/v5-deployment-verified.json",
+      "sha256": "1d157630afbfe204c7ad46a70772a1581f413c4fac090bfa3c64c3ad56ea07e7",
+      "bytes": 1341,
+      "sourceFileModifiedUtc": "2026-10-31T07:02:36.954641+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\artifacts\\bedrock-v5-deployment\\ecr-v5.json",
+      "copy": "evidence/config/ecr-v5.json",
+      "sha256": "d3e5e62e0b2def4f1c8951e6ae436a8d69e4ff36b0c393eaf0f97669ae9c6536",
+      "bytes": 545,
+      "sourceFileModifiedUtc": "2026-10-31T06:57:59.312968+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\bedrock-v5\\root-tests.txt",
+      "copy": "evidence/local/root-tests.txt",
+      "sha256": "fdd2aada3518be1197ecf5dff8117177313a285c3a1d2c9929e25d691d3478b9",
+      "bytes": 56542,
+      "sourceFileModifiedUtc": "2026-10-31T06:48:47.769177+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\bedrock-v5\\mobile-tests.txt",
+      "copy": "evidence/local/mobile-tests.txt",
+      "sha256": "9d64e783ceb23789bfa6c4e8ace7166e766e45639b3d51b8f013ac7bf7f047be",
+      "bytes": 7838,
+      "sourceFileModifiedUtc": "2026-10-31T06:49:33.794123+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\bedrock-v5\\mobile-check.txt",
+      "copy": "evidence/local/mobile-check.txt",
+      "sha256": "9a92af4170897bbb51161c10611888d6468f58c22fce0abe8834efd2f21bb204",
+      "bytes": 236,
+      "sourceFileModifiedUtc": "2026-10-31T06:49:35.600375+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\Project\\Unframe\\verification\\2026-10-31\\bedrock-v5\\browser-focused.txt",
+      "copy": "evidence/local/browser-focused.txt",
+      "sha256": "71605eb87ac0f2ae97e1e1b9d7817bff562eb3685788425d5cbdbdbda7d07a3c",
+      "bytes": 5010,
+      "sourceFileModifiedUtc": "2026-10-31T06:49:28.146541+00:00",
+      "transformation": "none; byte-identical copy"
+    },
+    {
+      "source": "D:\\FlyFly\\Study\\QUT\\Assessment\\26S2\\CAB432\\A3\\a86ca30d-a6c7-48f0-a909-28baa0981bb1.pdf",
+      "copy": "evidence/cost/calculator-export-2026-10-31.pdf",
+      "sha256": "459719cdb4fd44db96b5f8830ab2d3e07d48b41edae45bfff7328c666da47645",
+      "bytes": 21108,
+      "sourceFileModifiedUtc": "2026-10-31T15:18:21.380679+00:00",
+      "transformation": "none; byte-identical copy"
+    }
+  ],
+  "note": "File modification time is provenance, not necessarily observation time; use timestamps inside evidence. Original files unchanged."
+}

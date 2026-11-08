@@ -1,0 +1,1 @@
+{"metrics":[["ECS/ContainerInsights","RunningTaskCount","ServiceName","a3-n12281212-unframe-worker","ClusterName","n12281212-strobe-a2",{"label":"ECS - Running Worker Tasks"}]],"view":"timeSeries","stacked":false,"region":"ap-southeast-2","stat":"Average","period":60,"width":1000,"height":380,"start":"2026-10-31T07:02:18.301Z","end":"2026-10-31T07:08:53.642Z","timezone":"+1000"}

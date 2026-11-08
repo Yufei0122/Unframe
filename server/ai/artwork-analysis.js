@@ -12,9 +12,10 @@ export function createArtworkAnalysis(config, { vision = createVisionService(con
     let query, reference;
     if (store) {
       try {
-        const records = await store.load();
+        const records = store.search ? null : await store.load();
         query = await embeddings.generate(image, signal);
-        const ranked = records.map(record => ({ ...record, similarity: cosineSimilarity(query, record.vector) })).sort((a, b) => b.similarity - a.similarity);
+        const ranked = (store.search ? await store.search(query, { topK: Math.min(100, referenceArtworks().length), signal })
+          : records.map(record => ({ ...record, similarity: cosineSimilarity(query, record.vector) }))).sort((a, b) => b.similarity - a.similarity);
         const best = ranked[0];
         if (best?.similarity >= config.threshold && best.similarity - (ranked[1]?.similarity ?? -1) >= .05) {
           const entry = referenceArtworks().find(item => item.museumId === best.museumId && item.artwork.id === best.artworkId);

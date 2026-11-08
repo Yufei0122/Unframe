@@ -2,6 +2,8 @@
 
 Unframe is a React Native / Expo museum companion. **The mobile app is the only user interface**, including when opened in a computer browser. The former independent desktop website and curator interface have been removed.
 
+For the CAB432 A3 cloud submission, the scope is **Cloud-native AI Artwork Recognition**, with optional Bedrock artwork analysis. Cloud AI Tour Planning is **Future Work**; the existing local planning functionality below is preserved. Current deployment results, limitations and evidence are in [recognition-final-verification](docs/recognition-final-verification.md), with [submission checklist](docs/a3-recognition-evidence-checklist.md) and [cost inputs](docs/a3-cost-and-sustainability.md). Historical deployment notes are not current completion claims.
+
 ## Run on Windows
 
 Requires Node.js 22 or later. For a fresh checkout:

@@ -5,6 +5,7 @@ import { normalizeImage } from '../server/ai/images.js';
 
 try {
   const config = readAIConfig();
+  if (config.vectorStore === 's3vectors' && !process.argv.includes('--execute-aws')) throw new Error('AWS indexing is opt-in: pass --execute-aws only when ready to write the configured index.');
   const service = createEmbeddingService(config);
   const records = [];
   for (const { museumId, artwork } of referenceArtworks()) {

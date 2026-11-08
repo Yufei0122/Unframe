@@ -1,0 +1,20 @@
+{
+  "checkedAt": "2026-10-31T07:03:10.663Z",
+  "jobId": "48eb6b33-57e8-4d22-92bd-67690289915c",
+  "jobStatus": "SUCCEEDED",
+  "attempts": 1,
+  "method": "vision",
+  "resultPersistedInDynamoDB": true,
+  "cleanup": {
+    "status": "PASS_OBJECT_ABSENT",
+    "exists": false,
+    "errorCode": "404"
+  },
+  "dynamoDBResultMatchesAPI": true,
+  "bedrockCompleteEvents": 1,
+  "resultSavedEvents": 1,
+  "jobCompletedEvents": 1,
+  "failureEvents": [],
+  "logsRead": "PASS",
+  "bedrockVerification": "PASS_INVOKED_AND_PARSED"
+}

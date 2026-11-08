@@ -1,0 +1,179 @@
+[
+  {
+    "path": "submission-a3-infra.yml",
+    "change": "modified",
+    "beforeSha256": "983c6f3a15e9b965181d29194a3cc275f1a132f33d348e7aa5555666ce450877",
+    "afterSha256": "cd8b17a3ae2f0b98af081f06d243536611eec6ce6cdd0f86ec0bfd942c86a111"
+  },
+  {
+    "path": "app/README-CAB432-A3.md",
+    "change": "modified",
+    "beforeSha256": "109a5306138d4f4edb036ac930fbd2a9ac476afea565286fb8f985492b93f2c2",
+    "afterSha256": "19f3907a1afdc4c50387033717e34b216dd6c39eb295f268963f8f7afd902029"
+  },
+  {
+    "path": "app/docs/a3-cost-and-sustainability.md",
+    "change": "modified",
+    "beforeSha256": "1fe8157dd491c936199535c12d1f40161fad3c3ecd55d93067bbf731fb5f4ce1",
+    "afterSha256": "c63398539b12fdf6cc1d9bd3d5e03d54f480773990a852a1bac23c33b2e8ab9d"
+  },
+  {
+    "path": "app/docs/a3-recognition-evidence-checklist.md",
+    "change": "modified",
+    "beforeSha256": "7a1df7e5d46aee25f7f74f7d8375ec1a6699cf66f56af9dc06fd47b743638b02",
+    "afterSha256": "0fe668bbe5081c8827c0cf5a875b400332711f5b0ae6998378c406ac498e1de2"
+  },
+  {
+    "path": "app/docs/a3-submission-audit.md",
+    "change": "modified",
+    "beforeSha256": "549b238c503104444b63fff7ec2a6d7759dcfe28d753be739bbd5b29c54e781a",
+    "afterSha256": "01bc817143d5595e5d7a5c9e182f1402b4054c3b87c7faba520bd9b278f0b7ce"
+  },
+  {
+    "path": "app/docs/aws-deployment-readiness.md",
+    "change": "modified",
+    "beforeSha256": "5d336470798628e42e1c3f9896ed8022c3e9d77d879d688d0a525f8a760c7618",
+    "afterSha256": "9acfb7578bab6a290b1fd280a4ea4473164cd49fcc0122fb59cecba70e653e72"
+  },
+  {
+    "path": "app/docs/aws-final-integration-report.md",
+    "change": "modified",
+    "beforeSha256": "b8e106f2923e38b2726b8c31e50449499ee273a83b34c12922712d5f1e9fd398",
+    "afterSha256": "879c4c14823ad30f5086a7200323786ad3d47fdf7cf987e587048dbc5232e6f8"
+  },
+  {
+    "path": "app/docs/aws-final-verification-followup.md",
+    "change": "modified",
+    "beforeSha256": "657e2a025a43dff59c47a5b4a160d3acf5bc2e3faefa8420f801dd5331fdb0c1",
+    "afterSha256": "a5ea9689a16859eaa01a431c8df96edfea10a46043f82fd1425fb49fd6faa327"
+  },
+  {
+    "path": "app/docs/aws-live-deployment-report.md",
+    "change": "modified",
+    "beforeSha256": "3dcf9d8dadde980aea7d064ca8ea475b7bb5f41a24e8b7de18a528354d7f0c82",
+    "afterSha256": "6917cd2a0ff1ed6c9ba97187f777f0d08ff1405879fb30490ca800b203fc6da8"
+  },
+  {
+    "path": "app/docs/aws-scaling-test-plan.md",
+    "change": "modified",
+    "beforeSha256": "e75ce7f0683c72b04740f380231498fe9a5b17e37d6ad730ed43b91ebfca600c",
+    "afterSha256": "f00e15236d2a9553f457dd677dba293cfbb18e8adfadf92238eadc6e91e039ba"
+  },
+  {
+    "path": "app/docs/deployment-preparation-status.md",
+    "change": "modified",
+    "beforeSha256": "a3086bd0d22a8c34dac9378c91289209ea7ff7c4816ab502b2399ce1f373de78",
+    "afterSha256": "3eac61d16dbb1ec1b78f1dfc9951e0d3859bd57bcd1f08bb02384b8238f5007a"
+  },
+  {
+    "path": "app/docs/friday-deployment-checklist.md",
+    "change": "modified",
+    "beforeSha256": "89fc0f8b5edb74fd83a011a381b43c6bc1f429dd236845774c16b9a0b4196781",
+    "afterSha256": "89b30847452bb7ed40c9072fba3a04ebbce7167256c6b4a8bdc09568535bb50a"
+  },
+  {
+    "path": "app/docs/recognition-final-verification.md",
+    "change": "modified",
+    "beforeSha256": "f1942fd61eb1f5c2f92fa4f56594a5ba767c0f462ddd3d454e2f802f8f621207",
+    "afterSha256": "e39ed490863f98f10508cfe4d7f91c3031f4f502b4b85f9be6c24b5ce1e90541"
+  },
+  {
+    "path": "app/scripts/load-recognition-jobs.mjs",
+    "change": "modified",
+    "beforeSha256": "f86820900a8562eede90b346ca1a6d428a1467e361e17a0cb55ff45c709e6ae7",
+    "afterSha256": "32a2597827c0f7fd5e91da26ac1034f9f0b494051d35bcf3de1f518acea6d629"
+  },
+  {
+    "path": "app/scripts/prepare-a3-submission.mjs",
+    "change": "modified",
+    "beforeSha256": "7f894154bfe6a14e1f504151c941c93304193123f83698b0ce24313df3cb20d2",
+    "afterSha256": "934ea2ec31df50cbc79b208d001614c5aa74ffa7cdac90deaac1344be9d4a2f0"
+  },
+  {
+    "path": "app/scripts/validate-a3-submission.mjs",
+    "change": "modified",
+    "beforeSha256": "98dab5985edd21de5d047e1a6fde1c8390ad0a1d4f51cbe2c13a0d04e89933b8",
+    "afterSha256": "7cb3aca0bb55f7804ccf60bfaffb30c8cbf5732fabe236df94764b7c707d4755"
+  },
+  {
+    "path": "app/deployment/ecs/backlog-target-tracking.json",
+    "change": "modified",
+    "beforeSha256": "3f5202477ea7db2a6c0b8fbf0a58bef0cf36b5b9b7aa3e28e507bf4d120e57f9",
+    "afterSha256": "2d67203fa1d2becb252cb55e68708476832621938010f11fe9151d8073310d09"
+  },
+  {
+    "path": "app/deployment/ecs/scalable-target.json",
+    "change": "modified",
+    "beforeSha256": "f88e4ee346f085f205f79ec14fc903487a2d5c0850f31f5f8669b469e1faee40",
+    "afterSha256": "20fc37166332359b847928bd7be69352a9a1816cc8cac7d854611bbe56c11507"
+  },
+  {
+    "path": "scripts/validate-a3-submission.mjs",
+    "change": "modified",
+    "beforeSha256": "98dab5985edd21de5d047e1a6fde1c8390ad0a1d4f51cbe2c13a0d04e89933b8",
+    "afterSha256": "7cb3aca0bb55f7804ccf60bfaffb30c8cbf5732fabe236df94764b7c707d4755"
+  },
+  {
+    "path": "scripts/prepare-a3-submission.mjs",
+    "change": "modified",
+    "beforeSha256": "7f894154bfe6a14e1f504151c941c93304193123f83698b0ce24313df3cb20d2",
+    "afterSha256": "934ea2ec31df50cbc79b208d001614c5aa74ffa7cdac90deaac1344be9d4a2f0"
+  },
+  {
+    "path": "deployment/ecs/backlog-target-tracking.json",
+    "change": "modified",
+    "beforeSha256": "3f5202477ea7db2a6c0b8fbf0a58bef0cf36b5b9b7aa3e28e507bf4d120e57f9",
+    "afterSha256": "2d67203fa1d2becb252cb55e68708476832621938010f11fe9151d8073310d09"
+  },
+  {
+    "path": "docs/final-submission/architecture-aws.mmd",
+    "change": "modified",
+    "beforeSha256": "389cf5628d11289f55ea572e8e4810c157a6d2fe90945686c15dba40d8a1d252",
+    "afterSha256": "8e93aa6ed2175fea2f01b683c22a3802ca8f53a477af60d724751f6897aa4c9b"
+  },
+  {
+    "path": "docs/final-submission/architecture-specifications.md",
+    "change": "modified",
+    "beforeSha256": "5b05a2f6ff6128a101f34cb708432d1de8d69e6f1534a8c69916f7826e03a23d",
+    "afterSha256": "2ba8b65aad232fc6eff26e2b62642866145ebe2d83f99c9bcc7dfa7e35d546fe"
+  },
+  {
+    "path": "docs/final-submission/gradescope-audit.md",
+    "change": "modified",
+    "beforeSha256": "74596977d393d68d425545d1a6ebf3a6c08b7cefc65d0d303a6cc023a507a032",
+    "afterSha256": "25011732c738d5037de7269f20af26db20e97d95745f14285e030182912a74fb"
+  },
+  {
+    "path": "docs/final-submission/README.md",
+    "change": "modified",
+    "beforeSha256": "7afd3a139c58008b1e2db117050fd1bb296dbe5fbe93bc863c020d09ecd7f6d3",
+    "afterSha256": "78de19e25e455b21f4e1e4b02f31bef7f0046e3813e6e8b5d59ae4bc749f503c"
+  },
+  {
+    "path": "docs/final-submission/report-checklist.md",
+    "change": "modified",
+    "beforeSha256": "57c1e2953cf4b3ea32a50cefe13f3ef81f0e981fc397fbf29f3404699e4b376a",
+    "afterSha256": "adc6afa086ebed9ed2a7c4de3975b8168b280e5b8917aef70f56071876ec6689"
+  },
+  {
+    "path": "docs/final-submission/validate-pack.py",
+    "change": "modified",
+    "beforeSha256": "be7ec30d6a66e78226936acaeae51dd89221c04e8962afbf3a4c49804aab96ff",
+    "afterSha256": "117f2e78a35500f7ad3c25b6ba30496f646faa194c6a2e4aa0c1b877fce19ea6"
+  },
+  {
+    "path": "app/docs/a3-autoscaling-results.md",
+    "change": "added",
+    "afterSha256": "93dfd3b75d460a71289886cfe65aaae5de0b9afb5eb332f7acaf9ec40d3e568c"
+  },
+  {
+    "path": "app/docs/submission-current-state.md",
+    "change": "added",
+    "afterSha256": "e9f5bfe6a7ae65fa95288b929e77f444595bbcceeb2a59c74c6abadc8bcd49e4"
+  },
+  {
+    "path": "app/tests/scaling-load.test.js",
+    "change": "added",
+    "afterSha256": "1560d2ae6f486c11cfa4d2edeae48b539aa707b6dad9a43123a5cd92662d638b"
+  }
+]

@@ -1,0 +1,37 @@
+{
+  "checkedAt": "2026-10-31T08:36:30.782Z",
+  "checks": [
+    {
+      "name": "service",
+      "value": [
+        {
+          "desired": 1,
+          "running": 1,
+          "pending": 0,
+          "taskDefinition": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:6"
+        }
+      ]
+    },
+    {
+      "name": "task",
+      "value": [
+        {
+          "status": "RUNNING",
+          "health": "HEALTHY",
+          "cpu": "512",
+          "memory": "2048",
+          "taskDefinition": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:6"
+        }
+      ]
+    },
+    {
+      "name": "queue",
+      "value": {
+        "Attributes": {
+          "ApproximateNumberOfMessages": "0",
+          "ApproximateNumberOfMessagesNotVisible": "0"
+        }
+      }
+    }
+  ]
+}

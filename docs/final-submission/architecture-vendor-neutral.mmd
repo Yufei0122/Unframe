@@ -1,0 +1,44 @@
+flowchart LR
+  visitor["Visitor web client"]
+  edge["Global edge cache"]
+  staticStore[("Public static object store")]
+  gateway["HTTPS API gateway"]
+  jobs["Stateless job control function"]
+  state[("Structured job state and leases")]
+  images[("Private temporary image store")]
+  events["Object-created event notification"]
+  queue["Durable work queue"]
+  deadLetter["Dead-letter queue"]
+  subgraph compute["Elastic container workers: 1 to 3 replicas"]
+    worker["Serial job processor"]
+    encoder["Local image encoder: one model per task"]
+  end
+  vectors[("Managed vector reference index")]
+  vision["Optional managed vision model"]
+  telemetry["Logs, metrics and alarms"]
+  scaler["Metric-based capacity controller"]
+  roles["Service identities and access policies"]
+  visitor -->|"HTTPS assets"| edge
+  edge -->|"Origin cache misses"| staticStore
+  visitor -->|"Create and token-protected status polling"| gateway
+  gateway -->|"Synchronous invocation"| jobs
+  jobs -->|"Create and read state"| state
+  jobs -->|"Return job capability and signed upload grant"| visitor
+  visitor -->|"Direct signed HTTPS upload"| images
+  images ==>|"Object created"| events
+  events ==>|"Event pointer, not image bytes"| queue
+  worker -->|"Long poll, then acknowledge after completion"| queue
+  queue ==>|"Asynchronous work delivery"| worker
+  queue ==>|"Redrive after repeated receives"| deadLetter
+  worker -->|"Read image; delete after durable success"| images
+  worker -->|"Conditional claim; persist result and status"| state
+  worker -->|"Local inference"| encoder
+  worker -->|"Filtered nearest-neighbour query"| vectors
+  worker -->|"Only Analyse needing vision; schema validated"| vision
+  jobs -.->|"Logs and metrics"| telemetry
+  worker -.->|"Logs and metrics"| telemetry
+  queue -.->|"Backlog and age"| telemetry
+  telemetry -.->|"Visible backlog per running worker"| scaler
+  scaler -.->|"Automatic replica count"| compute
+  roles -.->|"Authorization configuration"| jobs
+  roles -.->|"Authorization configuration"| worker

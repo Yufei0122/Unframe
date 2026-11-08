@@ -1,0 +1,9 @@
+{
+  "retrievedAt": "2026-10-31T08:48:18.459Z",
+  "value": {
+    "TimeToLiveDescription": {
+      "TimeToLiveStatus": "ENABLED",
+      "AttributeName": "expiresAt"
+    }
+  }
+}

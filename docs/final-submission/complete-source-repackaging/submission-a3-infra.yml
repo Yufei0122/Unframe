@@ -1,0 +1,138 @@
+# Resource declaration, not CloudFormation and not a deployment template.
+# Based on SS.docx. Shared/provider-managed dependency tags and accepted identifiers require course review.
+# Cloud tour planning is deliberately outside the A3 scope and is Future Work.
+cloudInfrastructure:
+  - type: "ECS cluster"
+    arn: "arn:aws:ecs:ap-southeast-2:901444280953:cluster/n12281212-strobe-a2"
+    description: "Existing shared cluster hosts the Unframe Fargate worker; the course FAQ permits cluster reuse without relabelling."
+
+  - type: "ECS service"
+    arn: "arn:aws:ecs:ap-southeast-2:901444280953:service/n12281212-strobe-a2/a3-n12281212-unframe-worker"
+    description: "Runs recognition workers which pull uploaded-image jobs from SQS."
+
+  - type: "ECS task definition"
+    arn: "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:6"
+    description: "Pins worker v5 by verified ECR digest at 512 CPU units, 2048 MiB and Linux x86_64."
+
+  - type: "ECR repository"
+    arn: "arn:aws:ecr:ap-southeast-2:901444280953:repository/a3-n12281212-unframe-worker"
+    description: "Stores the immutable worker image containing OpenCLIP and recognition code."
+
+  - type: "Lambda function"
+    arn: "arn:aws:lambda:ap-southeast-2:901444280953:function:a3-n12281212-unframe-jobs"
+    description: "Creates jobs, issues bounded image uploads and reads results through per-job capabilities."
+
+  - type: "API Gateway HTTP API"
+    arn: "arn:aws:apigateway:ap-southeast-2::/apis/4xfbhsso7a"
+    description: "Shared HTTP API exposes A3 job routes through the prob stage; its assessment 2 purpose tag needs course review."
+
+  - type: "DynamoDB table"
+    arn: "arn:aws:dynamodb:ap-southeast-2:901444280953:table/a3-n12281212-unframe-jobs"
+    description: "Persists job state, leases and bounded results with a TTL."
+
+  - type: "S3 bucket"
+    arn: "arn:aws:s3:::a3-n12281212-unframe-job-images"
+    description: "Temporarily stores private image uploads and emits S3 ObjectCreated notifications."
+
+  - type: "S3 bucket"
+    arn: "arn:aws:s3:::a3-n12281212-unframe-web"
+    description: "Stores the public static frontend served through CloudFront."
+
+  - type: "SQS queue"
+    arn: "arn:aws:sqs:ap-southeast-2:901444280953:a3-n12281212-unframe-recognition"
+    description: "Buffers recognition work for serial worker-pull processing."
+
+  - type: "SQS queue"
+    arn: "arn:aws:sqs:ap-southeast-2:901444280953:a3-n12281212-unframe-recognition-dlq"
+    description: "Retains jobs that exhaust the configured retry policy for diagnosis."
+
+  - type: "S3 vector bucket"
+    arn: "arn:aws:s3vectors:ap-southeast-2:901444280953:bucket/a3-n12281212-unframe-vectors"
+    description: "Stores the versioned reference artwork vector index."
+
+  - type: "S3 vector index"
+    arn: "arn:aws:s3vectors:ap-southeast-2:901444280953:bucket/a3-n12281212-unframe-vectors/index/a3-n12281212-unframe-vectors"
+    description: "Retrieves matching artworks using 512-dimensional cosine vectors and metadata filters."
+
+  - type: "CloudFront distribution"
+    arn: "arn:aws:cloudfront::901444280953:distribution/E2CK5412ICFTJX"
+    description: "Caches public frontend assets and serves the web application over HTTPS."
+
+  - type: "CloudWatch dashboard"
+    arn: "arn:aws:cloudwatch::901444280953:dashboard/a3-n12281212-unframe"
+    description: "Displays eight queue, worker and Jobs Lambda operational metrics."
+
+  - type: "CloudWatch log group"
+    arn: "arn:aws:logs:ap-southeast-2:901444280953:log-group:/ecs/a3-n12281212-unframe-worker"
+    description: "Stores bounded operational events for the corresponding Unframe runtime."
+
+  - type: "CloudWatch log group"
+    arn: "arn:aws:logs:ap-southeast-2:901444280953:log-group:/aws/lambda/a3-n12281212-unframe-jobs"
+    description: "Stores bounded operational events for the corresponding Unframe runtime."
+
+  - type: "Application Auto Scaling target"
+    arn: "arn:aws:application-autoscaling:ap-southeast-2:901444280953:scalable-target/0ec5ae38e76bce6147649316c9b9741c455c"
+    description: "Registers the existing worker service at minimum one and maximum three tasks."
+
+  - type: "IAM service-linked role"
+    arn: "arn:aws:iam::901444280953:role/aws-service-role/ecs.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_ECSService"
+    description: "AWS-managed ECS scaling role is used by the registered target to adjust service desired capacity."
+
+  - type: "Application Auto Scaling policy"
+    arn: "arn:aws:autoscaling:ap-southeast-2:901444280953:scalingPolicy:ae38e76b-ce61-4764-9316-c9b9741c455c:resource/ecs/service/n12281212-strobe-a2/a3-n12281212-unframe-worker:policyName/unframe-sqs-backlog"
+    description: "Tracks visible SQS backlog per running task at target three with 30-second scale-out and 120-second scale-in cooldowns."
+
+  - type: "CloudWatch alarm"
+    arn: "arn:aws:cloudwatch:ap-southeast-2:901444280953:alarm:TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmHigh-bd150a38-aa09-489f-9726-d0ba56e37c83"
+    description: "Managed target-tracking alarm evaluates the worker backlog scaling metric."
+
+  - type: "CloudWatch alarm"
+    arn: "arn:aws:cloudwatch:ap-southeast-2:901444280953:alarm:TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmLow-18a6f57d-4b3d-4a15-b8a6-c78ee1cabc5f"
+    description: "Managed target-tracking alarm evaluates the worker backlog scaling metric."
+
+  - type: "IAM role"
+    arn: "arn:aws:iam::901444280953:role/Task-Role-CAB432-ECS"
+    description: "Existing course role supplies worker AWS service permissions."
+
+  - type: "IAM role"
+    arn: "arn:aws:iam::901444280953:role/Execution-Role-CAB432-ECS"
+    description: "Existing course role permits ECS image pulls and log delivery."
+
+  - type: "IAM role"
+    arn: "arn:aws:iam::901444280953:role/CAB432-Lambda-Role"
+    description: "Existing course role executes the Jobs Lambda; effective policy inspection is restricted."
+
+  - type: "EC2 subnet"
+    arn: "arn:aws:ec2:ap-southeast-2:901444280953:subnet/subnet-075811427d5564cf9"
+    description: "Existing subnet provides network placement for the worker task."
+
+  - type: "EC2 subnet"
+    arn: "arn:aws:ec2:ap-southeast-2:901444280953:subnet/subnet-05a3b8177138c8b14"
+    description: "Existing subnet provides network placement for the worker task."
+
+  - type: "EC2 VPC"
+    arn: "arn:aws:ec2:ap-southeast-2:901444280953:vpc/vpc-007bab53289655834"
+    description: "Existing shared virtual network connects worker tasks to regional service endpoints."
+
+  - type: "EC2 security group"
+    arn: "arn:aws:ec2:ap-southeast-2:901444280953:security-group/sg-078997505ad1c6bbc"
+    description: "Existing worker network rules control task ingress and egress."
+
+  - type: "EC2 route table"
+    arn: "arn:aws:ec2:ap-southeast-2:901444280953:route-table/rtb-0631ac6f229b4ec46"
+    description: "Existing public subnet routes provide outbound connectivity for worker AWS calls."
+
+  - type: "EC2 internet gateway"
+    arn: "arn:aws:ec2:ap-southeast-2:901444280953:internet-gateway/igw-0cbd9c45e83b6b967"
+    description: "Existing shared gateway provides public subnet internet routing."
+
+  - type: "Bedrock foundation model"
+    arn: "arn:aws:bedrock:ap-southeast-2::foundation-model/google.gemma-3-12b-it"
+    description: "AWS-managed optional artwork-analysis model with a verified successful vision Analyse job; ordinary recognition does not invoke it."
+
+  - type: "CloudWatch log group"
+    arn: "arn:aws:logs:ap-southeast-2:901444280953:log-group:/aws/ecs/containerinsights/n12281212-strobe-a2/performance"
+    description: "Existing shared Container Insights log group retains performance events for one day and supports worker running-task and utilization metrics."
+
+metaData:
+  qutUsernameTag: "n12281212@qut.edu.au"

@@ -1,0 +1,56 @@
+{
+  "checkedAt": "2026-10-31T06:19:56.981Z",
+  "jobId": "e606a64c-20fe-4b50-b781-a6f1ee78b63d",
+  "jobStatus": "RETRYING",
+  "attempts": 1,
+  "method": null,
+  "resultPersistedInDynamoDB": false,
+  "cleanup": {
+    "status": "NOT_CONFIRMED",
+    "exists": true,
+    "errorCode": null
+  },
+  "dynamoDBResultMatchesAPI": false,
+  "bedrockCompleteEvents": 0,
+  "resultSavedEvents": 0,
+  "jobCompletedEvents": 0,
+  "failureEvents": [
+    {
+      "timestamp": 1793427520194,
+      "logStreamName": "ecs/unframe-worker/47f6e647e2d34ee0b54e027ff906ce82",
+      "event": "bedrock_response_rejected",
+      "jobId": "e606a64c-20fe-4b50-b781-a6f1ee78b63d",
+      "operation": "ParseResponse",
+      "stage": "bedrock_response",
+      "errorCode": "BEDROCK_SCHEMA",
+      "exceptionType": "AIError",
+      "awsErrorCode": null,
+      "awsRequestId": "74412dfa-77b6-4444-92b9-63990709f319",
+      "httpStatusCode": 200,
+      "modelId": "google.gemma-3-12b-it",
+      "stopReason": "end_turn",
+      "contentBlockCount": 1,
+      "hasNonTextBlocks": false,
+      "textCharacters": 486,
+      "singleMarkdownFence": true
+    },
+    {
+      "timestamp": 1793427520202,
+      "logStreamName": "ecs/unframe-worker/47f6e647e2d34ee0b54e027ff906ce82",
+      "event": "job_failed",
+      "jobId": "e606a64c-20fe-4b50-b781-a6f1ee78b63d",
+      "operation": "ParseResponse",
+      "attempt": 1,
+      "stage": "bedrock_response",
+      "code": "PROCESSING_FAILED",
+      "errorCode": "BEDROCK_SCHEMA",
+      "exceptionType": "AIError",
+      "awsErrorCode": null,
+      "awsRequestId": "74412dfa-77b6-4444-92b9-63990709f319",
+      "httpStatusCode": 200,
+      "elapsedMs": 3886
+    }
+  ],
+  "logsRead": "PASS",
+  "bedrockVerification": "INVOKED_BUT_RESPONSE_REJECTED"
+}

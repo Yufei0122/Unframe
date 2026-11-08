@@ -1,0 +1,66 @@
+{
+  "source": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonCloudWatch/current/index.json",
+  "retrievedAt": "2026-10-31T08:54:57.766Z",
+  "rates": [
+    {
+      "sku": "5P8PBB6MXV325TDC",
+      "attributes": {
+        "servicecode": "AmazonCloudWatch",
+        "location": "Any",
+        "locationType": "AWS Region",
+        "group": "Dashboard",
+        "groupDescription": "CloudWatch Dashboards",
+        "usagetype": "DashboardsUsageHour-Basic",
+        "operation": "DashboardHour",
+        "regionCode": "",
+        "servicename": "AmazonCloudWatch",
+        "version": "Basic"
+      },
+      "description": "$3.00 per Dashboard per Month",
+      "unit": "Dashboards",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 3
+    },
+    {
+      "sku": "ZXHCNVUBD6E8UPH8",
+      "attributes": {
+        "servicecode": "AmazonCloudWatch",
+        "location": "Any",
+        "locationType": "AWS Region",
+        "group": "Dashboard",
+        "groupDescription": "CloudWatch Dashboards",
+        "usagetype": "Global-DashboardsUsageHour-Basic",
+        "operation": "DashboardHour",
+        "regionCode": "",
+        "servicename": "AmazonCloudWatch",
+        "version": "Basic (Free)"
+      },
+      "description": "Global",
+      "unit": "Dashboards",
+      "begin": "0",
+      "end": "3",
+      "usd": 0
+    },
+    {
+      "sku": "8AWBXE5MPQY58BK4",
+      "attributes": {
+        "servicecode": "AmazonCloudWatch",
+        "location": "Any",
+        "locationType": "AWS Region",
+        "group": "Dashboard",
+        "groupDescription": "CloudWatch Dashboards",
+        "usagetype": "DashboardsUsageHour",
+        "operation": "DashboardHour",
+        "regionCode": "",
+        "servicename": "AmazonCloudWatch",
+        "version": "Extended"
+      },
+      "description": "$3.00 per Dashboard per Month (>50 metrics)",
+      "unit": "Dashboards",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 3
+    }
+  ]
+}

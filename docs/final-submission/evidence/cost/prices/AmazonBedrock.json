@@ -1,0 +1,183 @@
+{
+  "source": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonBedrock/current/ap-southeast-2/index.json",
+  "retrievedAt": "2026-10-31T08:59:37.998Z",
+  "publicationDate": "2026-10-30T16:04:56Z",
+  "rates": [
+    {
+      "sku": "PW8JCBBCXKP7TKW2",
+      "attributes": {
+        "servicecode": "AmazonBedrock",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-google.gemma-3-12b-it-mantle-input-tokens-standard",
+        "operation": "",
+        "inferenceType": "Input tokens",
+        "model": "Gemma 3 12B",
+        "provider": "Google",
+        "regionCode": "ap-southeast-2",
+        "service_tier": "standard",
+        "servicename": "Amazon Bedrock"
+      },
+      "description": "$0.0000927 per 1K token for google.gemma-3-12b-it-mantle-input-tokens-standard in Asia Pacific (Sydney)",
+      "unit": "1K tokens",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.0000927,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "QW9MMUB8X3PDEK45",
+      "attributes": {
+        "servicecode": "AmazonBedrock",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-google.gemma-3-12b-it-mantle-input-tokens-priority",
+        "operation": "",
+        "inferenceType": "Input tokens priority",
+        "model": "Gemma 3 12B",
+        "provider": "Google",
+        "regionCode": "ap-southeast-2",
+        "service_tier": "priority",
+        "servicename": "Amazon Bedrock"
+      },
+      "description": "$0.000162225 per 1K token for google.gemma-3-12b-it-mantle-input-tokens-priority in Asia Pacific (Sydney)",
+      "unit": "1K tokens",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.000162225,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "YRSQ3RGXW5CZQUWD",
+      "attributes": {
+        "servicecode": "AmazonBedrock",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-google.gemma-3-12b-it-mantle-output-tokens-flex",
+        "operation": "",
+        "inferenceType": "Output tokens flex",
+        "model": "Gemma 3 12B",
+        "provider": "Google",
+        "regionCode": "ap-southeast-2",
+        "service_tier": "flex",
+        "servicename": "Amazon Bedrock"
+      },
+      "description": "$0.00014935 per 1K token for google.gemma-3-12b-it-mantle-output-tokens-flex in Asia Pacific (Sydney)",
+      "unit": "1K tokens",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.00014935,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "2WCPQ69NBWAXJ668",
+      "attributes": {
+        "servicecode": "AmazonBedrock",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-google.gemma-3-12b-it-mantle-input-tokens-flex",
+        "operation": "",
+        "inferenceType": "Input tokens flex",
+        "model": "Gemma 3 12B",
+        "provider": "Google",
+        "regionCode": "ap-southeast-2",
+        "service_tier": "flex",
+        "servicename": "Amazon Bedrock"
+      },
+      "description": "$0.00004635 per 1K token for google.gemma-3-12b-it-mantle-input-tokens-flex in Asia Pacific (Sydney)",
+      "unit": "1K tokens",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.00004635,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "B64D5PTD8JU5QA4P",
+      "attributes": {
+        "servicecode": "AmazonBedrock",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-google.gemma-3-12b-it-mantle-output-tokens-batch",
+        "operation": "",
+        "inferenceType": "output tokens batch",
+        "model": "Gemma 3 12B",
+        "provider": "Google",
+        "regionCode": "ap-southeast-2",
+        "service_tier": "batch",
+        "servicename": "Amazon Bedrock"
+      },
+      "description": "$0.00014935 per 1K token for google.gemma-3-12b-it-mantle-output-tokens-batch in Asia Pacific (Sydney)",
+      "unit": "1K tokens",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.00014935,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "EZFFCKKB22UNBB9G",
+      "attributes": {
+        "servicecode": "AmazonBedrock",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-google.gemma-3-12b-it-mantle-input-tokens-batch",
+        "operation": "",
+        "inferenceType": "input tokens batch",
+        "model": "Gemma 3 12B",
+        "provider": "Google",
+        "regionCode": "ap-southeast-2",
+        "service_tier": "batch",
+        "servicename": "Amazon Bedrock"
+      },
+      "description": "$0.00004635 per 1K token for google.gemma-3-12b-it-mantle-input-tokens-batch in Asia Pacific (Sydney)",
+      "unit": "1K tokens",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.00004635,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "HUAJPFQ5VKPMJWRT",
+      "attributes": {
+        "servicecode": "AmazonBedrock",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-google.gemma-3-12b-it-mantle-output-tokens-priority",
+        "operation": "",
+        "inferenceType": "Output tokens priority",
+        "model": "Gemma 3 12B",
+        "provider": "Google",
+        "regionCode": "ap-southeast-2",
+        "service_tier": "priority",
+        "servicename": "Amazon Bedrock"
+      },
+      "description": "$0.000522725 per 1K token for google.gemma-3-12b-it-mantle-output-tokens-priority in Asia Pacific (Sydney)",
+      "unit": "1K tokens",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.000522725,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "FC2Q7XPBMWCE648U",
+      "attributes": {
+        "servicecode": "AmazonBedrock",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-google.gemma-3-12b-it-mantle-output-tokens-standard",
+        "operation": "",
+        "inferenceType": "Output tokens",
+        "model": "Gemma 3 12B",
+        "provider": "Google",
+        "regionCode": "ap-southeast-2",
+        "service_tier": "standard",
+        "servicename": "Amazon Bedrock"
+      },
+      "description": "$0.0002987 per 1K token for google.gemma-3-12b-it-mantle-output-tokens-standard in Asia Pacific (Sydney)",
+      "unit": "1K tokens",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.0002987,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    }
+  ]
+}

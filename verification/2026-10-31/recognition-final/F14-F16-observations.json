@@ -1,0 +1,222 @@
+{
+  "startedAt": "2026-10-31T07:04:18.301Z",
+  "sawScaleOut": false,
+  "samples": [
+    {
+      "at": "2026-10-31T07:04:23.677Z",
+      "desired": 1,
+      "running": 1,
+      "pending": 0,
+      "queues": {
+        "recognition": {
+          "ApproximateNumberOfMessages": "0",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        },
+        "recognition-dlq": {
+          "ApproximateNumberOfMessages": "3",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        }
+      }
+    },
+    {
+      "at": "2026-10-31T07:04:39.504Z",
+      "desired": 1,
+      "running": 1,
+      "pending": 0,
+      "queues": {
+        "recognition": {
+          "ApproximateNumberOfMessages": "13",
+          "ApproximateNumberOfMessagesNotVisible": "1",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        },
+        "recognition-dlq": {
+          "ApproximateNumberOfMessages": "3",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        }
+      }
+    },
+    {
+      "at": "2026-10-31T07:04:54.705Z",
+      "desired": 1,
+      "running": 1,
+      "pending": 0,
+      "queues": {
+        "recognition": {
+          "ApproximateNumberOfMessages": "0",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        },
+        "recognition-dlq": {
+          "ApproximateNumberOfMessages": "3",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        }
+      }
+    },
+    {
+      "at": "2026-10-31T07:05:10.127Z",
+      "desired": 1,
+      "running": 1,
+      "pending": 0,
+      "queues": {
+        "recognition": {
+          "ApproximateNumberOfMessages": "0",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        },
+        "recognition-dlq": {
+          "ApproximateNumberOfMessages": "3",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        }
+      }
+    },
+    {
+      "at": "2026-10-31T07:05:25.383Z",
+      "desired": 1,
+      "running": 1,
+      "pending": 0,
+      "queues": {
+        "recognition": {
+          "ApproximateNumberOfMessages": "0",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        },
+        "recognition-dlq": {
+          "ApproximateNumberOfMessages": "3",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        }
+      }
+    },
+    {
+      "at": "2026-10-31T07:06:02.526Z",
+      "desired": 1,
+      "running": 1,
+      "pending": 0,
+      "queues": {
+        "recognition": {
+          "ApproximateNumberOfMessages": "0",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        },
+        "recognition-dlq": {
+          "ApproximateNumberOfMessages": "3",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        }
+      }
+    },
+    {
+      "at": "2026-10-31T07:06:39.459Z",
+      "desired": 1,
+      "running": 1,
+      "pending": 0,
+      "queues": {
+        "recognition": {
+          "ApproximateNumberOfMessages": "0",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        },
+        "recognition-dlq": {
+          "ApproximateNumberOfMessages": "3",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        }
+      }
+    },
+    {
+      "at": "2026-10-31T07:07:15.245Z",
+      "desired": 1,
+      "running": 1,
+      "pending": 0,
+      "queues": {
+        "recognition": {
+          "ApproximateNumberOfMessages": "0",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        },
+        "recognition-dlq": {
+          "ApproximateNumberOfMessages": "3",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        }
+      }
+    },
+    {
+      "at": "2026-10-31T07:07:50.911Z",
+      "desired": 1,
+      "running": 1,
+      "pending": 0,
+      "queues": {
+        "recognition": {
+          "ApproximateNumberOfMessages": "0",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        },
+        "recognition-dlq": {
+          "ApproximateNumberOfMessages": "3",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        }
+      }
+    },
+    {
+      "at": "2026-10-31T07:08:26.841Z",
+      "desired": 1,
+      "running": 1,
+      "pending": 0,
+      "queues": {
+        "recognition": {
+          "ApproximateNumberOfMessages": "0",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        },
+        "recognition-dlq": {
+          "ApproximateNumberOfMessages": "3",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        }
+      }
+    },
+    {
+      "at": "2026-10-31T07:09:06.183Z",
+      "desired": 1,
+      "running": 1,
+      "pending": 0,
+      "queues": {
+        "recognition": {
+          "ApproximateNumberOfMessages": "0",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        },
+        "recognition-dlq": {
+          "ApproximateNumberOfMessages": "3",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        }
+      }
+    },
+    {
+      "at": "2026-10-31T07:09:42.104Z",
+      "desired": 1,
+      "running": 1,
+      "pending": 0,
+      "queues": {
+        "recognition": {
+          "ApproximateNumberOfMessages": "0",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        },
+        "recognition-dlq": {
+          "ApproximateNumberOfMessages": "3",
+          "ApproximateNumberOfMessagesNotVisible": "0",
+          "ApproximateNumberOfMessagesDelayed": "0"
+        }
+      }
+    }
+  ]
+}

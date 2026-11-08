@@ -1,0 +1,184 @@
+Contact your AWS representative: 
+Contact Sales
+Export Date:
+10/31/2026
+Language:
+English
+Estimate url
+Estimate summary
+Upfront cost
+0.00 USD
+Monthly cost
+34.69 USD
+Total 12 months cost
+416.28 USD
+Includes upfront cost
+Detailed Estimate
+Name
+AWS Lambda
+Group
+-
+Region
+Asia Pacific (Sydney)
+Upfront cost
+0.00 USD
+Monthly cost
+1.15 USD
+Status
+-
+Description:
+Unframe A3 Jobs Lambda
+Config summary
+Architecture (x86), Architecture (x86), Invoke Mode (Buffered), Amount of ephemeral storage allocated (512 MB), 
+Number of requests (6745200 per month)
+Name
+Amazon DynamoDB
+Group
+-
+Region
+Asia Pacific (Sydney)
+Upfront cost
+0.00 USD
+Monthly cost
+2.58 USD
+Status
+-
+Description:
+Unframe A3 Jobs DynamoDB
+Config summary
+Table class (Standard), Average item size (all attributes) (2 KB), Data storage size (0.181274414 GB)
+Name
+Amazon Simple Storage 
+Service (S3)
+Group
+-
+Region
+Asia Pacific (Sydney)
+Upfront cost
+0.00 USD
+Monthly cost
+4.39 USD
+Status
+-
+Description:
+Unframe A3 - S3 Storage
+Config summary
+S3 Standard storage (0.021627234 GB per month), PUT, COPY, POST, LIST requests to S3 Standard (481800), GET, 
+SELECT, and all other requests from S3 Standard (1000100), Data returned by S3 Select (0 GB per month) Number of 
+indexes (1), Vector Dimensions (512), Key size (KB) per vector (0.2 KB), Percentage of vectors overwritten per month 
+(0), Number of vectors per index (15), Filterable metadata (KB) per vector (0.071 KB), Total number of queries per 
+month (across all indexes) (481800 per month), Non-filterable metadata (KB) per vector (0.144 KB)
+Name
+Amazon Simple Queue 
+Service (SQS)
+Group
+-
+Region
+Asia Pacific (Sydney)
+Upfront cost
+0.00 USD
+Monthly cost
+0.62 USD
+Status
+-
+Description:
+Unframe A3 - Recognition SQS and DLQ
+Config summary
+Standard queue requests (1.559509 million per month), FIFO queue requests (0 million per month), Fair queue requests 
+(0 million per month)
+Name
+Amazon Elastic Container 
+Registry
+Group
+-
+Region
+Asia Pacific (Sydney)
+Upfront cost
+0.00 USD
+Monthly cost
+0.40 USD
+Status
+-
+Description:
+Unframe A3 - ECR Worker Images
+Config summary
+Amount of data stored (4 GB per month)
+Name
+Amazon CloudFront
+Group
+-
+Region
+Asia Pacific (Sydney)
+Upfront cost
+0.00 USD
+Monthly cost
+16.03 USD
+Status
+-
+Description:
+Unframe A3 - CloudFront Web Delivery
+Config summary
+Data transfer out to internet (178.22265625 GB per month), Number of requests (HTTPS) (730000 per month)
+Name
+Amazon CloudWatch
+Group
+-
+Region
+Asia Pacific (Sydney)
+Upfront cost
+0.00 USD
+Monthly cost
+6.22 USD
+Status
+-
+Description:
+Unframe A3 - CloudWatch Monitoring
+Config summary
+Number of mobile OTEL events and spans or spans per visit (70), Mobile sampling rate (1), GetMetricData: Number of 
+metrics requested (100000), GetMetricWidgetImage: Number of metrics requested (0), Number of other API requests 
+(0), Standard Logs: Data Ingested (7.142204285 GB), Infrequent Access Logs: Data Ingested (0 GB), Standard Logs 
+Delivered to CloudWatch Logs (0 GB), Infrequent Access Logs Delivered to CloudWatch Logs (0 GB), Logs Delivered 
+to S3: Data Ingested (0 GB), Expected Logs Data scanned (0 GB), Number of Dashboards (1), Number of Standard 
+Resolution Alarm Metrics (4), Number of High Resolution Alarm Metrics (0), Number of composite alarms (0), 
+Number of alarms defined with a Metrics Insights query (0), Average number of metrics scanned by each Metrics 
+Insights query (0)
+Name
+AWS Data Transfer
+Group
+-
+Region
+Asia Pacific (Sydney)
+Upfront cost
+0.00 USD
+Monthly cost
+1.60 USD
+Status
+-
+Description:
+Unframe A3 - Internet Data Transfer
+Config summary
+DT Inbound: Not selected (0 TB per month), DT Outbound: Internet (14 GB per month), DT Intra-Region: (0 TB per 
+month), Data transfer cost (1.596)
+Name
+Amazon GuardDuty
+Group
+-
+Region
+Asia Pacific (Sydney)
+Upfront cost
+0.00 USD
+Monthly cost
+1.70 USD
+Status
+-
+Description:
+Unframe A3 - GuardDuty Runtime Monitoring
+Config summary
+Acknowledgement
+AWS Pricing Calculator provides only an estimate of your AWS fees and doesn't include any taxes that might apply. Your actual fees depend on a 
+variety of factors, including your actual usage of AWS services. 
+Learn more
+
+https://aws.amazon.com/contact-us/?nc2=h_header
+https://calculator.aws/#/estimate?utm_source=chatgpt.com&id=6eed2c7b3d08e7143dc00887ac10327a127ca7e8
+https://aws.amazon.com/calculator/calculator-assumptions/

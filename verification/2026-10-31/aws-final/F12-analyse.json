@@ -1,0 +1,94 @@
+{
+  "apiBase": "https://4xfbhsso7a.execute-api.ap-southeast-2.amazonaws.com/prob",
+  "operation": "analyse",
+  "museumId": "met",
+  "image": "mobile/assets/water-lilies.jpg",
+  "startedAt": "2026-10-30T19:53:13.992Z",
+  "stage": "complete",
+  "http": [
+    {
+      "stage": "create",
+      "method": "POST",
+      "status": 201,
+      "cacheControl": "no-store",
+      "requestId": "GEtS3iZVywMEJWw="
+    },
+    {
+      "stage": "upload",
+      "method": "PUT",
+      "status": 200,
+      "cacheControl": null,
+      "requestId": null
+    },
+    {
+      "stage": "poll",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "no-store",
+      "requestId": "GEtTSgOdSwMEJiQ="
+    },
+    {
+      "stage": "poll",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "no-store",
+      "requestId": "GEtTigKESwMEJeg="
+    },
+    {
+      "stage": "poll",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "no-store",
+      "requestId": "GEtTjhCwSwMEJmA="
+    }
+  ],
+  "statuses": [
+    "WAITING_UPLOAD",
+    "SUCCEEDED"
+  ],
+  "status": "PARTIAL_BEDROCK_NOT_EXERCISED",
+  "jobId": "d697fc84-9c23-4f15-abd0-2bcd5f040dc8",
+  "jobStatus": "SUCCEEDED",
+  "result": {
+    "artworkPresence": "likely",
+    "description": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny.",
+    "hypotheses": [
+      {
+        "artist": "Claude Monet",
+        "basis": "A visually similar collection reference. Compare with the work in front of you.",
+        "title": "Water Lilies"
+      }
+    ],
+    "identityStatus": "possible_match",
+    "method": "collection",
+    "search": {
+      "providers": [],
+      "status": "not_needed"
+    },
+    "sources": [
+      {
+        "artist": "Claude Monet",
+        "date": "1916–19",
+        "id": "collection:water-lilies",
+        "imageUrl": null,
+        "provider": "The Metropolitan Museum of Art · Collection record 437137",
+        "similarity": 0.9999953508377075,
+        "sourceUrl": "https://www.metmuseum.org/art/collection/search/437137",
+        "title": "Water Lilies",
+        "visualCheck": "similar"
+      }
+    ],
+    "timings": {
+      "matchingMs": 510,
+      "searchMs": 0,
+      "totalMs": 510,
+      "visionMs": 0
+    },
+    "visibleText": [],
+    "visualFeatures": []
+  },
+  "resultPersistedViaApi": true,
+  "bedrockInvocation": "NOT_INVOKED_CATALOGUE_SHORTCUT",
+  "elapsedMs": 4604,
+  "finishedAt": "2026-10-30T19:53:18.615Z"
+}

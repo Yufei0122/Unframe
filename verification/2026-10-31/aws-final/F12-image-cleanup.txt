@@ -1,0 +1,8 @@
+aws : 
+所在位置 行:2 字符: 613
++ ... sult.json"; aws s3api head-object --bucket a3-n12281212-unframe-job-i ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+aws: [ERROR]: An error occurred (404) when calling the HeadObject operation: Not Found

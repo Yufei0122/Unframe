@@ -1,0 +1,5 @@
+{
+  "AccountId": "901444280953",
+  "ResourceArn": "arn:aws:s3:::a3-n12281212-unframe-job-images",
+  "Tags": [{ "Key": "purpose", "Value": "assessment 3" }]
+}

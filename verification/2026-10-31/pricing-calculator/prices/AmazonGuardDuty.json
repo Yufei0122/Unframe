@@ -1,0 +1,83 @@
+{
+  "source": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonGuardDuty/current/ap-southeast-2/index.json",
+  "retrievedAt": "2026-10-31T08:59:36.907Z",
+  "publicationDate": "2026-10-30T00:56:14Z",
+  "rates": [
+    {
+      "sku": "2AEVNR36GM76D9AX",
+      "attributes": {
+        "servicecode": "AmazonGuardDuty",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "group": "Security Services - Amazon GuardDuty Free Fargate vCPU Monitored",
+        "usagetype": "APS2-FreeFargatevCPUMonitored",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon GuardDuty"
+      },
+      "description": "$0.00 per vCPU / month monitored (free trial) in Asia Pacific (Sydney) region",
+      "unit": "vCPU-Months",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0,
+      "effectiveDate": "2026-09-01T00:00:00Z"
+    },
+    {
+      "sku": "8W55KUBZST937JGV",
+      "attributes": {
+        "servicecode": "AmazonGuardDuty",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "group": "Security Services - Amazon GuardDuty Paid Fargate vCPU Monitored",
+        "usagetype": "APS2-PaidFargatevCPUMonitored",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon GuardDuty"
+      },
+      "description": "$1.7 per vCPU for the first 500 Fargate vCPU / month monitored in Asia Pacific (Sydney) region",
+      "unit": "vCPU-Months",
+      "begin": "0",
+      "end": "500",
+      "usd": 1.7,
+      "effectiveDate": "2026-09-01T00:00:00Z"
+    },
+    {
+      "sku": "8W55KUBZST937JGV",
+      "attributes": {
+        "servicecode": "AmazonGuardDuty",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "group": "Security Services - Amazon GuardDuty Paid Fargate vCPU Monitored",
+        "usagetype": "APS2-PaidFargatevCPUMonitored",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon GuardDuty"
+      },
+      "description": "$0.85 per vCPU for the next 4500 Fargate vCPU / month monitored in Asia Pacific (Sydney) region",
+      "unit": "vCPU-Months",
+      "begin": "500",
+      "end": "5000",
+      "usd": 0.85,
+      "effectiveDate": "2026-09-01T00:00:00Z"
+    },
+    {
+      "sku": "8W55KUBZST937JGV",
+      "attributes": {
+        "servicecode": "AmazonGuardDuty",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "group": "Security Services - Amazon GuardDuty Paid Fargate vCPU Monitored",
+        "usagetype": "APS2-PaidFargatevCPUMonitored",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon GuardDuty"
+      },
+      "description": "$0.28 per vCPU for above 5000 Fargate vCPU / month monitored in Asia Pacific (Sydney) region",
+      "unit": "vCPU-Months",
+      "begin": "5000",
+      "end": "Inf",
+      "usd": 0.28,
+      "effectiveDate": "2026-09-01T00:00:00Z"
+    }
+  ]
+}

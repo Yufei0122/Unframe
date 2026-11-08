@@ -1,0 +1,8 @@
+{
+  "ServiceNamespace": "ecs",
+  "ScalableDimension": "ecs:service:DesiredCount",
+  "ResourceId": "service/n12281212-strobe-a2/a3-n12281212-unframe-worker",
+  "MinCapacity": 1,
+  "MaxCapacity": 3,
+  "Tags": { "purpose": "assessment 3", "qut-username": "n12281212@qut.edu.au" }
+}

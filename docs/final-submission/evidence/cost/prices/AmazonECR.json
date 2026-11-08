@@ -1,0 +1,98 @@
+{
+  "source": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonECR/current/ap-southeast-2/index.json",
+  "retrievedAt": "2026-10-31T08:59:37.436Z",
+  "publicationDate": "2026-09-11T12:44:25Z",
+  "rates": [
+    {
+      "sku": "4MGJM3BEKQZNCFUT",
+      "attributes": {
+        "servicecode": "AmazonECR",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-AsyncActions-ImageSigning",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon EC2 Container Registry (ECR)"
+      },
+      "description": "$0.02 per Count for AsyncActions-ImageSigning in Asia Pacific (Sydney)",
+      "unit": "Count",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.02,
+      "effectiveDate": "2025-11-01T00:00:00Z"
+    },
+    {
+      "sku": "YBDKSSGX2GMZ62JV",
+      "attributes": {
+        "servicecode": "AmazonECR",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-TimedStorage-ByteHrs",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon EC2 Container Registry (ECR)",
+        "storageType": "S3"
+      },
+      "description": "$0.10 per GB-month of data storage",
+      "unit": "GB-Mo",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.1,
+      "effectiveDate": "2025-11-01T00:00:00Z"
+    },
+    {
+      "sku": "B4V85ACJBGKQVTEM",
+      "attributes": {
+        "servicecode": "AmazonECR",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-Retrieval-Archive",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon EC2 Container Registry (ECR)"
+      },
+      "description": "$0.03 per GB for Retrieval-Archive in Asia Pacific (Sydney)",
+      "unit": "GB",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.03,
+      "effectiveDate": "2025-11-01T00:00:00Z"
+    },
+    {
+      "sku": "YBWMWUQERVX7J3PX",
+      "attributes": {
+        "servicecode": "AmazonECR",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-TimedStorage-Archive-ByteHrs",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon EC2 Container Registry (ECR)"
+      },
+      "description": "$0.10 per GB-Mo from 0 to 153,600 for TimedStorage-Archive-ByteHrs in Asia Pacific (Sydney)",
+      "unit": "GB-Mo",
+      "begin": "0",
+      "end": "153600",
+      "usd": 0.1,
+      "effectiveDate": "2025-11-01T00:00:00Z"
+    },
+    {
+      "sku": "YBWMWUQERVX7J3PX",
+      "attributes": {
+        "servicecode": "AmazonECR",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-TimedStorage-Archive-ByteHrs",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon EC2 Container Registry (ECR)"
+      },
+      "description": "$0.07 per GB-Mo from 153,600 for TimedStorage-Archive-ByteHrs in Asia Pacific (Sydney)",
+      "unit": "GB-Mo",
+      "begin": "153600",
+      "end": "Inf",
+      "usd": 0.07,
+      "effectiveDate": "2025-11-01T00:00:00Z"
+    }
+  ]
+}

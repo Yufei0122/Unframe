@@ -1,0 +1,84 @@
+{
+  "apiBase": "https://4xfbhsso7a.execute-api.ap-southeast-2.amazonaws.com/prob",
+  "operation": "analyse",
+  "museumId": "met",
+  "image": "mobile/assets/met-exterior.jpg",
+  "startedAt": "2026-10-31T07:02:45.906Z",
+  "stage": "complete",
+  "http": [
+    {
+      "stage": "create",
+      "method": "POST",
+      "status": 201,
+      "cacheControl": "no-store",
+      "requestId": "GGPXigu4ywMEM0A="
+    },
+    {
+      "stage": "upload",
+      "method": "PUT",
+      "status": 200,
+      "cacheControl": null,
+      "requestId": null
+    },
+    {
+      "stage": "poll",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "no-store",
+      "requestId": "GGPX9iwzywMEMcQ="
+    },
+    {
+      "stage": "poll",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "no-store",
+      "requestId": "GGPYNjNkSwMEMCw="
+    },
+    {
+      "stage": "poll",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "no-store",
+      "requestId": "GGPYch2FywMENGw="
+    },
+    {
+      "stage": "poll",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "no-store",
+      "requestId": "GGPYsgk2ywMEMOQ="
+    },
+    {
+      "stage": "poll",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "no-store",
+      "requestId": "GGPY8h6FSwMENGw="
+    },
+    {
+      "stage": "poll",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "no-store",
+      "requestId": "GGPY9h3HSwMEMqg="
+    }
+  ],
+  "statuses": [
+    "WAITING_UPLOAD",
+    "PROCESSING",
+    "SUCCEEDED"
+  ],
+  "status": "PENDING_LOG_VERIFICATION",
+  "jobId": "48eb6b33-57e8-4d22-92bd-67690289915c",
+  "jobStatus": "SUCCEEDED",
+  "result": {
+    "method": "vision",
+    "identityStatus": "uncertain",
+    "artworkPresence": "unlikely"
+  },
+  "resultSha256": "adda271759792b7acdd391777c133fd8e68d251a722e4e80c7d7bd1cbc6eb300",
+  "resultPersistedViaApi": true,
+  "bedrockInvocation": "REQUIRES_CLOUDWATCH_CORROBORATION",
+  "elapsedMs": 9268,
+  "finishedAt": "2026-10-31T07:02:55.183Z"
+}

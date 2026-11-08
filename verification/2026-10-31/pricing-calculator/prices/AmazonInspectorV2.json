@@ -1,0 +1,710 @@
+{
+  "source": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonInspectorV2/current/ap-southeast-2/index.json",
+  "retrievedAt": "2026-10-31T08:59:37.686Z",
+  "publicationDate": "2026-10-28T19:48:20Z",
+  "rates": [
+    {
+      "sku": "C35Z7XW77WFWC3DV",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "description": "Container Image scanning includes an initial scan when an image is pushed to the ECR or an automated re-scan or an ad-hoc image scan",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-container-image-re-scan-free-trial",
+        "operation": "",
+        "freeUsageIncluded": "15-Days unlimited free trial",
+        "regionCode": "ap-southeast-2",
+        "scanType": "Automated re-scan",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.0 per Resource-assessment for container-image-re-scan-free-trial in Asia Pacific (Sydney)",
+      "unit": "Resource-assessment",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "T9YBHDKERJWQDQZ4",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-Azure-VM-Scanning-free-trial",
+        "operation": "",
+        "multicloudscantype": "Azure-VM-Scanning-free-trial",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.00 per Instance-hr for Azure-VM-Scanning-free-trial in Asia Pacific (Sydney)",
+      "unit": "Instance-hrs",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "QA95M9Q6B9F6YA2N",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-Code-Repository-Scan-free-trial",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "scanType": "free-trial",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.00 per Resource-assessment for APS2-Code-Repository-Scan-free-trial in Asia Pacific (Sydney)",
+      "unit": "Resource-assessment",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "CH6FV59WTES84VVS",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-Azure-Function-App-Standard-Scanning",
+        "operation": "",
+        "multicloudscantype": "Azure-Function-App-Standard-Scanning",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.000417 per Hourly for Azure-Function-App-Standard-Scanning in Asia Pacific (Sydney)",
+      "unit": "Hourly",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.000417,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "BP2WBJYDKNRJB78G",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-Azure-Container-Image-Rescan",
+        "operation": "",
+        "multicloudscantype": "Azure-Container-Image-Rescan",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.01 per Resource-assessment for Azure-Container-Image-Rescan in Asia Pacific (Sydney)",
+      "unit": "Resource-assessment",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.01,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "G7Y2QK7F83H9VNDQ",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "description": "Lambda standard scanning includes continuous vulnerability scanning of Lambda functions and associated dependencies",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-Lambda-Standard-Scanning",
+        "operation": "",
+        "freeUsageIncluded": "None",
+        "regionCode": "ap-southeast-2",
+        "scanType": "Standard Scanning",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.000417 per Hourly for Lambda-Standard-Scanning in Asia Pacific (Sydney)",
+      "unit": "Hourly",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.000417,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "GVD5MEBJKKTWYK85",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "description": "EC2 Scanning including continuous vulnerability and network reachability checks",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-EC2-Scanning-free-trial",
+        "operation": "",
+        "freeUsageIncluded": "15-Days unlimited free trial",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon Inspector",
+        "usageVolume": "Continuous EC2 scans"
+      },
+      "description": "$0.0 per Instance-hrs for EC2-Scanning-free-trial in Asia Pacific (Sydney)",
+      "unit": "Instance-hrs",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "XRWGMZA3EWP7EJNY",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "description": "EC2 Scanning including continuous vulnerability and network reachability checks",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-EC2-free-metering",
+        "operation": "",
+        "freeUsageIncluded": "Free-metering",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon Inspector",
+        "usageVolume": "Continuous EC2 scans"
+      },
+      "description": "$0.0 per Instance-hrs for EC2-free-metering in Asia Pacific (Sydney)",
+      "unit": "Instance-hrs",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "WX92KCPE5HWCUUBX",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "description": "EC2 CIS checks for operating systems (OS)",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-EC2-CIS-checks",
+        "operation": "",
+        "freeUsageIncluded": "None",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon Inspector",
+        "usageVolume": "CIS checks"
+      },
+      "description": "$0.03 per instance per assessment for CIS checks in Asia Pacific (Sydney)",
+      "unit": "Resource-assessment",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.03,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "WRN2HAY37544E56E",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "description": "Container Image scanning includes an initial scan when an image is pushed to the ECR or an automated re-scan or an ad-hoc image scan",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-container-image-re-scan",
+        "operation": "",
+        "freeUsageIncluded": "None",
+        "regionCode": "ap-southeast-2",
+        "scanType": "Automated re-scan",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.01 per Resource-assessment for container-image-re-scan in Asia Pacific (Sydney)",
+      "unit": "Resource-assessment",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.01,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "BE3AQRE5D8PF2E7N",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "description": "Lambda Code scanning includes continuous scanning of Lambda functions for code vulnerabilities",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-Lambda-Code-free-metering",
+        "operation": "",
+        "freeUsageIncluded": "Free-metering",
+        "regionCode": "ap-southeast-2",
+        "scanType": "Code Scanning",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.0 per Hourly for Lambda-Code-free-metering in Asia Pacific (Sydney)",
+      "unit": "Hourly",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "XEV4KSWG49J3VUP3",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "description": "Container image assessment in Continuous Integration/ Continuous Deployment (CI/CD) pipelines",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-CICD-container-image-assessment",
+        "operation": "",
+        "freeUsageIncluded": "None",
+        "regionCode": "ap-southeast-2",
+        "scanType": "CI/CD scan",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.03 per container image assessment in CI/CD in Asia Pacific (Sydney)",
+      "unit": "resource assessment",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.03,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "GXY5X83UHA63Y4R3",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-EC2-AMI-Scanning-One-Shot",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "scanType": "Scanning-One-Shot",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.42 per Resource-assessment for EC2-AMI-Scanning-One-Shot in Asia Pacific (Sydney)",
+      "unit": "Resource-assessment",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.42,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "DZ7G8THQMM2CW869",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-Code-Repository-Scan-SCA",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "scanType": "SCA",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.15 per Resource-assessment for APS2-Code-Repository-Scan-SCA in Asia Pacific (Sydney)",
+      "unit": "Resource-assessment",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.15,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "6P8FEUC37KUDKDXU",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-Code-Repository-Scan-free-metering",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "scanType": "free-metering",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.00 per Resource-assessment for APS2-Code-Repository-Scan-free-metering in Asia Pacific (Sydney)",
+      "unit": "Resource-assessment",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "8YUMHBYR3KP638WE",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "description": "Lambda Code scanning includes continuous scanning of Lambda functions for code vulnerabilities",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-Lambda-Code-Scanning-free-trial",
+        "operation": "",
+        "freeUsageIncluded": "15-Days unlimited free trial",
+        "regionCode": "ap-southeast-2",
+        "scanType": "Code Scanning",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.0 per Hourly for Lambda-Code-Scanning-free-trial in Asia Pacific (Sydney)",
+      "unit": "Hourly",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "KGAF38TURPTAC5SX",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-Azure-VM-Scanning",
+        "operation": "",
+        "multicloudscantype": "Azure-VM-Scanning",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.00174 per Instance-hr for Azure-VM-Scanning in Asia Pacific (Sydney)",
+      "unit": "Instance-hrs",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.00174,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "YKJSWP2RC5HQPE9T",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "description": "Container Image scanning includes an initial scan when an image is pushed to the ECR or an automated re-scan or an ad-hoc image scan",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-ECR-free-metering",
+        "operation": "",
+        "freeUsageIncluded": "Free-metering",
+        "regionCode": "ap-southeast-2",
+        "scanType": "free-metering",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.0 per Resource-assessment for ECR-free-metering in Asia Pacific (Sydney)",
+      "unit": "Resource-assessment",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "JZWMZH7KJ5GJW35N",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "description": "EC2 Scanning including continuous vulnerability and network reachability checks",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-EC2-Scanning-agentless-free-trial",
+        "operation": "",
+        "freeUsageIncluded": "15-Days unlimited free trial",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon Inspector",
+        "usageVolume": "Agentless vulnerability scans"
+      },
+      "description": "$0.0 per Instance-hrs for EC2-Scanning-agentless in Asia Pacific (Sydney)",
+      "unit": "Instance-hrs",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "YTVZZR7WP8S6H9H7",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-EC2-AMI-Scanning-free-trial",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "scanType": "Scanning-free-trial",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.00 per Hourly for EC2-AMI-Scanning-free-trial in Asia Pacific (Sydney)",
+      "unit": "Hourly",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "RYN5B6S55A38PRB5",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "description": "Lambda standard scanning includes continuous vulnerability scanning of Lambda functions and associated dependencies",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-Lambda-Standard-Scanning-free-trial",
+        "operation": "",
+        "freeUsageIncluded": "15-Days unlimited free trial",
+        "regionCode": "ap-southeast-2",
+        "scanType": "Standard Scanning",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.0 per Hourly for Lambda-Standard-Scanning-free-trial in Asia Pacific (Sydney)",
+      "unit": "Hourly",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "7R2J59SAMGZTA5JZ",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "description": "Lambda standard scanning includes continuous vulnerability scanning of Lambda functions and associated dependencies",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-Lambda-Standard-free-metering",
+        "operation": "",
+        "freeUsageIncluded": "Free-metering",
+        "regionCode": "ap-southeast-2",
+        "scanType": "free-metering",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.0 per Hourly for Lambda-Standard-free-metering in Asia Pacific (Sydney)",
+      "unit": "Hourly",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "3RS7K65H7WVBUJP4",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "description": "EC2 Scanning including continuous vulnerability and network reachability checks",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-EC2-Scanning",
+        "operation": "",
+        "freeUsageIncluded": "None",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon Inspector",
+        "usageVolume": "Continuous EC2 scans"
+      },
+      "description": "$0.00174 per Instance-hrs for EC2-Scanning in Asia Pacific (Sydney)",
+      "unit": "Instance-hrs",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.00174,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "XCG5X3MBZDKZ7HA5",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "description": "Container Image scanning includes an initial scan when an image is pushed to the ECR or an automated re-scan or an ad-hoc image scan",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-container-image-initial-scan-free-trial",
+        "operation": "",
+        "freeUsageIncluded": "15-Days unlimited free trial",
+        "regionCode": "ap-southeast-2",
+        "scanType": "Initial Scan (on-push to ECR)",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.0 per Resource-assessment for container-image-initial-scan-free-trial in Asia Pacific (Sydney)",
+      "unit": "Resource-assessment",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "26M3E65KVA9395T2",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-Azure-Function-App-Standard-Scanning-free-trial",
+        "operation": "",
+        "multicloudscantype": "Azure-Function-App-Standard-Scanning-free-trial",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.00 per Hourly for Azure-Function-App-Standard-Scanning-free-trial in Asia Pacific (Sydney)",
+      "unit": "Hourly",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "K249PV564CP5W2ZD",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "description": "Lambda Code scanning includes continuous scanning of Lambda functions for code vulnerabilities",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-Lambda-Code-Scanning",
+        "operation": "",
+        "freeUsageIncluded": "None",
+        "regionCode": "ap-southeast-2",
+        "scanType": "Code Scanning",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.00084 per Hourly for Lambda-Code-Scanning in Asia Pacific (Sydney)",
+      "unit": "Hourly",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.00084,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "PT3ZNB9UACZJHTRR",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-Azure-Container-Image-Initial-Scan-free-trial",
+        "operation": "",
+        "multicloudscantype": "Azure-Container-Image-Initial-Scan-free-trial",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.00 per Resource-assessment for Azure-Container-Image-Initial-Scan-free-trial in Asia Pacific (Sydney)",
+      "unit": "Resource-assessment",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "YXBGY4UBFS7U884M",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-EC2-AMI-Scanning",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "scanType": "Scanning",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.00174 per Hourly for EC2-AMI-Scanning in Asia Pacific (Sydney)",
+      "unit": "Hourly",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.00174,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "GBFN6EWQ7NJ249UF",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "description": "Container Image scanning includes an initial scan when an image is pushed to the ECR or an automated re-scan or an ad-hoc image scan",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-container-image-initial-scan",
+        "operation": "",
+        "freeUsageIncluded": "None",
+        "regionCode": "ap-southeast-2",
+        "scanType": "Initial Scan (on-push to ECR)",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.09 per Resource-assessment for container-image-initial-scan in Asia Pacific (Sydney)",
+      "unit": "Resource-assessment",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.09,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "Y8P43DBQ7BG4F4BD",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "description": "EC2 Scanning including continuous vulnerability and network reachability checks",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-EC2-Scanning-agentless",
+        "operation": "",
+        "freeUsageIncluded": "None",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon Inspector",
+        "usageVolume": "Agentless vulnerability scans"
+      },
+      "description": "$0.00243 per Instance-hrs for EC2-Scanning-agentless in Asia Pacific (Sydney)",
+      "unit": "Instance-hrs",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.00243,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "D66VA49MGBQW728G",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-Azure-Container-Image-Initial-Scan",
+        "operation": "",
+        "multicloudscantype": "Azure-Container-Image-Initial-Scan",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.09 per Resource-assessment for Azure-Container-Image-Initial-Scan in Asia Pacific (Sydney)",
+      "unit": "Resource-assessment",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.09,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "U45NPVZPJSQNBVK8",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "description": "Container image assessment in Continuous Integration/ Continuous Deployment (CI/CD) pipelines",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-CICD-container-image-assessment-free",
+        "operation": "",
+        "freeUsageIncluded": "Free",
+        "regionCode": "ap-southeast-2",
+        "scanType": "CI/CD scan",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.0 per container image assessment in CI/CD in Asia Pacific (Sydney)",
+      "unit": "resource assessment",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "TZ75UPFNRC9GNNU5",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-Azure-Container-Image-Rescan-free-trial",
+        "operation": "",
+        "multicloudscantype": "Azure-Container-Image-Rescan-free-trial",
+        "regionCode": "ap-southeast-2",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.00 per Resource-assessment for Azure-Container-Image-Rescan-free-trial in Asia Pacific (Sydney)",
+      "unit": "Resource-assessment",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "5F94QJBJHYCQGHTE",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-Code-Repository-Scan-IaC",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "scanType": "IaC",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.15 per Resource-assessment for APS2-Code-Repository-Scan-IaC in Asia Pacific (Sydney)",
+      "unit": "Resource-assessment",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.15,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "sku": "4ZV29Q7RPXXGR5TN",
+      "attributes": {
+        "servicecode": "AmazonInspectorV2",
+        "location": "Asia Pacific (Sydney)",
+        "locationType": "AWS Region",
+        "usagetype": "APS2-Code-Repository-Scan-SAST",
+        "operation": "",
+        "regionCode": "ap-southeast-2",
+        "scanType": "SAST",
+        "servicename": "Amazon Inspector"
+      },
+      "description": "$0.15 per Resource-assessment for APS2-Code-Repository-Scan-SAST in Asia Pacific (Sydney)",
+      "unit": "Resource-assessment",
+      "begin": "0",
+      "end": "Inf",
+      "usd": 0.15,
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    }
+  ]
+}

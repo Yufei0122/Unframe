@@ -1,0 +1,122 @@
+{
+    "Item": {
+        "attempts": {
+            "N": "1"
+        },
+        "completedAt": {
+            "N": "1793389999"
+        },
+        "jobId": {
+            "S": "d697fc84-9c23-4f15-abd0-2bcd5f040dc8"
+        },
+        "museumId": {
+            "S": "met"
+        },
+        "operation": {
+            "S": "analyse"
+        },
+        "result": {
+            "M": {
+                "artworkPresence": {
+                    "S": "likely"
+                },
+                "description": {
+                    "S": "A pond becomes a world of its own. In this late Water Lilies painting, Monet returns to the water garden he created at his home in Giverny."
+                },
+                "hypotheses": {
+                    "L": [
+                        {
+                            "M": {
+                                "artist": {
+                                    "S": "Claude Monet"
+                                },
+                                "basis": {
+                                    "S": "A visually similar collection reference. Compare with the work in front of you."
+                                },
+                                "title": {
+                                    "S": "Water Lilies"
+                                }
+                            }
+                        }
+                    ]
+                },
+                "identityStatus": {
+                    "S": "possible_match"
+                },
+                "method": {
+                    "S": "collection"
+                },
+                "search": {
+                    "M": {
+                        "providers": {
+                            "L": []
+                        },
+                        "status": {
+                            "S": "not_needed"
+                        }
+                    }
+                },
+                "sources": {
+                    "L": [
+                        {
+                            "M": {
+                                "artist": {
+                                    "S": "Claude Monet"
+                                },
+                                "date": {
+                                    "S": "1916�C19"
+                                },
+                                "id": {
+                                    "S": "collection:water-lilies"
+                                },
+                                "imageUrl": {
+                                    "NULL": true
+                                },
+                                "provider": {
+                                    "S": "The Metropolitan Museum of Art �� Collection record 437137"
+                                },
+                                "similarity": {
+                                    "N": "0.9999953508377075"
+                                },
+                                "sourceUrl": {
+                                    "S": "https://www.metmuseum.org/art/collection/search/437137"
+                                },
+                                "title": {
+                                    "S": "Water Lilies"
+                                },
+                                "visualCheck": {
+                                    "S": "similar"
+                                }
+                            }
+                        }
+                    ]
+                },
+                "timings": {
+                    "M": {
+                        "matchingMs": {
+                            "N": "510"
+                        },
+                        "searchMs": {
+                            "N": "0"
+                        },
+                        "totalMs": {
+                            "N": "510"
+                        },
+                        "visionMs": {
+                            "N": "0"
+                        }
+                    }
+                },
+                "visibleText": {
+                    "L": []
+                },
+                "visualFeatures": {
+                    "L": []
+                }
+            }
+        },
+        "status": {
+            "S": "SUCCEEDED"
+        }
+    }
+}

@@ -1,0 +1,1535 @@
+{
+  "retrievedAt": "2026-10-31T08:50:16.699Z",
+  "value": [
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "NetworkRxBytes",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "TaskSetCount",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-webui-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "StorageReadBytes",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-webui"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "EphemeralStorageUtilized",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-acp-adapter-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "StorageReadBytes",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "a3-n12281212-unframe-worker"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "EphemeralStorageUtilized",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-mcp"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "NetworkTxBytes",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-acp-adapter"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "CpuUtilized",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "a3-n12281212-unframe-worker"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "CpuUtilized",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-acp-adapter"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "StorageReadBytes",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-acp-adapter-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "NetworkTxBytes",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "a3-n12281212-unframe-worker"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "EphemeralStorageUtilized",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "a3-n12281212-unframe-worker"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "NetworkTxBytes",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-mcp-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "MemoryUtilized",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-webui"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "MemoryReserved",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "a3-n12281212-unframe-worker"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "NetworkTxBytes",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "a3-n12281212-unframe-worker"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "CpuReserved",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-mcp-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "MemoryUtilized",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-acp-adapter"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "CpuReserved",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-mcp"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "EphemeralStorageReserved",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-mcp-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "TaskSetCount",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-acp-adapter-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "DeploymentCount",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "a3-n12281212-unframe-worker"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "TaskSetCount",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-mcp-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "EphemeralStorageUtilized",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-acp-adapter"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "CpuReserved",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "a3-n12281212-unframe-worker"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "MemoryReserved",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-webui"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "ContainerInstanceCount",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "EphemeralStorageReserved",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "a3-n12281212-unframe-worker"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "NetworkRxBytes",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-webui-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "StorageWriteBytes",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-mcp-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "DesiredTaskCount",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-acp-adapter-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "MemoryReserved",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-acp-adapter-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "NetworkTxBytes",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-webui"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "CpuUtilized",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-acp-adapter-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "MemoryReserved",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-mcp-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "NetworkRxBytes",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "a3-n12281212-unframe-worker"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "CpuReserved",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-webui-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "MemoryUtilized",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-mcp"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "MemoryReserved",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-acp-adapter"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "MemoryUtilized",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-webui-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "MemoryUtilized",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "a3-n12281212-unframe-worker"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "ServiceCount",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "DesiredTaskCount",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-mcp-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "CpuReserved",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "a3-n12281212-unframe-worker"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "EphemeralStorageUtilized",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-webui"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "NetworkRxBytes",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-mcp-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "EphemeralStorageUtilized",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "a3-n12281212-unframe-worker"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "RunningTaskCount",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "a3-n12281212-unframe-worker"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "RunningTaskCount",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-webui-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "StorageWriteBytes",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "a3-n12281212-unframe-worker"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "StorageWriteBytes",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-acp-adapter"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "StorageReadBytes",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-webui-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "NetworkRxBytes",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-acp-adapter"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "MemoryReserved",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-webui-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "StorageWriteBytes",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-mcp"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "EphemeralStorageReserved",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "a3-n12281212-unframe-worker"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "MemoryUtilized",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-acp-adapter-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "NetworkRxBytes",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-acp-adapter-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "EphemeralStorageReserved",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-acp-adapter"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "DesiredTaskCount",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "a3-n12281212-unframe-worker"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "NetworkTxBytes",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "TaskCount",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "NetworkRxBytes",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-mcp"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "CpuUtilized",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-webui"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "CpuUtilized",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-webui-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "MemoryUtilized",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "NetworkTxBytes",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-webui-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "CpuUtilized",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-mcp"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "EphemeralStorageReserved",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-webui-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "MemoryReserved",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "a3-n12281212-unframe-worker"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "CpuReserved",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-acp-adapter"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "EphemeralStorageUtilized",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-webui-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "StorageReadBytes",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-mcp"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "PendingTaskCount",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-mcp-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "MemoryUtilized",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "a3-n12281212-unframe-worker"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "DeploymentCount",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-mcp-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "DesiredTaskCount",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-webui-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "StorageReadBytes",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-mcp-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "CpuUtilized",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "a3-n12281212-unframe-worker"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "PendingTaskCount",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-acp-adapter-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "MemoryUtilized",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-mcp-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "PendingTaskCount",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "a3-n12281212-unframe-worker"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "StorageWriteBytes",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-webui"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "NetworkRxBytes",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "a3-n12281212-unframe-worker"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "StorageWriteBytes",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "StorageReadBytes",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "NetworkTxBytes",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-mcp"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "DeploymentCount",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-webui-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "RunningTaskCount",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-mcp-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "CpuReserved",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-acp-adapter-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "EphemeralStorageReserved",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-mcp"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "MemoryReserved",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "EphemeralStorageReserved",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "NetworkRxBytes",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-webui"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "EphemeralStorageReserved",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-acp-adapter-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "StorageWriteBytes",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-webui-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "RunningTaskCount",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-acp-adapter-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "CpuReserved",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-webui"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "StorageReadBytes",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-acp-adapter"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "CpuReserved",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "PendingTaskCount",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-webui-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "DeploymentCount",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-acp-adapter-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "EphemeralStorageReserved",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-webui"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "EphemeralStorageUtilized",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-mcp-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "CpuUtilized",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "StorageReadBytes",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "a3-n12281212-unframe-worker"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "EphemeralStorageUtilized",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "StorageWriteBytes",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-acp-adapter-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "CpuUtilized",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-mcp-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "StorageWriteBytes",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "a3-n12281212-unframe-worker"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "MemoryReserved",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        },
+        {
+          "Name": "TaskDefinitionFamily",
+          "Value": "n12281212-strobe-mcp"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "NetworkTxBytes",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "n12281212-strobe-acp-adapter-service"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    },
+    {
+      "Namespace": "ECS/ContainerInsights",
+      "MetricName": "TaskSetCount",
+      "Dimensions": [
+        {
+          "Name": "ServiceName",
+          "Value": "a3-n12281212-unframe-worker"
+        },
+        {
+          "Name": "ClusterName",
+          "Value": "n12281212-strobe-a2"
+        }
+      ]
+    }
+  ]
+}

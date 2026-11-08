@@ -1,0 +1,146 @@
+{"event":"bedrock_complete","jobId":null,"modelId":"google.gemma-3-12b-it","elapsedMs":3}
+{"event":"bedrock_complete","jobId":null,"modelId":"google.gemma-3-12b-it","elapsedMs":11}
+{"event":"bedrock_complete","jobId":null,"modelId":"google.gemma-3-12b-it","elapsedMs":5}
+✔ Bedrock parsing accepts documented Converse envelope and validates schema (97.2236ms)
+✔ Bedrock generator sends Converse fields, never Ollama payload, and sanitizes SDK failures (10.153ms)
+✔ Bedrock text provider preserves catalogue grounding and deterministic route service contract (99.7064ms)
+{"event":"bedrock_complete","jobId":null,"modelId":"google.gemma-3-12b-it","elapsedMs":33}
+✔ Bedrock vision uses bounded image bytes and the existing uncertain identity validation (345.6778ms)
+✔ diagnostics expose only bounded approved codes and AWS request metadata (8.1227ms)
+✔ nested stages preserve the original exception and the deepest service boundary (3.006ms)
+✔ Bedrock sanitization retains safe SDK diagnostics without exposing response or cause (4.3106ms)
+✔ SQS validation accepts S3 notifications and rejects foreign/malformed/oversized messages (7.6936ms)
+✔ successful processing saves result before deleting image and acknowledging; duplicate avoids inference (19.5736ms)
+✔ processing failures preserve input and message and make job retryable (9.7636ms)
+✔ cleanup or acknowledgement failure retains durable success and retries without inference (9.1185ms)
+✔ worker failure logs keep nested vector errors separate from retry-state update failures (7.0417ms)
+✔ malformed messages and active leases are not acknowledged or deleted (1.2171ms)
+{"event":"job_api_failure","jobId":null,"code":"INVALID_JSON"}
+{"event":"job_api_failure","jobId":null,"code":"JSON_REQUIRED"}
+{"event":"job_api_failure","jobId":null,"code":"REQUEST_TOO_LARGE"}
+{"event":"job_api_failure","jobId":"469b3175-9f42-42c6-9789-1a01ae2c7435","code":"JOB_NOT_FOUND"}
+{"event":"job_api_failure","jobId":"469b3175-9f42-42c6-9789-1a01ae2c7435","code":"JOB_NOT_FOUND"}
+✔ retry limit produces FAILED without deleting message or temporary image (18.6508ms)
+✔ job creation validates input, stores only token hash, and status hides internal fields (4.0946ms)
+✔ API Gateway v1/v2 parsing is isolated and handles CORS, content type and malformed JSON (2.8527ms)
+✔ HTTP API v2 routes POST and GET with default, named and already-stripped stages (5.5201ms)
+✔ HTTP API v2 stage normalization does not accept foreign prefixes or unrelated routes (0.8581ms)
+✔ HTTP API v2 named-stage routes preserve job creation and read-token authentication (1.5253ms)
+✔ DynamoDB transitions use conditional ownership, expiry, retries, consistent reads and bounded results (4.1001ms)
+✔ presigned uploads prevent overwrites; versioned cleanup deletes the actual uploaded version (1.1084ms)
+✔ visibility must exceed processing deadline and cloud config has no resource-name defaults (0.6193ms)
+✔ S3 reads enforce the recorded size/type/ETag and read the event object version (12.9414ms)
+✔ invalid image bytes cannot save a successful result or delete the input (7.0711ms)
+{"event":"bedrock_complete","jobId":null,"modelId":"google.gemma-3-12b-it","elapsedMs":90}
+{"event":"bedrock_complete","jobId":null,"modelId":"google.gemma-3-12b-it","elapsedMs":4}
+{"event":"bedrock_complete","jobId":null,"modelId":"google.gemma-3-12b-it","elapsedMs":13}
+{"event":"bedrock_complete","jobId":null,"modelId":"google.gemma-3-12b-it","elapsedMs":6}
+{"event":"bedrock_complete","jobId":null,"modelId":"google.gemma-3-12b-it","elapsedMs":4}
+{"event":"bedrock_complete","jobId":null,"modelId":"google.gemma-3-12b-it","elapsedMs":2}
+{"event":"bedrock_complete","jobId":null,"modelId":"google.gemma-3-12b-it","elapsedMs":2}
+{"event":"bedrock_complete","jobId":null,"modelId":"google.gemma-3-12b-it","elapsedMs":3}
+{"event":"planning_api_failure","requestId":null,"code":"JSON_REQUIRED"}
+{"event":"planning_api_failure","requestId":null,"code":"INVALID_JSON"}
+{"event":"planning_api_failure","requestId":null,"code":"REQUEST_TOO_LARGE"}
+{"event":"planning_api_failure","requestId":null,"code":"INVALID_INPUT"}
+{"event":"planning_api_failure","requestId":null,"code":"INVALID_MUSEUM"}
+{"event":"planning_api_failure","requestId":null,"code":"INVALID_INPUT"}
+✔ planning Lambda preserves web NDJSON answer/route protocol with one Bedrock call and deterministic routing (312.1407ms)
+✔ planning Lambda supports REST proxy events, separate plan retry and catalogue confirmation (107.8085ms)
+✔ planning Lambda handles real HTTP API v2 named-stage and unprefixed paths (218.1839ms)
+✔ planning Lambda rejects invalid transport/input/origin without model calls (2.7473ms)
+{"event":"planning_api_failure","requestId":null,"code":"PLANNING_TIMEOUT"}
+{"event":"bedrock_complete","jobId":null,"modelId":"google.gemma-3-12b-it","elapsedMs":11}
+{"event":"planning_api_failure","requestId":null,"code":"BEDROCK_UNAVAILABLE"}
+✔ planning Lambda bounds inference to the remaining invocation time and cancels the provider (27.9057ms)
+✔ route errors retain the valid answer and provider errors never silently use local recommendations (13.9169ms)
+✔ cosine distance maps to similarity, never probability; malformed values rejected (5.5575ms)
+✔ metadata filter serialization omits empty filters and supports one equality condition (4.5304ms)
+✔ S3 QueryVectors payload uses explicit AND for all five recognition filters and validates identity (16.1227ms)
+✔ global S3 QueryVectors payload keeps all four identity filters without a museum condition (1.0943ms)
+✔ wrong index metric/dimension and non-normalized vectors fail closed (2.7047ms)
+✔ remote candidate path retains ranking, threshold, cap, filtering, and human confirmation (3.4055ms)
+✔ general analysis uses global remote search and retains distinct-match margin (3.8221ms)
+✔ index publication uses versioned keys and validates complete catalogue before writing (2.9407ms)
+✔ planning status requires a local completion model and reports no inference claim (4.1251ms)
+✔ local transport waits for delayed headers and a complete UTF-8 response within its budget (263.228ms)
+✔ non-planning local timeout still cancels the socket (headers sent: false) (135.2428ms)
+✔ non-planning local timeout still cancels the socket (headers sent: true) (124.679ms)
+✔ planning chat waits beyond the configured model deadline (178.917ms)
+✔ planning plan waits beyond the configured model deadline (163.6882ms)
+✔ timing benchmark measures first/repeat chat and real-HTTP routes without a deadline (497.0917ms)
+{"event":"ai_failure","stage":"request","code":"OLLAMA_HTTP_500"}
+✔ timing benchmark reports model failure and does not invent successful durations (28.7938ms)
+{"event":"ai_failure","stage":"request","code":"REQUEST_CANCELLED"}
+✔ cancelling the timing benchmark aborts model work and saves an unsuccessful report (29.8698ms)
+✔ local transport rejects redirects without contacting their destination (5.7889ms)
+{"event":"ai_failure","stage":"recommendation","code":"OLLAMA_HTTP_500"}
+{"event":"ai_failure","stage":"request","code":"OLLAMA_HTTP_500"}
+{"event":"ai_failure","stage":"request","code":"INVALID_INPUT"}
+✔ strict route requests expose Qwen failure, while ordinary fallback remains explicitly labelled (103.1146ms)
+✔ obviously impossible visits fail before model inference (0.7757ms)
+{"event":"ai_failure","stage":"request","code":"REQUEST_CANCELLED"}
+✔ disconnecting plan aborts the actual upstream HTTP request and allows a fresh Qwen route (63.2892ms)
+{"event":"ai_failure","stage":"request","code":"REQUEST_CANCELLED"}
+✔ disconnecting chat aborts the actual upstream HTTP request and allows a fresh Qwen route (52.9972ms)
+✔ route cancellation is never converted into a local fallback (0.4873ms)
+{"event":"ai_failure","stage":"request","code":"NO_ROUTE"}
+{"event":"ai_failure","stage":"request","code":"INVALID_INPUT"}
+{"event":"ai_failure","stage":"request","code":"NO_ROUTE"}
+{"event":"ai_failure","stage":"request","code":"INVALID_INPUT"}
+{"event":"ai_failure","stage":"request","code":"NO_ROUTE"}
+{"event":"ai_failure","stage":"request","code":"INVALID_INPUT"}
+✔ route-only acceptance exercises every museum, Chinese chat and graph constraints without image services (349.5025ms)
+{"event":"ai_failure","stage":"request","code":"OLLAMA_HTTP_500"}
+{"event":"ai_failure","stage":"request","code":"OLLAMA_HTTP_500"}
+{"event":"ai_failure","stage":"request","code":"NO_ROUTE"}
+{"event":"ai_failure","stage":"request","code":"INVALID_INPUT"}
+{"event":"ai_failure","stage":"request","code":"OLLAMA_HTTP_500"}
+{"event":"ai_failure","stage":"request","code":"OLLAMA_HTTP_500"}
+{"event":"ai_failure","stage":"request","code":"NO_ROUTE"}
+{"event":"ai_failure","stage":"request","code":"INVALID_INPUT"}
+{"event":"ai_failure","stage":"request","code":"OLLAMA_HTTP_500"}
+{"event":"ai_failure","stage":"request","code":"OLLAMA_HTTP_500"}
+{"event":"ai_failure","stage":"request","code":"NO_ROUTE"}
+{"event":"ai_failure","stage":"request","code":"INVALID_INPUT"}
+✔ strict acceptance records model failure instead of counting deterministic routes as AI success (133.1888ms)
+{"event":"ai_failure","stage":"request","code":"NO_ROUTE"}
+{"event":"ai_failure","stage":"request","code":"INVALID_INPUT"}
+{"event":"ai_failure","stage":"request","code":"NO_ROUTE"}
+{"event":"ai_failure","stage":"request","code":"INVALID_INPUT"}
+{"event":"ai_failure","stage":"request","code":"NO_ROUTE"}
+{"event":"ai_failure","stage":"request","code":"INVALID_INPUT"}
+✔ route acceptance records duration without rejecting successful responses beyond the artwork budget (783.7657ms)
+✔ the legacy route CLI accepts correct slow planning responses for every museum (9253.8766ms)
+{"event":"ai_generation_retry","stage":"planning_chat","reason":"output_limit","attempt":1,"done":true,"doneReason":"length","numPredict":192,"numCtx":4096,"generatedTokens":192,"promptTokens":1300,"loadMs":null,"promptEvalMs":null,"evalMs":1000,"elapsedMs":55,"nextNumPredict":1024}
+{"event":"ai_generation_retry","stage":"planning_route","reason":"output_limit","attempt":1,"done":true,"doneReason":"length","numPredict":192,"numCtx":4096,"generatedTokens":192,"promptTokens":1300,"loadMs":null,"promptEvalMs":null,"evalMs":1000,"elapsedMs":49,"nextNumPredict":1024}
+{"event":"ai_generation_retry","stage":"planning_chat","reason":"output_limit","attempt":1,"done":true,"doneReason":"length","numPredict":192,"numCtx":4096,"generatedTokens":192,"promptTokens":1300,"loadMs":null,"promptEvalMs":null,"evalMs":1000,"elapsedMs":54,"nextNumPredict":1024}
+{"event":"ai_generation_retry","stage":"planning_route","reason":"output_limit","attempt":1,"done":true,"doneReason":"length","numPredict":192,"numCtx":4096,"generatedTokens":192,"promptTokens":1300,"loadMs":null,"promptEvalMs":null,"evalMs":1000,"elapsedMs":54,"nextNumPredict":1024}
+✔ timing includes truncation retries while accepting only complete planning responses (581.7854ms)
+{"event":"ai_generation_retry","stage":"planning_chat","reason":"output_limit","attempt":1,"done":true,"doneReason":"length","numPredict":1024,"numCtx":4096,"generatedTokens":1024,"promptTokens":1300,"loadMs":null,"promptEvalMs":null,"evalMs":1000,"elapsedMs":2,"nextNumPredict":2048}
+{"event":"ai_generation_incomplete","outputSetting":"OLLAMA_PLANNING_NUM_PREDICT","attempt":2,"done":true,"doneReason":"length","numPredict":2048,"numCtx":4096,"generatedTokens":2048,"promptTokens":1300,"loadMs":null,"promptEvalMs":null,"evalMs":1000,"elapsedMs":3}
+{"event":"ai_failure","stage":"request","code":"OLLAMA_INCOMPLETE"}
+✔ exhausted output retries retain safe diagnostics and the actual HTTP error in the timing report (40.3054ms)
+{"event":"ai_generation_retry","stage":"planning_chat","reason":"output_limit","attempt":1,"done":true,"doneReason":"length","numPredict":192,"numCtx":4096,"generatedTokens":192,"promptTokens":1300,"loadMs":null,"promptEvalMs":null,"evalMs":1000,"elapsedMs":3,"nextNumPredict":1024}
+{"event":"ai_failure","stage":"request","code":"OLLAMA_BUSY"}
+{"event":"ai_failure","stage":"request","code":"REQUEST_CANCELLED"}
+✔ cancelling during the expanded-budget retry aborts upstream work and releases the busy gate (82.6462ms)
+✔ combined visits use one model call and route with the UPDATED preferences in every museum (35.283ms)
+{"event":"ai_failure","stage":"request","code":"INVALID_RECOMMENDATIONS"}
+{"event":"ai_failure","stage":"request","code":"INVALID_RECOMMENDATIONS"}
+{"event":"ai_failure","stage":"request","code":"INVALID_RECOMMENDATIONS"}
+✔ invalid combined recommendations never publish a partial preference update (30.2207ms)
+{"event":"ai_failure","stage":"visit_route","code":"NO_ROUTE"}
+✔ an infeasible combined visit retains the answer and emits a route error without another model call (14.0163ms)
+{"event":"ai_failure","stage":"request","code":"REQUEST_CANCELLED"}
+✔ cancelling a combined visit aborts upstream and releases the single-generation gate (70.7888ms)
+✔ the combined acceptance CLI checks every museum with exactly one generation per turn (312.0741ms)
+✔ combined reply grammars bound English and Chinese strings even when maxLength is ignored (1.3467ms)
+ℹ tests 66
+ℹ suites 0
+ℹ pass 66
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14726.6394

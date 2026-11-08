@@ -1,0 +1,5 @@
+{
+  "retrievedAt": "2026-10-31T07:24:35.224Z",
+  "errorCode": "AccessDeniedException",
+  "message": "aws: [ERROR]: An error occurred (AccessDeniedException) when calling the GetServiceQuota operation: Current AWS principal is not authorized to perform: servicequotas:GetServiceQuota on resource: arn:aws:servicequotas:ap-southeast-2:901444280953:fargate/L-3032A538 because no identity-based policy allows the servicequotas:GetServiceQuota action"
+}

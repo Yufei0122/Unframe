@@ -1,0 +1,15 @@
+{
+    "logGroups": [
+        {
+            "logGroupName": "/ecs/a3-n12281212-unframe-worker",
+            "creationTime": 1793379026719,
+            "metricFilterCount": 0,
+            "arn": "arn:aws:logs:ap-southeast-2:901444280953:log-group:/ecs/a3-n12281212-unframe-worker:*",
+            "storedBytes": 0,
+            "logGroupClass": "STANDARD",
+            "logGroupArn": "arn:aws:logs:ap-southeast-2:901444280953:log-group:/ecs/a3-n12281212-unframe-worker",
+            "deletionProtectionEnabled": false,
+            "bearerTokenAuthenticationEnabled": false
+        }
+    ]
+}

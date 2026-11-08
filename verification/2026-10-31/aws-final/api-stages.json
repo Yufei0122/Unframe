@@ -1,0 +1,32 @@
+{
+    "Items": [
+        {
+            "AutoDeploy": true,
+            "CreatedDate": "2026-08-28T16:34:15+00:00",
+            "DefaultRouteSettings": {
+                "DetailedMetricsEnabled": false
+            },
+            "DeploymentId": "j2yxj9",
+            "LastDeploymentStatusMessage": "Successfully deployed stage with deployment ID 'j2yxj9'",
+            "LastUpdatedDate": "2026-10-30T19:32:00+00:00",
+            "RouteSettings": {},
+            "StageName": "$default",
+            "StageVariables": {},
+            "Tags": {}
+        },
+        {
+            "AutoDeploy": true,
+            "CreatedDate": "2026-08-28T16:34:15+00:00",
+            "DefaultRouteSettings": {
+                "DetailedMetricsEnabled": false
+            },
+            "DeploymentId": "j2yxj9",
+            "LastDeploymentStatusMessage": "Successfully deployed stage with deployment ID 'j2yxj9'",
+            "LastUpdatedDate": "2026-10-30T19:32:00+00:00",
+            "RouteSettings": {},
+            "StageName": "prob",
+            "StageVariables": {},
+            "Tags": {}
+        }
+    ]
+}

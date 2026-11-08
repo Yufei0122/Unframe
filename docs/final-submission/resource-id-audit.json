@@ -1,0 +1,194 @@
+[
+  {
+    "type": "ECS cluster",
+    "arn": "arn:aws:ecs:ap-southeast-2:901444280953:cluster/n12281212-strobe-a2",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "ECS service",
+    "arn": "arn:aws:ecs:ap-southeast-2:901444280953:service/n12281212-strobe-a2/a3-n12281212-unframe-worker",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "ECS task definition",
+    "arn": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:6",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "ECR repository",
+    "arn": "arn:aws:ecr:ap-southeast-2:901444280953:repository/a3-n12281212-unframe-worker",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "Lambda function",
+    "arn": "arn:aws:lambda:ap-southeast-2:901444280953:function:a3-n12281212-unframe-jobs",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "API Gateway HTTP API",
+    "arn": "arn:aws:apigateway:ap-southeast-2::/apis/4xfbhsso7a",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "DynamoDB table",
+    "arn": "arn:aws:dynamodb:ap-southeast-2:901444280953:table/a3-n12281212-unframe-jobs",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "S3 bucket",
+    "arn": "arn:aws:s3:::a3-n12281212-unframe-job-images",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "S3 bucket",
+    "arn": "arn:aws:s3:::a3-n12281212-unframe-web",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "SQS queue",
+    "arn": "arn:aws:sqs:ap-southeast-2:901444280953:a3-n12281212-unframe-recognition",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "SQS queue",
+    "arn": "arn:aws:sqs:ap-southeast-2:901444280953:a3-n12281212-unframe-recognition-dlq",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "S3 vector bucket",
+    "arn": "arn:aws:s3vectors:ap-southeast-2:901444280953:bucket/a3-n12281212-unframe-vectors",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "S3 vector index",
+    "arn": "arn:aws:s3vectors:ap-southeast-2:901444280953:bucket/a3-n12281212-unframe-vectors/index/a3-n12281212-unframe-vectors",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "CloudFront distribution",
+    "arn": "arn:aws:cloudfront::901444280953:distribution/E2CK5412ICFTJX",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "CloudWatch dashboard",
+    "arn": "arn:aws:cloudwatch::901444280953:dashboard/a3-n12281212-unframe",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "CloudWatch log group",
+    "arn": "arn:aws:logs:ap-southeast-2:901444280953:log-group:/ecs/a3-n12281212-unframe-worker",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "CloudWatch log group",
+    "arn": "arn:aws:logs:ap-southeast-2:901444280953:log-group:/aws/lambda/a3-n12281212-unframe-jobs",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "Application Auto Scaling target",
+    "arn": "arn:aws:application-autoscaling:ap-southeast-2:901444280953:scalable-target/0ec5ae38e76bce6147649316c9b9741c455c",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "IAM service-linked role",
+    "arn": "arn:aws:iam::901444280953:role/aws-service-role/ecs.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_ECSService",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "Application Auto Scaling policy",
+    "arn": "arn:aws:autoscaling:ap-southeast-2:901444280953:scalingPolicy:ae38e76b-ce61-4764-9316-c9b9741c455c:resource/ecs/service/n12281212-strobe-a2/a3-n12281212-unframe-worker:policyName/unframe-sqs-backlog",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "CloudWatch alarm",
+    "arn": "arn:aws:cloudwatch:ap-southeast-2:901444280953:alarm:TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmHigh-bd150a38-aa09-489f-9726-d0ba56e37c83",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "CloudWatch alarm",
+    "arn": "arn:aws:cloudwatch:ap-southeast-2:901444280953:alarm:TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmLow-18a6f57d-4b3d-4a15-b8a6-c78ee1cabc5f",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "IAM role",
+    "arn": "arn:aws:iam::901444280953:role/Task-Role-CAB432-ECS",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "IAM role",
+    "arn": "arn:aws:iam::901444280953:role/Execution-Role-CAB432-ECS",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "IAM role",
+    "arn": "arn:aws:iam::901444280953:role/CAB432-Lambda-Role",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "EC2 subnet",
+    "arn": "arn:aws:ec2:ap-southeast-2:901444280953:subnet/subnet-075811427d5564cf9",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "EC2 subnet",
+    "arn": "arn:aws:ec2:ap-southeast-2:901444280953:subnet/subnet-05a3b8177138c8b14",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "EC2 VPC",
+    "arn": "arn:aws:ec2:ap-southeast-2:901444280953:vpc/vpc-007bab53289655834",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "EC2 security group",
+    "arn": "arn:aws:ec2:ap-southeast-2:901444280953:security-group/sg-078997505ad1c6bbc",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "EC2 route table",
+    "arn": "arn:aws:ec2:ap-southeast-2:901444280953:route-table/rtb-0631ac6f229b4ec46",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "EC2 internet gateway",
+    "arn": "arn:aws:ec2:ap-southeast-2:901444280953:internet-gateway/igw-0cbd9c45e83b6b967",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  },
+  {
+    "type": "Bedrock foundation model",
+    "arn": "arn:aws:bedrock:ap-southeast-2::foundation-model/google.gemma-3-12b-it",
+    "matchesCollectedInventory": true,
+    "regionCheck": true
+  }
+]

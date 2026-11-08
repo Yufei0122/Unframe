@@ -1,0 +1,15 @@
+{
+    "ApiEndpoint": "https://4xfbhsso7a.execute-api.ap-southeast-2.amazonaws.com",
+    "ApiId": "4xfbhsso7a",
+    "ApiKeySelectionExpression": "$request.header.x-api-key",
+    "CreatedDate": "2026-08-28T16:34:13+00:00",
+    "DisableExecuteApiEndpoint": false,
+    "IpAddressType": "ipv4",
+    "Name": "n12281212-strobe-api",
+    "ProtocolType": "HTTP",
+    "RouteSelectionExpression": "$request.method $request.path",
+    "Tags": {
+        "qut-username": "n12281212@qut.edu.au",
+        "purpose": "assessment 2"
+    }
+}

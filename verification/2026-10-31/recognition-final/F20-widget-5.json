@@ -1,0 +1,1 @@
+{"metrics":[["AWS/Lambda","Invocations","FunctionName","a3-n12281212-unframe-jobs",{"label":"Lambda - Jobs Invocations","region":"ap-southeast-2"}]],"view":"timeSeries","stacked":false,"region":"ap-southeast-2","stat":"Sum","period":60,"width":1000,"height":380,"start":"2026-10-31T07:02:18.301Z","end":"2026-10-31T07:09:01.419Z","timezone":"+1000"}

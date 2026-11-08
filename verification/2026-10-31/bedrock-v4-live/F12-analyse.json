@@ -1,0 +1,62 @@
+{
+  "apiBase": "https://4xfbhsso7a.execute-api.ap-southeast-2.amazonaws.com/prob",
+  "operation": "analyse",
+  "museumId": "met",
+  "image": "mobile/assets/met-exterior.jpg",
+  "startedAt": "2026-10-31T06:18:33.219Z",
+  "stage": "poll",
+  "http": [
+    {
+      "stage": "create",
+      "method": "POST",
+      "status": 201,
+      "cacheControl": "no-store",
+      "requestId": "GGI5EgaxSwMEJkw="
+    },
+    {
+      "stage": "upload",
+      "method": "PUT",
+      "status": 200,
+      "cacheControl": null,
+      "requestId": null
+    },
+    {
+      "stage": "poll",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "no-store",
+      "requestId": "GGI5eiuDSwMEJag="
+    },
+    {
+      "stage": "poll",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "no-store",
+      "requestId": "GGI5ujupSwMEJiQ="
+    },
+    {
+      "stage": "poll",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "no-store",
+      "requestId": "GGI5-g1xSwMEJsw="
+    },
+    {
+      "stage": "poll",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "no-store",
+      "requestId": "GGI6NitQywMEJjg="
+    }
+  ],
+  "statuses": [
+    "WAITING_UPLOAD",
+    "PROCESSING",
+    "RETRYING"
+  ],
+  "status": "FAIL",
+  "jobId": "e606a64c-20fe-4b50-b781-a6f1ee78b63d",
+  "timedOut": false,
+  "elapsedMs": 7658,
+  "finishedAt": "2026-10-31T06:18:40.913Z"
+}

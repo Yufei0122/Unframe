@@ -1,0 +1,14 @@
+{
+  "retrievedAt": "2026-10-31T08:50:19.030Z",
+  "value": {
+    "count": 3,
+    "bytes": 1670990,
+    "averageBytes": 556996.6666666666,
+    "sizes": [
+      787748,
+      372985,
+      510257
+    ],
+    "truncated": false
+  }
+}

@@ -1,0 +1,16 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: app\.env.example
+    at scan (file:///D:/FlyFly/Study/Project/Unframe/scripts/validate-a3-submission.mjs:55:14)
+    at async file:///D:/FlyFly/Study/Project/Unframe/scripts/validate-a3-submission.mjs:63:1 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v25.9.0

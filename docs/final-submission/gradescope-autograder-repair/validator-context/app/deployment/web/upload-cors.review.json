@@ -1,0 +1,9 @@
+{
+  "CORSRules": [{
+    "AllowedOrigins": ["https://<FINAL_CLOUDFRONT_DOMAIN>"],
+    "AllowedMethods": ["PUT"],
+    "AllowedHeaders": ["Content-Type", "If-None-Match"],
+    "ExposeHeaders": ["ETag"],
+    "MaxAgeSeconds": 300
+  }]
+}

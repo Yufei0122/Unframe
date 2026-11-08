@@ -1,0 +1,13 @@
+{
+  "retrievedAt": "2026-10-31T08:50:21.361Z",
+  "value": {
+    "Attributes": {
+      "ApproximateNumberOfMessages": "3",
+      "ApproximateNumberOfMessagesNotVisible": "0",
+      "VisibilityTimeout": "30",
+      "ReceiveMessageWaitTimeSeconds": "0",
+      "MessageRetentionPeriod": "345600",
+      "SqsManagedSseEnabled": "true"
+    }
+  }
+}

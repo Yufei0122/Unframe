@@ -1,0 +1,138 @@
+[
+    {
+        "timestamp": 1793388650442,
+        "message": "Loading local OpenCLIP on CPU; uploaded photos are never saved."
+    },
+    {
+        "timestamp": 1793388671566,
+        "message": "{\"service\": \"openclip\", \"address\": \"http://127.0.0.1:8001\", \"model\": \"ViT-B-32\", \"pretrained\": \"laion2b_s34b_b79k\", \"dimensions\": 512, \"normalized\": true, \"device\": \"cpu\", \"threads\": 1}"
+    },
+    {
+        "timestamp": 1793388671817,
+        "message": "{\"event\":\"worker_ready\",\"jobId\":null}"
+    },
+    {
+        "timestamp": 1793388766066,
+        "message": "{\"event\":\"job_received\",\"jobId\":\"c52c3782-0b39-405f-86bf-8ca2b65b06cf\"}"
+    },
+    {
+        "timestamp": 1793388766102,
+        "message": "{\"event\":\"job_processing\",\"jobId\":\"c52c3782-0b39-405f-86bf-8ca2b65b06cf\",\"attempt\":1,\"operation\":\"recognise\"}"
+    },
+    {
+        "timestamp": 1793388767299,
+        "message": "{\"event\":\"job_result_saved\",\"jobId\":\"c52c3782-0b39-405f-86bf-8ca2b65b06cf\"}"
+    },
+    {
+        "timestamp": 1793388767332,
+        "message": "{\"event\":\"job_completed\",\"jobId\":\"c52c3782-0b39-405f-86bf-8ca2b65b06cf\"}"
+    },
+    {
+        "timestamp": 1793389150895,
+        "message": "{\"event\":\"job_received\",\"jobId\":\"85b9f54f-3c28-4018-84ae-f1eae834de80\"}"
+    },
+    {
+        "timestamp": 1793389150919,
+        "message": "{\"event\":\"job_processing\",\"jobId\":\"85b9f54f-3c28-4018-84ae-f1eae834de80\",\"attempt\":1,\"operation\":\"recognise\"}"
+    },
+    {
+        "timestamp": 1793389151485,
+        "message": "{\"event\":\"job_result_saved\",\"jobId\":\"85b9f54f-3c28-4018-84ae-f1eae834de80\"}"
+    },
+    {
+        "timestamp": 1793389151530,
+        "message": "{\"event\":\"job_completed\",\"jobId\":\"85b9f54f-3c28-4018-84ae-f1eae834de80\"}"
+    },
+    {
+        "timestamp": 1793389152599,
+        "message": "{\"event\":\"job_received\",\"jobId\":\"19446b07-c342-4a75-82c7-f609db1e3b8f\"}"
+    },
+    {
+        "timestamp": 1793389152610,
+        "message": "{\"event\":\"job_processing\",\"jobId\":\"19446b07-c342-4a75-82c7-f609db1e3b8f\",\"attempt\":1,\"operation\":\"analyse\"}"
+    },
+    {
+        "timestamp": 1793389154535,
+        "message": "{\"event\":\"job_failed\",\"jobId\":\"19446b07-c342-4a75-82c7-f609db1e3b8f\",\"code\":\"PROCESSING_FAILED\",\"stage\":\"bedrock_analysis\",\"service\":\"Bedrock\",\"operation\":\"Analyse\",\"exceptionType\":\"AIError\",\"errorCode\":\"BEDROCK_JSON\",\"awsErrorCode\":null,\"awsRequestId\":null,\"httpStatusCode\":null,\"attempt\":1,\"elapsedMs\":1937}"
+    },
+    {
+        "timestamp": 1793389452599,
+        "message": "{\"event\":\"job_received\",\"jobId\":\"19446b07-c342-4a75-82c7-f609db1e3b8f\"}"
+    },
+    {
+        "timestamp": 1793389452626,
+        "message": "{\"event\":\"job_processing\",\"jobId\":\"19446b07-c342-4a75-82c7-f609db1e3b8f\",\"attempt\":2,\"operation\":\"analyse\"}"
+    },
+    {
+        "timestamp": 1793389455276,
+        "message": "{\"event\":\"job_failed\",\"jobId\":\"19446b07-c342-4a75-82c7-f609db1e3b8f\",\"code\":\"PROCESSING_FAILED\",\"stage\":\"bedrock_analysis\",\"service\":\"Bedrock\",\"operation\":\"Analyse\",\"exceptionType\":\"AIError\",\"errorCode\":\"BEDROCK_JSON\",\"awsErrorCode\":null,\"awsRequestId\":null,\"httpStatusCode\":null,\"attempt\":2,\"elapsedMs\":2676}"
+    },
+    {
+        "timestamp": 1793389752602,
+        "message": "{\"event\":\"job_received\",\"jobId\":\"19446b07-c342-4a75-82c7-f609db1e3b8f\"}"
+    },
+    {
+        "timestamp": 1793389752630,
+        "message": "{\"event\":\"job_processing\",\"jobId\":\"19446b07-c342-4a75-82c7-f609db1e3b8f\",\"attempt\":3,\"operation\":\"analyse\"}"
+    },
+    {
+        "timestamp": 1793389755312,
+        "message": "{\"event\":\"job_failed\",\"jobId\":\"19446b07-c342-4a75-82c7-f609db1e3b8f\",\"code\":\"PROCESSING_FAILED\",\"stage\":\"bedrock_analysis\",\"service\":\"Bedrock\",\"operation\":\"Analyse\",\"exceptionType\":\"AIError\",\"errorCode\":\"BEDROCK_JSON\",\"awsErrorCode\":null,\"awsRequestId\":null,\"httpStatusCode\":null,\"attempt\":3,\"elapsedMs\":2710}"
+    },
+    {
+        "timestamp": 1793389998633,
+        "message": "{\"event\":\"job_received\",\"jobId\":\"d697fc84-9c23-4f15-abd0-2bcd5f040dc8\"}"
+    },
+    {
+        "timestamp": 1793389998661,
+        "message": "{\"event\":\"job_processing\",\"jobId\":\"d697fc84-9c23-4f15-abd0-2bcd5f040dc8\",\"attempt\":1,\"operation\":\"analyse\"}"
+    },
+    {
+        "timestamp": 1793389999262,
+        "message": "{\"event\":\"job_result_saved\",\"jobId\":\"d697fc84-9c23-4f15-abd0-2bcd5f040dc8\"}"
+    },
+    {
+        "timestamp": 1793389999299,
+        "message": "{\"event\":\"job_completed\",\"jobId\":\"d697fc84-9c23-4f15-abd0-2bcd5f040dc8\"}"
+    },
+    {
+        "timestamp": 1793390052605,
+        "message": "{\"event\":\"job_received\",\"jobId\":\"19446b07-c342-4a75-82c7-f609db1e3b8f\"}"
+    },
+    {
+        "timestamp": 1793390052614,
+        "message": "{\"event\":\"job_processing\",\"jobId\":\"19446b07-c342-4a75-82c7-f609db1e3b8f\",\"attempt\":4,\"operation\":\"analyse\"}"
+    },
+    {
+        "timestamp": 1793390055957,
+        "message": "{\"event\":\"job_failed\",\"jobId\":\"19446b07-c342-4a75-82c7-f609db1e3b8f\",\"code\":\"PROCESSING_FAILED\",\"stage\":\"bedrock_analysis\",\"service\":\"Bedrock\",\"operation\":\"Analyse\",\"exceptionType\":\"AIError\",\"errorCode\":\"BEDROCK_JSON\",\"awsErrorCode\":null,\"awsRequestId\":null,\"httpStatusCode\":null,\"attempt\":4,\"elapsedMs\":3352}"
+    },
+    {
+        "timestamp": 1793390320418,
+        "message": "{\"event\":\"job_received\",\"jobId\":\"f81413e3-2075-4571-898c-8e05701bd1c5\"}"
+    },
+    {
+        "timestamp": 1793390320443,
+        "message": "{\"event\":\"job_processing\",\"jobId\":\"f81413e3-2075-4571-898c-8e05701bd1c5\",\"attempt\":1,\"operation\":\"recognise\"}"
+    },
+    {
+        "timestamp": 1793390321011,
+        "message": "{\"event\":\"job_result_saved\",\"jobId\":\"f81413e3-2075-4571-898c-8e05701bd1c5\"}"
+    },
+    {
+        "timestamp": 1793390321042,
+        "message": "{\"event\":\"job_completed\",\"jobId\":\"f81413e3-2075-4571-898c-8e05701bd1c5\"}"
+    },
+    {
+        "timestamp": 1793390352606,
+        "message": "{\"event\":\"job_received\",\"jobId\":\"19446b07-c342-4a75-82c7-f609db1e3b8f\"}"
+    },
+    {
+        "timestamp": 1793390352615,
+        "message": "{\"event\":\"job_processing\",\"jobId\":\"19446b07-c342-4a75-82c7-f609db1e3b8f\",\"attempt\":5,\"operation\":\"analyse\"}"
+    },
+    {
+        "timestamp": 1793390355855,
+        "message": "{\"event\":\"job_failed\",\"jobId\":\"19446b07-c342-4a75-82c7-f609db1e3b8f\",\"code\":\"PROCESSING_FAILED\",\"stage\":\"bedrock_analysis\",\"service\":\"Bedrock\",\"operation\":\"Analyse\",\"exceptionType\":\"AIError\",\"errorCode\":\"BEDROCK_JSON\",\"awsErrorCode\":null,\"awsRequestId\":null,\"httpStatusCode\":null,\"attempt\":5,\"elapsedMs\":3249}"
+    }
+]

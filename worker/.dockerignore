@@ -1,0 +1,9 @@
+# Build from the repository root with -f worker/Dockerfile.
+# Dockerfile.dockerignore is the authoritative context allowlist for that command.
+.env*
+.git
+.aws
+.venv
+.local-ai
+node_modules
+**/__pycache__

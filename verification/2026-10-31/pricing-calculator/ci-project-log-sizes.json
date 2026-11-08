@@ -1,0 +1,21 @@
+{
+  "retrievedAt": "2026-10-31T08:52:00.754Z",
+  "value": {
+    "windowSeconds": 1800,
+    "groups": {
+      "Service": {
+        "events": 31,
+        "bytes": 17515
+      },
+      "Task": {
+        "events": 71,
+        "bytes": 107789
+      },
+      "Container": {
+        "events": 141,
+        "bytes": 106797
+      }
+    },
+    "note": "Only matching Unframe performance records; excludes shared cluster aggregate and Strobe records."
+  }
+}

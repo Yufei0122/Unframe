@@ -1,0 +1,39 @@
+{
+  "origin": "https://d3x3iexpafsgf.cloudfront.net",
+  "asset": "https://d3x3iexpafsgf.cloudfront.net/_expo/static/js/web/index-31a0793bc093765b55760af215024b9e.js",
+  "requests": [
+    {
+      "timestamp": "2026-10-30T19:57:41.264Z",
+      "status": 200,
+      "xCache": "RefreshHit from cloudfront",
+      "age": null,
+      "cacheControl": null,
+      "elapsedMs": 1306,
+      "bytes": 2005342
+    },
+    {
+      "timestamp": "2026-10-30T19:57:42.574Z",
+      "status": 200,
+      "xCache": "Hit from cloudfront",
+      "age": null,
+      "cacheControl": null,
+      "elapsedMs": 282,
+      "bytes": 2005342
+    },
+    {
+      "timestamp": "2026-10-30T19:57:42.858Z",
+      "status": 200,
+      "xCache": "Hit from cloudfront",
+      "age": "1",
+      "cacheControl": null,
+      "elapsedMs": 268,
+      "bytes": 2005342
+    }
+  ],
+  "build": {
+    "actualApiBasePresent": true,
+    "jobsModePresent": true,
+    "localhostApiPresent": false
+  },
+  "status": "PASS"
+}

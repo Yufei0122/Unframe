@@ -1,0 +1,11 @@
+aws : 
+所在位置 行:2 字符: 1
++ aws lambda create-function --function-name a3-n12281212-unframe-plann ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+aws: [ERROR]: An error occurred (AccessDeniedException) when calling the CreateFunction operation: User: arn:aws:sts::9
+01444280953:assumed-role/AWSReservedSSO_CAB432-STUDENT_f2baa6a2ba3c79c9/n12281212@qut.edu.au is not authorized to perfo
+rm: lambda:CreateFunction on resource: arn:aws:lambda:ap-southeast-2:901444280953:function:a3-n12281212-unframe-plannin
+g with an explicit deny in an identity-based policy: arn:aws:iam::901444280953:policy/Do-Not-Delete-LT1-DenyPolicy-4

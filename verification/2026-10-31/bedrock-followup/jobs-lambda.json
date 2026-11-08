@@ -1,0 +1,11 @@
+{
+    "FunctionName": "a3-n12281212-unframe-jobs",
+    "Role": "arn:aws:iam::901444280953:role/CAB432-Lambda-Role",
+    "Runtime": "nodejs22.x",
+    "Handler": "server/cloud/handlers.jobsHandler",
+    "Timeout": 3,
+    "MemorySize": 128,
+    "RevisionId": "a560be9a-821b-4a1f-b228-a0daff8031b9",
+    "LastUpdateStatus": "Successful",
+    "State": "Active"
+}

@@ -1,0 +1,123 @@
+{
+  "retrievedAt": "2026-10-31T07:24:25.525Z",
+  "value": [
+    {
+      "taskDefinition": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:6",
+      "desired": 1,
+      "running": 1,
+      "pending": 0,
+      "deployments": [
+        {
+          "id": "ecs-svc/0247050502470215559",
+          "status": "PRIMARY",
+          "taskDefinition": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:6",
+          "desiredCount": 1,
+          "pendingCount": 0,
+          "runningCount": 1,
+          "failedTasks": 0,
+          "createdAt": "2026-10-31T16:59:13.006000+10:00",
+          "updatedAt": "2026-10-31T17:02:21.085000+10:00",
+          "launchType": "FARGATE",
+          "platformVersion": "1.4.0",
+          "platformFamily": "Linux",
+          "networkConfiguration": {
+            "awsvpcConfiguration": {
+              "subnets": [
+                "subnet-075811427d5564cf9",
+                "subnet-05a3b8177138c8b14"
+              ],
+              "securityGroups": [
+                "sg-078997505ad1c6bbc"
+              ],
+              "assignPublicIp": "ENABLED"
+            }
+          },
+          "rolloutState": "COMPLETED",
+          "rolloutStateReason": "ECS deployment ecs-svc/0247050502470215559 completed."
+        }
+      ],
+      "events": [
+        {
+          "id": "2a50faf6-765f-476c-a1fe-be154ad0191f",
+          "createdAt": "2026-10-31T17:02:21.091000+10:00",
+          "message": "(service a3-n12281212-unframe-worker) has reached a steady state."
+        },
+        {
+          "id": "33e5b086-67b6-46c1-813e-ab8edc38674e",
+          "createdAt": "2026-10-31T17:02:21.090000+10:00",
+          "message": "(service a3-n12281212-unframe-worker) (deployment ecs-svc/0247050502470215559) deployment completed."
+        },
+        {
+          "id": "929c8233-c9f9-46e0-b7ed-af4fbe373059",
+          "createdAt": "2026-10-31T17:01:05.796000+10:00",
+          "message": "(service a3-n12281212-unframe-worker) has stopped 1 running tasks: (task 47f6e647e2d34ee0b54e027ff906ce82)."
+        },
+        {
+          "id": "6f985a0c-c192-4b22-bfe4-ad46d936e3f1",
+          "createdAt": "2026-10-31T16:59:22.022000+10:00",
+          "message": "(service a3-n12281212-unframe-worker) has started 1 tasks: (task 14d226de342f4ebb95672558bd499a7b)."
+        },
+        {
+          "id": "74342934-1efa-4196-8fab-0cf235841ba5",
+          "createdAt": "2026-10-31T16:17:07.530000+10:00",
+          "message": "(service a3-n12281212-unframe-worker) has reached a steady state."
+        },
+        {
+          "id": "edb0892c-bb83-472c-a639-8e2d58dca3c3",
+          "createdAt": "2026-10-31T16:17:07.529000+10:00",
+          "message": "(service a3-n12281212-unframe-worker) (deployment ecs-svc/4585886962920341312) deployment completed."
+        },
+        {
+          "id": "7382136b-c724-4345-ba3c-288a58d6f28e",
+          "createdAt": "2026-10-31T16:15:57.765000+10:00",
+          "message": "(service a3-n12281212-unframe-worker) has stopped 1 running tasks: (task cb916ca6f0484d318109cddf9c3436a1)."
+        },
+        {
+          "id": "49319643-a241-476d-a35a-8512c6e8c507",
+          "createdAt": "2026-10-31T16:14:13.422000+10:00",
+          "message": "(service a3-n12281212-unframe-worker) has started 1 tasks: (task 47f6e647e2d34ee0b54e027ff906ce82)."
+        },
+        {
+          "id": "98c4318b-f9f5-4dcf-878f-0eafbd1a25d6",
+          "createdAt": "2026-10-31T11:33:12.668000+10:00",
+          "message": "(service a3-n12281212-unframe-worker) has reached a steady state."
+        },
+        {
+          "id": "e9be845d-2b68-49d2-8e28-fbafcdfce6ec",
+          "createdAt": "2026-10-31T05:32:47.210000+10:00",
+          "message": "(service a3-n12281212-unframe-worker) has reached a steady state."
+        },
+        {
+          "id": "b707c575-03d6-4d22-88b5-a9268bdaa6aa",
+          "createdAt": "2026-10-31T05:32:47.209000+10:00",
+          "message": "(service a3-n12281212-unframe-worker) (deployment ecs-svc/0312324149253549029) deployment completed."
+        },
+        {
+          "id": "4297431c-93a8-4bcd-a5e5-db3885c366a1",
+          "createdAt": "2026-10-31T05:31:33.933000+10:00",
+          "message": "(service a3-n12281212-unframe-worker) has stopped 1 running tasks: (task b81f902404d244fcacf4a0d277d11f02)."
+        },
+        {
+          "id": "1ea9d925-f6c8-42d7-8d6b-118c582480f2",
+          "createdAt": "2026-10-31T05:29:49.486000+10:00",
+          "message": "(service a3-n12281212-unframe-worker) has started 1 tasks: (task cb916ca6f0484d318109cddf9c3436a1)."
+        },
+        {
+          "id": "e3456224-9a05-45d3-9262-0f16378ec90d",
+          "createdAt": "2026-10-31T03:48:38.754000+10:00",
+          "message": "(service a3-n12281212-unframe-worker) has reached a steady state."
+        },
+        {
+          "id": "4351deaf-0b05-46eb-999a-320f96fca73c",
+          "createdAt": "2026-10-31T03:48:38.753000+10:00",
+          "message": "(service a3-n12281212-unframe-worker) (deployment ecs-svc/0187700546537704791) deployment completed."
+        },
+        {
+          "id": "0453ff10-464e-42dc-b59a-b2dd66c0b157",
+          "createdAt": "2026-10-31T03:46:33.789000+10:00",
+          "message": "(service a3-n12281212-unframe-worker) has started 1 tasks: (task b81f902404d244fcacf4a0d277d11f02)."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "retrievedAt": "2026-10-31T08:48:18.474Z",
+  "value": {
+    "stage": "prob",
+    "accessLogs": null,
+    "routeSettings": {},
+    "defaultRouteSettings": {
+      "DetailedMetricsEnabled": false
+    }
+  }
+}

@@ -1,0 +1,110 @@
+[
+    {
+        "name": "n12281212-prac-bedrock-test",
+        "role": "arn:aws:iam::901444280953:role/CAB432-Lambda-Role",
+        "runtime": "python3.14",
+        "handler": "lambda_function.lambda_handler",
+        "architecture": [
+            "x86_64"
+        ]
+    },
+    {
+        "name": "a3-n12281212-unframe-jobs",
+        "role": "arn:aws:iam::901444280953:role/CAB432-Lambda-Role",
+        "runtime": "nodejs22.x",
+        "handler": "server/cloud/handlers.jobsHandler",
+        "architecture": [
+            "x86_64"
+        ]
+    },
+    {
+        "name": "n12281212-strobe-moment",
+        "role": "arn:aws:iam::901444280953:role/CAB432-Lambda-Role",
+        "runtime": "python3.14",
+        "handler": "lambda_function.lambda_handler",
+        "architecture": [
+            "x86_64"
+        ]
+    },
+    {
+        "name": "n12281212-strobe-user",
+        "role": "arn:aws:iam::901444280953:role/CAB432-Lambda-Role",
+        "runtime": "python3.14",
+        "handler": "lambda_function.lambda_handler",
+        "architecture": [
+            "x86_64"
+        ]
+    },
+    {
+        "name": "n12281212-strobe-comment",
+        "role": "arn:aws:iam::901444280953:role/CAB432-Lambda-Role",
+        "runtime": "python3.14",
+        "handler": "lambda_function.lambda_handler",
+        "architecture": [
+            "x86_64"
+        ]
+    },
+    {
+        "name": "n12281212-strobe-like",
+        "role": "arn:aws:iam::901444280953:role/CAB432-Lambda-Role",
+        "runtime": "python3.14",
+        "handler": "lambda_function.lambda_handler",
+        "architecture": [
+            "x86_64"
+        ]
+    },
+    {
+        "name": "n12281212-strobe-classification",
+        "role": "arn:aws:iam::901444280953:role/CAB432-Lambda-Role",
+        "runtime": "python3.14",
+        "handler": "lambda_function.lambda_handler",
+        "architecture": [
+            "x86_64"
+        ]
+    },
+    {
+        "name": "n12281212-strobe-embedding-test",
+        "role": "arn:aws:iam::901444280953:role/CAB432-Lambda-Role",
+        "runtime": "python3.14",
+        "handler": "lambda_function.lambda_handler",
+        "architecture": [
+            "x86_64"
+        ]
+    },
+    {
+        "name": "n12281212-strobe-agent",
+        "role": "arn:aws:iam::901444280953:role/CAB432-Lambda-Role",
+        "runtime": "python3.14",
+        "handler": "lambda_function.lambda_handler",
+        "architecture": [
+            "x86_64"
+        ]
+    },
+    {
+        "name": "n12281212-strobe-follow",
+        "role": "arn:aws:iam::901444280953:role/CAB432-Lambda-Role",
+        "runtime": "python3.14",
+        "handler": "lambda_function.lambda_handler",
+        "architecture": [
+            "x86_64"
+        ]
+    },
+    {
+        "name": "n12281212-strobe-heartbeat",
+        "role": "arn:aws:iam::901444280953:role/CAB432-Lambda-Role",
+        "runtime": "python3.14",
+        "handler": "lambda_function.lambda_handler",
+        "architecture": [
+            "x86_64"
+        ]
+    },
+    {
+        "name": "n12281212-strobe-post",
+        "role": "arn:aws:iam::901444280953:role/CAB432-Lambda-Role",
+        "runtime": "python3.14",
+        "handler": "lambda_function.lambda_handler",
+        "architecture": [
+            "x86_64"
+        ]
+    }
+]

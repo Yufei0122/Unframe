@@ -36,7 +36,7 @@ export function validSavedRoute(value: unknown, artworkIds: string[]): value is 
   if (!a || !Array.isArray(a.route) || !a.route.length || !Array.isArray(a.navigation) || a.route.length !== a.navigation.length) return false;
   return typeof a.demo === 'boolean' && typeof a.mapNotice === 'string' && typeof a.reasoningSummary === 'string'
     && (a.warning === undefined || typeof a.warning === 'string') && new Set(a.route.map(stop => stop?.artworkId)).size === a.route.length
-    && ['local', 'ollama'].includes(a.recommendationSource) && finite(a.estimatedMinutes) && finite(a.estimatedWalkingDistance)
+    && ['local', 'ollama', 'bedrock'].includes(a.recommendationSource) && finite(a.estimatedMinutes) && finite(a.estimatedWalkingDistance)
     && a.route.every(stop => !!stop && museum.artworks.some(art => art.id === stop.artworkId) && finite(stop.order) && typeof stop.title === 'string' && typeof stop.galleryId === 'string' && finite(stop.estimatedVisitMinutes))
     && a.navigation.every(segment => !!segment && typeof segment.from === 'string' && typeof segment.to === 'string' && finite(segment.distance) && finite(segment.estimatedSeconds) && Array.isArray(segment.nodes) && segment.nodes.every(id => museum.graph.nodes.some(node => node.id === id)));
 }
@@ -65,7 +65,7 @@ export function profileActivity(state: MobileState): ProfileActivity[] {
     entries.push({ id: `visit-${visit.id}`, kind: 'Visits', visitId: visit.id, date: visit.date, label: 'Completed a visit', title: museum ? `A day at ${museum.shortName}` : 'A day at Northbank', subtitle: museum?.name || 'Northbank Gallery · Sample visit', body: visit.summary, coverId: a?.id });
   }
   for (const route of state.savedRoutes || []) {
-    const info = savedRouteInfo(route), ai = route.kind === 'museum' && route.itinerary.recommendationSource === 'ollama';
+    const info = savedRouteInfo(route), ai = route.kind === 'museum' && ['ollama', 'bedrock'].includes(route.itinerary.recommendationSource);
     entries.push({ id: `route-${route.id}`, kind: 'Routes', date: route.savedAt, label: ai ? 'Saved an AI route' : 'Saved a route', title: route.title, subtitle: info.place, body: `${info.ids.length} artworks · ${Math.ceil(info.minutes)} minutes · ${info.museum}`, museumId: info.museumId, coverId: info.museumId ? undefined : info.ids[0], routeId: route.id, ai });
   }
   return entries.sort((a, b) => (b.date ? Date.parse(b.date) : -Infinity) - (a.date ? Date.parse(a.date) : -Infinity));

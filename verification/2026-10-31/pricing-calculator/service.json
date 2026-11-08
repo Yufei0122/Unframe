@@ -1,0 +1,26 @@
+{
+  "retrievedAt": "2026-10-31T08:48:15.778Z",
+  "value": [
+    {
+      "serviceName": "a3-n12281212-unframe-worker",
+      "desired": 1,
+      "running": 1,
+      "pending": 0,
+      "taskDefinition": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:6",
+      "launchType": "FARGATE",
+      "network": {
+        "awsvpcConfiguration": {
+          "subnets": [
+            "subnet-075811427d5564cf9",
+            "subnet-05a3b8177138c8b14"
+          ],
+          "securityGroups": [
+            "sg-078997505ad1c6bbc"
+          ],
+          "assignPublicIp": "ENABLED"
+        }
+      },
+      "loadBalancers": []
+    }
+  ]
+}

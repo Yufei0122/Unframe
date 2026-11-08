@@ -1,0 +1,20 @@
+{
+  "status": "READ_ONLY_BASELINE_ONLY",
+  "submissionFilesChanged": [],
+  "originalFilesChanged": [],
+  "originalFilesChecked": 878,
+  "yamlSha256Unchanged": true,
+  "declaredArnCount": 33,
+  "planningResourceArns": [],
+  "secretPatternFindings": [],
+  "lockfileChecks": [
+    {
+      "path": "package.json",
+      "matchesLock": true
+    },
+    {
+      "path": "mobile/package.json",
+      "matchesLock": true
+    }
+  ]
+}

@@ -91,7 +91,7 @@ test('a visually matched reference takes priority over an unsupported model iden
   await openScan(page);
   await page.getByLabel('Upload artwork image').setInputFiles(photo);
   await expect(page.getByRole('heading', { name: 'Water Lilies', exact: true })).toBeVisible();
-  await expect(page.getByText('Claude Monet', { exact: true })).toBeVisible();
+  await expect(page.getByTestId('artwork-analysis-result').getByText('Claude Monet', { exact: true })).toBeVisible();
   await expect(page.getByText('Possible match · The Met · Unconfirmed', { exact: true })).toBeVisible();
   await expect(page.getByText('Mona Lisa', { exact: true })).toHaveCount(0);
   await page.screenshot({ path: 'test-results/general-artwork-reference-match.png' });

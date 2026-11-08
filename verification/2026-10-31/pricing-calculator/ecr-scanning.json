@@ -1,0 +1,17 @@
+{
+  "retrievedAt": "2026-10-31T08:59:30.365Z",
+  "value": {
+    "scanType": "ENHANCED",
+    "rulesForReview": [
+      {
+        "scanFrequency": "CONTINUOUS_SCAN",
+        "repositoryFilters": [
+          {
+            "filter": "*",
+            "filterType": "WILDCARD"
+          }
+        ]
+      }
+    ]
+  }
+}

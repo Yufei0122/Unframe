@@ -1,0 +1,81 @@
+{
+  "retrievedAt": "2026-10-31T08:34:58.433Z",
+  "value": {
+    "ScalingPolicies": [
+      {
+        "PolicyARN": "arn:aws:autoscaling:ap-southeast-2:901444280953:scalingPolicy:ae38e76b-ce61-4764-9316-c9b9741c455c:resource/ecs/service/n12281212-strobe-a2/a3-n12281212-unframe-worker:policyName/unframe-sqs-backlog",
+        "PolicyName": "unframe-sqs-backlog",
+        "ServiceNamespace": "ecs",
+        "ResourceId": "service/n12281212-strobe-a2/a3-n12281212-unframe-worker",
+        "ScalableDimension": "ecs:service:DesiredCount",
+        "PolicyType": "TargetTrackingScaling",
+        "TargetTrackingScalingPolicyConfiguration": {
+          "TargetValue": 3,
+          "CustomizedMetricSpecification": {
+            "Dimensions": [],
+            "Metrics": [
+              {
+                "Id": "m1",
+                "MetricStat": {
+                  "Metric": {
+                    "Dimensions": [
+                      {
+                        "Name": "QueueName",
+                        "Value": "a3-n12281212-unframe-recognition"
+                      }
+                    ],
+                    "MetricName": "ApproximateNumberOfMessagesVisible",
+                    "Namespace": "AWS/SQS"
+                  },
+                  "Stat": "Sum"
+                },
+                "ReturnData": false
+              },
+              {
+                "Id": "m2",
+                "MetricStat": {
+                  "Metric": {
+                    "Dimensions": [
+                      {
+                        "Name": "ClusterName",
+                        "Value": "n12281212-strobe-a2"
+                      },
+                      {
+                        "Name": "ServiceName",
+                        "Value": "a3-n12281212-unframe-worker"
+                      }
+                    ],
+                    "MetricName": "RunningTaskCount",
+                    "Namespace": "ECS/ContainerInsights"
+                  },
+                  "Stat": "Average"
+                },
+                "ReturnData": false
+              },
+              {
+                "Expression": "m1 / m2",
+                "Id": "backlog_per_task",
+                "Label": "Visible recognition messages per running worker",
+                "ReturnData": true
+              }
+            ]
+          },
+          "ScaleOutCooldown": 30,
+          "ScaleInCooldown": 120,
+          "DisableScaleIn": false
+        },
+        "Alarms": [
+          {
+            "AlarmName": "TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmHigh-bd150a38-aa09-489f-9726-d0ba56e37c83",
+            "AlarmARN": "arn:aws:cloudwatch:ap-southeast-2:901444280953:alarm:TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmHigh-bd150a38-aa09-489f-9726-d0ba56e37c83"
+          },
+          {
+            "AlarmName": "TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmLow-18a6f57d-4b3d-4a15-b8a6-c78ee1cabc5f",
+            "AlarmARN": "arn:aws:cloudwatch:ap-southeast-2:901444280953:alarm:TargetTracking-service/n12281212-strobe-a2/a3-n12281212-unframe-worker-AlarmLow-18a6f57d-4b3d-4a15-b8a6-c78ee1cabc5f"
+          }
+        ],
+        "CreationTime": "2026-10-31T05:53:53.841000+10:00"
+      }
+    ]
+  }
+}

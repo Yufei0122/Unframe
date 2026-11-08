@@ -1,0 +1,43 @@
+{
+  "TargetValue": 3,
+  "ScaleOutCooldown": 30,
+  "ScaleInCooldown": 120,
+  "DisableScaleIn": false,
+  "CustomizedMetricSpecification": {
+    "Metrics": [
+      {
+        "Id": "backlog",
+        "MetricStat": {
+          "Metric": {
+            "Namespace": "AWS/SQS",
+            "MetricName": "ApproximateNumberOfMessagesVisible",
+            "Dimensions": [{ "Name": "QueueName", "Value": "<QUEUE_NAME>" }]
+          },
+          "Stat": "Sum"
+        },
+        "ReturnData": false
+      },
+      {
+        "Id": "tasks",
+        "MetricStat": {
+          "Metric": {
+            "Namespace": "ECS/ContainerInsights",
+            "MetricName": "RunningTaskCount",
+            "Dimensions": [
+              { "Name": "ClusterName", "Value": "<CLUSTER_NAME>" },
+              { "Name": "ServiceName", "Value": "<SERVICE_NAME>" }
+            ]
+          },
+          "Stat": "Average"
+        },
+        "ReturnData": false
+      },
+      {
+        "Id": "backlog_per_task",
+        "Expression": "IF(tasks > 0, backlog / tasks, backlog)",
+        "Label": "Visible SQS messages per running task",
+        "ReturnData": true
+      }
+    ]
+  }
+}

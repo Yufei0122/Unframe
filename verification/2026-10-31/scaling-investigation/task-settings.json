@@ -1,0 +1,28 @@
+{
+  "retrievedAt": "2026-10-31T07:24:27.552Z",
+  "value": {
+    "cpu": "512",
+    "memory": "2048",
+    "runtime": {
+      "cpuArchitecture": "X86_64",
+      "operatingSystemFamily": "LINUX"
+    },
+    "containers": [
+      {
+        "name": "unframe-worker",
+        "stopTimeout": null,
+        "healthCheck": {
+          "command": [
+            "CMD",
+            "node",
+            "worker/healthcheck.js"
+          ],
+          "interval": 30,
+          "timeout": 5,
+          "retries": 3,
+          "startPeriod": 180
+        }
+      }
+    ]
+  }
+}

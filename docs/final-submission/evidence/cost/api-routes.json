@@ -1,0 +1,21 @@
+{
+  "retrievedAt": "2026-10-31T08:48:15.917Z",
+  "value": [
+    {
+      "route": "POST /a3/jobs",
+      "target": "integrations/fffmtna"
+    },
+    {
+      "route": "OPTIONS /a3/jobs/{jobId}",
+      "target": "integrations/fffmtna"
+    },
+    {
+      "route": "OPTIONS /a3/jobs",
+      "target": "integrations/fffmtna"
+    },
+    {
+      "route": "GET /a3/jobs/{jobId}",
+      "target": "integrations/fffmtna"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "status": "PASS_LOCAL_VALIDATION",
+  "submissionReady": false,
+  "resources": 32,
+  "sourceFilesVerified": 336,
+  "sourceBytes": 9987619,
+  "dashboardWidgetsPreserved": 7,
+  "vectorCount": 15,
+  "historicalBrowserJobsVerified": 1,
+  "detectedSecretPatterns": 0,
+  "cloudPlanning": "OUT_OF_SCOPE_FUTURE_WORK",
+  "remaining": [
+    "fresh AWS verification blocked by expired session",
+    "shared API and dependency tagging review",
+    "final Calculator reconciliation",
+    "optional AI confirmation endpoint unavailable",
+    "student report/video"
+  ]
+}

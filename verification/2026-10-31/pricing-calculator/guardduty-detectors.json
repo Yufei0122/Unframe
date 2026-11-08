@@ -1,0 +1,4 @@
+{
+  "retrievedAt": "2026-10-31T08:50:15.270Z",
+  "error": "aws: [ERROR]: An error occurred (AccessDeniedException) when calling the ListDetectors operation: User: arn:aws:sts::901444280953:assumed-role/AWSReservedSSO_CAB432-STUDENT_f2baa6a2ba3c79c9/[session-redacted] is not authorized to perform: guardduty:ListDetectors on resource: arn:aws:guardduty:ap-southeast-2:901444280953:detector/* with an explicit deny in an identity-based policy: arn:aws:iam::901444280953:policy/Do-Not-Delete-LT1-AllowPolicy-AND-DenyPolicy-1"
+}

@@ -1,0 +1,11 @@
+{
+  "retrievedAt": "2026-10-31T08:48:18.468Z",
+  "value": {
+    "ContinuousBackupsDescription": {
+      "ContinuousBackupsStatus": "ENABLED",
+      "PointInTimeRecoveryDescription": {
+        "PointInTimeRecoveryStatus": "DISABLED"
+      }
+    }
+  }
+}

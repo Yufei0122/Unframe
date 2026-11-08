@@ -1,0 +1,34 @@
+{
+  "originalValidatorSha256": "7cb3aca0bb55f7804ccf60bfaffb30c8cbf5732fabe236df94764b7c707d4755",
+  "unmodified": {
+    "command": [
+      "node",
+      "D:\\FlyFly\\Study\\Project\\Unframe\\scripts\\validate-a3-submission.mjs",
+      "--manifest",
+      "D:\\FlyFly\\Study\\Project\\Unframe\\docs\\final-submission\\gradescope-autograder-repair\\validator-context\\docs\\final-submission\\gradescope-repair\\manifest.json",
+      "--output",
+      "D:\\FlyFly\\Study\\Project\\Unframe\\docs\\final-submission\\gradescope-autograder-repair\\validator-context\\docs\\final-submission\\gradescope-repair\\existing-validator-unmodified.json"
+    ],
+    "cwd": "D:\\FlyFly\\Study\\Project\\Unframe\\docs\\final-submission\\gradescope-autograder-repair\\validator-context",
+    "exitCode": 1
+  },
+  "unmodifiedFailure": "Blanket .env* filename prohibition rejects .env.example",
+  "adapted": {
+    "command": [
+      "node",
+      "D:\\FlyFly\\Study\\Project\\Unframe\\docs\\final-submission\\gradescope-autograder-repair\\validate-a3-submission.safe-examples.mjs",
+      "--manifest",
+      "D:\\FlyFly\\Study\\Project\\Unframe\\docs\\final-submission\\gradescope-autograder-repair\\validator-context\\docs\\final-submission\\gradescope-repair\\manifest.json",
+      "--output",
+      "D:\\FlyFly\\Study\\Project\\Unframe\\docs\\final-submission\\gradescope-autograder-repair\\validator-context\\docs\\final-submission\\gradescope-repair\\existing-validator-safe-examples.json"
+    ],
+    "cwd": "D:\\FlyFly\\Study\\Project\\Unframe\\docs\\final-submission\\gradescope-autograder-repair\\validator-context",
+    "exitCode": 0
+  },
+  "adaptation": "Audit-only copy permits the exact .env.example filename; every other original assertion is retained. Original source and submitted validator unchanged.",
+  "safeTemplateContentsScannedSeparately": true,
+  "originalAndEvidenceUnchanged": true,
+  "currentRootComparison": "False in this isolated context; all 335 original hashes independently checked by validate.py.",
+  "historicalEvidenceOnly": true,
+  "freshAwsValidation": false
+}

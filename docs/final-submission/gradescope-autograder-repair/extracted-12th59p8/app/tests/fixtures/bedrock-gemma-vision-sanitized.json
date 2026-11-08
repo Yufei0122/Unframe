@@ -1,0 +1,20 @@
+{
+  "provenance": {
+    "model": "google.gemma-3-12b-it",
+    "capturedAt": "2026-10-31T05:55:50.667Z",
+    "source": "one direct AWS Converse call, public reference image; descriptive strings redacted"
+  },
+  "response": {
+    "stopReason": "end_turn",
+    "output": {
+      "message": {
+        "role": "assistant",
+        "content": [
+          {
+            "text": "```json\n{\n  \"subjectType\": \"painting\",\n  \"description\": \"Sanitized public-reference description.\",\n  \"visualFeatures\": [\n    \"Sanitized feature.\",\n    \"Sanitized feature.\"\n  ],\n  \"visibleText\": [],\n  \"hypotheses\": [\n    {\n      \"title\": \"Sanitized title.\",\n      \"artist\": \"Sanitized artist.\",\n      \"basis\": \"Sanitized basis.\"\n    }\n  ]\n}\n```"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+[
+    {
+        "Path":  "D:\\FlyFly\\Study\\Project\\Unframe\\server\\ai\\routes.js",
+        "Hash":  "51320AF753D3E7005EB1906712961CE9AEDAF90285DABC69109ABB2CDDD93B9C"
+    },
+    {
+        "Path":  "D:\\FlyFly\\Study\\Project\\Unframe\\server\\ai\\recognition.js",
+        "Hash":  "3616CD91344A9B26313E7FA08B43B6942DE1745284496BFC3933508A8C108B52"
+    },
+    {
+        "Path":  "D:\\FlyFly\\Study\\Project\\Unframe\\server\\ai\\s3-vectors.js",
+        "Hash":  "83391DB82B64BCF6586EC7741BA26235644140F457A8F9AEE52E1702A7AF4F4A"
+    },
+    {
+        "Path":  "D:\\FlyFly\\Study\\Project\\Unframe\\server\\ai\\config.js",
+        "Hash":  "3476B3D7B7E8C3A580190C38E8C9501A0C5F98257D2AD2C5AE78E18EEB1383ED"
+    }
+]

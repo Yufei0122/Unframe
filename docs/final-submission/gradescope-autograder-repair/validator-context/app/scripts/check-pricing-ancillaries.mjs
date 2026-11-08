@@ -1,0 +1,14 @@
+// Final scoped read-only checks; environment selection is an explicit non-secret allowlist.
+import { execFile as cb } from 'node:child_process';
+import { promisify } from 'node:util';
+import { writeFile } from 'node:fs/promises';
+const exec = promisify(cb), dir = 'verification/2026-10-31/pricing-calculator';
+async function read(name,args,project){try{const {stdout}=await exec('aws',[...args,'--profile','default','--region','ap-southeast-2','--output','json','--no-cli-pager'],{windowsHide:true,timeout:45000,maxBuffer:2**22});const value=project(JSON.parse(stdout));await writeFile(`${dir}/${name}.json`,JSON.stringify({retrievedAt:new Date().toISOString(),value},null,2));console.log(JSON.stringify({name,value}));}catch(e){const error=String(e.stderr||e.message).replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi,'[session-redacted]').trim();await writeFile(`${dir}/${name}.json`,JSON.stringify({error},null,2));console.log(JSON.stringify({name,error}));}}
+await read('safe-worker-cost-settings',['ecs','describe-task-definition','--task-definition','a3-n12281212-unframe-worker:6'],v=>v.taskDefinition.containerDefinitions.flatMap(c=>(c.environment||[]).filter(e=>['OPENCLIP_THREADS','AI_PROVIDER','OLLAMA_VISION_NUM_PREDICT','BEDROCK_MODEL_ID','BEDROCK_VISION_MODEL','AI_ANALYSIS_BUDGET_MS','ARTWORK_MATCH_THRESHOLD'].includes(e.name))));
+await read('vpc-endpoints',['ec2','describe-vpc-endpoints','--filters','Name=vpc-id,Values=vpc-007bab53289655834'],v=>v.VpcEndpoints.map(e=>({id:e.VpcEndpointId,type:e.VpcEndpointType,service:e.ServiceName,requesterManaged:e.RequesterManaged,privateDns:e.PrivateDnsEnabled,subnets:e.SubnetIds})));
+await read('ecr-scanning',['ecr','get-registry-scanning-configuration'],v=>({scanType:v.scanningConfiguration.scanType,rulesForReview:v.scanningConfiguration.rules}));
+for (const [kind, field, value] of [['ecr','ecrRepositoryName','a3-n12281212-unframe-worker'],['lambda','lambdaFunctionName','a3-n12281212-unframe-jobs']]) {
+  const path = `${dir}/inspector-${kind}-filter.json`; await writeFile(path,JSON.stringify({[field]:[{comparison:'EQUALS',value}]}));
+  await read(`inspector-${kind}-coverage`,['inspector2','list-coverage','--filter-criteria',`file://${path}`],v=>v.coveredResources.map(r=>({type:r.resourceType,scanType:r.scanType,status:r.scanStatus,lastScannedAt:r.lastScannedAt})));
+}
+await writeFile(`${dir}/calculator-access-limitations.json`,JSON.stringify({checkedAt:new Date().toISOString(),browser:'No enabled browser surfaces; Calculator JS form not inspectable. Official current workflow documentation consulted.',cloudfrontSubscription:'Installed CLI rejects pricing-plan-manager as invalid choice; no subscription modified. PAYG is working assumption from existing creation configuration, not a fresh subscription API confirmation.'},null,2));

@@ -1,0 +1,1 @@
+{"TableName":"a3-n12281212-unframe-jobs","Key":{"jobId":{"S":"277829b9-3ab0-43e0-936e-6f945ad3d730"}},"ConsistentRead":true,"ProjectionExpression":"#j,#s,#a,#r,#c,#t","ExpressionAttributeNames":{"#j":"jobId","#s":"status","#a":"attempts","#r":"result","#c":"completedAt","#t":"createdAt"}}
