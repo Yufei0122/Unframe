@@ -16,6 +16,8 @@ export type SavedRoute = { id: string; title: string; savedAt: string } & ({ kin
 export interface MobileState { version: 1; preferences: Preferences; avatarUri?: string; saved: string[]; savedAt?: Record<string, string>; savedRoutes?: SavedRoute[]; visits: Visit[]; feedback: Feedback[]; tour: ActiveTour | null }
 export const initialState: MobileState = { version: 1, preferences: { name: 'Alex', interests: ['Nature', 'Colour'], duration: 30, stepFree: false, saveHistory: true, largeText: false }, saved: [], visits: [], feedback: [], tour: null };
 export type RootStackParams = {
+  SignIn: undefined;
+  Studio: undefined;
   MuseumSelect: undefined;
   Welcome: undefined;
   Tour: undefined;

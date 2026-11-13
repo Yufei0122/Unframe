@@ -7,6 +7,8 @@ import { initialState } from './seed.js';
 import { planRoute, guideReply } from './domain.js';
 import { startLocalServer } from './startup.js';
 import { createAIHandler } from './ai/handler.js';
+import { catalogues } from './ai/catalogues.js';
+import { createStudio } from './studio.js';
 
 const handleAI = createAIHandler();
 
@@ -23,6 +25,9 @@ const workspace = createHash('sha256').update(process.platform === 'win32' ? dat
 let state;
 try { state = JSON.parse(await readFile(dataFile, 'utf8')); }
 catch (error) { if (error.code !== 'ENOENT') throw error; state = initialState(); }
+const catalogue = [...catalogues.entries()].flatMap(([museumId, item]) => item.collection.map(art => Object.assign(art, { museumId })));
+catalogue.push(...state.artworks.map(art => Object.assign(art, { museumId: 'northbank' })));
+const studio = await createStudio({ dataDir, catalogue });
 let writes = Promise.resolve();
 async function persist() {
   const snapshot = JSON.stringify(state, null, 2);
@@ -52,6 +57,7 @@ const server = http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url, 'http://localhost');
     const route = url.pathname;
+    if (await studio.handle(req, res, route, { body, send })) return;
     if (route.startsWith('/api/ai/')) return await handleAI(req, res);
     if (route.startsWith('/api/')) {
       if (route === '/api/health' && req.method === 'GET') return send(res, 200, { app: 'unframe', status: 'ok', workspace });
@@ -101,16 +107,14 @@ const server = http.createServer(async (req, res) => {
       }
       const artMatch = route.match(/^\/api\/artworks\/([a-z0-9-]+)$/);
       if (artMatch && req.method === 'PATCH') {
-        const art = state.artworks.find(a => a.id === artMatch[1]); if (!art) return send(res, 404, { error: 'Artwork not found' });
-        const input = await body(req);
-        for (const key of ['description', 'detail', 'source']) if (input[key] !== undefined) assert(typeof input[key] === 'string' && input[key].trim().length > 0 && input[key].length <= 5000, `Invalid ${key}`);
-        for (const key of ['description', 'detail', 'source']) if (input[key] !== undefined) art[key] = input[key].trim();
-        art.updatedAt = new Date().toISOString(); await persist(); return send(res, 200, art);
+        studio.requireUser(req);
+        return send(res, 409, { error: 'Submit a Studio review case to change published content.', code: 'REVIEW_REQUIRED' });
       }
       const feedbackMatch = route.match(/^\/api\/feedback\/([a-z0-9-]+)$/);
       if (feedbackMatch && req.method === 'PATCH') {
+        studio.requireUser(req);
         const item = state.feedback.find(f => f.id === feedbackMatch[1]); if (!item) return send(res, 404, { error: 'Feedback not found' });
-        const { status } = await body(req); assert(['Open', 'Resolved'].includes(status), 'Invalid status'); item.status = status; await persist(); return send(res, 200, item);
+        const { status } = await body(req); studio.requireUser(req); assert(['Open', 'Resolved'].includes(status), 'Invalid status'); item.status = status; await persist(); return send(res, 200, item);
       }
       return send(res, 404, { error: 'Endpoint not found' });
     }
@@ -120,6 +124,6 @@ const server = http.createServer(async (req, res) => {
       return res.end();
     }
     return send(res, 404, { error: 'Page not found. Open the mobile app.', mobileUrl: mobileWebUrl.href });
-  } catch (error) { if (!error.status) console.error(error); send(res, error.status || 500, { error: error.status ? error.message : 'Something went wrong. Please try again.' }); }
+  } catch (error) { if (!error.status) console.error(error); send(res, error.status || 500, { error: error.status ? error.message : 'Something went wrong. Please try again.', ...(error.code && error.status ? { code: error.code } : {}) }); }
 });
 if (!await startLocalServer(server, { port, workspace, dataFile })) process.exitCode = 1;

@@ -10,7 +10,7 @@ import { execFile } from 'node:child_process';
 
 const execFileAsync = promisify(execFile);
 
-let child, directory;
+let child, directory, staffToken;
 const port = 31000 + Math.floor(Math.random() * 20000);
 const base = `http://127.0.0.1:${port}`;
 async function request(route, method = 'GET', data, headers = {}) {
@@ -26,6 +26,7 @@ before(async () => {
     await new Promise(resolve => setTimeout(resolve, 100));
   }
   assert.ok(ready, 'Test server started');
+  staffToken = (await request('/studio/setup', 'POST', { name: 'Test curator', email: 'curator@example.test', password: 'Test-only-password-983' })).data.token;
 });
 after(async () => {
   if (child && child.exitCode === null) { const exited = once(child, 'exit'); child.kill(); await exited; }
@@ -101,14 +102,15 @@ test('disabled history returns a reflection but does not retain a visit', async 
 test('feedback can be submitted and resolved by the local museum workspace', async () => {
   const result = await request('/feedback', 'POST', { artworkId: 'riverlight', type: 'Accuracy', message: 'Please review the colour description.' });
   assert.equal(result.status, 201); assert.equal(result.data.status, 'Open');
-  const resolved = await request(`/feedback/${result.data.id}`, 'PATCH', { status: 'Resolved' });
+  const resolved = await request(`/feedback/${result.data.id}`, 'PATCH', { status: 'Resolved' }, { Authorization: `Bearer ${staffToken}` });
   assert.equal(resolved.data.status, 'Resolved');
 });
-test('editing a collection note updates guide answers', async () => {
-  const result = await request('/artworks/riverlight', 'PATCH', { description: 'Updated interpretation from a curator.' });
-  assert.equal(result.status, 200);
+test('direct editing cannot bypass the authenticated review workflow', async () => {
+  const result = await request('/artworks/riverlight', 'PATCH', { description: 'Updated interpretation from a curator.' }, { Authorization: `Bearer ${staffToken}` });
+  assert.equal(result.status, 409);
+  assert.equal(result.data.code, 'REVIEW_REQUIRED');
   const answer = await request('/guide', 'POST', { question: 'Tell me about Riverlight' });
-  assert.match(answer.data.text, /Updated interpretation from a curator/);
+  assert.doesNotMatch(answer.data.text, /Updated interpretation from a curator/);
   assert.ok(answer.data.sources.length > 0);
 });
 test('cross-origin mutations and malformed requests are rejected', async () => {

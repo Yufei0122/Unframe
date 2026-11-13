@@ -24,6 +24,10 @@ import { AboutScreen, FeedbackScreen, PlannerScreen } from './src/screens/Modals
 import { LookupScreen } from './src/screens/Lookup';
 import { AIPlannerScreen } from './src/screens/AIPlanner';
 import { AIItineraryScreen } from './src/screens/AIItinerary';
+import { StudioApp } from './src/studio/StudioApp';
+import { LocaleProvider } from './src/studio/locale';
+import { AuthProvider } from './src/auth';
+import { SignInScreen } from './src/studio/Login';
 
 const Stack = createNativeStackNavigator<RootStackParams>();
 const Tabs = createBottomTabNavigator<TabParams>();
@@ -63,6 +67,8 @@ function MainTabs() {
 function AppNavigation() {
   return <NavigationContainer documentTitle={{ formatter: () => 'Unframe' }} theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, primary: c.green, background: c.bg, card: c.bg, text: c.ink, border: c.border } }}>
     <Stack.Navigator initialRouteName="MuseumSelect" screenOptions={{ headerTintColor: c.green, headerShadowVisible: false, contentStyle: { backgroundColor: c.bg }, headerTitleStyle: { fontSize: 15 }, headerBackButtonDisplayMode: 'minimal' }}>
+      <Stack.Screen name="SignIn" component={SignInScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name="Studio" component={StudioApp} options={{ headerShown: false }}/>
       <Stack.Screen name="MuseumSelect" component={MuseumSelectScreen} options={{ headerShown: false }}/>
       <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }}/>
       <Stack.Screen name="Home" component={MainTabs} options={{ headerShown: false }}/>
@@ -84,7 +90,7 @@ export default function App() {
   const desktop = Platform.OS === 'web' && width >= 600;
   return <View style={[styles.canvas, desktop && styles.desktop]}>
     <View testID="mobile-viewport" style={[styles.viewport, desktop && { width: 406, height: Math.min(860, height - 40), borderRadius: 39, borderWidth: 8, borderColor: '#252723', boxShadow: '0 22px 70px #25392D26, 0 0 0 1px #C8C4BA' }]}>
-      <SafeAreaProvider><StoreProvider><LocationProvider><StatusBar style="dark"/><AppNavigation/></LocationProvider></StoreProvider></SafeAreaProvider>
+      <SafeAreaProvider><LocaleProvider><AuthProvider><StoreProvider><LocationProvider><StatusBar style="dark"/><AppNavigation/></LocationProvider></StoreProvider></AuthProvider></LocaleProvider></SafeAreaProvider>
     </View>
   </View>;
 }

@@ -30,7 +30,8 @@
     "mobile:export:web": "npm --prefix mobile run export:web",
     "test:mobile:e2e": "playwright test --config playwright.mobile.config.js",
     "test:mobile:web-dev": "playwright test --config playwright.mobile-dev.config.js",
-    "test": "node --test tests/domain.test.js tests/api.test.js tests/ai.test.js tests/ai-runtime.test.js",
+    "test:studio:e2e": "playwright test --config playwright.studio.config.js",
+    "test": "node --test tests/domain.test.js tests/api.test.js tests/ai.test.js tests/ai-runtime.test.js tests/studio.test.js",
     "test:e2e": "npm run test:mobile:e2e",
     "check": "node --check server/index.js && node --check server/domain.js"
   },
