@@ -2,6 +2,8 @@
 
 A native React Native + Expo application for iOS and Android. It includes native stack navigation, bottom tabs, device photo/camera access, speech, and persistent on-device data. It is not a WebView of the website.
 
+The discovery entrance and visitor Home offer optional **Sign in / 登录**, with **Create account / 注册** available from the login form. Both forms use the approved gallery-and-form layout with English/Chinese controls; login includes the brand lockup and registration omits it. Registration requires an email, a 10–128 character password and matching confirmation, then signs in as an ordinary visitor. Guest browsing remains available. Only authorized accounts see **Studio / 审核后台** and can switch workspaces without signing in again. Administrators manage grants and revocations in Studio's account page. Studio retains **Overview / Review / Content / Workflow**, evidence verification, separate reviewers and explicit publication. See [account access and workflow](../STUDIO.md). Authentication does not automatically upload visitor drafts or saved data. The decorative `assets/auth-gallery.jpg` is a generated architectural image matching the approved concept.
+
 ## The Met and Brisbane GOMA visits
 
 The app opens on museum discovery: a full-width photographic preview above a web OpenLayers street map. Switch between New York and Brisbane, tap a museum pin, or swipe the preview (mouse dragging also works). The preview rotates every ten seconds, pausing during interaction, when hidden, or for reduced-motion preferences. The Met and GOMA offer **Choose** → welcome → **Start Visit**. Five nearby museums offer photo previews and official website links. See [museum discovery sources and scope](../MUSEUM-DISCOVERY.md).
@@ -108,7 +110,7 @@ Data is stored under `unframe.mobile.v1` using AsyncStorage on the device. The p
 
 Planning conversations stay in memory for the current museum session and are cleared on reload, museum change or New conversation. Sending a message transmits it, the latest eight messages and the current visit preferences through the backend to local Ollama Qwen. Unframe does not write planning conversations to disk. The AI models run on the backend computer, which may be separate from the phone; public model downloads require internet access during setup.
 
-The mobile app is the only UI; the separate website and curator workspace have been removed. Existing backend JSON files are preserved, but are not copied or synchronised to the phone. The mobile app and backend share bundled collection data and core route/guide algorithms under `../shared/`.
+The Expo app is the only UI; the separate website remains removed. Staff management now runs inside Unframe Studio in the same application. Published catalogue revisions sync from the backend and are cached for offline reading; visitor drafts, saved items and visit records remain on the device. The mobile app and backend share bundled collection data and core route/guide algorithms under `../shared/`.
 
 ## Build an actual iOS installation
 

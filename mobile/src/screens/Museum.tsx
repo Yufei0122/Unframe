@@ -6,6 +6,7 @@ import { images } from '../assets';
 import { useMuseumLocation } from '../location';
 import { useStore } from '../store';
 import { Button, Icon, T, c, useRootNavigation } from '../ui';
+import { WorkspaceSwitch } from '../WorkspaceSwitch';
 
 export function MuseumScreen() {
   const { museumId } = useMuseumLocation();
@@ -29,6 +30,7 @@ function MuseumContent() {
   const changeFloor = (value: Floor) => { setFloor(value); setRoom(null); };
   const showSearch = () => { setSearch(true); setViewAll(true); };
   return <SafeAreaView edges={['top']} style={styles.screen} onLayout={event => setScreenHeight(event.nativeEvent.layout.height)}>
+    <WorkspaceSwitch onStudio={() => nav.navigate('Studio')} onSignIn={() => nav.navigate('SignIn')}/>
     <View style={styles.header}>
       <Pressable accessibilityRole="button" accessibilityLabel="Choose museum" onPress={() => nav.navigate('MuseumSelect')} style={styles.museumButton}><T numberOfLines={1} style={styles.museumName}>{museum.name}</T><Icon name="chevron-down" size={16}/></Pressable>
       <Pressable accessibilityRole="button" accessibilityLabel="Scan an artwork" onPress={() => nav.navigate('Lookup')} style={styles.scan}><Icon name="scan-outline" size={19}/></Pressable>

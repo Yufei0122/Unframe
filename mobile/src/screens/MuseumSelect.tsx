@@ -14,6 +14,7 @@ import { DiscoveryMap } from '../components/DiscoveryMap';
 import { SwipeScene } from '../components/SwipeScene';
 import { PreviewBackdrop } from '../components/PreviewBackdrop';
 import { Icon, T, serif } from '../ui';
+import { WorkspaceSwitch } from '../WorkspaceSwitch';
 
 export function MuseumSelectScreen({ navigation }: NativeStackScreenProps<RootStackParams, 'MuseumSelect'>) {
   const { museumId, location, coordinates, selectMuseum, locate } = useMuseumLocation();
@@ -68,6 +69,7 @@ export function MuseumSelectScreen({ navigation }: NativeStackScreenProps<RootSt
   const distance = meters == null ? locationLabel(location.status) : (meters < 1000 ? Math.round(meters) + ' m' : (meters / 1000).toLocaleString('en', { maximumFractionDigits: 1 }) + ' km') + ' · straight line';
   return <SafeAreaView edges={['top']} style={styles.screen} onLayout={event => setHeight(event.nativeEvent.layout.height)}>
     {focused && <StatusBar style="dark"/>}
+    <WorkspaceSwitch onStudio={() => navigation.navigate('Studio')} onSignIn={() => navigation.navigate('SignIn')}/>
     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1 }}>
       <SwipeScene onSwipe={cycle} onDrag={setDrag} onHold={setHeld} onVisibility={setVisible}>
       <View testID="museum-scene" style={[styles.hero, { height: heroHeight }]}>

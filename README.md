@@ -1,6 +1,6 @@
 ﻿# Unframe
 
-Unframe is a React Native / Expo museum companion. **The mobile app is the only user interface**, including when opened in a computer browser. The former independent desktop website and curator interface have been removed.
+Unframe is a React Native / Expo museum companion. **The Expo app is the only user interface**, including when opened in a computer browser. Sign-in is optional, and visitors can create ordinary accounts from the bilingual login page. Guests and ordinary accounts use the visitor interface, while authorized accounts also see **Unframe Studio** on the main screen and can switch between visitor and review workspaces without signing in again. The former independent desktop website remains removed. See **[Account access, sign-in and review workflow](STUDIO.md)**.
 
 ## Run on Windows
 

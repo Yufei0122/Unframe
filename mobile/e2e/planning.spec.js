@@ -16,7 +16,8 @@ test('chat fits a small screen, handles keyboard input and retries without losin
     return route.fulfill(++calls === 1 ? { status: 503, json: { error: 'Local Ollama Qwen is temporarily unavailable.' } } : { json: { reply: 'We will take a relaxed, step-free route.', preferences: { ...input.preferences, walkingPreference: 'less_walking', accessibilityRequirements: ['step_free'] } } });
   });
   await openPlan(page);
-  await expect(page.getByRole('tab')).toHaveCount(5);
+  await expect(page.getByRole('tab')).toHaveCount(4);
+  for (const label of ['Home', 'Plan', 'Scan', 'Profile']) await expect(page.getByRole('tab', { name: new RegExp(`${label}$`) })).toBeVisible();
   const composer = page.getByRole('textbox', { name: 'Message your visit planner' });
   await expect(composer).toBeInViewport();
   await expect(page.getByRole('button', { name: 'Send message', exact: true })).toBeInViewport();
