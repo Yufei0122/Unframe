@@ -1,0 +1,14 @@
+{
+    "Key":  {
+                "jobId":  {
+                              "S":  "c52c3782-0b39-405f-86bf-8ca2b65b06cf"
+                          }
+            },
+    "TableName":  "a3-n12281212-unframe-jobs",
+    "ProjectionExpression":  "#s,attempts,#r,completedAt,jobId",
+    "ExpressionAttributeNames":  {
+                                     "#r":  "result",
+                                     "#s":  "status"
+                                 },
+    "ConsistentRead":  true
+}

@@ -1,0 +1,14 @@
+{
+    "ResourceArn":  "arn:aws:s3:::a3-n12281212-unframe-web",
+    "Tags":  [
+                 {
+                     "Key":  "qut-username",
+                     "Value":  "n12281212@qut.edu.au"
+                 },
+                 {
+                     "Key":  "purpose",
+                     "Value":  "assessment 3"
+                 }
+             ],
+    "AccountId":  "901444280953"
+}

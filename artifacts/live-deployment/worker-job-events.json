@@ -1,0 +1,47 @@
+[
+    {
+        "timestamp":  1793388671817,
+        "event":  "worker_ready",
+        "jobId":  null,
+        "attempt":  null,
+        "operation":  null,
+        "code":  null,
+        "stage":  null
+    },
+    {
+        "timestamp":  1793388766066,
+        "event":  "job_received",
+        "jobId":  "c52c3782-0b39-405f-86bf-8ca2b65b06cf",
+        "attempt":  null,
+        "operation":  null,
+        "code":  null,
+        "stage":  null
+    },
+    {
+        "timestamp":  1793388766102,
+        "event":  "job_processing",
+        "jobId":  "c52c3782-0b39-405f-86bf-8ca2b65b06cf",
+        "attempt":  1,
+        "operation":  "recognise",
+        "code":  null,
+        "stage":  null
+    },
+    {
+        "timestamp":  1793388767299,
+        "event":  "job_result_saved",
+        "jobId":  "c52c3782-0b39-405f-86bf-8ca2b65b06cf",
+        "attempt":  null,
+        "operation":  null,
+        "code":  null,
+        "stage":  null
+    },
+    {
+        "timestamp":  1793388767332,
+        "event":  "job_completed",
+        "jobId":  "c52c3782-0b39-405f-86bf-8ca2b65b06cf",
+        "attempt":  null,
+        "operation":  null,
+        "code":  null,
+        "stage":  null
+    }
+]

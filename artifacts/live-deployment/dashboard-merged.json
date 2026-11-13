@@ -1,0 +1,244 @@
+{
+  "widgets": [
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 0,
+      "width": 6,
+      "height": 6,
+      "properties": {
+        "metrics": [
+          [
+            "AWS/SQS",
+            "ApproximateNumberOfMessagesVisible",
+            "QueueName",
+            "a3-n12281212-unframe-recognition",
+            {
+              "label": "SQS - Recognition Queue Depth"
+            }
+          ]
+        ],
+        "view": "timeSeries",
+        "stacked": false,
+        "region": "ap-southeast-2",
+        "stat": "Average",
+        "period": 300
+      }
+    },
+    {
+      "type": "metric",
+      "x": 6,
+      "y": 0,
+      "width": 6,
+      "height": 6,
+      "properties": {
+        "metrics": [
+          [
+            "AWS/SQS",
+            "ApproximateAgeOfOldestMessage",
+            "QueueName",
+            "a3-n12281212-unframe-recognition",
+            {
+              "label": "SQS - Oldest Message Age"
+            }
+          ]
+        ],
+        "view": "timeSeries",
+        "stacked": false,
+        "region": "ap-southeast-2",
+        "stat": "Average",
+        "period": 300
+      }
+    },
+    {
+      "type": "metric",
+      "x": 12,
+      "y": 0,
+      "width": 6,
+      "height": 6,
+      "properties": {
+        "metrics": [
+          [
+            "ECS/ContainerInsights",
+            "RunningTaskCount",
+            "ServiceName",
+            "a3-n12281212-unframe-worker",
+            "ClusterName",
+            "n12281212-strobe-a2",
+            {
+              "label": "ECS - Running Worker Tasks"
+            }
+          ]
+        ],
+        "view": "timeSeries",
+        "stacked": false,
+        "region": "ap-southeast-2",
+        "stat": "Average",
+        "period": 60
+      }
+    },
+    {
+      "type": "metric",
+      "x": 18,
+      "y": 0,
+      "width": 6,
+      "height": 6,
+      "properties": {
+        "metrics": [
+          [
+            "ECS/ContainerInsights",
+            "CpuUtilized",
+            "ServiceName",
+            "a3-n12281212-unframe-worker",
+            "ClusterName",
+            "n12281212-strobe-a2",
+            {
+              "label": "ECS - CPU Utilization"
+            }
+          ],
+          [
+            ".",
+            "MemoryUtilized",
+            ".",
+            ".",
+            ".",
+            ".",
+            {
+              "label": "ECS - CPU Utilization"
+            }
+          ]
+        ],
+        "view": "timeSeries",
+        "stacked": false,
+        "region": "ap-southeast-2",
+        "stat": "Average",
+        "period": 60
+      }
+    },
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 6,
+      "width": 6,
+      "height": 6,
+      "properties": {
+        "metrics": [
+          [
+            "AWS/Lambda",
+            "Errors",
+            "FunctionName",
+            "a3-n12281212-unframe-jobs",
+            {
+              "label": "Lambda - Jobs Errors",
+              "region": "ap-southeast-2"
+            }
+          ]
+        ],
+        "view": "timeSeries",
+        "stacked": false,
+        "region": "ap-southeast-2",
+        "stat": "Sum",
+        "period": 60
+      }
+    },
+    {
+      "type": "metric",
+      "x": 6,
+      "y": 6,
+      "width": 6,
+      "height": 6,
+      "properties": {
+        "metrics": [
+          [
+            "AWS/Lambda",
+            "Invocations",
+            "FunctionName",
+            "a3-n12281212-unframe-jobs",
+            {
+              "label": "Lambda - Jobs Invocations",
+              "region": "ap-southeast-2"
+            }
+          ]
+        ],
+        "view": "timeSeries",
+        "stacked": false,
+        "region": "ap-southeast-2",
+        "stat": "Sum",
+        "period": 60
+      }
+    },
+    {
+      "type": "metric",
+      "x": 12,
+      "y": 6,
+      "width": 6,
+      "height": 6,
+      "properties": {
+        "metrics": [
+          [
+            "AWS/SQS",
+            "ApproximateNumberOfMessagesVisible",
+            "QueueName",
+            "a3-n12281212-unframe-recognition-dlq",
+            {
+              "label": "DLQ - Failed Recognition Messages"
+            }
+          ]
+        ],
+        "view": "timeSeries",
+        "stacked": false,
+        "region": "ap-southeast-2",
+        "stat": "Maximum",
+        "period": 60
+      }
+    },
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 12,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "title": "Worker CPUUtilization (%)",
+        "metrics": [
+          [
+            "AWS/ECS",
+            "CPUUtilization",
+            "ClusterName",
+            "n12281212-strobe-a2",
+            "ServiceName",
+            "a3-n12281212-unframe-worker"
+          ]
+        ],
+        "view": "timeSeries",
+        "region": "ap-southeast-2",
+        "stat": "Average",
+        "period": 60
+      }
+    },
+    {
+      "type": "metric",
+      "x": 12,
+      "y": 12,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "title": "Worker MemoryUtilization (%)",
+        "metrics": [
+          [
+            "AWS/ECS",
+            "MemoryUtilization",
+            "ClusterName",
+            "n12281212-strobe-a2",
+            "ServiceName",
+            "a3-n12281212-unframe-worker"
+          ]
+        ],
+        "view": "timeSeries",
+        "region": "ap-southeast-2",
+        "stat": "Average",
+        "period": 60
+      }
+    }
+  ]
+}

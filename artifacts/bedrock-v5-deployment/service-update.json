@@ -1,0 +1,63 @@
+{
+  "taskDefinition": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:6",
+  "configurationPreserved": true,
+  "desiredCount": 1,
+  "deployments": [
+    {
+      "id": "ecs-svc/0247050502470215559",
+      "status": "PRIMARY",
+      "taskDefinition": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:6",
+      "desiredCount": 0,
+      "pendingCount": 0,
+      "runningCount": 0,
+      "failedTasks": 0,
+      "createdAt": "2026-10-31T16:59:13.006000+10:00",
+      "updatedAt": "2026-10-31T16:59:13.006000+10:00",
+      "launchType": "FARGATE",
+      "platformVersion": "1.4.0",
+      "platformFamily": "Linux",
+      "networkConfiguration": {
+        "awsvpcConfiguration": {
+          "subnets": [
+            "subnet-075811427d5564cf9",
+            "subnet-05a3b8177138c8b14"
+          ],
+          "securityGroups": [
+            "sg-078997505ad1c6bbc"
+          ],
+          "assignPublicIp": "ENABLED"
+        }
+      },
+      "rolloutState": "IN_PROGRESS",
+      "rolloutStateReason": "ECS deployment ecs-svc/0247050502470215559 in progress."
+    },
+    {
+      "id": "ecs-svc/4585886962920341312",
+      "status": "ACTIVE",
+      "taskDefinition": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:5",
+      "desiredCount": 1,
+      "pendingCount": 0,
+      "runningCount": 1,
+      "failedTasks": 0,
+      "createdAt": "2026-10-31T16:13:57.651000+10:00",
+      "updatedAt": "2026-10-31T16:59:13.006000+10:00",
+      "launchType": "FARGATE",
+      "platformVersion": "1.4.0",
+      "platformFamily": "Linux",
+      "networkConfiguration": {
+        "awsvpcConfiguration": {
+          "subnets": [
+            "subnet-075811427d5564cf9",
+            "subnet-05a3b8177138c8b14"
+          ],
+          "securityGroups": [
+            "sg-078997505ad1c6bbc"
+          ],
+          "assignPublicIp": "ENABLED"
+        }
+      },
+      "rolloutState": "COMPLETED",
+      "rolloutStateReason": "ECS deployment ecs-svc/4585886962920341312 completed."
+    }
+  ]
+}

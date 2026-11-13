@@ -1,0 +1,7 @@
+{
+  "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:6",
+  "revision": 6,
+  "image": "901444280953.dkr.ecr.ap-southeast-2.amazonaws.com/a3-n12281212-unframe-worker@sha256:a0e14f0a51d37614f8ca567abdeb19f0f9edb1d0837413c85f1ead7ba9ceb258",
+  "cpu": "512",
+  "memory": "2048"
+}

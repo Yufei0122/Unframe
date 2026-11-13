@@ -1,0 +1,16 @@
+{
+    "imageDetails": [
+        {
+            "registryId": "901444280953",
+            "repositoryName": "a3-n12281212-unframe-worker",
+            "imageDigest": "sha256:a0e14f0a51d37614f8ca567abdeb19f0f9edb1d0837413c85f1ead7ba9ceb258",
+            "imageTags": [
+                "v5"
+            ],
+            "imageSizeInBytes": 1545533015,
+            "imagePushedAt": "2026-10-31T16:57:57.145000+10:00",
+            "imageManifestMediaType": "application/vnd.oci.image.index.v1+json",
+            "imageStatus": "ACTIVE"
+        }
+    ]
+}

@@ -1,0 +1,52 @@
+{
+  "previousTask": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:5",
+  "previousImage": "901444280953.dkr.ecr.ap-southeast-2.amazonaws.com/a3-n12281212-unframe-worker@sha256:3899104485df64461bbba840c7639a51de541a20b88a8c578dbd5be9ccfed152",
+  "newImage": "901444280953.dkr.ecr.ap-southeast-2.amazonaws.com/a3-n12281212-unframe-worker@sha256:a0e14f0a51d37614f8ca567abdeb19f0f9edb1d0837413c85f1ead7ba9ceb258",
+  "cpu": "512",
+  "memory": "2048",
+  "runtimePlatform": {
+    "cpuArchitecture": "X86_64",
+    "operatingSystemFamily": "LINUX"
+  },
+  "healthCheck": {
+    "command": [
+      "CMD",
+      "node",
+      "worker/healthcheck.js"
+    ],
+    "interval": 30,
+    "timeout": 5,
+    "retries": 3,
+    "startPeriod": 180
+  },
+  "taskRoleArn": "arn:aws:iam::901444280953:role/Task-Role-CAB432-ECS",
+  "executionRoleArn": "arn:aws:iam::901444280953:role/Execution-Role-CAB432-ECS",
+  "environmentNames": [
+    "WORKER_MAX_ATTEMPTS",
+    "RECOGNITION_QUEUE_URL",
+    "JOB_IMAGES_BUCKET",
+    "PYTHON_EXE",
+    "WORKER_VISIBILITY_SECONDS",
+    "BEDROCK_VISION_MODEL_ID",
+    "VECTOR_STORE",
+    "BEDROCK_PLANNING_MODEL_ID",
+    "ARTWORK_MATCH_THRESHOLD",
+    "WORKER_JOB_TIMEOUT_MS",
+    "OPENCLIP_CACHE_DIR",
+    "JOB_IMAGE_PREFIX",
+    "S3_VECTOR_INDEX_ARN",
+    "S3_VECTOR_VERSION",
+    "AI_ANALYSIS_BUDGET_MS",
+    "OPENCLIP_DEVICE",
+    "OPENCLIP_URL",
+    "AI_PROVIDER",
+    "OPENCLIP_TIMEOUT_MS",
+    "BEDROCK_MODEL_ID",
+    "JOBS_TABLE_NAME",
+    "OPENCLIP_THREADS"
+  ],
+  "baselineHash": "f6f464720a1dea61eccd9afaff3323255d5c1a587d507d7285665924349180a6",
+  "restoredHash": "f6f464720a1dea61eccd9afaff3323255d5c1a587d507d7285665924349180a6",
+  "serviceConfigurationHash": "37a44d89fd7750c916e85a5fff2602ae28b5ea7f14c82e22c6dc9305c7065026",
+  "onlyImageChanged": true
+}

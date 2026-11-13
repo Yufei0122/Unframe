@@ -1,0 +1,199 @@
+{
+    "taskDefinition": {
+        "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:5",
+        "containerDefinitions": [
+            {
+                "name": "unframe-worker",
+                "image": "901444280953.dkr.ecr.ap-southeast-2.amazonaws.com/a3-n12281212-unframe-worker@sha256:3899104485df64461bbba840c7639a51de541a20b88a8c578dbd5be9ccfed152",
+                "cpu": 0,
+                "portMappings": [],
+                "essential": true,
+                "environment": [
+                    {
+                        "name": "WORKER_MAX_ATTEMPTS",
+                        "value": "5"
+                    },
+                    {
+                        "name": "RECOGNITION_QUEUE_URL",
+                        "value": "https://sqs.ap-southeast-2.amazonaws.com/901444280953/a3-n12281212-unframe-recognition"
+                    },
+                    {
+                        "name": "JOB_IMAGES_BUCKET",
+                        "value": "a3-n12281212-unframe-job-images"
+                    },
+                    {
+                        "name": "PYTHON_EXE",
+                        "value": "/opt/venv/bin/python"
+                    },
+                    {
+                        "name": "WORKER_VISIBILITY_SECONDS",
+                        "value": "300"
+                    },
+                    {
+                        "name": "BEDROCK_VISION_MODEL_ID",
+                        "value": "google.gemma-3-12b-it"
+                    },
+                    {
+                        "name": "VECTOR_STORE",
+                        "value": "s3vectors"
+                    },
+                    {
+                        "name": "BEDROCK_PLANNING_MODEL_ID",
+                        "value": "google.gemma-3-12b-it"
+                    },
+                    {
+                        "name": "ARTWORK_MATCH_THRESHOLD",
+                        "value": "0.80"
+                    },
+                    {
+                        "name": "WORKER_JOB_TIMEOUT_MS",
+                        "value": "180000"
+                    },
+                    {
+                        "name": "OPENCLIP_CACHE_DIR",
+                        "value": "/opt/models"
+                    },
+                    {
+                        "name": "JOB_IMAGE_PREFIX",
+                        "value": "uploads/"
+                    },
+                    {
+                        "name": "S3_VECTOR_INDEX_ARN",
+                        "value": "arn:aws:s3vectors:ap-southeast-2:901444280953:bucket/a3-n12281212-unframe-vectors/index/a3-n12281212-unframe-vectors"
+                    },
+                    {
+                        "name": "S3_VECTOR_VERSION",
+                        "value": "openclip-v1"
+                    },
+                    {
+                        "name": "AI_ANALYSIS_BUDGET_MS",
+                        "value": "125000"
+                    },
+                    {
+                        "name": "OPENCLIP_DEVICE",
+                        "value": "cpu"
+                    },
+                    {
+                        "name": "OPENCLIP_URL",
+                        "value": "http://127.0.0.1:8001"
+                    },
+                    {
+                        "name": "AI_PROVIDER",
+                        "value": "bedrock"
+                    },
+                    {
+                        "name": "OPENCLIP_TIMEOUT_MS",
+                        "value": "30000"
+                    },
+                    {
+                        "name": "BEDROCK_MODEL_ID",
+                        "value": "google.gemma-3-12b-it"
+                    },
+                    {
+                        "name": "JOBS_TABLE_NAME",
+                        "value": "a3-n12281212-unframe-jobs"
+                    },
+                    {
+                        "name": "OPENCLIP_THREADS",
+                        "value": "1"
+                    }
+                ],
+                "environmentFiles": [],
+                "mountPoints": [],
+                "volumesFrom": [],
+                "ulimits": [],
+                "logConfiguration": {
+                    "logDriver": "awslogs",
+                    "options": {
+                        "awslogs-group": "/ecs/a3-n12281212-unframe-worker",
+                        "awslogs-region": "ap-southeast-2",
+                        "awslogs-stream-prefix": "ecs"
+                    },
+                    "secretOptions": []
+                },
+                "healthCheck": {
+                    "command": [
+                        "CMD",
+                        "node",
+                        "worker/healthcheck.js"
+                    ],
+                    "interval": 30,
+                    "timeout": 5,
+                    "retries": 3,
+                    "startPeriod": 180
+                },
+                "systemControls": []
+            }
+        ],
+        "family": "a3-n12281212-unframe-worker",
+        "taskRoleArn": "arn:aws:iam::901444280953:role/Task-Role-CAB432-ECS",
+        "executionRoleArn": "arn:aws:iam::901444280953:role/Execution-Role-CAB432-ECS",
+        "networkMode": "awsvpc",
+        "revision": 5,
+        "volumes": [],
+        "status": "ACTIVE",
+        "requiresAttributes": [
+            {
+                "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+            },
+            {
+                "name": "ecs.capability.execution-role-awslogs"
+            },
+            {
+                "name": "com.amazonaws.ecs.capability.ecr-auth"
+            },
+            {
+                "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+            },
+            {
+                "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+            },
+            {
+                "name": "com.amazonaws.ecs.capability.task-iam-role"
+            },
+            {
+                "name": "ecs.capability.container-health-check"
+            },
+            {
+                "name": "ecs.capability.execution-role-ecr-pull"
+            },
+            {
+                "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+            },
+            {
+                "name": "ecs.capability.task-eni"
+            },
+            {
+                "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+            }
+        ],
+        "placementConstraints": [],
+        "compatibilities": [
+            "EC2",
+            "MANAGED_INSTANCES",
+            "FARGATE"
+        ],
+        "runtimePlatform": {
+            "cpuArchitecture": "X86_64",
+            "operatingSystemFamily": "LINUX"
+        },
+        "requiresCompatibilities": [
+            "FARGATE"
+        ],
+        "cpu": "512",
+        "memory": "2048",
+        "registeredAt": "2026-10-31T16:13:34.030000+10:00",
+        "registeredBy": "arn:aws:sts::901444280953:assumed-role/AWSReservedSSO_CAB432-STUDENT_f2baa6a2ba3c79c9/n12281212@qut.edu.au",
+        "enableFaultInjection": false
+    },
+    "tags": [
+        {
+            "key": "qut-username",
+            "value": "n12281212@qut.edu.au"
+        },
+        {
+            "key": "purpose",
+            "value": "assessment 3"
+        }
+    ]
+}

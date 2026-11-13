@@ -1,0 +1,60 @@
+{
+  "apiBase": "https://4xfbhsso7a.execute-api.ap-southeast-2.amazonaws.com/prob",
+  "image": "mobile/assets/water-lilies.jpg",
+  "museumId": "met",
+  "status": "PASS",
+  "stage": "reread",
+  "startedAt": "2026-10-30T19:32:41.029Z",
+  "http": [
+    {
+      "stage": "create",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "stage": "upload",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "stage": "poll",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "stage": "poll",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "stage": "poll",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "stage": "reread",
+      "method": "GET",
+      "status": 200
+    }
+  ],
+  "statuses": [
+    "WAITING_UPLOAD",
+    "PROCESSING",
+    "SUCCEEDED"
+  ],
+  "jobId": "c52c3782-0b39-405f-86bf-8ca2b65b06cf",
+  "uploaded": true,
+  "candidates": [
+    {
+      "artworkId": "water-lilies",
+      "similarity": 0.9999953508377075
+    }
+  ],
+  "artworkId": "water-lilies",
+  "similarity": 0.9999953508377075,
+  "requiresConfirmation": true,
+  "resultStillAvailable": true,
+  "jobStatus": "SUCCEEDED",
+  "elapsedMs": 6121,
+  "finishedAt": "2026-10-30T19:32:47.164Z"
+}

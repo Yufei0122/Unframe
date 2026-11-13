@@ -1,0 +1,24 @@
+[
+    {
+        "taskArn": "arn:aws:ecs:ap-southeast-2:901444280953:task/n12281212-strobe-a2/47f6e647e2d34ee0b54e027ff906ce82",
+        "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:901444280953:task-definition/a3-n12281212-unframe-worker:5",
+        "lastStatus": "RUNNING",
+        "healthStatus": "HEALTHY",
+        "cpu": "512",
+        "memory": "2048",
+        "containers": [
+            {
+                "name": "aws-guardduty-agent-VbsUnkb",
+                "image": null,
+                "imageDigest": "sha256:694927b5f7ee005b25d725fb8a0a2e86c72ccfe967cec6386574e608ceb1777b",
+                "healthStatus": "UNKNOWN"
+            },
+            {
+                "name": "unframe-worker",
+                "image": "901444280953.dkr.ecr.ap-southeast-2.amazonaws.com/a3-n12281212-unframe-worker@sha256:3899104485df64461bbba840c7639a51de541a20b88a8c578dbd5be9ccfed152",
+                "imageDigest": "sha256:3899104485df64461bbba840c7639a51de541a20b88a8c578dbd5be9ccfed152",
+                "healthStatus": "HEALTHY"
+            }
+        ]
+    }
+]

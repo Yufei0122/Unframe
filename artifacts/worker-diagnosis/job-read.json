@@ -1,0 +1,7 @@
+{
+  "TableName": "a3-n12281212-unframe-jobs",
+  "Key": { "jobId": { "S": "d1964a3b-3090-4a41-87a6-83a2a69decac" } },
+  "ConsistentRead": true,
+  "ProjectionExpression": "jobId,#s,operation,museumId,attempts,createdAt,updatedAt,sizeBytes,contentType,#b,imageKey,#e",
+  "ExpressionAttributeNames": { "#s": "status", "#e": "error", "#b": "bucket" }
+}

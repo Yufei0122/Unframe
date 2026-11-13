@@ -1,0 +1,86 @@
+{
+  "DistributionConfig": {
+    "CallerReference": "a3-n12281212-unframe-web-20261031-deployment",
+    "Aliases": {
+      "Quantity": 0
+    },
+    "DefaultRootObject": "index.html",
+    "Origins": {
+      "Quantity": 1,
+      "Items": [
+        {
+          "Id": "unframe-static",
+          "DomainName": "a3-n12281212-unframe-web.s3.ap-southeast-2.amazonaws.com",
+          "OriginPath": "",
+          "S3OriginConfig": {
+            "OriginAccessIdentity": ""
+          }
+        }
+      ]
+    },
+    "DefaultCacheBehavior": {
+      "TargetOriginId": "unframe-static",
+      "ViewerProtocolPolicy": "redirect-to-https",
+      "AllowedMethods": {
+        "Quantity": 2,
+        "Items": [
+          "GET",
+          "HEAD"
+        ],
+        "CachedMethods": {
+          "Quantity": 2,
+          "Items": [
+            "GET",
+            "HEAD"
+          ]
+        }
+      },
+      "Compress": true,
+      "ForwardedValues": {
+        "QueryString": false,
+        "Cookies": {
+          "Forward": "none"
+        }
+      },
+      "TrustedSigners": {
+        "Enabled": false,
+        "Quantity": 0
+      },
+      "MinTTL": 0,
+      "DefaultTTL": 300,
+      "MaxTTL": 86400
+    },
+    "CacheBehaviors": {
+      "Quantity": 0
+    },
+    "CustomErrorResponses": {
+      "Quantity": 0
+    },
+    "Comment": "CAB432 A3 n12281212 Unframe public static frontend",
+    "PriceClass": "PriceClass_100",
+    "Enabled": true,
+    "ViewerCertificate": {
+      "CloudFrontDefaultCertificate": true
+    },
+    "Restrictions": {
+      "GeoRestriction": {
+        "RestrictionType": "none",
+        "Quantity": 0
+      }
+    },
+    "HttpVersion": "http2",
+    "IsIPV6Enabled": true
+  },
+  "Tags": {
+    "Items": [
+      {
+        "Key": "purpose",
+        "Value": "assessment 3"
+      },
+      {
+        "Key": "qut-username",
+        "Value": "n12281212@qut.edu.au"
+      }
+    ]
+  }
+}

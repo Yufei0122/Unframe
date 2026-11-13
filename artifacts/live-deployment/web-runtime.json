@@ -1,0 +1,54 @@
+[
+  {
+    "check": "http_redirect",
+    "status": 301,
+    "location": "https://d3x3iexpafsgf.cloudfront.net/"
+  },
+  {
+    "check": "https_index",
+    "status": 200,
+    "contentType": "text/html",
+    "matchesLocal": true
+  },
+  {
+    "check": "javascript",
+    "status": 200,
+    "contentType": "application/javascript",
+    "bytes": 2005342,
+    "hashMatchesLocal": true,
+    "apiBaseCorrect": true
+  },
+  {
+    "check": "css",
+    "status": 200,
+    "contentType": "text/css",
+    "bytes": 5262,
+    "hashMatchesLocal": true
+  },
+  {
+    "check": "jobs_create_cors",
+    "status": 204,
+    "origin": "https://d3x3iexpafsgf.cloudfront.net",
+    "methods": "GET,POST,OPTIONS",
+    "headers": "Content-Type,X-Job-Token"
+  },
+  {
+    "check": "jobs_poll_cors",
+    "status": 204,
+    "origin": "https://d3x3iexpafsgf.cloudfront.net",
+    "methods": "GET,POST,OPTIONS",
+    "headers": "Content-Type,X-Job-Token"
+  },
+  {
+    "check": "private_upload_cors",
+    "status": 200,
+    "origin": "https://d3x3iexpafsgf.cloudfront.net",
+    "methods": "PUT",
+    "headers": "content-type, if-none-match"
+  },
+  {
+    "check": "unapproved_origin_rejected",
+    "status": 403,
+    "origin": null
+  }
+]

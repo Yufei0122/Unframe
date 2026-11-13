@@ -1,0 +1,20 @@
+{
+    "CORSRules":  [
+                      {
+                          "MaxAgeSeconds":  300,
+                          "AllowedMethods":  [
+                                                 "PUT"
+                                             ],
+                          "AllowedOrigins":  [
+                                                 "https://d3x3iexpafsgf.cloudfront.net"
+                                             ],
+                          "AllowedHeaders":  [
+                                                 "Content-Type",
+                                                 "If-None-Match"
+                                             ],
+                          "ExposeHeaders":  [
+                                                "ETag"
+                                            ]
+                      }
+                  ]
+}

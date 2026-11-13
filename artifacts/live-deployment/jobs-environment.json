@@ -1,0 +1,10 @@
+{
+    "Variables":  {
+                      "JOB_IMAGE_PREFIX":  "uploads/",
+                      "JOB_TTL_SECONDS":  "86400",
+                      "JOB_IMAGES_BUCKET":  "a3-n12281212-unframe-job-images",
+                      "JOBS_TABLE_NAME":  "a3-n12281212-unframe-jobs",
+                      "JOB_UPLOAD_TTL_SECONDS":  "300",
+                      "JOBS_ALLOWED_ORIGINS":  "https://d3x3iexpafsgf.cloudfront.net"
+                  }
+}
