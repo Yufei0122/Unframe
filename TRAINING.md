@@ -104,6 +104,19 @@ npm.cmd run ai:train:met:tune -- --run ".local-ai/met-training/<expanded run>" -
 
 This reuses the original frozen-backbone features and augmentation samples, recording their hashes and checking source checkpoint/manifest compatibility. It repeats the same projection objective and batches with a different learning rate. Its selected epoch must strictly exceed the earlier full-gallery validation Top-1 before another test inference is performed; otherwise it records `validation_only_not_selected` and leaves the earlier index unchanged. Validation-only trials are retained alongside the chosen model's results.
 
+## Train on every mini-gallery reference
+
+The opt-in full-gallery mode leaves the existing pilot and expanded defaults unchanged:
+
+```powershell
+npm.cmd run ai:train:met:full-gallery -- --prepare-only --output ".local-ai/met-training/<unique prepare run>"
+npm.cmd run ai:train:met:full-gallery -- --epochs 1 --output ".local-ai/met-training/<unique smoke run>"
+```
+
+This mode puts every clean reference in `manifest.gallery` into `manifest.training`, including single-reference identities. Singletons use two independently seeded augmentation views of the same source; multi-reference identities pair different source files whenever possible. The frozen convolutional backbone is cached in batches and only the 512-dimensional projection head receives gradients. Verified feature caches are reusable across unique output directories.
+
+Query image paths and byte hashes remain disjoint and query pixels never enter training. Because reference images for validation/test identities do enter training, this is full-gallery/transductive instance retrieval, not unseen-identity generalization. Its manifest, report and model card therefore record `queryPixelsUsedForTraining: false`, `evaluationIdentitiesSeenInGalleryTraining: true`, and `unseenIdentityGeneralizationClaim: false`. The original expanded experiment, which excludes query identities from its additional gradient updates, remains the strict comparison baseline.
+
 ## Sources and redistribution
 
 - [Dataset and download links](https://cmp.felk.cvut.cz/met/), [paper](https://arxiv.org/abs/2202.01747), [publisher's code](https://github.com/nikosips/met).

@@ -14,6 +14,7 @@
     "ai:index": "node scripts/index-artworks.mjs",
     "ai:train:met": "node scripts/ai-met.mjs train",
     "ai:train:met:expanded": "node scripts/ai-met.mjs expanded",
+    "ai:train:met:full-gallery": "node scripts/ai-met.mjs full-gallery --all-gallery-training",
     "ai:train:met:tune": "node scripts/ai-met.mjs tune",
     "ai:met:catalogue": "node scripts/ai-met.mjs catalogue",
     "ai:met:evaluate": "node scripts/ai-met.mjs evaluate",

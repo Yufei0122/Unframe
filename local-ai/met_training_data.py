@@ -122,7 +122,8 @@ def read_ground_truth(archive):
     return result
 
 
-def select_manifest(metadata, *, train_classes=512, distractor_classes=128, negatives_per_group=96, seed=7, full_gallery=False):
+def select_manifest(metadata, *, train_classes=512, distractor_classes=128, negatives_per_group=96, seed=7,
+                    full_gallery=False, all_gallery_training=False):
     rng = random.Random(seed)
     grouped = defaultdict(list)
     for row in metadata["mini_MET_database.json"]:
@@ -141,9 +142,14 @@ def select_manifest(metadata, *, train_classes=512, distractor_classes=128, nega
     if not evaluation_ids <= set(grouped):
         raise ValueError("Mini gallery does not cover official known queries")
     candidates = sorted(key for key, rows in grouped.items() if len(rows) >= 2 and key not in evaluation_ids)
-    if len(candidates) < train_classes:
-        raise ValueError("Not enough distinct, multi-reference training identities")
-    train_ids = set(rng.sample(candidates, train_classes))
+    if all_gallery_training:
+        if not full_gallery:
+            raise ValueError("All-gallery training requires the complete mini gallery")
+        train_ids = set(grouped)
+    else:
+        if len(candidates) < train_classes:
+            raise ValueError("Not enough distinct, multi-reference training identities")
+        train_ids = set(rng.sample(candidates, train_classes))
     remaining = sorted(set(grouped) - train_ids - evaluation_ids)
     distractor_ids = set(rng.sample(remaining, min(distractor_classes, len(remaining))))
     gallery_ids = set(grouped) if full_gallery else train_ids | evaluation_ids | distractor_ids
@@ -153,7 +159,11 @@ def select_manifest(metadata, *, train_classes=512, distractor_classes=128, nega
                 "seed": seed, "training": training, "gallery": gallery, **splits,
                 "selection": {"trainingClasses": len(train_ids), "galleryClasses": len(gallery_ids), "evaluationClasses": len(evaluation_ids),
                               "negativeSamplesPerGroupPerSplit": negatives_per_group, "maxReferencesPerClass": None if full_gallery else 3,
-                              "trainingIdentitiesExcludedFromQueryIdentities": True},
+                              "trainingIdentitiesExcludedFromQueryIdentities": not all_gallery_training,
+                              "allGalleryTraining": all_gallery_training,
+                              "queryPixelsUsedForTraining": False,
+                              "evaluationIdentitiesSeenInGalleryTraining": all_gallery_training,
+                              "unseenIdentityGeneralizationClaim": False},
                 "limitation": "A selected gallery and sampled unknowns, not the full benchmark. Official positive query splits are retained. Gallery metadata selects supported identities; no query pixels enter training."}
     validate_manifest(manifest)
     if full_gallery:
@@ -171,8 +181,13 @@ def validate_manifest(manifest):
             raise ValueError("Query pixels leak between splits")
     trained = {row["id"] for row in manifest["training"]}
     query_ids = {row["id"] for key in ["validation", "test"] for row in manifest[key] if row["id"] >= 0}
-    if trained & query_ids:
+    all_gallery_training = manifest.get("selection", {}).get("allGalleryTraining", False)
+    if trained & query_ids and not all_gallery_training:
         raise ValueError("Supervised training identities overlap evaluation identities")
+    if all_gallery_training:
+        flags = manifest["selection"]
+        if flags.get("queryPixelsUsedForTraining") is not False or flags.get("evaluationIdentitiesSeenInGalleryTraining") is not True or flags.get("unseenIdentityGeneralizationClaim") is not False:
+            raise ValueError("All-gallery training requires explicit transductive evaluation flags")
     for rows in [manifest[key] for key in sets]:
         for row in rows:
             path = PurePosixPath(row["path"])

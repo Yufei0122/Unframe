@@ -16,7 +16,7 @@ from train_met import calibrate, contrastive_loss, metrics, rank
 from met_pretrained import NormalizedGeM, convert_state
 from evaluate_met_fullframe import fit384
 from train_met import NORMALIZE
-from train_met_expanded import hard_batches, reference_groups
+from train_met_expanded import full_gallery_batches, hard_batches, reference_groups, terminal_failure_status
 from met_catalogue import extract_catalogue, load_local_catalogue
 from met_training_data import sha256
 from query_met import load_gallery, load_openclip_gallery
@@ -136,6 +136,37 @@ class MetTrainingTests(unittest.TestCase):
         self.assertIn(100, {row["id"] for row in result["gallery"]})
         self.assertEqual(sum(row["id"] == 99 for row in result["gallery"]), 5)
         self.assertFalse({row["id"] for row in result["training"]} & {1, 2})
+
+    def test_all_gallery_training_selects_every_reference_and_marks_transductive_evaluation(self):
+        source = metadata()
+        source["mini_MET_database.json"] += [{"id": 99, "path": f"MET/99/{i}.jpg"} for i in range(3)]
+        source["mini_MET_database.json"].append({"id": 100, "path": "MET/100/0.jpg"})
+        result = select_manifest(source, train_classes=2, negatives_per_group=1, full_gallery=True, all_gallery_training=True)
+        self.assertEqual(result["training"], result["gallery"])
+        self.assertEqual(len(result["training"]), len(source["mini_MET_database.json"]))
+        self.assertFalse(result["selection"]["queryPixelsUsedForTraining"])
+        self.assertTrue(result["selection"]["evaluationIdentitiesSeenInGalleryTraining"])
+        self.assertFalse(result["selection"]["unseenIdentityGeneralizationClaim"])
+        self.assertTrue({row["id"] for row in result["training"]} & {1, 2})
+        self.assertFalse({row["path"] for row in result["training"]} & {row["path"] for row in result["validation"] + result["test"]})
+
+    def test_single_reference_identity_gets_two_augmented_views_and_every_reference_is_covered(self):
+        groups = {10: [0], 11: [1, 2], 12: [3, 4, 5]}
+        batches = full_gallery_batches(groups, 2, np.random.default_rng(17))
+        flattened = [item for batch in batches for item in batch]
+        self.assertEqual(sorted(flattened), [(10, 0), (11, 0), (11, 1), (12, 0), (12, 1), (12, 2)])
+        self.assertTrue(all(len({identity for identity, _ in batch}) == len(batch) for batch in batches))
+
+    def test_cross_identity_conflicts_are_removed_but_clean_singletons_remain_in_all_gallery_mode(self):
+        rows = [{"id": 10, "path": "MET/10/0.jpg"}, {"id": 11, "path": "MET/11/0.jpg"}, {"id": 12, "path": "MET/12/0.jpg"}, {"id": 13, "path": "MET/13/0.jpg"}]
+        hashes = {rows[0]["path"]: "a", rows[1]["path"]: "x", rows[2]["path"]: "x", rows[3]["path"]: "b"}
+        data = {"gallery": rows, "training": rows, "imageSha256": hashes, "selection": {"allGalleryTraining": True}}
+        self.assertEqual(reference_groups(data), {10: [0], 13: [3]})
+
+    def test_interruption_and_failure_are_never_completed(self):
+        self.assertEqual(terminal_failure_status(KeyboardInterrupt()), "cancelled")
+        self.assertEqual(terminal_failure_status(RuntimeError("boom")), "failed")
+        self.assertNotEqual(terminal_failure_status(KeyboardInterrupt()), "completed")
 
     def test_blocked_retrieval_matches_brute_force_across_query_chunks(self):
         rng = np.random.default_rng(11)
